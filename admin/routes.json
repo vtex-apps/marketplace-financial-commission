@@ -1,0 +1,6 @@
+{
+  "admin.app.example": {
+    "component": "commissionReport",
+    "path": "/admin/app/commission-report"
+  }
+}

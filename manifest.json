@@ -1,9 +1,9 @@
 {
   "vendor": "vtex",
-  "name": "admin-vbase-example",
-  "version": "0.0.2",
-  "title": "Admin Example - VBase",
-  "description": "Admin Example - VBase",
+  "name": "marketplace-financial-commission",
+  "version": "0.0.1",
+  "title": "marketplace-financial-commission",
+  "description": "marketplace-financial-commission",
   "builders": {
     "react": "3.x",
     "messages": "1.x",
@@ -13,21 +13,66 @@
     "graphql": "1.x"
   },
   "dependencies": {
+    "vtex.sellers-graphql": "8.x",
     "vtex.styleguide": "9.x"
   },
   "registries": [
     "smartcheckout"
   ],
+  "credentialType": "absolute",
   "policies": [
     {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "portal.vtexcommercestable.com.br",
-        "path": "*"
-      }
+      "name": "vbase-read-write"
+    },
+    {
+      "name": "OMSViewer"
+    },
+    {
+      "name": "ADMIN_CRM"
+    },
+    {
+      "name": "POWER_USER_CRM"
+    },
+    {
+      "name": "ADMIN_DS"
+    },
+    {
+      "name": "POWER_USER_DS"
+    },
+    {
+      "name": "OMSViewer"
+    },
+    {
+      "name": "WorkflowAction"
+    },
+    {
+      "name": "Changes"
+    },
+    {
+      "name": "ShippingAction"
     },
     {
       "name": "vbase-read-write"
+    },
+    {
+      "name": "Get_User_By_Identifier"
+    },
+    {
+      "name": "graphql-query"
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.myvtex.com",
+        "path": "/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexcommercestable.com.br",
+        "path": "/api/*"
+      }
     }
   ],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"

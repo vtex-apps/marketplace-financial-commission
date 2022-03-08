@@ -1,20 +1,21 @@
-import {
+import type {
   ClientsConfig,
-  LRUCache,
-  Service,
   ServiceContext,
   ParamsContext,
   RecorderState,
 } from '@vtex/api'
+import { LRUCache, Service, method } from '@vtex/api'
 
 import { Clients } from './clients'
+import { sellers } from './middlewares/sellers'
 import { queries, mutations } from './resolvers'
 
-const TIMEOUT_MS = 800
+const TIMEOUT_MS = 30000
 
 // Create a LRU memory cache for the Status client.
 // The @vtex/api HttpClient respects Cache-Control headers and uses the provided cache.
 const memoryCache = new LRUCache<string, any>({ max: 5000 })
+
 metrics.trackCache('status', memoryCache)
 
 // This is the configuration for clients available in `ctx.clients`.
@@ -31,7 +32,7 @@ const clients: ClientsConfig<Clients> = {
     orders: {
       timeout: 3000,
     },
-    status: {
+    sellers: {
       memoryCache,
     },
   },
@@ -59,5 +60,10 @@ export default new Service<Clients, State, ParamsContext>({
         ...mutations,
       },
     },
+  },
+  routes: {
+    sellers: method({
+      GET: [sellers],
+    }),
   },
 })

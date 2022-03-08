@@ -33,7 +33,7 @@ export default class SellersIO extends AppGraphQLClient {
       ...options,
       headers: {
         ...options?.headers,
-        VtexIdclientAutCookie: context.authToken,
+        cookie: `VtexIdclientAutCookie=${context.authToken}`,
       },
     })
   }

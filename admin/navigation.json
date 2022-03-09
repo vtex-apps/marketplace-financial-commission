@@ -1,10 +1,10 @@
 {
   "section": "orders",
-  "titleId": "admin-example.navigation.label",
+  "titleId": "admin/navigation.title",
   "subSectionItems": [
     {
-      "labelId": "admin-example.navigation.commission",
-      "path": "/admin/commission-report"
+      "labelId": "admin/navigation.dashboard-label",
+      "path": "/admin/commission-dashboard"
     }
   ]
 }

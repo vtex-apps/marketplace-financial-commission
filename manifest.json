@@ -2,8 +2,8 @@
   "vendor": "vtex",
   "name": "marketplace-financial-commission",
   "version": "0.0.1",
-  "title": "marketplace-financial-commission",
-  "description": "marketplace-financial-commission",
+  "title": "Financial commission for Marketplace",
+  "description": "Streamline the commissioning flows between a marketplace operator and the sellers",
   "builders": {
     "react": "3.x",
     "messages": "1.x",
@@ -16,9 +16,7 @@
     "vtex.sellers-graphql": "8.x",
     "vtex.styleguide": "9.x"
   },
-  "registries": [
-    "smartcheckout"
-  ],
+  "registries": ["smartcheckout"],
   "credentialType": "absolute",
   "policies": [
     {
@@ -28,44 +26,10 @@
       "name": "OMSViewer"
     },
     {
-      "name": "ADMIN_CRM"
-    },
-    {
-      "name": "POWER_USER_CRM"
-    },
-    {
       "name": "ADMIN_DS"
     },
     {
-      "name": "POWER_USER_DS"
-    },
-    {
-      "name": "OMSViewer"
-    },
-    {
-      "name": "WorkflowAction"
-    },
-    {
-      "name": "Changes"
-    },
-    {
-      "name": "ShippingAction"
-    },
-    {
-      "name": "vbase-read-write"
-    },
-    {
-      "name": "Get_User_By_Identifier"
-    },
-    {
       "name": "graphql-query"
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "{{account}}.myvtex.com",
-        "path": "/*"
-      }
     },
     {
       "name": "outbound-access",

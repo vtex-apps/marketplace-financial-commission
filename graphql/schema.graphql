@@ -1,7 +1,6 @@
 type Query {
-  token: String
-}
-
-type Mutation {
-  saveToken(token: String): String
+  """
+  Retrieve all onboarded sellers
+  """
+  getSellers: Sellers @cacheControl(scope: PUBLIC, maxAge: LONG)
 }

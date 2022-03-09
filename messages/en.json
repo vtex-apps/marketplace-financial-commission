@@ -1,4 +1,4 @@
 {
-  "admin-example.navigation.label": "Commission Report",
-  "admin-example.navigation.commission": "Commission Report"
+  "admin/navigation.title": "Commission Report",
+  "admin/navigation.dashboard-label": "Commission Report"
 }

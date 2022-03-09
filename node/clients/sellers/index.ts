@@ -33,21 +33,20 @@ export default class SellersIO extends AppGraphQLClient {
       ...options,
       headers: {
         ...options?.headers,
-        VtexIdclientAutCookie: context.authToken,
+        Cookie: `VtexIdclientAutCookie=${context.adminUserAuthToken}`,
       },
     })
   }
 
-  public GetSellers = async (): Promise<Sellers> => {
+  public getSellers = async (): Promise<Sellers> => {
     const sellers = await this.graphql
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      .query<Sellers, {}>(
+      .query<Sellers, Record<string, unknown>>(
         {
           query: GET_SELLERS,
           variables: {},
         },
         {
-          metric: 'sellers',
+          metric: 'get-sellers',
         }
       )
       .then(

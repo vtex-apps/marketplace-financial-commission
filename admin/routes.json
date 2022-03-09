@@ -1,6 +1,6 @@
 {
-  "admin.app.example": {
-    "component": "commissionReport",
-    "path": "/admin/app/commission-report"
+  "admin.app.dashboard": {
+    "component": "dashboard",
+    "path": "/admin/app/commission-dashboard"
   }
 }

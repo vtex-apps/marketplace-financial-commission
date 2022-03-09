@@ -1,10 +1,15 @@
 {
-  "memory": 256,
-  "ttl": 10,
-  "timeout": 800,
+  "stack": "nodejs",
+  "memory": 512,
+  "ttl": 60,
+  "timeout": 30,
   "minReplicas": 2,
-  "maxReplicas": 4,
-  "workers": 1,
+  "maxReplicas": 12,
+  "cpu": {
+    "type": "shared",
+    "value": 80,
+    "scalingPercentage": 95
+  },
   "routes": {
     "sellers": {
       "path": "/_v/sellers/getsellers",

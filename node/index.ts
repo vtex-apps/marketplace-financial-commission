@@ -3,6 +3,7 @@ import { Service, method } from '@vtex/api'
 
 import type { Clients } from './clients'
 import clients from './clients'
+import { GenerateDashboard } from './middlewares/dashboard'
 import { sellers } from './middlewares/sellers'
 import { queries /* , mutations */ } from './resolvers'
 
@@ -21,6 +22,9 @@ export default new Service<Clients, RecorderState, ParamsContext>({
   routes: {
     sellers: method({
       GET: [sellers],
+    }),
+    dashboard: method({
+      GET: [GenerateDashboard],
     }),
   },
 })

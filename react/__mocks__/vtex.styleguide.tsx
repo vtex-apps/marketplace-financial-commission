@@ -1,0 +1,7 @@
+export { default as IconShoppingCart } from '@vtex/styleguide/lib/icon/IconShoppingCart'
+export { default as IconUser } from '@vtex/styleguide/lib/icon/IconUser'
+export { default as IconArrowUp } from '@vtex/styleguide/lib/icon/IconArrowUp'
+export { default as IconInfo } from '@vtex/styleguide/lib/icon/IconInfo'
+export { default as IconCog } from '@vtex/styleguide/lib/icon/IconCog'
+export { default as IconExternalLink } from '@vtex/styleguide/lib/icon/IconExternalLink'
+export { default as IconArrowDown } from '@vtex/styleguide/lib/icon/IconArrowDown'

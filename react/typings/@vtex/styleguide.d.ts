@@ -1,0 +1,7 @@
+declare module '@vtex/styleguide/lib/icon/IconShoppingCart'
+declare module '@vtex/styleguide/lib/icon/IconUser'
+declare module '@vtex/styleguide/lib/icon/IconArrowUp'
+declare module '@vtex/styleguide/lib/icon/IconInfo'
+declare module '@vtex/styleguide/lib/icon/IconCog'
+declare module '@vtex/styleguide/lib/icon/IconExternalLink'
+declare module '@vtex/styleguide/lib/icon/IconArrowDown'

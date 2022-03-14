@@ -1,9 +1,9 @@
-interface Sellers {
-  sellers: Seller[]
-  paging: Paging
+interface DatesInvoice {
+  invoicedDateInit: string
+  invoicedDateEnd: string
 }
 
-interface Seller {
+interface Item {
   id: string
   name: string
   account: string
@@ -13,5 +13,18 @@ interface Seller {
 }
 
 interface Paging {
-  total: string
+  total: number
+}
+
+interface Sellers {
+  items: Item[]
+  paging: Paging
+}
+
+interface Data {
+  sellers: Sellers
+}
+
+interface DataSellers {
+  data: Data
 }

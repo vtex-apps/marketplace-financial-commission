@@ -40,7 +40,7 @@ export default class SellersIO extends AppGraphQLClient {
 
   public getSellers = async (): Promise<Sellers> => {
     const sellers = await this.graphql
-      .query<Sellers, Record<string, unknown>>(
+      .query<Data, Record<string, unknown>>(
         {
           query: GET_SELLERS,
           variables: {},
@@ -55,7 +55,7 @@ export default class SellersIO extends AppGraphQLClient {
         )
       )
       .then((query) => {
-        return query.data as Sellers
+        return query.data?.sellers as Sellers
       })
 
     return sellers

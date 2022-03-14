@@ -1953,7 +1953,7 @@
     uuid "^3.3.3"
     xss "^1.0.6"
 
-"@vtex/clients@^2.17.0":
+"@vtex/clients@^2.19.4":
   version "2.19.4"
   resolved "https://registry.yarnpkg.com/@vtex/clients/-/clients-2.19.4.tgz#accabee2352f3863f5be906c6e2ee0bdb81b100c"
   integrity sha512-Bdmi8yQBcj7woX/1QxAebVMOzal+6GWyQYIQNWQhyNqbKq0BnBjwxVGG44T0zxawBPto6PuULTEP8r1SI3hmWQ==
@@ -6581,6 +6581,10 @@ verror@1.10.0:
     assert-plus "^1.0.0"
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
+
+"vtex.marketplace-financial-commission@https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1646834025/public/@types/vtex.marketplace-financial-commission":
+  version "0.0.1"
+  resolved "https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1646834025/public/@types/vtex.marketplace-financial-commission#032ed6eea38e58bffebd41785b5c9ef55b1a28ec"
 
 "vtex.sellers-graphql@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.sellers-graphql@8.5.3/public/@types/vtex.sellers-graphql":
   version "8.5.3"

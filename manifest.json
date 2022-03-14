@@ -18,9 +18,7 @@
     "vtex.render-runtime": "8.x",
     "vtex.native-types": "0.x"
   },
-  "registries": [
-    "smartcheckout"
-  ],
+  "registries": ["smartcheckout"],
   "credentialType": "absolute",
   "policies": [
     {
@@ -34,6 +32,9 @@
     },
     {
       "name": "graphql-query"
+    },
+    {
+      "name": "OMSViewer"
     },
     {
       "name": "outbound-access",

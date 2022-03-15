@@ -1,11 +1,10 @@
-import React, { FC, useState } from 'react'
+import type { FC } from 'react'
+import React, { useState } from 'react'
 import {
   Layout,
-  PageHeader,
   Box,
   EXPERIMENTAL_Select as Select,
   DatePicker,
-  Button,
   Table,
   Checkbox,
   Totalizer,
@@ -14,19 +13,15 @@ import {
   IconArrowUp,
   IconInfo,
   ButtonWithIcon,
-  IconExternalLink,
+  IconOptionsDots,
   IconCog,
-  Collapsible,
-  LineChart,
-  IconArrowDown,
   ModalDialog,
+  IconFilter,
 } from 'vtex.styleguide'
 
-
+import styles from './styles.css'
 
 const CommissionReport: FC = () => {
-
-  const [isOpen, setIsOpen] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const jsonschema2 = {
     properties: {
@@ -75,8 +70,7 @@ const CommissionReport: FC = () => {
         cellRenderer: () => {
           return (
             <div>
-              <ButtonWithIcon icon={<IconExternalLink />} variation="tertiary">
-              </ButtonWithIcon>
+              <ButtonWithIcon icon={<IconOptionsDots />} variation="tertiary" />
             </div>
           )
         },
@@ -95,10 +89,17 @@ const CommissionReport: FC = () => {
 
   return (
     <Layout>
-      <PageHeader title="Commission Report Dashboard" fullWidth />
-      <div className='mt3' style={{textAlign: 'right'}}>
-        <ButtonWithIcon icon={<IconCog color="#3F3F40" size={20}/>} variation="tertiary" onClick={() => setOpenModal(!openModal)}>
-        </ButtonWithIcon>
+      <div className="mt9">
+        <h1 style={{ color: '#3F3F40', fontSize: '35px' }}>
+          Commission Report Dashboard
+        </h1>
+      </div>
+      <div style={{ textAlign: 'right' }}>
+        <ButtonWithIcon
+          icon={<IconCog color="#3F3F40" size={20} />}
+          variation="tertiary"
+          onClick={() => setOpenModal(!openModal)}
+        />
       </div>
       <div>
         <ModalDialog
@@ -113,48 +114,15 @@ const CommissionReport: FC = () => {
             label: 'Cancel',
           }}
           isOpen={openModal}
-          onClose={() => setOpenModal(false)}>
-            <div className='flex w-100'>
-              Definir campos aquí
-            </div>
+          onClose={() => setOpenModal(false)}
+        >
+          <div className="flex w-100">Definir campos aquí</div>
         </ModalDialog>
       </div>
-      <div className='mt5'>
-        <Box title="Overview">
-          <Totalizer
-            items={[
-              {
-                label: 'Total Orders',
-                value: '500',
-                iconBackgroundColor: '#EAFCE3',
-                icon: <IconShoppingCart color="#79B03A" size={18} />,
-              },
-              {
-                label: 'Number of Sellers',
-                value: '15',
-                iconBackgroundColor: '#CCE8FF',
-                icon: <IconUser color="#368DF7" size={18} />,
-              },
-              {
-                label: 'Total Amount Orders',
-                value: '95000 usd',
-                iconBackgroundColor: '#FFDCF8',
-                icon: <IconArrowUp color="#F67CC7" size={14} />,
-              },
-              {
-                label: 'Total Commission',
-                value: '2000 usd',
-                iconBackgroundColor: '#FFF0EC',
-                icon: <IconInfo color="#F7634A" size={14} />,
-              },
-            ]}
-          />
-        </Box>
-      </div>
-      <div className="mt7">
+      <div>
         <Box>
-          <div className="flex">
-            <div className="w-30 mr4">
+          <div className={`${styles.filter} flex`}>
+            <div className={`${styles.filter_container} w-30 mr4`}>
               <Select
                 defaultValue={{
                   value: { id: 0, name: 'first-option' },
@@ -175,7 +143,7 @@ const CommissionReport: FC = () => {
                 onChange={() => {}}
               />
             </div>
-            <div className="w-20 mr4">
+            <div className={`${styles.filter_container} w-20 mr4`}>
               <Select
                 multi
                 label="Choose items to filter"
@@ -192,7 +160,7 @@ const CommissionReport: FC = () => {
                 onChange={() => {}}
               />
             </div>
-            <div className="w-20 mr4">
+            <div className={`${styles.filter_container} w-20 mr4`}>
               <DatePicker
                 label="Start Date"
                 value={startDate}
@@ -200,7 +168,7 @@ const CommissionReport: FC = () => {
                 locale="en-US"
               />
             </div>
-            <div className="w-20 mr4">
+            <div className={`${styles.filter_container} w-20 mr4`}>
               <DatePicker
                 label="Final Date"
                 value={finalDate}
@@ -208,15 +176,51 @@ const CommissionReport: FC = () => {
                 locale="en-US"
               />
             </div>
-            <div className="w-10 mt6">
-              <Button variation="primary">Filter</Button>
+            <div className={`${styles.btn_filter} w-10 mt6`}>
+              <ButtonWithIcon
+                icon={<IconFilter color="#FFF" size={18} />}
+                variation="primary"
+                onClick={() => {}}
+              >
+                Filter
+              </ButtonWithIcon>
             </div>
           </div>
         </Box>
       </div>
 
-      <div className="mt7">
+      <div className="mt4">
         <Box>
+          <div className="mt4 mb7">
+            <Totalizer
+              items={[
+                {
+                  label: 'Total Orders',
+                  value: '500',
+                  iconBackgroundColor: '#EAFCE3',
+                  icon: <IconShoppingCart color="#79B03A" size={18} />,
+                },
+                {
+                  label: 'Number of Sellers',
+                  value: '15',
+                  iconBackgroundColor: '#CCE8FF',
+                  icon: <IconUser color="#368DF7" size={18} />,
+                },
+                {
+                  label: 'Total Amount Orders',
+                  value: '95000 usd',
+                  iconBackgroundColor: '#FFDCF8',
+                  icon: <IconArrowUp color="#F67CC7" size={14} />,
+                },
+                {
+                  label: 'Total Commission',
+                  value: '2000 usd',
+                  iconBackgroundColor: '#FFF0EC',
+                  icon: <IconInfo color="#F7634A" size={14} />,
+                },
+              ]}
+            />
+          </div>
           <Table
             schema={jsonschema2}
             items={[
@@ -265,62 +269,10 @@ const CommissionReport: FC = () => {
               textShowRows: 'Show rows',
               textOf: 'of',
               totalItems: 5,
-              rowsOptions: [5, 10, 15, 25]
+              rowsOptions: [5, 10, 15, 25],
             }}
           />
         </Box>
-      </div>
-      <div className="mt7 mb4">
-        <Collapsible
-        header={
-          <span className="c-action-primary hover-c-action-primary fw5">
-            Graphics and Statistics
-          </span>
-        }
-        onClick={() => setIsOpen(!isOpen) }
-        isOpen={isOpen}>
-          <div className='mt7'>
-            <div className="mt4 flex">
-              <div className='w-50 mr7'>
-                <Box>
-                  <LineChart
-                  data={[{orders: '600', month: 'January'}, {orders: '200', month: 'February'}, {orders: '800', month: 'March'}, {orders: '700', month: 'April'}, {orders: '800', month: 'May'}]}
-                  dataKeys={['orders', 'month']}
-                  xAxisKey='month'
-                  />
-                </Box>
-              </div>
-              <div className='w-50'>
-                <div style={{height: '183px'}}>
-                  <Box>
-                    <div className='flex w-100' style={{alignItems: 'center', justifyContent: 'center'}}>
-                      <div className='w-10'>
-                        <IconArrowUp color="#79B03A" size={35} />
-                      </div>
-                      <div className='w-90 pl5 pt2 pb2'>
-                        <p style={{marginBottom: '0px'}}><b style={{fontSize: '35px'}}>10%</b> orders</p>
-                        <p style={{marginTop: '4px'}}>higher that last month</p>
-                      </div>
-                    </div>
-                  </Box>
-                </div>
-                <div className='mt4'>
-                  <Box>
-                    <div className='flex w-100' style={{alignItems: 'center', justifyContent: 'center'}}>
-                      <div className='w-10'>
-                        <IconArrowDown color="#FF4C4C" size={35} />
-                      </div>
-                      <div className='w-90 pl5 pt2 pb2'>
-                        <p style={{marginBottom: '0px'}}><b style={{fontSize: '35px'}}>5%</b> due payments</p>
-                        <p style={{marginTop: '4px'}}>less that last month</p>
-                      </div>
-                    </div>
-                  </Box>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Collapsible>
       </div>
     </Layout>
   )

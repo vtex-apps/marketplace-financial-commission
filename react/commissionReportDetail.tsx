@@ -1,14 +1,12 @@
-import React, { FC, useState } from 'react'
+import type { FC } from 'react'
+import React, { useState } from 'react'
 import {
   Layout,
   Tab,
   Tabs,
-  PageHeader,
   Box,
   EXPERIMENTAL_Select as Select,
   DatePicker,
-  Button,
-  Totalizer,
   Table,
   Tag,
   ButtonWithIcon,
@@ -17,10 +15,12 @@ import {
   IconUser,
   IconArrowUp,
   IconExternalLink,
+  IconFilter,
 } from 'vtex.styleguide'
 
-const CommissionReportDetail: FC = () => {
+import styles from './styles.css'
 
+const CommissionReportDetail: FC = () => {
   const [openModal, setOpenModal] = useState(true)
 
   const startDate = new Date()
@@ -37,11 +37,19 @@ const CommissionReportDetail: FC = () => {
   const jsonschema = {
     properties: {
       id: {
-        title: 'Invoice',
+        title: 'Orders',
         width: 150,
         // eslint-disable-next-line react/display-name
         cellRenderer: () => (
-          <p style={{color:'#134CD8', textDecoration:'underline'}}>11234234443 <IconExternalLink /></p>
+          <div className={styles.btn_external}>
+            <ButtonWithIcon
+              icon={<IconExternalLink color="#134CD8" size={15} />}
+              variation="tertiary"
+              onClick={() => setOpenModal(!openModal)}
+            >
+              11234234443
+            </ButtonWithIcon>
+          </div>
         ),
       },
       creation: {
@@ -50,11 +58,11 @@ const CommissionReportDetail: FC = () => {
       },
       invoiced: {
         title: 'Invoiced date',
-        width: 130,
+        width: 140,
       },
       total: {
         title: 'Total Order',
-        width: 130,
+        width: 120,
       },
       commission: {
         title: 'Total Commission',
@@ -84,12 +92,20 @@ const CommissionReportDetail: FC = () => {
         width: 280,
         // eslint-disable-next-line react/display-name
         cellRenderer: () => (
-          <p style={{color:'#134CD8', textDecoration:'underline'}}>11234234443 <IconExternalLink /></p>
+          <div className={styles.btn_external}>
+            <ButtonWithIcon
+              icon={<IconExternalLink color="#134CD8" size={15} />}
+              variation="tertiary"
+              onClick={() => {}}
+            >
+              974747333
+            </ButtonWithIcon>
+          </div>
         ),
       },
       invoicedData: {
         title: 'Invoiced Date',
-        width: 220,
+        width: 230,
       },
       dueDate: {
         title: 'Due Date',
@@ -97,66 +113,54 @@ const CommissionReportDetail: FC = () => {
       },
       totalDue: {
         title: 'Total Due',
-        width: 150,
+        width: 160,
       },
     },
   }
 
   return (
-    <div style={{margin: '0px'}}>
-      <div className="flex w-100 pb2" style={{alignItems: 'flex-end', justifyContent: 'flex-end', height: '60px'}}>
+    <div style={{ margin: '0px' }}>
+      <div
+        className="flex w-100 pb2"
+        style={{
+          alignItems: 'flex-end',
+          justifyContent: 'flex-end',
+          height: '60px',
+        }}
+      >
         <div style={{ marginRight: '40px' }}>
-          <p style={{ color: '#999999', fontSize: '15px'}}>
+          <p style={{ color: '#999999', fontSize: '15px' }}>
             Billing Cycle: 25/03/2022
           </p>
         </div>
         <div style={{ marginRight: '40px' }}>
-          <p style={{ color: '#999999', fontSize: '15px'}}>
+          <p style={{ color: '#999999', fontSize: '15px' }}>
             Next Billing: 2 weeks
           </p>
         </div>
-        <div style={{ marginRight: '40px'}}>
-          <p style={{ color: '#999999', fontSize: '15px'}}>
+        <div style={{ marginRight: '40px' }}>
+          <p style={{ color: '#999999', fontSize: '15px' }}>
             Current Commission: 10%
           </p>
         </div>
       </div>
       <Layout>
-        <PageHeader title="Commission Report Seller: Erika Gutiérrez" fullWidth />
-        <div className='mt3' style={{textAlign: 'right'}}>
-          <ButtonWithIcon icon={<IconCog color="#3F3F40" size={20}/>} variation="tertiary" onClick={() => setOpenModal(!openModal)}>
-          </ButtonWithIcon>
+        <div className="mt9">
+          <h1 style={{ color: '#3F3F40', fontSize: '35px' }}>
+            Commission Report Dashboard
+          </h1>
         </div>
-        <div className='mt5'>
-          <Box title="Overview">
-            <Totalizer
-              items={[
-                {
-                  label: 'Orders Sellers',
-                  value: '2',
-                  iconBackgroundColor: '#EAFCE3',
-                  icon: <IconShoppingCart color="#79B03A" size={18} />,
-                },
-                {
-                  label: 'Total Orders',
-                  value: '15000',
-                  iconBackgroundColor: '#CCE8FF',
-                  icon: <IconUser color="#368DF7" size={18} />,
-                },
-                {
-                  label: 'Total Commission',
-                  value: '2000',
-                  iconBackgroundColor: '#FFDCF8',
-                  icon: <IconArrowUp color="#F67CC7" size={14} />,
-                },
-              ]}
-            />
-          </Box>
+        <div style={{ textAlign: 'right' }}>
+          <ButtonWithIcon
+            icon={<IconCog color="#3F3F40" size={20} />}
+            variation="tertiary"
+            onClick={() => setOpenModal(!openModal)}
+          />
         </div>
-        <div className="mt7">
+        <div>
           <Box>
-            <div className="flex">
-              <div className="w-50 mr4">
+            <div className={`${styles.filter} flex`}>
+              <div className={`${styles.filter_container} w-50 mr4`}>
                 <Select
                   multi
                   label="Choose items to filter"
@@ -173,7 +177,7 @@ const CommissionReportDetail: FC = () => {
                   onChange={() => {}}
                 />
               </div>
-              <div className="w-20 mr4">
+              <div className={`${styles.filter_container} w-20 mr4`}>
                 <DatePicker
                   label="Start Date"
                   value={startDate}
@@ -181,7 +185,7 @@ const CommissionReportDetail: FC = () => {
                   locale="en-US"
                 />
               </div>
-              <div className="w-20 mr4">
+              <div className={`${styles.filter_container} w-20 mr4`}>
                 <DatePicker
                   label="Final Date"
                   value={finalDate}
@@ -189,8 +193,14 @@ const CommissionReportDetail: FC = () => {
                   locale="en-US"
                 />
               </div>
-              <div className="w-10 mt6">
-                <Button variation="primary">Filter</Button>
+              <div className={`${styles.btn_filter} w-10 mt6`}>
+                <ButtonWithIcon
+                  icon={<IconFilter color="#FFF" size={18} />}
+                  variation="primary"
+                  onClick={() => {}}
+                >
+                  Filter
+                </ButtonWithIcon>
               </div>
             </div>
           </Box>
@@ -204,7 +214,7 @@ const CommissionReportDetail: FC = () => {
             >
               <div className="mt5">
                 <Box>
-                  <div>
+                  <div className="mt2">
                     <Table
                       schema={jsonschema}
                       items={[
@@ -233,12 +243,47 @@ const CommissionReportDetail: FC = () => {
                           handleCallback: () => {},
                         },
                       }}
+                      totalizers={[
+                        {
+                          label: 'Orders Sellers',
+                          value: '2',
+                          iconBackgroundColor: '#EAFCE3',
+                          icon: <IconShoppingCart color="#79B03A" size={18} />,
+                        },
+                        {
+                          label: 'Total Orders',
+                          value: '15000',
+                          iconBackgroundColor: '#CCE8FF',
+                          icon: <IconUser color="#368DF7" size={18} />,
+                        },
+                        {
+                          label: 'Total Commission',
+                          value: '2000',
+                          iconBackgroundColor: '#FFDCF8',
+                          icon: <IconArrowUp color="#F67CC7" size={14} />,
+                        },
+                      ]}
+                      pagination={{
+                        onNextClick: () => {},
+                        onPrevClick: () => {},
+                        currentItemFrom: 1,
+                        currentItemTo: 5,
+                        onRowsChange: () => {},
+                        textShowRows: 'Show rows',
+                        textOf: 'of',
+                        totalItems: 5,
+                        rowsOptions: [5, 10, 15, 25],
+                      }}
                     />
                   </div>
                 </Box>
               </div>
             </Tab>
-            <Tab label="Invoices" active={tabs === 2} onClick={() => setTabs(2)}>
+            <Tab
+              label="Invoices"
+              active={tabs === 2}
+              onClick={() => setTabs(2)}
+            >
               <div className="mt5">
                 <Box>
                   <Table
@@ -249,15 +294,25 @@ const CommissionReportDetail: FC = () => {
                         invoicedData: '03/04/2022',
                         dueDate: '03/04/2022',
                         totalDue: '23434',
-                      }
+                      },
                     ]}
+                    pagination={{
+                      onNextClick: () => {},
+                      onPrevClick: () => {},
+                      currentItemFrom: 1,
+                      currentItemTo: 5,
+                      onRowsChange: () => {},
+                      textShowRows: 'Show rows',
+                      textOf: 'of',
+                      totalItems: 5,
+                      rowsOptions: [5, 10, 15, 25],
+                    }}
                   />
                 </Box>
               </div>
             </Tab>
           </Tabs>
         </div>
-
       </Layout>
     </div>
   )

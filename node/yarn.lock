@@ -1907,10 +1907,10 @@
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.8.1.tgz#5668c0bce55a91f2b9566b1d8a4c0a8dbbc79764"
   integrity sha512-wmk0xQI6Yy7Fs/il4EpOcflG4uonUpYGqvZARESLc2oy4u69fkatFLbJOeW4Q6awO15P4rduAe6xkwHevpXcUQ==
 
-"@vtex/api@6.45.6":
-  version "6.45.6"
-  resolved "https://registry.yarnpkg.com/@vtex/api/-/api-6.45.6.tgz#e5f08476d7c76f26baa1c040666d1364bdd6bc35"
-  integrity sha512-9pDiUxcUzq8RZa9yBex4C8dcAHXBRGAZokvHJ6sykrojq6mJxs+rUTE28TPeeQxwvvKsvrdpsfCUAYQ+UDz+zA==
+"@vtex/api@6.45.10":
+  version "6.45.10"
+  resolved "https://registry.yarnpkg.com/@vtex/api/-/api-6.45.10.tgz#d338d05341e176593124fa171ea5710eee802e61"
+  integrity sha512-1OllEdBosqGbyGSvQtJzplmOISj2jalpgTDhRWlzhCdkGYbAg0Sm4doudKfZdvizu/6D1Dz4Uy2YncT6M3Vzng==
   dependencies:
     "@types/koa" "^2.11.0"
     "@types/koa-compose" "^3.2.3"
@@ -6582,17 +6582,17 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-"vtex.marketplace-financial-commission@https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1646834025/public/@types/vtex.marketplace-financial-commission":
+"vtex.marketplace-financial-commission@https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1647466037/public/@types/vtex.marketplace-financial-commission":
   version "0.0.1"
-  resolved "https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1646834025/public/@types/vtex.marketplace-financial-commission#032ed6eea38e58bffebd41785b5c9ef55b1a28ec"
+  resolved "https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1647466037/public/@types/vtex.marketplace-financial-commission#8e927e9587d1b51bb1375ba92b026765df48ddd5"
 
 "vtex.sellers-graphql@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.sellers-graphql@8.5.3/public/@types/vtex.sellers-graphql":
   version "8.5.3"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.sellers-graphql@8.5.3/public/@types/vtex.sellers-graphql#d762860406dc2e21ea95cbe7efb334de51796863"
 
-"vtex.styleguide@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.0/public/@types/vtex.styleguide":
-  version "9.146.0"
-  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.0/public/@types/vtex.styleguide#d8f912c8301ea527aee64e597de46cfc97974a26"
+"vtex.styleguide@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.1/public/@types/vtex.styleguide":
+  version "9.146.1"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.1/public/@types/vtex.styleguide#66db40ca1b78ad77ce4beedabecee320e1ef2ead"
 
 w3c-hr-time@^1.0.1:
   version "1.0.2"

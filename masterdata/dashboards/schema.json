@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dashboard",
+  "type": "object",
+  "properties": {
+    "dateCut": {
+      "type": "string"
+    },
+    "sellers": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "account": {
+            "type": "string"
+          },
+          "stats": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "dateInvoiced": {
+                  "type": "string"
+                },
+                "countOrders": {
+                  "type": "number"
+                },
+                "totalComission": {
+                  "type": "number"
+                },
+                "totalValueOrder": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "dateInvoiced",
+                "countOrders",
+                "totalComission",
+                "totalValueOrder"
+              ]
+            }
+          }
+        },
+        "required": ["id", "name", "stats"]
+      }
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "countOrders": {
+          "type": "number"
+        },
+        "dateInvoiced": {
+          "type": "string"
+        },
+        "totalComission": {
+          "type": "number"
+        },
+        "totalValueOrder": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "countOrders",
+        "dateInvoiced",
+        "totalComission",
+        "totalValueOrder"
+      ]
+    }
+  },
+  "required": ["dateCut", "sellers", "stats"]
+}

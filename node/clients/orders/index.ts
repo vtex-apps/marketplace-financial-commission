@@ -44,34 +44,14 @@ export class OrdersClient extends JanusClient {
   }
 
   /* eslint max-params: ["error", 4] */
-  public async listOrders(
-    invoicedDateInit: string,
-    invoicedDateEnd: string,
-    page: number,
-    sellerName: string
-  ): Promise<VtexListOrder> {
+  public async listOrders(params: Params): Promise<VtexListOrder> {
     const { logger } = this.context
     // const baseUrl = `http://${this.context.account}.vtexcommercestable.com.br/api`
 
     try {
       const order = await this.http.get<VtexListOrder>(
-        `api/oms/pvt/orders?f_status=invoice,invoiced&f_invoicedDate=invoicedDate:[${invoicedDateInit} TO ${invoicedDateEnd}]&f_sellerNames=${sellerName}&orderBy=invoicedDate,desc&page=${page}&per_page=100`
+        `api/oms/pvt/orders?f_status=${params.f_status}&f_${params.fieldDate}=${params.fieldDate}:[${params.fieldDateIni} TO ${params.fieldDateEnd}]&f_sellerNames=${params.sellerName}&orderBy=${params.orderBy},desc&page=${params.page}&per_page=100`
       )
-
-      // console.info(
-      //   `${baseUrl}/oms/pvt/orders?f_status=invoice,invoiced&f_invoicedDate=invoicedDate:[${invoicedDateInit} TO ${invoicedDateEnd}]&f_sellerNames=${sellerName}&orderBy=invoicedDate,desc&page=${page}&per_page=100`
-      // )
-
-      // logger.info({
-      //   workflowInstance: 'GetOrder',
-      //   message: 'Getting VTEX Order',
-      //   data: JSON.stringify({
-      //     request: JSON.stringify({
-      //       url: `${baseUrl}/oms/pvt/orders`,
-      //     }),
-      //     response: JSON.stringify(order),
-      //   }),
-      // })
 
       return order
     } catch (err) {
@@ -84,4 +64,14 @@ export class OrdersClient extends JanusClient {
       throw err
     }
   }
+}
+
+interface Params {
+  f_status: string
+  fieldDate: string
+  fieldDateIni: string
+  fieldDateEnd: string
+  sellerName: string
+  orderBy: string
+  page: number
 }

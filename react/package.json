@@ -21,9 +21,9 @@
     "apollo-cache-inmemory": "^1.6.5",
     "graphql": "^14.6.0",
     "typescript": "3.9.7",
-    "vtex.marketplace-financial-commission": "https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1646834025/public/@types/vtex.marketplace-financial-commission",
+    "vtex.marketplace-financial-commission": "https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1647466037/public/@types/vtex.marketplace-financial-commission",
     "vtex.render-runtime": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.132.3/public/@types/vtex.render-runtime",
     "vtex.sellers-graphql": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.sellers-graphql@8.5.3/public/@types/vtex.sellers-graphql",
-    "vtex.styleguide": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.0/public/@types/vtex.styleguide"
+    "vtex.styleguide": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.1/public/@types/vtex.styleguide"
   }
 }

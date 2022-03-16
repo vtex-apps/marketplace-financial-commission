@@ -1,4 +1,5 @@
-interface Dashboard {
+interface Dashboards {
+  dateCut: string
   sellers: SellersDashboard[]
   stats: StatsSeller
 }

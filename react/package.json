@@ -24,6 +24,6 @@
     "graphql": "^14.6.0",
     "typescript": "3.9.7",
     "vtex.sellers-graphql": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.sellers-graphql@8.5.3/public/@types/vtex.sellers-graphql",
-    "vtex.styleguide": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.0/public/@types/vtex.styleguide"
+    "vtex.styleguide": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.1/public/@types/vtex.styleguide"
   }
 }

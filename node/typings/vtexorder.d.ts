@@ -124,7 +124,51 @@ interface Seller {
 }
 
 interface PackageAttachment {
-  packages: any[]
+  packages: Package[]
+}
+
+interface Package {
+  items: ItemPackages[]
+  courier?: any
+  invoiceNumber: string
+  invoiceValue: number
+  invoiceUrl: string
+  issuanceDate: Date
+  trackingNumber?: any
+  invoiceKey: string
+  trackingUrl?: any
+  embeddedInvoice: string
+  type: string
+  courierStatus?: any
+  cfop?: any
+  restitutions: Restitutions
+  volumes?: any
+  EnableInferItems?: any
+}
+
+interface Restitutions {
+  Refund: Refund
+}
+
+interface Refund {
+  value: number
+  giftCardData?: any
+  items: ItemRefund[]
+}
+
+interface ItemRefund {
+  id: string
+  quantity: number
+  price: number
+  description?: any
+}
+
+interface ItemPackages {
+  itemIndex: number
+  quantity: number
+  price: number
+  description: string
+  unitMultiplier: number
 }
 
 interface PaymentData {

@@ -1,6 +1,7 @@
 import type { ClientsConfig, ServiceContext } from '@vtex/api'
+import type { Dashboard } from 'vtex.marketplace-financial-commission'
 import { IOClients, LRUCache } from '@vtex/api'
-import { OMS } from '@vtex/clients'
+import { masterDataFor, OMS } from '@vtex/clients'
 
 import { OrdersClient } from './orders'
 import SellersIO from './sellers'
@@ -16,6 +17,10 @@ export class Clients extends IOClients {
 
   public get ordersClient() {
     return this.getOrSet('ordersClient', OrdersClient)
+  }
+
+  public get dashboardClientMD() {
+    return this.getOrSet('dashboards', masterDataFor<Dashboard>('dashboard'))
   }
 }
 

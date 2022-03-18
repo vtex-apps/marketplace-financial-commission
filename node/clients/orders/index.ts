@@ -46,7 +46,6 @@ export class OrdersClient extends JanusClient {
   /* eslint max-params: ["error", 4] */
   public async listOrders(params: Params): Promise<VtexListOrder> {
     const { logger } = this.context
-    // const baseUrl = `http://${this.context.account}.vtexcommercestable.com.br/api`
 
     try {
       const order = await this.http.get<VtexListOrder>(

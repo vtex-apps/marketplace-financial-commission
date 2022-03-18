@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/schema#",
   "title": "Dashboard",
   "type": "object",
   "properties": {
@@ -8,47 +8,35 @@
     },
     "sellers": {
       "type": "array",
-      "additionalItems": false,
       "items": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string"
           },
-          "name": {
-            "type": "string"
-          },
           "account": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
           "stats": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "dateInvoiced": {
-                  "type": "string"
-                },
-                "countOrders": {
-                  "type": "number"
-                },
-                "totalComission": {
-                  "type": "number"
-                },
-                "totalValueOrder": {
-                  "type": "number"
-                }
+            "type": "object",
+            "properties": {
+              "countOrders": {
+                "type": "number"
               },
-              "required": [
-                "dateInvoiced",
-                "countOrders",
-                "totalComission",
-                "totalValueOrder"
-              ]
-            }
+              "totalComission": {
+                "type": "number"
+              },
+              "totalValueOrder": {
+                "type": "number"
+              }
+            },
+            "required": ["countOrders", "totalComission", "totalValueOrder"]
           }
         },
-        "required": ["id", "name", "stats"]
+        "required": ["id", "account", "name", "stats"]
       }
     },
     "stats": {
@@ -75,5 +63,6 @@
       ]
     }
   },
-  "required": ["dateCut", "sellers", "stats"]
+  "required": ["dateCut", "sellers", "stats"],
+  "v-indexed": ["dateCut"]
 }

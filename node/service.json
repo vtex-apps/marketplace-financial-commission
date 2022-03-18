@@ -18,6 +18,10 @@
     "dashboard": {
       "path": "/_v/dashboard/generateDashboard",
       "public": true
+    },
+    "searchdashboard": {
+      "path": "/_v/dashboard/searchDashboard",
+      "public": true
     }
   }
 }

@@ -62,7 +62,9 @@ export async function SearchDashboard(ctx: Context, next: () => Promise<any>) {
       0
     )
 
-    const order = {
+    const outstandingBalance = 0
+
+    const seller: SellersDashboard = {
       id: item.id,
       account: item.account,
       name: item.name,
@@ -70,10 +72,11 @@ export async function SearchDashboard(ctx: Context, next: () => Promise<any>) {
         countOrders,
         totalComission,
         totalValueOrder,
+        outstandingBalance,
       },
     }
 
-    calculateSellers.push(order)
+    calculateSellers.push(seller)
   })
 
   const countOrders = calculateSellers.reduce(

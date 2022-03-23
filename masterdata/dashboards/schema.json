@@ -23,17 +23,17 @@
           "stats": {
             "type": "object",
             "properties": {
-              "countOrders": {
+              "ordersCount": {
                 "type": "number"
               },
               "totalComission": {
                 "type": "number"
               },
-              "totalValueOrder": {
+              "totalOrderValue": {
                 "type": "number"
               }
             },
-            "required": ["countOrders", "totalComission", "totalValueOrder"]
+            "required": ["ordersCount", "totalComission", "totalOrderValue"]
           }
         },
         "required": ["id", "account", "name", "stats"]
@@ -42,7 +42,7 @@
     "stats": {
       "type": "object",
       "properties": {
-        "countOrders": {
+        "ordersCount": {
           "type": "number"
         },
         "dateInvoiced": {
@@ -51,15 +51,15 @@
         "totalComission": {
           "type": "number"
         },
-        "totalValueOrder": {
+        "totalOrderValue": {
           "type": "number"
         }
       },
       "required": [
-        "countOrders",
+        "ordersCount",
         "dateInvoiced",
         "totalComission",
-        "totalValueOrder"
+        "totalOrderValue"
       ]
     }
   },

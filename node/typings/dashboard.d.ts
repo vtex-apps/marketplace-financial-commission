@@ -1,6 +1,6 @@
 interface Dashboards {
   dateCut?: string
-  dateIni?: string
+  dateStart?: string
   dateEnd?: string
   sellers: SellersDashboard[]
   stats: StatsSeller
@@ -15,14 +15,14 @@ interface SellersDashboard {
 
 interface StatsSeller {
   dateInvoiced?: string
-  countOrders: number
+  ordersCount: number
   totalComission: float
-  totalValueOrder: float
+  totalOrderValue: float
   outstandingBalance?: float
 }
 
 interface OrderComission {
   orderId: string
   totalComission: float
-  totalValueOrder: float
+  totalOrderValue: float
 }

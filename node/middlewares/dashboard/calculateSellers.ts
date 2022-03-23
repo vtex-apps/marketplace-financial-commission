@@ -1,10 +1,15 @@
 import { getDatesInvoiced } from '../../utils'
 
+interface CalculateSellers {
+  sellersDashboard: SellersDashboard[]
+  stats: StatsSeller
+}
+
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 export async function CalculateSellers(
   ctx: Context,
   respsellers: Sellers
-): Promise<SellersDashboard[]> {
+): Promise<CalculateSellers> {
   const {
     clients: { ordersClient },
   } = ctx
@@ -12,24 +17,50 @@ export async function CalculateSellers(
   const sellersDashboard: SellersDashboard[] = []
 
   const val = (v: number) => v / 100
+  const dateInvoiced = getDatesInvoiced()
+  let ordersCountStats = 0
+  let totalComissionStats = 0
+  let totalOrderValueStats = 0
 
   await Promise.all(
     respsellers.items.map(async (item) => {
-      const dateInvoiced = getDatesInvoiced()
       const page = 1
 
-      const orderList = await ordersClient.listOrders({
-        f_status: 'invoice,invoiced',
+      const orderListIni = await ordersClient.listOrders({
+        fStatus: 'invoice,invoiced',
         fieldDate: 'invoicedDate',
-        fieldDateIni: dateInvoiced.invoicedDateInit,
-        fieldDateEnd: dateInvoiced.invoicedDateEnd,
+        fieldDateStart: dateInvoiced.dateInvoiceInitial,
+        fieldDateEnd: dateInvoiced.dateInvoiceEnd,
         sellerName: item.name,
         orderBy: 'invoicedDate',
         page,
       })
 
+      const allOrders = []
+      const pagesOrder = []
+
+      for (let index = 0; index <= orderListIni.paging.pages; index++) {
+        pagesOrder.push(index)
+      }
+
+      for (const pages of pagesOrder) {
+        allOrders.push(
+          ordersClient.listOrders({
+            fStatus: 'invoice,invoiced',
+            fieldDate: 'invoicedDate',
+            fieldDateStart: dateInvoiced.dateInvoiceInitial,
+            fieldDateEnd: dateInvoiced.dateInvoiceEnd,
+            sellerName: item.name,
+            orderBy: 'invoicedDate',
+            page: pages,
+          })
+        )
+      }
+
+      const orderList = await Promise.all(allOrders)
+
       const comissions = await Promise.all(
-        orderList.list.map(async (order) => {
+        orderList[0].list.map(async (order) => {
           const orderData = await ordersClient.getOrder(order.orderId)
 
           const totalComission = orderData.items.reduce(
@@ -40,7 +71,7 @@ export async function CalculateSellers(
             0
           )
 
-          const totalValueOrder = orderData.items.reduce(
+          const totalOrderValue = orderData.items.reduce(
             (total, x) => (total += val(x.price)),
             0
           )
@@ -48,30 +79,29 @@ export async function CalculateSellers(
           const lines: OrderComission = {
             orderId: order.orderId,
             totalComission,
-            totalValueOrder,
+            totalOrderValue,
           }
 
           return lines
         })
       )
 
-      const dateInvoi = new Date(new Date().setDate(new Date().getDate() - 1))
-      const countOrders = comissions.length
+      const ordersCount = comissions.length
       const totalComission = comissions.reduce(
         (total, comis) => (total += comis.totalComission),
         0
       )
 
       const totalValueOrder = comissions.reduce(
-        (total, value) => (total += value.totalValueOrder),
+        (total, value) => (total += value.totalOrderValue),
         0
       )
 
       const statsOrder: StatsSeller = {
-        dateInvoiced: dateInvoi.toISOString().split('T')[0],
-        countOrders,
+        dateInvoiced: dateInvoiced.formattedDate,
+        ordersCount,
         totalComission,
-        totalValueOrder,
+        totalOrderValue: totalValueOrder,
       }
 
       const sellersComission: SellersDashboard = {
@@ -81,9 +111,22 @@ export async function CalculateSellers(
         stats: statsOrder,
       }
 
+      ordersCountStats += ordersCount
+      totalComissionStats += totalComission
+      totalOrderValueStats += totalValueOrder
+
       sellersDashboard.push(sellersComission)
     })
   )
 
-  return sellersDashboard
+  const responseCalculateDashboard: CalculateSellers = {
+    sellersDashboard,
+    stats: {
+      ordersCount: ordersCountStats,
+      totalComission: totalComissionStats,
+      totalOrderValue: totalOrderValueStats,
+    },
+  }
+
+  return responseCalculateDashboard
 }

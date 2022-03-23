@@ -1,6 +1,7 @@
 interface DatesInvoice {
-  invoicedDateInit: string
-  invoicedDateEnd: string
+  dateInvoiceInitial: string
+  dateInvoiceEnd: string
+  formattedDate: string
 }
 
 interface Item {
@@ -27,4 +28,14 @@ interface Data {
 
 interface DataSellers {
   data: Data
+}
+
+interface ParamsListOrders {
+  fStatus: string
+  fieldDate: string
+  fieldDateStart: string
+  fieldDateEnd: string
+  sellerName: string
+  orderBy: string
+  page: number
 }

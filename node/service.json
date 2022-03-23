@@ -15,7 +15,7 @@
       "path": "/_v/sellers/getsellers",
       "public": true
     },
-    "dashboard": {
+    "generateDashboard": {
       "path": "/_v/dashboard/generateDashboard",
       "public": true
     },

@@ -2,6 +2,7 @@
 export async function SearchDashboard(ctx: Context, next: () => Promise<any>) {
   const {
     clients: { dashboardClientMD },
+    query: { dateStart, dateEnd },
   } = ctx
 
   const pagination = {
@@ -9,12 +10,11 @@ export async function SearchDashboard(ctx: Context, next: () => Promise<any>) {
     pageSize: 100,
   }
 
-  const { dateIni, dateEnd } = ctx.query
   const dashboardResponse = await dashboardClientMD.search(
     pagination,
     ['_all'],
     'createdIn',
-    `dateCut between ${dateIni} AND ${dateEnd}`
+    `dateCut between ${dateStart} AND ${dateEnd}`
   )
 
   const sellersArray = dashboardResponse.reduce((arr, p) => {
@@ -47,8 +47,8 @@ export async function SearchDashboard(ctx: Context, next: () => Promise<any>) {
   const calculateSellers: SellersDashboard[] = []
 
   unificationSellers.forEach((item) => {
-    const countOrders = item.stats.reduce(
-      (total, x) => (total += x.countOrders),
+    const ordersCount = item.stats.reduce(
+      (total, x) => (total += x.ordersCount),
       0
     )
 
@@ -57,8 +57,8 @@ export async function SearchDashboard(ctx: Context, next: () => Promise<any>) {
       0
     )
 
-    const totalValueOrder = item.stats.reduce(
-      (total, x) => (total += x.totalValueOrder),
+    const totalOrderValue = item.stats.reduce(
+      (total, x) => (total += x.totalOrderValue),
       0
     )
 
@@ -69,9 +69,9 @@ export async function SearchDashboard(ctx: Context, next: () => Promise<any>) {
       account: item.account,
       name: item.name,
       stats: {
-        countOrders,
+        ordersCount,
         totalComission,
-        totalValueOrder,
+        totalOrderValue,
         outstandingBalance,
       },
     }
@@ -79,8 +79,8 @@ export async function SearchDashboard(ctx: Context, next: () => Promise<any>) {
     calculateSellers.push(seller)
   })
 
-  const countOrders = calculateSellers.reduce(
-    (total, x) => (total += x.stats.countOrders),
+  const ordersCount = calculateSellers.reduce(
+    (total, x) => (total += x.stats.ordersCount),
     0
   )
 
@@ -89,19 +89,19 @@ export async function SearchDashboard(ctx: Context, next: () => Promise<any>) {
     0
   )
 
-  const totalValueOrder = calculateSellers.reduce(
-    (total, x) => (total += x.stats.totalValueOrder),
+  const totalOrderValue = calculateSellers.reduce(
+    (total, x) => (total += x.stats.totalOrderValue),
     0
   )
 
   const dashboard: Dashboards = {
-    dateIni,
+    dateStart,
     dateEnd,
     sellers: calculateSellers,
     stats: {
-      countOrders,
+      ordersCount,
       totalComission,
-      totalValueOrder,
+      totalOrderValue,
     },
   }
 

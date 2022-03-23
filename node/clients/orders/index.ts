@@ -1,6 +1,25 @@
 import type { InstanceOptions, IOContext } from '@vtex/api'
 import { JanusClient } from '@vtex/api'
 
+const baseURL = 'api/oms/pvt/orders'
+
+const routes = {
+  getOrder: (orderId: string) => `${baseURL}/${orderId}`,
+  listOrders: (params: ParamsListOrders) => {
+    const {
+      fStatus,
+      fieldDate,
+      fieldDateStart,
+      fieldDateEnd,
+      sellerName,
+      orderBy,
+      page,
+    } = params
+
+    return `${baseURL}?f_status=${fStatus}&f_${fieldDate}=${fieldDate}:[${fieldDateStart} TO ${fieldDateEnd}]&f_sellerNames=${sellerName}&orderBy=${orderBy},desc&page=${page}&per_page=100`
+  },
+}
+
 export class OrdersClient extends JanusClient {
   constructor(context: IOContext, options?: InstanceOptions) {
     super(context, {
@@ -15,21 +34,9 @@ export class OrdersClient extends JanusClient {
 
   public async getOrder(orderId: string): Promise<VtexOrder> {
     const { logger } = this.context
-    const baseUrl = `http://${this.context.account}.vtexcommercestable.com.br/api`
 
     try {
-      const order = await this.http.get(`api/oms/pvt/orders/${orderId}`)
-
-      logger.info({
-        workflowInstance: 'GetOrder',
-        message: 'Getting VTEX Order',
-        data: JSON.stringify({
-          request: JSON.stringify({
-            url: `${baseUrl}/oms/pvt/orders/${orderId}`,
-          }),
-          response: '',
-        }),
-      })
+      const order = await this.http.get(routes.getOrder(orderId))
 
       return order
     } catch (err) {
@@ -44,33 +51,23 @@ export class OrdersClient extends JanusClient {
   }
 
   /* eslint max-params: ["error", 4] */
-  public async listOrders(params: Params): Promise<VtexListOrder> {
+  public async listOrders(params: ParamsListOrders): Promise<VtexListOrder> {
     const { logger } = this.context
 
     try {
       const order = await this.http.get<VtexListOrder>(
-        `api/oms/pvt/orders?f_status=${params.f_status}&f_${params.fieldDate}=${params.fieldDate}:[${params.fieldDateIni} TO ${params.fieldDateEnd}]&f_sellerNames=${params.sellerName}&orderBy=${params.orderBy},desc&page=${params.page}&per_page=100`
+        routes.listOrders(params)
       )
 
       return order
     } catch (err) {
       logger.error({
-        workflowInstance: 'GetOrder',
-        message: 'Error Getting VTEX order',
+        workflowInstance: 'GetListOrders',
+        message: 'Error Getting VTEX List Order',
         exception: err,
       } as LoggerMessage)
 
       throw err
     }
   }
-}
-
-interface Params {
-  f_status: string
-  fieldDate: string
-  fieldDateIni: string
-  fieldDateEnd: string
-  sellerName: string
-  orderBy: string
-  page: number
 }

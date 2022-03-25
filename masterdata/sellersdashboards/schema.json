@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema#",
-  "title": "Dashboard",
+  "title": "SellersDashboard",
   "type": "object",
   "properties": {
     "dateCut": {
@@ -20,7 +20,7 @@
           "name": {
             "type": "string"
           },
-          "stats": {
+          "statistics": {
             "type": "object",
             "properties": {
               "ordersCount": {
@@ -36,33 +36,10 @@
             "required": ["ordersCount", "totalComission", "totalOrderValue"]
           }
         },
-        "required": ["id", "account", "name", "stats"]
+        "required": ["id", "account", "name", "statistics"]
       }
-    },
-    "stats": {
-      "type": "object",
-      "properties": {
-        "ordersCount": {
-          "type": "number"
-        },
-        "dateInvoiced": {
-          "type": "string"
-        },
-        "totalComission": {
-          "type": "number"
-        },
-        "totalOrderValue": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "ordersCount",
-        "dateInvoiced",
-        "totalComission",
-        "totalOrderValue"
-      ]
     }
   },
-  "required": ["dateCut", "sellers", "stats"],
+  "required": ["dateCut", "sellers"],
   "v-indexed": ["dateCut"]
 }

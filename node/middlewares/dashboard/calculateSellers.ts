@@ -6,7 +6,7 @@ interface CalculateSellers {
 }
 
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-export async function CalculateSellers(
+export async function calculateSellers(
   ctx: Context,
   respsellers: Sellers
 ): Promise<CalculateSellers> {
@@ -16,7 +16,7 @@ export async function CalculateSellers(
 
   const sellersDashboard: SellersDashboard[] = []
 
-  const val = (v: number) => v / 100
+  const formatVtexNumber = (v: number) => v / 100
   const dateInvoiced = getDatesInvoiced()
   let ordersCountStats = 0
   let totalComissionStats = 0
@@ -37,13 +37,8 @@ export async function CalculateSellers(
       })
 
       const allOrders = []
-      const pagesOrder = []
 
-      for (let index = 0; index <= orderListIni.paging.pages; index++) {
-        pagesOrder.push(index)
-      }
-
-      for (const pages of pagesOrder) {
+      for (let pages = 1; pages <= orderListIni.paging.pages; pages++) {
         allOrders.push(
           ordersClient.listOrders({
             fStatus: 'invoice,invoiced',
@@ -66,13 +61,15 @@ export async function CalculateSellers(
           const totalComission = orderData.items.reduce(
             (total, x) =>
               total +
-              (val(x.price) * val(val(x.commission)) +
-                val(x.shippingPrice ?? 0) * val(val(x.freightCommission ?? 0))),
+              (formatVtexNumber(x.price) *
+                formatVtexNumber(formatVtexNumber(x.commission)) +
+                formatVtexNumber(x.shippingPrice ?? 0) *
+                  formatVtexNumber(formatVtexNumber(x.freightCommission ?? 0))),
             0
           )
 
           const totalOrderValue = orderData.items.reduce(
-            (total, x) => (total += val(x.price)),
+            (total, x) => (total += formatVtexNumber(x.price)),
             0
           )
 

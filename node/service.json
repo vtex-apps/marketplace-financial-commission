@@ -12,15 +12,15 @@
   },
   "routes": {
     "sellers": {
-      "path": "/_v/sellers/getsellers",
+      "path": "/_v/sellers",
       "public": true
     },
     "generateDashboard": {
-      "path": "/_v/dashboard/generateDashboard",
+      "path": "/_v/dashboard/generate",
       "public": true
     },
-    "searchdashboard": {
-      "path": "/_v/dashboard/searchDashboard",
+    "searchDashboard": {
+      "path": "/_v/dashboard/search",
       "public": true
     }
   }

@@ -5032,9 +5032,9 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-"vtex.marketplace-financial-commission@https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1648064585/public/@types/vtex.marketplace-financial-commission":
+"vtex.marketplace-financial-commission@https://deimer2--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1648164897/public/@types/vtex.marketplace-financial-commission":
   version "0.0.1"
-  resolved "https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1648064585/public/@types/vtex.marketplace-financial-commission#51c665be365adb5b9151bbccfa280948193ceca1"
+  resolved "https://deimer2--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1648164897/public/@types/vtex.marketplace-financial-commission#2f2d8fda9b52184358f7d62e7377884e2c20d62a"
 
 "vtex.render-runtime@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.132.4/public/@types/vtex.render-runtime":
   version "8.132.4"

@@ -1,6 +1,6 @@
 {
   "vendor": "vtex",
-  "name": "marketplace-financial-commission",
+  "name": "marketplace-financial",
   "version": "0.0.1",
   "title": "Financial commission for Marketplace",
   "description": "Streamline the commissioning flows between a marketplace operator and the sellers",
@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "vtex.sellers-graphql": "8.x",
-    "vtex.styleguide": "9.x"
+    "vtex.styleguide": "9.x",
+    "vtex.render-runtime": "8.x",
+    "vtex.native-types": "0.x"
   },
   "registries": [
     "smartcheckout"
@@ -38,6 +40,27 @@
       "attrs": {
         "host": "{{account}}.vtexcommercestable.com.br",
         "path": "/api/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "api.vtex.com",
+        "path": "*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "elefantqa.myvtex.com",
+        "path": "*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "deimer--elefantqa.myvtex.com",
+        "path": "*"
       }
     }
   ],

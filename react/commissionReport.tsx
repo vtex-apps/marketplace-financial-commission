@@ -11,7 +11,8 @@ import type { InjectedIntlProps } from 'react-intl'
 import { injectIntl } from 'react-intl'
 import { formatIOMessage } from 'vtex.native-types'
 import { message } from './utils/definedMessages'
-import TableComponent from './components/Dashboard/Table'
+//import TableComponent from './components/Dashboard/Table'
+import TableComponent from './components/Dashboard/Table/Tablev2'
 import Totalizer from './components/Dashboard/Totalizer'
 import Filter from './components/Dashboard/Filter'
 import SettingsDashboard from './components/Dashboard/SettingsDashboard'
@@ -19,23 +20,6 @@ import SettingsDashboard from './components/Dashboard/SettingsDashboard'
 const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
   const { culture } = useRuntime()
   const [openModal, setOpenModal] = useState(false)
-
-  //Example schema
-  const tempColumns = {
-    properties: {
-      id: {
-        title: 'id',
-        width: 50,
-        // eslint-disable-next-line react/display-name
-        cellRenderer: () => {
-          return (
-            <div>
-            </div>
-          )
-        },
-      },
-    },
-  }
 
   return (
     <Layout fullWidth>
@@ -67,7 +51,8 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
       <div className="mt4">
         <PageBlock>
           <div className="mt4 mb7">
-            <TableComponent schemaTable={tempColumns} itemTable={[]} actions={[]}/>
+            {/*<TableComponent schemaTable={tempColumns} itemTable={[]} actions={[]}/>*/}
+            <TableComponent />
           </div>
         </PageBlock>
       </div>

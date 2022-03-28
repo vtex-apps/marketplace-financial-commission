@@ -21,36 +21,36 @@ const Filter: FC<FilterProps & InjectedIntlProps> = (props) => {
   return(
     <div className={`${styles.filter} flex`}>
       <div className={`${styles.filter_container} w-30 mr4`}>
-        {props.sellersDashboard ?? <Select
+        <Select
           multi
           label={formatIOMessage({id: message.selectSeller.id, intl: props.intl,}).toString()}
           options={props.listSellers}
           onChange={() => {}}
-        /> }
+        />
       </div>
       <div className={`${styles.filter_container} w-20 mr4`}>
-        { props.optionsSelect ?? <Select
+        <Select
           multi
           label={formatIOMessage({id: message.selectItems.id, intl: props.intl,}).toString()}
           options={props.optionsSelect}
-          onChange={() => {}}
-        /> }
+          onChange={(values: any) => {console.info('values ', values)}}
+        />
       </div>
       <div className={`${styles.filter_container} w-20 mr4`}>
-        { props.startDatePicker ?? <DatePicker
+        <DatePicker
           label={formatIOMessage({id: message.startPicker.id, intl: props.intl,}).toString()}
           value={props.startDatePicker}
           onChange={() => { }}
           locale={props.locale}
-        /> }
+        />
       </div>
       <div className={`${styles.filter_container} w-20 mr4`}>
-        { props.finalDate ?? <DatePicker
+        <DatePicker
           label={formatIOMessage({id: message.endPicker.id, intl: props.intl,}).toString()}
           value={props.finalDate}
           onChange={() => {}}
           locale={props.locale}
-        /> }
+        />
       </div>
       <div className={`${styles.btn_filter} w-10 mt6`}>
         <ButtonWithIcon

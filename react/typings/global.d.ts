@@ -73,3 +73,14 @@ interface SettingsProps {
   setOpenModal: (open: boolean) => void
 }
 
+enum SortOrder {
+  ASC = 'ASC',
+  DSC = 'DSC',
+}
+
+type Sorted = {
+  /** order of the sorting */
+  order?: SortOrder
+  /** reference prop */
+  by?: string
+}

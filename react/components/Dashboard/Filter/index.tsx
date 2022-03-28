@@ -25,14 +25,7 @@ const Filter: FC<FilterProps & InjectedIntlProps> = (props) => {
           multi
           label={formatIOMessage({id: message.selectSeller.id, intl: props.intl,}).toString()}
           options={props.listSellers}
-          onChange={(value: any) => {
-            let tempFilter: any = []
-            value.forEach((i:any) => {
-              const getDataSeller = props.sellersDashboard ? props.sellersDashboard.filter((s:any) => s.seller === i.label) : {}
-              tempFilter.push(getDataSeller)
-            })
-            // setSellersDashboard(tempFilter)
-          }}
+          onChange={() => {}}
         /> }
       </div>
       <div className={`${styles.filter_container} w-20 mr4`}>
@@ -40,7 +33,7 @@ const Filter: FC<FilterProps & InjectedIntlProps> = (props) => {
           multi
           label={formatIOMessage({id: message.selectItems.id, intl: props.intl,}).toString()}
           options={props.optionsSelect}
-          onChange={(values: any) => {console.info('values ', values)}}
+          onChange={() => {}}
         /> }
       </div>
       <div className={`${styles.filter_container} w-20 mr4`}>

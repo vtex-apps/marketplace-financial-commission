@@ -20,8 +20,8 @@ export class Clients extends IOClients {
 
   public get sellersDashboardClientMD() {
     return this.getOrSet(
-      'sellersDashboards',
-      masterDataFor<SellersDashboard>('sellersDashboards')
+      'sellersdashboards',
+      masterDataFor<SellersDashboard>('sellersdashboards')
     )
   }
 

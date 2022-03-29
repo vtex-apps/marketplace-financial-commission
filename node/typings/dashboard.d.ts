@@ -3,14 +3,14 @@ interface Dashboards {
   dateStart?: string
   dateEnd?: string
   sellers: SellersDashboard[]
-  stats: StatsSeller
+  statistics?: StatsSeller
 }
 
 interface SellersDashboard {
   id: string
   name: string
   account: string
-  stats: StatsSeller
+  statistics: StatsSeller
 }
 
 interface StatsSeller {

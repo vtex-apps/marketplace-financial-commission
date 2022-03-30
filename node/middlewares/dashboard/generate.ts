@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 import type {
   SellersDashboard,
-  // StatisticsDashboard,
+  StatisticsDashboard,
 } from 'vtex.marketplace-financial-commission'
 
 import { getDatesInvoiced } from '../../utils'
@@ -13,7 +13,7 @@ export async function generate(ctx: Context, next: () => Promise<Dashboards>) {
     state: {
       body: { sellers },
     },
-    clients: { sellersDashboardClientMD },
+    clients: { sellersDashboardClientMD, statisticsDashboardClientMD },
   } = ctx
 
   const getDates = getDatesInvoiced()
@@ -23,19 +23,14 @@ export async function generate(ctx: Context, next: () => Promise<Dashboards>) {
 
   const {
     sellersDashboard,
-    // stats: { ordersCount, totalComission, totalOrderValue },
+    statistics: { ordersCount, totalComission, totalOrderValue },
   } = responseCalculateSellers
-
-  // const dashboard: SellersDashboard = {
-  //   dateCut,
-  //   sellers: sellersDashboard as [],
-  // }
 
   const multiplier = 20
   let page = 1
   let lastSeller = false
   const totalPage = Math.round(sellersDashboard.length / 20 + 1)
-  const responseGenerate = []
+  const responseGenerateSellers = []
 
   while (!lastSeller) {
     const initialOffset = (page - 1) * multiplier
@@ -63,33 +58,46 @@ export async function generate(ctx: Context, next: () => Promise<Dashboards>) {
       dashboardWithId
     )
 
-    responseGenerate.push(dashboardSave)
-
-    console.info({ dashboardSave: JSON.stringify(dashboardSave) })
+    responseGenerateSellers.push(dashboardSave)
 
     page++
   }
 
-  // const statsGeneral: StatisticsDashboard = {
-  //   dateCut,
-  //   statistics: {
-  //     ordersCount,
-  //     totalComission,
-  //     totalOrderValue,
-  //   },
-  // }
+  const statsGeneral: StatisticsDashboard = {
+    dateCut,
+    statistics: {
+      ordersCount,
+      totalComission,
+      totalOrderValue,
+    },
+  }
 
-  // const dashboardWithId = {
-  //   id: `DSH-${ctx.vtex.account}-${getDates.formattedDate}`,
-  //   ...dashboard,
-  // }
+  const dashboardstatsWithId = {
+    id: `DSH-Statistics-${ctx.vtex.account}-${getDates.formattedDate}`,
+    ...statsGeneral,
+  }
 
-  // const dashboardResponse = await dashboardClientMD.saveOrUpdate(
-  //   dashboardWithId
+  let responseStatistics
+
+  try {
+    responseStatistics = await statisticsDashboardClientMD.saveOrUpdate(
+      dashboardstatsWithId
+    )
+  } catch (error) {
+    responseStatistics = '304 Not Modified'
+  }
+
+  // const responseStatistics = await statisticsDashboardClientMD.saveOrUpdate(
+  //   dashboardstatsWithId
   // )
 
+  const responseGenerateDashboard = {
+    Sellers: responseGenerateSellers,
+    Statistics: responseStatistics,
+  }
+
   ctx.status = 200
-  ctx.body = responseGenerate // dashboardResponse
+  ctx.body = responseGenerateDashboard
   ctx.set('Cache-Control', 'no-cache ')
   await next()
 }

@@ -19,8 +19,12 @@
       "path": "/_v/dashboard/generate",
       "public": true
     },
-    "searchDashboard": {
-      "path": "/_v/dashboard/search",
+    "searchSellersDashboard": {
+      "path": "/_v/dashboard/sellers/search",
+      "public": true
+    },
+    "searchStatisticsDashboard": {
+      "path": "/_v/dashboard/statistics/search",
       "public": true
     }
   }

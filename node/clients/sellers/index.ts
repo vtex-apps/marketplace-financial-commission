@@ -8,6 +8,15 @@ import { AppGraphQLClient } from '@vtex/api'
 
 import { GET_SELLERS } from './queries'
 
+// interface SellersParams {
+//   pagination: Pagination
+// }
+
+// interface Pagination {
+//   from: number
+//   to: number
+// }
+
 class CustomGraphQLError extends Error {
   public graphQLErrors: any
 
@@ -33,17 +42,17 @@ export default class SellersIO extends AppGraphQLClient {
       ...options,
       headers: {
         ...options?.headers,
-        Cookie: `VtexIdclientAutCookie=${context.adminUserAuthToken}`,
+        cookie: `VtexIdclientAutCookie=${context.authToken}`,
       },
     })
   }
 
-  public getSellers = async (): Promise<Sellers> => {
+  public async getSellers(...sellersParams: []): Promise<Sellers> {
     const sellers = await this.graphql
-      .query<Sellers, Record<string, unknown>>(
+      .query<Data, Record<string, unknown>>(
         {
           query: GET_SELLERS,
-          variables: {},
+          variables: { sellersParams },
         },
         {
           metric: 'get-sellers',
@@ -55,7 +64,7 @@ export default class SellersIO extends AppGraphQLClient {
         )
       )
       .then((query) => {
-        return query.data as Sellers
+        return query.data?.sellers as Sellers
       })
 
     return sellers

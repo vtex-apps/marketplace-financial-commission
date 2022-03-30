@@ -12,7 +12,19 @@
   },
   "routes": {
     "sellers": {
-      "path": "/_v/sellers/getsellers",
+      "path": "/_v/sellers",
+      "public": true
+    },
+    "generateDashboard": {
+      "path": "/_v/dashboard/generate",
+      "public": true
+    },
+    "searchSellersDashboard": {
+      "path": "/_v/dashboard/sellers/search",
+      "public": true
+    },
+    "searchStatisticsDashboard": {
+      "path": "/_v/dashboard/statistics/search",
       "public": true
     }
   }

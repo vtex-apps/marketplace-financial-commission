@@ -1,20 +1,21 @@
 {
   "dependencies": {
-    "co-body": "^6.0.0",
-    "@vtex/api": "6.45.10",
-    "@vtex/clients": "^2.17.0"
+    "@vtex/api": "6.45.11-beta",
+    "@vtex/clients": "^2.19.4",
+    "co-body": "^6.0.0"
   },
   "devDependencies": {
     "@types/co-body": "^6.1.0",
     "@types/jest": "^27.4.1",
     "@types/node": "^12.0.0",
-    "@vtex/api": "6.45.10",
+    "@vtex/api": "6.45.11-beta",
     "@vtex/test-tools": "^3.4.3",
     "tslint": "^5.0.0",
     "tslint-config-vtex": "^2.1.0",
     "typescript": "3.9.7",
+    "vtex.marketplace-financial-commission": "https://deimer2--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1648578509/public/@types/vtex.marketplace-financial-commission",
     "vtex.sellers-graphql": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.sellers-graphql@8.5.3/public/@types/vtex.sellers-graphql",
-    "vtex.styleguide": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.0/public/@types/vtex.styleguide"
+    "vtex.styleguide": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.1/public/@types/vtex.styleguide"
   },
   "scripts": {
     "lint": "tsc --noEmit --pretty"

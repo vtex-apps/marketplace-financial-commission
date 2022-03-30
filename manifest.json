@@ -10,7 +10,8 @@
     "node": "6.x",
     "docs": "0.x",
     "admin": "0.x",
-    "graphql": "1.x"
+    "graphql": "1.x",
+    "masterdata": "1.x"
   },
   "dependencies": {
     "vtex.sellers-graphql": "8.x",
@@ -18,9 +19,7 @@
     "vtex.render-runtime": "8.x",
     "vtex.native-types": "0.x"
   },
-  "registries": [
-    "smartcheckout"
-  ],
+  "registries": ["smartcheckout"],
   "credentialType": "absolute",
   "policies": [
     {
@@ -28,6 +27,13 @@
     },
     {
       "name": "OMSViewer"
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "api.vtex.com",
+        "path": "/api/*"
+      }
     },
     {
       "name": "ADMIN_DS"
@@ -45,22 +51,8 @@
     {
       "name": "outbound-access",
       "attrs": {
-        "host": "api.vtex.com",
-        "path": "*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "elefantqa.myvtex.com",
-        "path": "*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "deimer--elefantqa.myvtex.com",
-        "path": "*"
+        "host": "portal.vtexcommercestable.com.br",
+        "path": "/api/*"
       }
     }
   ],

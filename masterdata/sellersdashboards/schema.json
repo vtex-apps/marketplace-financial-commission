@@ -41,5 +41,5 @@
     }
   },
   "required": ["dateCut", "sellers"],
-  "v-indexed": ["dateCut"]
+  "v-indexed": ["dateCut", "sellers"]
 }

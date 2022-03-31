@@ -8,6 +8,8 @@ interface SellersOrdersDetail {
 
 interface Order {
   orderId: string
+  sellerOrderId?: string
+  marketplaceOrderId?: string
   totalComission: float
   totalOrderValue: float
   status: string

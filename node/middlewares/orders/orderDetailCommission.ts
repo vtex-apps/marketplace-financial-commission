@@ -40,6 +40,7 @@ export async function orderDetailCommission(
 
       const item: Order = {
         orderId: orderData.orderId,
+        sellerOrderId: orderData.sellerOrderId,
         totalOrderValue,
         totalComission,
         status: orderData.status,

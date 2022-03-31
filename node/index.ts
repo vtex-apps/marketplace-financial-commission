@@ -6,6 +6,7 @@ import clients from './clients'
 import { generate } from './middlewares/dashboard/generate'
 import { searchSellers } from './middlewares/dashboard/searchSellers'
 import { searchStatistics } from './middlewares/dashboard/searchStatistics'
+import { orders } from './middlewares/orders/orders'
 import { sellers } from './middlewares/sellers/sellers'
 import { sellersResponse } from './middlewares/sellers/sellersresponse'
 import { queries /* , mutations */ } from './resolvers'
@@ -34,6 +35,9 @@ export default new Service<Clients, RecorderState, ParamsContext>({
     }),
     searchStatisticsDashboard: method({
       GET: [searchStatistics],
+    }),
+    orders: method({
+      GET: [orders],
     }),
   },
 })

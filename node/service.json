@@ -26,6 +26,10 @@
     "searchStatisticsDashboard": {
       "path": "/_v/dashboard/statistics/search",
       "public": true
+    },
+    "orders": {
+      "path": "/_v/orders",
+      "public": true
     }
   }
 }

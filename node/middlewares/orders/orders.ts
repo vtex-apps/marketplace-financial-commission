@@ -11,6 +11,8 @@ export async function orders(ctx: Context, next: () => Promise<Sellers>) {
 
   await validationParams('Orders', ctx.query)
 
+  await validationParams('Orders', ctx.query)
+
   const listOrders = await orderListSeller(
     ctx,
     sellerName,

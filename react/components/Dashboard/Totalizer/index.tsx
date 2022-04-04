@@ -4,6 +4,10 @@ import {
   Totalizer
 } from 'vtex.styleguide'
 
+type TotalizerProps = {
+  item: StatsTotalizer[]
+}
+
 const TotalizerComponent: FC<TotalizerProps> = (props) => {
   return(
     <Totalizer

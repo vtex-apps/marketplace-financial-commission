@@ -3,10 +3,17 @@
   "compilerOptions": {
     "jsx": "react",
     "noEmitOnError": false,
-    "lib": ["dom"],
+    "lib": [
+      "dom"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "target": "es2017"
   },
-  "include": ["./typings/*.d.ts", "./**/*.tsx", "./**/*.ts", "components/Dashboard/Totalizer"]
+  "include": [
+    "./typings/*.d.ts",
+    "./**/*.tsx",
+    "./**/*.ts",
+    "components/Dashboard/Totalizer"
+  ]
 }

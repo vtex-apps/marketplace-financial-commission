@@ -1,5 +1,7 @@
-import { getSellers } from './getSellers'
+import { dashboard } from './getDashboard'
+import { sellers } from './getSellers'
+import { stats } from './getStats'
 
-export const queries = { getSellers }
+export const queries = { dashboard, sellers, stats }
 
 export const mutations = {}

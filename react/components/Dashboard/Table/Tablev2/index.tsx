@@ -8,49 +8,10 @@ import {
 } from 'vtex.styleguide'
 
 
-const TableV2: FC = () => {
+const TableV2: FC<TableData> = (props) => {
   const sorting = useTableSort()
-  const columns = [
-    {
-      /** Prop that this column represents */
-      id: 'id',
-      /** Title that will appear on Header */
-      title: 'ID',
-      /** Fixed width */
-      width: '3rem',
-    },
-    {
-      id: 'name',
-      title: 'Name',
-      sortable: true,
-    },
-    {
-      id: 'qty',
-      title: 'Qty',
-    },
-    {
-      id: 'costPrice',
-      title: 'Cost',
-      /** Cellrenderer using the default data, which is costPrice in this case */
-    },
-    {
-      id: 'retailPrice',
-      title: 'Retail',
-    },
-    {
-      id: 'profit',
-      /** This is a custom title */
-      title: 'Profit',
-      /** Profit is a condensed column generated using retailPrice and costPrice props */
-    },
-    {
-      id: 'actions',
-      width: '3rem',
-      /** This column is extended, its data is the entire row */
-    },
-  ]
 
-  const arrayItems = [{
+  const arrayItems:any = []/*[{
     id: 'id',
     name: 'test',
     qty: 'qty',
@@ -68,7 +29,7 @@ const TableV2: FC = () => {
     profit: 'profit',
     actions: 'actions'
   }
-  ]
+  ]*/
 
   /*eslint-disable */
   const ascOrdering = (prop:any): (a: any, b: any) => 1 | -1 | 0 => (a, b) => a[prop] > b[prop] ? 1 : a[prop] < b[prop] ? -1 : 0
@@ -95,7 +56,7 @@ const TableV2: FC = () => {
       <Table
         measures={measures}
         items={items}
-        columns={columns}
+        columns={props.schemaTable}
         highlightOnHover
         sorting={sorting}
       />

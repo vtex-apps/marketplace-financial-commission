@@ -2,5 +2,7 @@ type Query {
   """
   Retrieve all onboarded sellers
   """
-  getSellers: Sellers @cacheControl(scope: PUBLIC, maxAge: LONG)
+  dashboard: Dashboards @cacheControl(scope: PUBLIC, maxAge: LONG)
+  sellers: Sellers @cacheControl(scope: PUBLIC, maxAge: LONG)
+  stats: Stats @cacheControl(scope: PUBLIC, maxAge: LONG)
 }

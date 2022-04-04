@@ -1,9 +1,8 @@
 import type { ParamsContext, RecorderState } from '@vtex/api'
-import { Service, method } from '@vtex/api'
+import { Service } from '@vtex/api'
 
 import type { Clients } from './clients'
 import clients from './clients'
-import { sellers } from './middlewares/sellers'
 import { queries /* , mutations */ } from './resolvers'
 
 export default new Service<Clients, RecorderState, ParamsContext>({
@@ -17,10 +16,5 @@ export default new Service<Clients, RecorderState, ParamsContext>({
         ...mutations,
       }, */,
     },
-  },
-  routes: {
-    sellers: method({
-      GET: [sellers],
-    }),
-  },
+  }
 })

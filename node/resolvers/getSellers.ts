@@ -1,9 +1,9 @@
-export const getSellers = async (
+export const sellers = async (
   _: unknown,
   __: unknown,
-  { clients: { sellersIO } }: Context
-): Promise<Sellers> => {
-  const respsellers = await sellersIO.getSellers()
+  { clients: { SellerIO } }: Context
+): Promise<Dashboards> => {
+  const respsellers = await SellerIO.seller()
 
   return respsellers
 }

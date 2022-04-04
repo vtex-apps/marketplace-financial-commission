@@ -13,8 +13,11 @@
     "tslint": "^5.0.0",
     "tslint-config-vtex": "^2.1.0",
     "typescript": "3.9.7",
+    "vtex.marketplace-financial": "https://erika--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial@0.0.1+build1649025378/public/@types/vtex.marketplace-financial",
+    "vtex.native-types": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types",
+    "vtex.render-runtime": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.132.4/public/@types/vtex.render-runtime",
     "vtex.sellers-graphql": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.sellers-graphql@8.5.3/public/@types/vtex.sellers-graphql",
-    "vtex.styleguide": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.0/public/@types/vtex.styleguide"
+    "vtex.styleguide": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.1/public/@types/vtex.styleguide"
   },
   "scripts": {
     "lint": "tsc --noEmit --pretty"

@@ -1,11 +1,21 @@
 import type { ClientsConfig, ServiceContext } from '@vtex/api'
 import { IOClients, LRUCache } from '@vtex/api'
 
-import SellersIO from './sellers'
+import DashboardIO from './dashboard'
+import SellerIO from './sellers'
+import StatsIO from './stats'
 
 export class Clients extends IOClients {
-  public get sellersIO() {
-    return this.getOrSet('sellersIO', SellersIO)
+  public get DashboardIO() {
+    return this.getOrSet('DashboardIO', DashboardIO)
+  }
+
+  public get SellerIO() {
+    return this.getOrSet('SellerIO', SellerIO)
+  }
+
+  public get StatsIO() {
+    return this.getOrSet('SellerIO', StatsIO)
   }
 }
 

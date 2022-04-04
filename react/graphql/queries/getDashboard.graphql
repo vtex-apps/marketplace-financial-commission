@@ -1,0 +1,5 @@
+query getDashboard($startDate: String, $finalDate: String) {
+  getDashboard(startDate: $startDate, finalDate: $finalDate){
+
+  }
+}

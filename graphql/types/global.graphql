@@ -1,1 +1,60 @@
-scalar Sellers
+type Dashboards {
+  dateCut: String
+  dateStart: String
+  dateEnd: String
+  sellers: [SellersDashboard]
+  statistics: StatsSeller
+  paging: Paging
+}
+
+type SellersDashboard {
+  id: String
+  name: String
+  account: String
+  statistics: StatsSeller
+}
+
+type StatsSeller {
+  dateInvoiced: String
+  ordersCount: Int
+  totalComission: Int
+  totalOrderValue: Int
+  outstandingBalance: Int
+}
+
+type Paging {
+  currentPage: Int
+  totalPages: Int
+}
+
+type PagingSeller {
+  total: Int
+}
+
+
+type Sellers {
+  items: [DataSeller]
+  paging: PagingSeller
+}
+
+type DataSeller {
+  id: String
+  name: String
+  account: String
+  productCommissionPercentage: Int
+  freightCommissionPercentage: Int
+  isActive: Boolean
+}
+
+
+type Stats {
+  dateStart: String
+  dateEnd: String
+  statistics: statisticsStats
+}
+
+type statisticsStats {
+  ordersCount: Int
+  totalComission: Float
+  totalOrderValue: Float
+}

@@ -1,0 +1,11 @@
+query stats {
+  stats{
+    dateStart
+    dateEnd
+    statistics{
+      ordersCount
+      totalComission
+      totalOrderValue
+    }
+  }
+}

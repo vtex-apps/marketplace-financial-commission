@@ -1,7 +1,9 @@
 declare module '*.png'
 declare module '*.css'
+declare module '*.gql'
 declare module 'vtex.render-runtime'
 declare module 'vtex.native-types'
+declare module '*.graphql'
 
 
 interface TableProps {
@@ -41,7 +43,7 @@ interface TableProps {
   }
   itemTable: []
   actions: []
-  totalizers?: TotalizerProps
+  totalizers?: StatsTotalizer[]
   toolbar?:  {
     newLine: {
       label: string,
@@ -57,20 +59,20 @@ interface FilterProps {
   finalDate?: Date
   locale: string
   optionsSelect?: []
+  setStartDate?: any
+  setFinalDate?: any
 }
-interface TotalizerProps {
-  item: [
-    {
-      label: string
-      value: number
-      iconBackgroundColor: string
-      icon: object
-    }
-  ]
-}
+
 interface SettingsProps {
   openModal: boolean
   setOpenModal: (open: boolean) => void
+}
+
+interface StatsTotalizer {
+  label: string
+  value: string
+  iconBackgroundColor?: string
+  icon?: object
 }
 
 enum SortOrder {
@@ -83,4 +85,9 @@ type Sorted = {
   order?: SortOrder
   /** reference prop */
   by?: string
+}
+
+interface TableData {
+  items: any
+  schemaTable: any
 }

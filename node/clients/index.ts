@@ -1,5 +1,8 @@
-import type { ClientsConfig, ServiceContext } from '@vtex/api'
-import type { Dashboard } from 'vtex.marketplace-financial-commission'
+import type { ClientsConfig } from '@vtex/api'
+import type {
+  SellersDashboard,
+  StatisticsDashboard,
+} from 'vtex.marketplace-financial-commission'
 import { IOClients, LRUCache } from '@vtex/api'
 import { masterDataFor } from '@vtex/clients'
 
@@ -15,23 +18,22 @@ export class Clients extends IOClients {
     return this.getOrSet('ordersClient', OrdersClient)
   }
 
-  public get dashboardClientMD() {
-    return this.getOrSet('dashboards', masterDataFor<Dashboard>('dashboards'))
+  public get sellersDashboardClientMD() {
+    return this.getOrSet(
+      'sellersdashboards',
+      masterDataFor<SellersDashboard>('sellersdashboards')
+    )
+  }
+
+  public get statisticsDashboardClientMD() {
+    return this.getOrSet(
+      'statisticsDashboards',
+      masterDataFor<StatisticsDashboard>('statisticsDashboards')
+    )
   }
 }
 
-declare global {
-  type Context = ServiceContext<Clients>
-
-  type LoggerMessage = {
-    workflowInstance: string
-    message: string
-    exception?: string
-    request?: any
-  }
-}
-
-const TIMEOUT_MS = 5000
+const TIMEOUT_MS = 20000
 const memoryCache = new LRUCache<string, any>({ max: 5000 })
 
 metrics.trackCache('financial-commission', memoryCache)

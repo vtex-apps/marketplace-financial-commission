@@ -8,6 +8,15 @@ import { AppGraphQLClient } from '@vtex/api'
 
 import { GET_SELLERS } from './queries'
 
+// interface SellersParams {
+//   pagination: Pagination
+// }
+
+// interface Pagination {
+//   from: number
+//   to: number
+// }
+
 class CustomGraphQLError extends Error {
   public graphQLErrors: any
 
@@ -38,12 +47,12 @@ export default class SellersIO extends AppGraphQLClient {
     })
   }
 
-  public getSellers = async (): Promise<Sellers> => {
+  public async getSellers(...sellersParams: []): Promise<Sellers> {
     const sellers = await this.graphql
       .query<Data, Record<string, unknown>>(
         {
           query: GET_SELLERS,
-          variables: {},
+          variables: { sellersParams },
         },
         {
           metric: 'get-sellers',

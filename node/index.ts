@@ -3,9 +3,12 @@ import { Service, method } from '@vtex/api'
 
 import type { Clients } from './clients'
 import clients from './clients'
-import { GenerateDashboard } from './middlewares/dashboard/generateDashboard'
-import { SearchDashboard } from './middlewares/dashboard/searchDashboard'
-import { sellers } from './middlewares/sellers'
+import { generate } from './middlewares/dashboard/generate/generate'
+import { searchSellers } from './middlewares/dashboard/search/searchSellers'
+import { searchStatistics } from './middlewares/dashboard/search/searchStatistics'
+import { orders } from './middlewares/orders/orders'
+import { sellers } from './middlewares/sellers/sellers'
+import { sellersResponse } from './middlewares/sellers/sellersresponse'
 import { queries /* , mutations */ } from './resolvers'
 
 export default new Service<Clients, RecorderState, ParamsContext>({
@@ -22,13 +25,19 @@ export default new Service<Clients, RecorderState, ParamsContext>({
   },
   routes: {
     sellers: method({
-      GET: [sellers],
+      GET: [sellers, sellersResponse],
     }),
     generateDashboard: method({
-      GET: [GenerateDashboard],
+      GET: [sellers, generate],
     }),
-    searchdashboard: method({
-      GET: [SearchDashboard],
+    searchSellersDashboard: method({
+      GET: [searchSellers],
+    }),
+    searchStatisticsDashboard: method({
+      GET: [searchStatistics],
+    }),
+    orders: method({
+      GET: [orders],
     }),
   },
 })

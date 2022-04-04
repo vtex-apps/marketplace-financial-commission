@@ -53,16 +53,15 @@ interface TableProps {
 
 }
 interface FilterProps {
-  listSellers?: []
-  sellersDashboard?: []
+  dataWithoutFilter?: []
+  setDataWithoutFilter?: any
   startDatePicker?: Date
-  finalDate?: Date
+  finalDatePicker?: Date
   locale: string
   optionsSelect?: []
   setStartDate?: any
   setFinalDate?: any
 }
-
 interface SettingsProps {
   openModal: boolean
   setOpenModal: (open: boolean) => void

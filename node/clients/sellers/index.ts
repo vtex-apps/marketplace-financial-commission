@@ -6,10 +6,6 @@ import type {
 } from '@vtex/api'
 import { AppGraphQLClient } from '@vtex/api'
 
-import { GETSELLERS } from './queries'
-
-console.log('GET_SELLERS ', GETSELLERS)
-
 class CustomGraphQLError extends Error {
   public graphQLErrors: any
 

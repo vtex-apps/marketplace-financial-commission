@@ -5,31 +5,12 @@ import {
   EXPERIMENTAL_Table as Table,
   EXPERIMENTAL_useTableMeasures as useTableMeasures,
   EXPERIMENTAL_useTableSort as useTableSort
+  //EXPERIMENTAL_useCheckboxTree as useColumnsWithCheckboxes
 } from 'vtex.styleguide'
 
 
 const TableV2: FC<TableData> = (props) => {
   const sorting = useTableSort()
-
-  const arrayItems:any = []/*[{
-    id: 'id',
-    name: 'test',
-    qty: 'qty',
-    costPrice: 'costPrice',
-    retailPrice: 'retailPrice',
-    profit: 'profit',
-    actions: 'actions'
-  },
-  {
-    id: 'id2',
-    name: 'name',
-    qty: 'qty',
-    costPrice: 'costPrice',
-    retailPrice: 'retailPrice',
-    profit: 'profit',
-    actions: 'actions'
-  }
-  ]*/
 
   /*eslint-disable */
   const ascOrdering = (prop:any): (a: any, b: any) => 1 | -1 | 0 => (a, b) => a[prop] > b[prop] ? 1 : a[prop] < b[prop] ? -1 : 0
@@ -40,14 +21,14 @@ const TableV2: FC<TableData> = (props) => {
       sorted: { order, by },
     } = sorting
     if (!order) {
-      return arrayItems
+      return props.items
     }
 
     const ascending = order === 'ASC'
     const comparator = ascending ? ascOrdering(by) : dscOrdering(by)
-    return arrayItems.sort(comparator)
+    return props.items.sort(comparator)
   }
-    , [sorting.sorted, arrayItems])
+    , [sorting.sorted, props.items])
 
   const measures = useTableMeasures({ size: items.length })
 

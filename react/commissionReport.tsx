@@ -3,40 +3,19 @@ import React, { useState, useEffect } from 'react'
 import {
   Layout,
   PageBlock,
-  Checkbox,
   IconShoppingCart,
   IconUser,
   IconArrowUp,
-  IconInfo
+  IconInfo,
+  PageHeader
 } from 'vtex.styleguide'
-import { useLazyQuery } from 'react-apollo'
+import { useLazyQuery, useQuery } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
-import type { InjectedIntlProps } from 'react-intl'
-import { injectIntl } from 'react-intl'
-import { formatIOMessage } from 'vtex.native-types'
-import { message } from './utils/definedMessages'
-import { TableComponent, Totalizer, Filter, SettingsDashboard} from './components'
+import { FormattedMessage  } from 'react-intl'
+import { TableComponent, Totalizer, Filter, SettingsDashboard } from './components'
 import { GETSELLERS, STATS, DASHBOARD } from './graphql'
 
-
-
 export const schemaTable = [
-  {
-    id: 'id',
-    cellRenderer: () => {
-      return (
-        <div>
-          <Checkbox
-            checked={false}
-            id="option-0"
-            name="default-checkbox-group"
-            onChange={() => { }}
-            value="option-0"
-          />
-        </div>
-      )
-    },
-  },
   {
     id: 'name',
     title: 'Seller name',
@@ -65,19 +44,13 @@ export const schemaTable = [
   },
 ]
 
-const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
+const CommissionReport: FC= () => {
   const { culture } = useRuntime()
-  const [sellersSelect, setSellerSelect] = useState<any>({data:{
-    sellers:{
-      item: [],
-      paging: {
-        total: 0
-      }
-    }
-  }})
+
   const [optionsSelect, setOptionsSelect] = useState<any>([])
   const [openModal, setOpenModal] = useState(false)
-  const [sellersDashboard, setSellersDashboard] = useState(false)
+  const [sellersDashboard, setSellersDashboard] = useState<any>([])
+  const [sellersDashboardFilter, setSellersDashboardFilter] = useState<any>([])
   const [statsTotalizer, setStatsTotalizer] = useState<StatsTotalizer[]>([{
     label: '',
     value: '',
@@ -90,17 +63,17 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
 
   const [stats, { data: dataStats }] = useLazyQuery(STATS, {
     ssr: false,
-    pollInterval: 5000,
+    pollInterval: 0,
   })
 
-  const [sellers, { data: dataSellers }] = useLazyQuery(GETSELLERS, {
+  const { data: dataSellers } = useQuery(GETSELLERS, {
     ssr: false,
-    pollInterval: 5000,
+    pollInterval: 0,
   })
 
   const [dashboard, { data: dataDashboard }] = useLazyQuery(DASHBOARD, {
     ssr: false,
-    pollInterval: 5000,
+    pollInterval: 0,
   })
 
   useEffect(() => {
@@ -108,24 +81,21 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
     const defaultDate = new Date();
     const defaultStart = new Date(defaultDate.getFullYear(), defaultDate.getMonth(), 1)
     const defaultStartString = defaultStart.getFullYear() + "-" + (defaultStart.getMonth() + 1) + "-" + "01"
-    const valueDate = defaultDate.getDate()-1
-    const dateDefault = valueDate <= 9 ? "0"+ valueDate: valueDate
+    const valueDate = defaultDate.getDate() - 1
+    const dateDefault = valueDate <= 9 ? "0" + valueDate : valueDate
     const defaultFinal = defaultDate.getFullYear() + "-" + (defaultDate.getMonth() + 1) + "-" + dateDefault
     setStartDate(defaultStartString)
     setFinalDate(defaultFinal)
 
     stats()
-    sellers()
     dashboard()
 
-    setSellersDashboard(false)
-
-    if(dataStats){
+    if (dataStats) {
 
       setStatsTotalizer([
         {
           label: 'Number of Sellers',
-          value: '0',
+          value: dataDashboard ? dataDashboard.dashboard.sellers.length : 0,
           iconBackgroundColor: '#EAFCE3',
           icon: <IconUser color="#79B03A" size={18} />
         },
@@ -150,9 +120,9 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
       ])
     }
 
-    if(dataSellers){
-      let builtSelectSeller:any = []
-      dataSellers.getSellers.items.forEach((seller:any) => {
+    if (dataSellers) {
+      let builtSelectSeller: any = []
+      dataSellers.getSellers.items.forEach((seller: any) => {
         builtSelectSeller.push({
           value: { id: seller.id, name: seller.name },
           label: seller.name
@@ -160,34 +130,50 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
       })
 
       setOptionsSelect(builtSelectSeller)
-      setSellerSelect(dataSellers.getSellers)
-
     }
 
-    console.log('dataDashboard ', dataDashboard)
-
+    if (dataDashboard) {
+      let dataTableDashboard: any = []
+      dataDashboard.dashboard.sellers.forEach((item: any) => {
+        dataTableDashboard.push({
+          name: item.name,
+          dateInvoiced: item.statistics.dateInvoiced,
+          ordersCount: item.statistics.ordersCount.toFixed(2),
+          totalComission: item.statistics.totalComission.toFixed(2),
+          totalOrderValue: item.statistics.totalOrderValue.toFixed(2)
+        })
+      });
+      setSellersDashboard(dataTableDashboard)
+    }
   }, [dataStats, dataSellers, dataDashboard])
 
-
-
-
   return (
-    <Layout>
-      <div className="mt9">
-        <h1 style={{ color: '#3F3F40', fontSize: '35px' }}>
-          {formatIOMessage({
-            id: message.title.id,
-            intl,
-          }).toString()}
-        </h1>
-      </div>
+    <Layout
+      pageHeader={
+        <PageHeader
+          title={
+            <FormattedMessage id="admin/navigation.title" />
+          }
+        />
+      }>
       <div>
         <SettingsDashboard openModal={openModal} setOpenModal={setOpenModal} />
       </div>
       <div className="mt4">
         <PageBlock>
           <div className="mt4 mb7">
-            {(startDate && finalDate) ? <Filter listSellers={sellersSelect.data ? sellersSelect.data.sellers.item : []} sellersDashboard={[]} startDatePicker={new Date(startDate)} finalDate={new Date(finalDate)} locale={culture.locale} optionsSelect={optionsSelect} setStartDate={setStartDate} setFinalDate={setFinalDate}/> : <div />}
+            {(startDate && finalDate) ?
+              <Filter
+              dataWithoutFilter={sellersDashboard}
+              setDataWithoutFilter={setSellersDashboardFilter}
+              startDatePicker={new Date(startDate)}
+              finalDatePicker={new Date(finalDate)}
+              locale={culture.locale}
+              optionsSelect={optionsSelect}
+              setStartDate={setStartDate}
+              setFinalDate={setFinalDate}
+              /> : <div />
+            }
           </div>
         </PageBlock>
       </div>
@@ -201,7 +187,7 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
       <div className="mt4">
         <PageBlock>
           <div className="mt4 mb7">
-            <TableComponent schemaTable={schemaTable} items={sellersDashboard}/>
+            <TableComponent schemaTable={schemaTable} items={sellersDashboardFilter.length ? sellersDashboardFilter : sellersDashboard} />
           </div>
         </PageBlock>
       </div>
@@ -209,4 +195,4 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
   )
 }
 
-export default injectIntl(CommissionReport)
+export default CommissionReport

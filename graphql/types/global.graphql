@@ -17,8 +17,8 @@ type SellersDashboard {
 type StatsSeller {
   dateInvoiced: String
   ordersCount: Int
-  totalComission: Int
-  totalOrderValue: Int
+  totalComission: Float
+  totalOrderValue: Float
   outstandingBalance: Int
 }
 

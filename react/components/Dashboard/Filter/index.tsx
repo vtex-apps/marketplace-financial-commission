@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import React from 'react'
+import React, { useState } from 'react'
 import type { InjectedIntlProps } from 'react-intl'
 import { injectIntl } from 'react-intl'
 import { formatIOMessage } from 'vtex.native-types'
@@ -17,10 +17,17 @@ import styles from '../../../styles.css'
 
 const Filter: FC<FilterProps & InjectedIntlProps> = (props) => {
 
+  const [dataFilter, setDataFilter] = useState([])
 
   const changesValuesTable = () => {
-    console.log('consumir servicio aqui otra vez')
 
+    const filterDataSellers = props.dataWithoutFilter?.filter((seller:any) => dataFilter?.some((item:any) => item.label === seller.name));
+
+    if(filterDataSellers?.length){
+      props.setDataWithoutFilter(filterDataSellers)
+    }else{
+      props.setDataWithoutFilter([])
+    }
   }
 
   const getDate = (date: string) => {
@@ -34,8 +41,8 @@ const Filter: FC<FilterProps & InjectedIntlProps> = (props) => {
   }
 
   const changeStartDate = (start:any) => {
-    if(props.finalDate)
-      if(start.getTime() < props.finalDate.getTime() ){
+    if(props.finalDatePicker)
+      if(start.getTime() < props.finalDatePicker.getTime() ){
         const newDate = getDate(start)
         props.setStartDate(newDate)
       }
@@ -56,7 +63,7 @@ const Filter: FC<FilterProps & InjectedIntlProps> = (props) => {
           multi
           label={formatIOMessage({id: message.selectSeller.id, intl: props.intl,}).toString()}
           options={props.optionsSelect}
-          onChange={(values: any) => {console.info('values ', values)}}
+          onChange={(values: any) => setDataFilter(values)}
         />
       </div>
       <div className={`${styles.filter_container} w-20 mr4`}>
@@ -79,7 +86,7 @@ const Filter: FC<FilterProps & InjectedIntlProps> = (props) => {
       <div className={`${styles.filter_container} w-20 mr4`}>
         <DatePicker
           label={formatIOMessage({id: message.endPicker.id, intl: props.intl,}).toString()}
-          value={props.finalDate}
+          value={props.finalDatePicker}
           maxDate={addDays(new Date(), -1)}
           onChange={(final: any) => changeFinalDate(final)}
           locale={props.locale}

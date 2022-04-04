@@ -3,7 +3,7 @@ export const sellers = async (
   __: unknown,
   { clients: { SellerIO } }: Context
 ): Promise<Dashboards> => {
-  const respsellers = await SellerIO.seller()
+  const respsellers = await SellerIO.sellers()
 
   return respsellers
 }

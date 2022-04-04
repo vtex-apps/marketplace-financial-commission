@@ -22,7 +22,7 @@ import Totalizer from './components/Dashboard/Totalizer'
 import Filter from './components/Dashboard/Filter'
 import SettingsDashboard from './components/Dashboard/SettingsDashboard'
 import { tempSellers }  from './dataTest'
-//import SELLERS from './graphql/queries/getSellers.graphql'
+import SELLERS from './graphql/queries/getSellers.graphql'
 import STATS from './graphql/queries/getStats.graphql'
 
 
@@ -99,6 +99,11 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
     pollInterval: 5000,
   })
 
+  const [sellers, { data: dataSellers }] = useLazyQuery(SELLERS, {
+    ssr: false,
+    pollInterval: 5000,
+  })
+
   useEffect(() => {
 
     const defaultDate = new Date();
@@ -112,6 +117,9 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
     console.log('inicial date ', defaultStartString, ' Last date ', defaultFinal)
 
     stats()
+    sellers()
+
+    console.log('dataSellers ', dataSellers)
 
     if(dataStats){
       setStatsTotalizer([
@@ -146,11 +154,6 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
   useEffect(() => {
     setSellerSelect(tempSellers)
     setSellersDashboard(false)
-    setStatsTotalizer([{
-      label: '',
-      value: '',
-      iconBackgroundColor: ''
-    }])
 
     let builtSelectSeller:any = []
 
@@ -164,8 +167,6 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
     setOptionsSelect(builtSelectSeller)
 
   }, [])
-
-  console.log('ENTRE UNA VEZ:::::::: ', sellersSelect.data)
 
   return (
     <Layout>

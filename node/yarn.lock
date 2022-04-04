@@ -6587,9 +6587,9 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-"vtex.marketplace-financial@https://erika--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial@0.0.1+build1649025378/public/@types/vtex.marketplace-financial":
+"vtex.marketplace-financial@https://erika--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial@0.0.1+build1649076449/public/@types/vtex.marketplace-financial":
   version "0.0.1"
-  resolved "https://erika--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial@0.0.1+build1649025378/public/@types/vtex.marketplace-financial#9d2b22424d0295794988c3c1f165c443a4c9f3a1"
+  resolved "https://erika--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial@0.0.1+build1649076449/public/@types/vtex.marketplace-financial#eead8131663b13fc42b69e4aa699c0e76ca4f13d"
 
 "vtex.native-types@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types":
   version "0.8.0"

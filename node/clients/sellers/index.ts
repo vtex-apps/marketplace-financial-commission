@@ -40,7 +40,7 @@ export default class SellersIO extends AppGraphQLClient {
     })
   }
 
-  public seller =  async (): Promise<any> => {
+  public sellers =  async (): Promise<any> => {
 
     const dataBody = {
       "items": [

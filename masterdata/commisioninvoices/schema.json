@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "SellersDashboard",
+  "type": "object",
+  "properties": {
+    "invoiceId": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["unready", "ready", "unpaid", "paid"]
+    },
+    "invoiceCreateDate": {
+      "type": "string"
+    },
+    "invoiceDueDate": {
+      "type": "string"
+    },
+    "sellerData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "contact": {
+          "type": "object",
+          "properties": {
+            "phone": {
+              "type": ["string", "null"]
+            },
+            "email": {
+              "type": "string"
+            }
+          }
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "postalCode": {
+              "type": ["string", "null"]
+            },
+            "city": {
+              "type": ["string", "null"]
+            },
+            "state": {
+              "type": ["string", "null"]
+            },
+            "country": {
+              "type": ["string", "null"]
+            },
+            "street": {
+              "type": ["string", "null"]
+            },
+            "number": {
+              "type": ["string", "null"]
+            }
+          }
+        },
+        "comment": {
+          "type": "string"
+        }
+      }
+    },
+    "orders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          },
+          "commission": {
+            "type": "number"
+          },
+          "totalOrderRate": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "totalizers": {
+      "type": "object",
+      "properties": {
+        "subtotal": {
+          "type": "number"
+        },
+        "fee": {
+          "type": ["string", "null"]
+        },
+        "total": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "v-default-fields": ["id", "status", "invoiceCreateDate", "invoiceDueDate"],
+  "v-indexed": ["id", "status", "invoiceCreateDate", "invoiceDueDate"],
+  "v-cache": false,
+  "v-security": {
+    "publicJsonSchema": true,
+    "allowGetAll": true,
+    "publicRead": ["id", "status", "invoiceCreateDate", "invoiceDueDate"],
+    "publicWrite": ["status", "invoiceCreateDate", "invoiceDueDate"],
+    "publicFilter": ["id", "status", "invoiceCreateDate", "invoiceDueDate"]
+  }
+}

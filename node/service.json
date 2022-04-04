@@ -26,6 +26,18 @@
     "searchStatisticsDashboard": {
       "path": "/_v/dashboard/statistics/search",
       "public": true
+    },
+    "singleInvoice": {
+      "path": "/_v/financial-commission/invoice/:id",
+      "public": true
+    },
+    "invoicesBySeller": {
+      "path": "/_v/financial-commission/invoice/seller/:seller",
+      "public": true
+    },
+    "generateInvoices": {
+      "path": "/_v/financial-commission/generate-invoices",
+      "public": true
     }
   }
 }

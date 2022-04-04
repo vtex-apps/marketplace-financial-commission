@@ -1,17 +1,14 @@
 import type { ParamsContext, RecorderState } from '@vtex/api'
-import { Service, method } from '@vtex/api'
+import { Service } from '@vtex/api'
 
-import type { Clients } from './clients'
 import clients from './clients'
-import { generate } from './middlewares/dashboard/generate'
-import { searchSellers } from './middlewares/dashboard/searchSellers'
-import { searchStatistics } from './middlewares/dashboard/searchStatistics'
-import { sellers } from './middlewares/sellers/sellers'
-import { sellersResponse } from './middlewares/sellers/sellersresponse'
+import type { Clients } from './clients'
 import { queries /* , mutations */ } from './resolvers'
+import { routes } from './routes'
 
 export default new Service<Clients, RecorderState, ParamsContext>({
   clients,
+  routes,
   graphql: {
     resolvers: {
       Query: {
@@ -21,19 +18,5 @@ export default new Service<Clients, RecorderState, ParamsContext>({
         ...mutations,
       }, */,
     },
-  },
-  routes: {
-    sellers: method({
-      GET: [sellers, sellersResponse],
-    }),
-    generateDashboard: method({
-      GET: [sellers, generate],
-    }),
-    searchSellersDashboard: method({
-      GET: [searchSellers],
-    }),
-    searchStatisticsDashboard: method({
-      GET: [searchStatistics],
-    }),
   },
 })

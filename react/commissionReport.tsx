@@ -10,20 +10,14 @@ import {
   IconInfo
 } from 'vtex.styleguide'
 import { useLazyQuery } from 'react-apollo'
-
-
 import { useRuntime } from 'vtex.render-runtime'
 import type { InjectedIntlProps } from 'react-intl'
 import { injectIntl } from 'react-intl'
 import { formatIOMessage } from 'vtex.native-types'
 import { message } from './utils/definedMessages'
-import TableComponent from './components/Dashboard/Table/Tablev2'
-import Totalizer from './components/Dashboard/Totalizer'
-import Filter from './components/Dashboard/Filter'
-import SettingsDashboard from './components/Dashboard/SettingsDashboard'
-import { tempSellers }  from './dataTest'
-import SELLERS from './graphql/queries/getSellers.graphql'
-import STATS from './graphql/queries/getStats.graphql'
+import { TableComponent, Totalizer, Filter, SettingsDashboard} from './components'
+import { GETSELLERS, STATS, DASHBOARD } from './graphql'
+
 
 
 export const schemaTable = [
@@ -99,7 +93,12 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
     pollInterval: 5000,
   })
 
-  const [sellers, { data: dataSellers }] = useLazyQuery(SELLERS, {
+  const [sellers, { data: dataSellers }] = useLazyQuery(GETSELLERS, {
+    ssr: false,
+    pollInterval: 5000,
+  })
+
+  const [dashboard, { data: dataDashboard }] = useLazyQuery(DASHBOARD, {
     ssr: false,
     pollInterval: 5000,
   })
@@ -114,14 +113,15 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
     const defaultFinal = defaultDate.getFullYear() + "-" + (defaultDate.getMonth() + 1) + "-" + dateDefault
     setStartDate(defaultStartString)
     setFinalDate(defaultFinal)
-    console.log('inicial date ', defaultStartString, ' Last date ', defaultFinal)
 
     stats()
     sellers()
+    dashboard()
 
-    console.log('dataSellers ', dataSellers)
+    setSellersDashboard(false)
 
     if(dataStats){
+
       setStatsTotalizer([
         {
           label: 'Number of Sellers',
@@ -149,24 +149,27 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
         },
       ])
     }
-  }, [dataStats])
 
-  useEffect(() => {
-    setSellerSelect(tempSellers)
-    setSellersDashboard(false)
-
-    let builtSelectSeller:any = []
-
-    tempSellers.data.sellers.item.forEach((seller:any) => {
-      builtSelectSeller.push({
-        value: { id: seller.id, name: seller.name },
-        label: seller.name
+    if(dataSellers){
+      let builtSelectSeller:any = []
+      dataSellers.getSellers.items.forEach((seller:any) => {
+        builtSelectSeller.push({
+          value: { id: seller.id, name: seller.name },
+          label: seller.name
+        })
       })
-    })
 
-    setOptionsSelect(builtSelectSeller)
+      setOptionsSelect(builtSelectSeller)
+      setSellerSelect(dataSellers.getSellers)
 
-  }, [])
+    }
+
+    console.log('dataDashboard ', dataDashboard)
+
+  }, [dataStats, dataSellers, dataDashboard])
+
+
+
 
   return (
     <Layout>

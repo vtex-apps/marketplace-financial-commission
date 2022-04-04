@@ -3,6 +3,6 @@ type Query {
   Retrieve all onboarded sellers
   """
   dashboard: Dashboards @cacheControl(scope: PUBLIC, maxAge: LONG)
-  sellers: Sellers @cacheControl(scope: PUBLIC, maxAge: LONG)
+  getSellers: Sellers @cacheControl(scope: PUBLIC, maxAge: LONG)
   stats: Stats @cacheControl(scope: PUBLIC, maxAge: LONG)
 }

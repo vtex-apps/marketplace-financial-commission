@@ -1,5 +1,5 @@
-query sellers {
-  sellers{
+query getSellers {
+  getSellers{
     items{
       id
       name

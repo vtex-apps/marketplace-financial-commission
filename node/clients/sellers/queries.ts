@@ -1,6 +1,6 @@
-export const SELLERS = `
-query sellers {
-  sellers{
+export const GETSELLERS = `
+query getSellers {
+  getSellers{
     items{
       id
       name

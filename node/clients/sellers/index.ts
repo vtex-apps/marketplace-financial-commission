@@ -6,9 +6,9 @@ import type {
 } from '@vtex/api'
 import { AppGraphQLClient } from '@vtex/api'
 
-import { SELLERS } from './queries'
+import { GETSELLERS } from './queries'
 
-console.log('GET_SELLERS ', SELLERS)
+console.log('GET_SELLERS ', GETSELLERS)
 
 class CustomGraphQLError extends Error {
   public graphQLErrors: any
@@ -40,7 +40,7 @@ export default class SellersIO extends AppGraphQLClient {
     })
   }
 
-  public sellers =  async (): Promise<any> => {
+  public getSellers =  async (): Promise<any> => {
 
     const dataBody = {
       "items": [

@@ -10,6 +10,7 @@ import { message } from './utils/definedMessages'
 import TableComponent from './components/Dashboard/Table'
 import Filter from './components/Dashboard/Filter'
 import SettingsDashboard from './components/Dashboard/SettingsDashboard'
+import InvoiceTable from './components/Invoices/InvoiceTable'
 
 const CommissionReportDetail: FC<InjectedIntlProps> = ({ intl }) => {
   const { culture } = useRuntime()
@@ -43,7 +44,7 @@ const CommissionReportDetail: FC<InjectedIntlProps> = ({ intl }) => {
     <Layout fullWidth>
       <div className="mt9 mb9">
         <h1 style={{ color: '#3F3F40', fontSize: '35px' }}>
-          {formatIOMessage({ id: message.title.id, intl }).toString()}
+          {formatIOMessage({ id: message.detailTitle.id, intl }).toString()}
         </h1>
       </div>
       <div className="flex">
@@ -121,11 +122,7 @@ const CommissionReportDetail: FC<InjectedIntlProps> = ({ intl }) => {
           >
             <div className="mt5">
               <PageBlock>
-                <TableComponent
-                  schemaTable={tempColumns}
-                  itemTable={[]}
-                  actions={[]}
-                />
+                <InvoiceTable />
               </PageBlock>
             </div>
           </Tab>

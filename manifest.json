@@ -17,7 +17,8 @@
     "vtex.sellers-graphql": "8.x",
     "vtex.styleguide": "9.x",
     "vtex.render-runtime": "8.x",
-    "vtex.native-types": "0.x"
+    "vtex.native-types": "0.x",
+    "vtex.format-currency": "0.x"
   },
   "registries": ["smartcheckout"],
   "credentialType": "absolute",

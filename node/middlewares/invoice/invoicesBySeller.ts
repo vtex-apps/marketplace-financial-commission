@@ -1,4 +1,4 @@
-// import { MOCK_INVOICES } from './__mocks__/getInvoice'
+import { MOCK_INVOICES } from '../../mocks/invoices'
 
 /**
  * @description Retrieves all the invoices of a given seller.
@@ -27,7 +27,7 @@ export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
   }) */
 
   ctx.status = 200
-  ctx.body = 'MOCK_INVOICES'
+  ctx.body = MOCK_INVOICES
 
   await next()
 }

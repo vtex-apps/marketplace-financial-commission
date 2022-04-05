@@ -1,0 +1,3 @@
+query SELLER_INVOICES {
+  invoices: getInvoicesBySeller(seller: "test")
+}

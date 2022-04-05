@@ -8,8 +8,13 @@ import { unificationSellers } from './unificationSellers'
 export async function searchSellers(ctx: Context, next: () => Promise<any>) {
   const {
     clients: { sellersDashboardClientMD, vbase },
-    query: { dateStart, dateEnd, sellerId, page, pageSize },
   } = ctx
+
+  const dateStart = ctx.query.dateStart as string
+  const dateEnd = ctx.query.dateEnd as string
+  const sellerId = ctx.query.sellerId as string
+  const page = Number(ctx.query.page)
+  const pageSize = Number(ctx.query.pageSize)
 
   await validationParams('Sellers', ctx.query)
 

@@ -2,8 +2,8 @@ import type { ClientsConfig } from '@vtex/api'
 import type {
   SellersDashboard,
   StatisticsDashboard,
-  CommissionInvoices,
-} from 'vtex.marketplace-financial-commission'
+  CommisionInvoice,
+} from 'vtex.marketplace-financial-commision'
 import { IOClients, LRUCache } from '@vtex/api'
 import { masterDataFor } from '@vtex/clients'
 
@@ -36,7 +36,7 @@ export class Clients extends IOClients {
   public get commissionInvoices() {
     return this.getOrSet(
       'commission-invoices',
-      masterDataFor<CommissionInvoices>('Invoices')
+      masterDataFor<CommisionInvoice>('Invoices')
     )
   }
 }

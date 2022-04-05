@@ -1,4 +1,4 @@
-import { getDatesInvoiced } from '../../utils'
+import { getDatesInvoiced } from '../../../utils'
 
 export async function orderListInvoicedBySeller(
   ctx: Context,

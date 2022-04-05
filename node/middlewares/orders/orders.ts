@@ -1,3 +1,4 @@
+import { validationParams } from '../validationParams'
 import { orderDetailCommission } from './orderDetailCommission'
 import { orderListSeller } from './orderListSeller'
 
@@ -5,6 +6,8 @@ export async function orders(ctx: Context, next: () => Promise<Sellers>) {
   const {
     query: { sellerName, dateStart, dateEnd, page, perpage },
   } = ctx
+
+  await validationParams('Orders', ctx.query)
 
   const listOrders = await orderListSeller(
     ctx,

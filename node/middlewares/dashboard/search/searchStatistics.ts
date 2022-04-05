@@ -1,4 +1,4 @@
-import type { StatisticsDashboard } from 'vtex.marketplace-financial-commision'
+import type { StatisticsDashboard } from 'vtex.marketplace-financial-commission'
 
 import { validationParams } from '../../validationParams'
 

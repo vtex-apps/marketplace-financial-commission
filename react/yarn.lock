@@ -5076,9 +5076,9 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-"vtex.marketplace-financial-commission@https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1649181267/public/@types/vtex.marketplace-financial-commission":
+"vtex.marketplace-financial-commission@https://raphael--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1649195161/public/@types/vtex.marketplace-financial-commission":
   version "0.0.1"
-  resolved "https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1649181267/public/@types/vtex.marketplace-financial-commission#92c3c4ad458a498f83d36f1e44aaa6cae52752a1"
+  resolved "https://raphael--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1649195161/public/@types/vtex.marketplace-financial-commission#598017afdb8218a67425903de862e87ea1006bb0"
 
 "vtex.native-types@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types":
   version "0.8.0"

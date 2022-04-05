@@ -4,6 +4,7 @@ import { IOClients, LRUCache } from '@vtex/api'
 import DashboardIO from './dashboard'
 import SellerIO from './sellers'
 import StatsIO from './stats'
+import OrdersIO from './orders'
 
 export class Clients extends IOClients {
   public get DashboardIO() {
@@ -16,6 +17,10 @@ export class Clients extends IOClients {
 
   public get StatsIO() {
     return this.getOrSet('SellerIO', StatsIO)
+  }
+
+  public get OrdersIO() {
+    return this.getOrSet('OrdersIO', OrdersIO)
   }
 }
 

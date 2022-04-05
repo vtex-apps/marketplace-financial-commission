@@ -149,12 +149,13 @@ const CommissionReport: FC= () => {
 
   return (
     <Layout
+      fullWidth
       pageHeader={
         <PageHeader
           title={
             <FormattedMessage id="admin/navigation.title" />
           }
-        />
+       />
       }>
       <div>
         <SettingsDashboard openModal={openModal} setOpenModal={setOpenModal} />

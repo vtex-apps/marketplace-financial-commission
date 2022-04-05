@@ -1,9 +1,6 @@
 import type { FC } from 'react'
 import React, { useState } from 'react'
-import type { InjectedIntlProps } from 'react-intl'
-import { injectIntl } from 'react-intl'
-import { formatIOMessage } from 'vtex.native-types'
-
+import { FormattedMessage  } from 'react-intl'
 import {
   EXPERIMENTAL_Select as Select,
   DatePicker,
@@ -12,10 +9,9 @@ import {
 } from 'vtex.styleguide'
 
 import { addDays } from 'date-fns'
-import { message } from '../../../utils/definedMessages'
 import styles from '../../../styles.css'
 
-const Filter: FC<FilterProps & InjectedIntlProps> = (props) => {
+const Filter: FC<FilterProps> = (props) => {
 
   const [dataFilter, setDataFilter] = useState([])
 
@@ -61,7 +57,7 @@ const Filter: FC<FilterProps & InjectedIntlProps> = (props) => {
       <div className={`${styles.filter_container} w-30 mr4`}>
         <Select
           multi
-          label={formatIOMessage({id: message.selectSeller.id, intl: props.intl,}).toString()}
+          label={<FormattedMessage id="admin/table.title-seller-label" />}
           options={props.optionsSelect}
           onChange={(values: any) => setDataFilter(values)}
         />
@@ -69,14 +65,14 @@ const Filter: FC<FilterProps & InjectedIntlProps> = (props) => {
       <div className={`${styles.filter_container} w-20 mr4`}>
         <Select
           multi
-          label={formatIOMessage({id: message.selectItems.id, intl: props.intl,}).toString()}
+          label={<FormattedMessage id="admin/table.title-items-label" />}
           options={[]}
           onChange={(values: any) => {console.info('values ', values)}}
         />
       </div>
       <div className={`${styles.filter_container} w-20 mr4`}>
         <DatePicker
-          label={formatIOMessage({id: message.startPicker.id, intl: props.intl,}).toString()}
+          label={<FormattedMessage id="admin/table.title-datepicker-start" />}
           value={props.startDatePicker}
           maxDate={addDays(new Date(), -1)}
           onChange={(start: any) => changeStartDate(start)}
@@ -85,7 +81,7 @@ const Filter: FC<FilterProps & InjectedIntlProps> = (props) => {
       </div>
       <div className={`${styles.filter_container} w-20 mr4`}>
         <DatePicker
-          label={formatIOMessage({id: message.endPicker.id, intl: props.intl,}).toString()}
+          label={<FormattedMessage id="admin/table.title-datepicker-final" />}
           value={props.finalDatePicker}
           maxDate={addDays(new Date(), -1)}
           onChange={(final: any) => changeFinalDate(final)}
@@ -99,12 +95,12 @@ const Filter: FC<FilterProps & InjectedIntlProps> = (props) => {
           variation="primary"
           onClick={() => changesValuesTable()}
         >
-          {formatIOMessage({id: message.filter.id, intl: props.intl,}).toString()}
+          {<FormattedMessage id="admin/table.title-filter" />}
         </ButtonWithIcon>
       </div>
     </div>
   )
 }
 
-export default injectIntl(Filter)
+export default Filter
 

@@ -44,13 +44,14 @@ declare global {
   }
 
   interface ParamsListOrders {
-    fStatus: string
+    fStatus?: string
     fieldDate: string
     fieldDateStart: string
     fieldDateEnd: string
     sellerName: string
     orderBy: string
     page: number
+    perpage?: number
   }
 }
 

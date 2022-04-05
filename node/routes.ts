@@ -5,6 +5,7 @@ import { searchSellers } from './middlewares/dashboard/searchSellers'
 import { searchStatistics } from './middlewares/dashboard/searchStatistics'
 import { sellers } from './middlewares/sellers/sellers'
 import { sellersResponse } from './middlewares/sellers/sellersresponse'
+import { orders } from './middlewares/orders/orders'
 import {
   getInvoice,
   invoicesBySeller,
@@ -34,6 +35,9 @@ const routes = {
   }),
   generateInvoices: method({
     GET: [generateInvoices],
+  }),
+  orders: method({
+    GET: [orders],
   }),
 }
 

@@ -5,6 +5,14 @@ export const message = defineMessages({
     defaultMessage: '',
     id: 'admin/navigation.title',
   },
+  dashboardTitle: {
+    defaultMessage: '',
+    id: 'admin/navigation.dashboard-title',
+  },
+  detailTitle: {
+    defaultMessage: '',
+    id: 'admin/navigation.detail-title',
+  },
   sellerName: {
     defaultMessage: '',
     id: 'admin/table.title-sellers',

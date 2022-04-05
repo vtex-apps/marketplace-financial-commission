@@ -1,5 +1,6 @@
 import { getSellers } from './getSellers'
+import { getInvoicesBySeller } from './getInvoicesBySeller'
 
-export const queries = { getSellers }
+export const queries = { getInvoicesBySeller, getSellers }
 
 export const mutations = {}

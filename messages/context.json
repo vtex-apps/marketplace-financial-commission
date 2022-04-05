@@ -1,5 +1,7 @@
 {
-  "admin/navigation.title": "Dashboard Main Title ",
+  "admin/navigation.section-title": "Commission Report",
+  "admin/navigation.dashboard-title": "Dashboard",
+  "admin/navigation.detail-title": "Detailed records",
   "admin/table.title-sellers": "Title table to identify seller",
   "admin/table.title-orders": "Title table to identify orders",
   "admin/table.title-total-order": "Title table to identify total orders",
@@ -33,5 +35,3 @@
   "admin/title-modal-send": "Title to button send of modal settings",
   "admin/title-modal-cancel": "Title to button cancel of modal settings"
 }
-
-

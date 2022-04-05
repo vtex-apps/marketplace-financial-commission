@@ -2,7 +2,7 @@
 import type {
   SellersDashboard,
   StatisticsDashboard,
-} from 'vtex.marketplace-financial-commision'
+} from 'vtex.marketplace-financial-commission'
 
 import { getDatesInvoiced } from '../../../utils'
 import { calculateSellers } from './calculateSellers'

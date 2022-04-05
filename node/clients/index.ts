@@ -3,7 +3,7 @@ import type {
   SellersDashboard,
   StatisticsDashboard,
   CommisionInvoice,
-} from 'vtex.marketplace-financial-commision'
+} from 'vtex.marketplace-financial-commission'
 import { IOClients, LRUCache } from '@vtex/api'
 import { masterDataFor } from '@vtex/clients'
 

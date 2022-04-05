@@ -1,5 +1,7 @@
 {
-  "admin/navigation.title": "Commission Report Dashboard",
+  "admin/navigation.section-title": "Commission Report",
+  "admin/navigation.dashboard-title": "Dashboard",
+  "admin/navigation.detail-title": "Detailed records",
   "admin/table.title-sellers": "Seller name",
   "admin/table.title-orders": "Orders",
   "admin/table.title-total-order": "Total Orders",

@@ -20,9 +20,14 @@
     "vtex.native-types": "0.x",
     "vtex.format-currency": "0.x"
   },
-  "registries": ["smartcheckout"],
+  "registries": [
+    "smartcheckout"
+  ],
   "credentialType": "absolute",
   "policies": [
+    {
+      "name": "template-criar"
+    },
     {
       "name": "vbase-read-write"
     },

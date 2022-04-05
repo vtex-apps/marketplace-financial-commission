@@ -1,1 +1,60 @@
 scalar Sellers
+scalar DashboardsGRP
+type DashboardsGRPT {
+  dateCut: String
+  dateStart: String
+  dateEnd: String
+  sellers: [SellersDashboardGRP]
+  statistics: StatsSellerGRP
+  paging: PagingGRP
+}
+
+type SellersDashboardGRP {
+  id: String
+  name: String
+  account: String
+  statistics: StatsSellerGRP
+}
+
+type StatsSellerGRP {
+  dateInvoiced: String
+  ordersCount: Int
+  totalComission: Float
+  totalOrderValue: Float
+  outstandingBalance: Int
+}
+
+type PagingGRP {
+  currentPage: Int
+  totalPages: Int
+}
+
+type PagingSellerGRP {
+  total: Int
+}
+
+type SellersGRP {
+  items: [DataSellerGRP]
+  paging: PagingSellerGRP
+}
+
+type DataSellerGRP {
+  id: String
+  name: String
+  account: String
+  productCommissionPercentage: Int
+  freightCommissionPercentage: Int
+  isActive: Boolean
+}
+
+type StatsGRP {
+  dateStart: String
+  dateEnd: String
+  statistics: statisticsStatsGRP
+}
+
+type statisticsStatsGRP {
+  ordersCount: Int
+  totalComission: Float
+  totalOrderValue: Float
+}

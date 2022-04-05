@@ -1,15 +1,6 @@
 {
-  "extends": ["vtex-react"],
+  "extends": "vtex",
   "root": true,
-  "rules": {
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto"
-      }
-    ],
-    "@typescript-eslint/no-explicit-any": 0
-  },
   "env": {
     "node": true
   }

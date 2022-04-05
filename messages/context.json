@@ -1,31 +1,11 @@
 {
   "admin/navigation.title": "Dashboard Main Title ",
-  "admin/table.title-sellers": "Title table to identify seller",
-  "admin/table.title-orders": "Title table to identify orders",
-  "admin/table.title-total-order": "Title table to identify total orders",
-  "admin/table.title-total-amount": "Title table to identify total amount",
-  "admin/table.title-total-commission": "Title table to identify total commission",
-  "admin/table.title-outstading-balance": "Title table to identify Outstanding balance",
-  "admin/table.title-actions": "Title table to identify Actions",
-  "admin/table.title-number-sellers": "Title table to identify Number of Sellers",
-  "admin/table.title-invoiced": "Title table to identify Invoiced Date",
-  "admin/table.title-rate": "Title table to identify Rate",
-  "admin/table.title-status": "Title table to identify Status",
-  "admin/table.title-invoice": "Title table to identify Invoice",
-  "admin/table.title-due-date": "Title table to identify Due Date",
-  "admin/table.title-due-total": "Title table to identify Total Due",
   "admin/table.title-seller-label": "Title of table filter to identify Choose seller name",
   "admin/table.title-items-label": "Title of table filter to identify other items",
   "admin/table.title-datepicker-start": "Title of table filter to identify Start Date",
   "admin/table.title-datepicker-final": "Title of table filter to identify Final Date",
   "admin/table.title-filter": "Title of table filter to identify Filter",
   "admin/table.title-tab-commission": "Title tab to identify Commissions",
-  "admin/table.title-btn-create": "Create Invoice",
-  "admin/table.title-totalizer-sellers": "Title table to identify Orders Sellers",
-  "admin/table.title-order": "Title table to identify Total Order",
-  "admin/table.title-order-creation": "Title table to identify Order Creation Date",
-  "admin/table.title-table-rows": "Title table to identify Show rows",
-  "admin/table.title-table-text": "Title table to identify of",
   "admin/table.title-tab-invoices": "Title tab to Invoices",
   "admin/title-billing-cycle": "Title to info bar to identify Billing Cycle:",
   "admin/title-netx-billing": "Title to info bar to identify Next Billing:",
@@ -33,5 +13,3 @@
   "admin/title-modal-send": "Title to button send of modal settings",
   "admin/title-modal-cancel": "Title to button cancel of modal settings"
 }
-
-

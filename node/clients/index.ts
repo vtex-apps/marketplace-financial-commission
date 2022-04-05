@@ -9,6 +9,7 @@ import { masterDataFor } from '@vtex/clients'
 
 import { OrdersClient } from './orders'
 import SellersIO from './sellers'
+import DashboardIO from './dashboard'
 
 export class Clients extends IOClients {
   public get sellersIO() {
@@ -39,9 +40,14 @@ export class Clients extends IOClients {
       masterDataFor<CommisionInvoice>('Invoices')
     )
   }
+
+  public get DashboardIO() {
+    return this.getOrSet('DashboardIO', DashboardIO)
+  }
 }
 
 const TIMEOUT_MS = 20000
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const memoryCache = new LRUCache<string, any>({ max: 5000 })
 
 metrics.trackCache('financial-commission', memoryCache)

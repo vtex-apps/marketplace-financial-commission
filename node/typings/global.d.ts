@@ -8,6 +8,7 @@ declare global {
     workflowInstance: string
     message: string
     exception?: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     request?: any
   }
 
@@ -53,6 +54,14 @@ declare global {
     page: number
     perpage?: number
   }
+  interface Stats {
+    dateStart: string
+    dateEnd: string
+    statistics: StatisticsStats
+  }
+  interface StatisticsStats {
+    ordersCount: number
+    totalComission: number
+    totalOrderValue: number
+  }
 }
-
-export {}

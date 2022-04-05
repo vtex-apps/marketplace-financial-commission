@@ -2,7 +2,7 @@
   "stack": "nodejs",
   "memory": 512,
   "ttl": 60,
-  "timeout": 30,
+  "timeout": 60,
   "minReplicas": 2,
   "maxReplicas": 12,
   "cpu": {
@@ -37,6 +37,10 @@
     },
     "generateInvoices": {
       "path": "/_v/financial-commission/generate-invoices",
+      "public": true
+    },
+    "orders": {
+      "path": "/_v/orders",
       "public": true
     }
   }

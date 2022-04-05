@@ -8,10 +8,15 @@ import { masterDataFor } from '@vtex/clients'
 
 import { OrdersClient } from './orders'
 import SellersIO from './sellers'
+import Template from './template'
 
 export class Clients extends IOClients {
   public get sellersIO() {
     return this.getOrSet('sellersIO', SellersIO)
+  }
+
+  public get template() {
+    return this.getOrSet('template', Template)
   }
 
   public get ordersClient() {

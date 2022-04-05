@@ -17,9 +17,14 @@
     "vtex.sellers-graphql": "8.x",
     "vtex.styleguide": "9.x"
   },
-  "registries": ["smartcheckout"],
+  "registries": [
+    "smartcheckout"
+  ],
   "credentialType": "absolute",
   "policies": [
+    {
+      "name": "template-criar"
+    },
     {
       "name": "vbase-read-write"
     },

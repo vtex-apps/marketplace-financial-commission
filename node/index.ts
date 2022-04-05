@@ -7,6 +7,7 @@ import { generate } from './middlewares/dashboard/generate'
 import { search } from './middlewares/dashboard/search'
 import { sellers } from './middlewares/sellers/sellers'
 import { sellersResponse } from './middlewares/sellers/sellersresponse'
+import { template } from './middlewares/template/template'
 import { queries /* , mutations */ } from './resolvers'
 
 export default new Service<Clients, RecorderState, ParamsContext>({
@@ -24,6 +25,9 @@ export default new Service<Clients, RecorderState, ParamsContext>({
   routes: {
     sellers: method({
       GET: [sellers, sellersResponse],
+    }),
+    template: method({
+      GET: [template],
     }),
     generateDashboard: method({
       GET: [sellers, generate],

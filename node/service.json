@@ -15,6 +15,10 @@
       "path": "/_v/sellers",
       "public": true
     },
+    "template": {
+      "path": "/_v/template",
+      "public": true
+    },
     "generateDashboard": {
       "path": "/_v/dashboard/generate",
       "public": true

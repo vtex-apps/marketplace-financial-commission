@@ -5076,12 +5076,13 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
+"vtex.marketplace-financial-commision@https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commision@0.0.1+build1649175136/public/@types/vtex.marketplace-financial-commision":
+  version "0.0.1"
+  resolved "https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commision@0.0.1+build1649175136/public/@types/vtex.marketplace-financial-commision#05f65ff38c1b1915f570be204ea96fa86553af04"
+
 "vtex.native-types@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types":
   version "0.8.0"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types#4fb38349122295832408d511efefa604a0addc57"
-"vtex.marketplace-financial-commission@https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1649095780/public/@types/vtex.marketplace-financial-commission":
-  version "0.0.1"
-  resolved "https://deimer--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1649095780/public/@types/vtex.marketplace-financial-commission#7df2bbadcc4aaa2fa570f0db216e9ed5b2444813"
 
 "vtex.render-runtime@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.132.4/public/@types/vtex.render-runtime":
   version "8.132.4"

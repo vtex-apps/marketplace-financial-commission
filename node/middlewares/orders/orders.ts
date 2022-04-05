@@ -3,9 +3,11 @@ import { orderDetailCommission } from './orderDetailCommission'
 import { orderListSeller } from './orderListSeller'
 
 export async function orders(ctx: Context, next: () => Promise<Sellers>) {
-  const {
-    query: { sellerName, dateStart, dateEnd, page, perpage },
-  } = ctx
+  const dateStart = ctx.query.dateStart as string
+  const dateEnd = ctx.query.dateEnd as string
+  const sellerName = ctx.query.sellerName as string
+  const page = Number(ctx.query.page)
+  const perpage = Number(ctx.query.perpage)
 
   await validationParams('Orders', ctx.query)
 

@@ -212,3 +212,5 @@ export const MOCK_INVOICES = [
     },
   },
 ]
+
+export {}

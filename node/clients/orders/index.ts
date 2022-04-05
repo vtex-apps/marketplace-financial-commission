@@ -14,9 +14,12 @@ const routes = {
       sellerName,
       orderBy,
       page,
+      perpage,
     } = params
 
-    return `${baseURL}?f_status=${fStatus}&f_${fieldDate}=${fieldDate}:[${fieldDateStart} TO ${fieldDateEnd}]&f_sellerNames=${sellerName}&orderBy=${orderBy},desc&page=${page}&per_page=100`
+    return `${baseURL}?f_status=${fStatus}&f_${fieldDate}=${fieldDate}:[${fieldDateStart} TO ${fieldDateEnd}]&f_sellerNames=${sellerName}&orderBy=${orderBy},desc&page=${page}&per_page=${
+      perpage ?? 100
+    }`
   },
 }
 

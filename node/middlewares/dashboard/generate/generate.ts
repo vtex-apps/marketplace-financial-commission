@@ -2,9 +2,9 @@
 import type {
   SellersDashboard,
   StatisticsDashboard,
-} from 'vtex.marketplace-financial-commission'
+} from 'vtex.marketplace-financial-commision'
 
-import { getDatesInvoiced } from '../../utils'
+import { getDatesInvoiced } from '../../../utils'
 import { calculateSellers } from './calculateSellers'
 
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
@@ -26,42 +26,19 @@ export async function generate(ctx: Context, next: () => Promise<Dashboards>) {
     statistics: { ordersCount, totalComission, totalOrderValue },
   } = responseCalculateSellers
 
-  const multiplier = 20
-  let page = 1
-  let lastSeller = false
-  const totalPage = Math.round(sellersDashboard.length / 20 + 1)
-  const responseGenerateSellers = []
-
-  while (!lastSeller) {
-    const initialOffset = (page - 1) * multiplier
-    const sellersDashboardOffset = sellersDashboard.slice(
-      initialOffset,
-      page * multiplier
-    )
-
-    if (sellersDashboardOffset.length === 0) {
-      lastSeller = true
-      break
-    }
-
-    const dashboard: SellersDashboard = {
-      dateCut,
-      sellers: sellersDashboardOffset as [],
-    }
-
-    const dashboardWithId = {
-      id: `DSH-${ctx.vtex.account}-${getDates.formattedDate}-Page_${page}to${totalPage}`,
-      ...dashboard,
-    }
-
-    const dashboardSave = await sellersDashboardClientMD.saveOrUpdate(
-      dashboardWithId
-    )
-
-    responseGenerateSellers.push(dashboardSave)
-
-    page++
+  const dashboard: SellersDashboard = {
+    dateCut,
+    sellers: sellersDashboard as [],
   }
+
+  const dashboardWithId = {
+    id: `DSH-${ctx.vtex.account}-${getDates.formattedDate}`,
+    ...dashboard,
+  }
+
+  const dashboardSaveMD = await sellersDashboardClientMD.saveOrUpdate(
+    dashboardWithId
+  )
 
   const statsGeneral: StatisticsDashboard = {
     dateCut,
@@ -87,12 +64,8 @@ export async function generate(ctx: Context, next: () => Promise<Dashboards>) {
     responseStatistics = '304 Not Modified'
   }
 
-  // const responseStatistics = await statisticsDashboardClientMD.saveOrUpdate(
-  //   dashboardstatsWithId
-  // )
-
   const responseGenerateDashboard = {
-    Sellers: responseGenerateSellers,
+    Sellers: dashboardSaveMD,
     Statistics: responseStatistics,
   }
 

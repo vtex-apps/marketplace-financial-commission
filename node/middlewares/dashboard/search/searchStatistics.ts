@@ -1,4 +1,6 @@
-import type { StatisticsDashboard } from 'vtex.marketplace-financial-commission'
+import type { StatisticsDashboard } from 'vtex.marketplace-financial-commision'
+
+import { validationParams } from '../../validationParams'
 
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 export async function searchStatistics(ctx: Context, next: () => Promise<any>) {
@@ -6,6 +8,8 @@ export async function searchStatistics(ctx: Context, next: () => Promise<any>) {
     clients: { statisticsDashboardClientMD },
     query: { dateStart, dateEnd },
   } = ctx
+
+  await validationParams('Statistics', ctx.query)
 
   const pagination = {
     page: 1,

@@ -1,10 +1,11 @@
 import { method } from '@vtex/api'
 
-import { generate } from './middlewares/dashboard/generate'
-import { searchSellers } from './middlewares/dashboard/searchSellers'
-import { searchStatistics } from './middlewares/dashboard/searchStatistics'
+import { generate } from './middlewares/dashboard/generate/generate'
+import { searchSellers } from './middlewares/dashboard/search/searchSellers'
+import { searchStatistics } from './middlewares/dashboard/search/searchStatistics'
 import { sellers } from './middlewares/sellers/sellers'
 import { sellersResponse } from './middlewares/sellers/sellersresponse'
+import { orders } from './middlewares/orders/orders'
 import {
   getInvoice,
   invoicesBySeller,
@@ -34,6 +35,9 @@ const routes = {
   }),
   generateInvoices: method({
     GET: [generateInvoices],
+  }),
+  orders: method({
+    GET: [orders],
   }),
 }
 

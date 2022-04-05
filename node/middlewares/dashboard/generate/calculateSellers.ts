@@ -1,4 +1,3 @@
-import { getDatesInvoiced } from '../../utils'
 import { calculateCommissionByOrder } from './calculateCommissionByOrder'
 import { orderListInvoicedBySeller } from './orderListInvoicedBySeller'
 
@@ -13,7 +12,6 @@ export async function calculateSellers(
   sellers: Sellers
 ): Promise<CalculateSellers> {
   const sellersDashboard: SellersDashboard[] = []
-  const dateInvoiced = getDatesInvoiced()
   let ordersCountStats = 0
   let totalComissionStats = 0
   let totalOrderValueStats = 0
@@ -39,10 +37,10 @@ export async function calculateSellers(
       )
 
       const statsOrder: StatsSeller = {
-        dateInvoiced: dateInvoiced.formattedDate,
         ordersCount,
         totalComission,
         totalOrderValue: totalValueOrder,
+        outstandingBalance: 0, // TODO de donde obtener este valor
       }
 
       const sellersComission: SellersDashboard = {

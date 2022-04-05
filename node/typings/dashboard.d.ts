@@ -10,7 +10,11 @@ interface SellersDashboard {
   id: string
   name: string
   account: string
-  statistics: StatsSeller
+  statistics?: StatsSeller
+}
+
+interface UnificationSellersDashboard extends SellersDashboard {
+  statistics: StatsSeller[]
 }
 
 interface StatsSeller {
@@ -25,4 +29,17 @@ interface OrderComission {
   orderId: string
   totalComission: float
   totalOrderValue: float
+}
+
+interface ResultSearch {
+  dateStart: string
+  dateEnd: string
+  sellers: SellersDashboard[] | SellersDashboard
+  pagination: Pagination
+}
+
+interface Pagination {
+  currentPage: number
+  pageSize: number
+  totalPage: number
 }

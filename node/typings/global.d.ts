@@ -53,6 +53,27 @@ declare global {
     page: number
     perpage?: number
   }
+
+  interface SearchSellersServiceRequest {
+    dateStart: string
+    dateEnd: string
+    sellerId?: string
+    page: number
+    pageSize: number
+  }
+
+  interface SearchStatsServiceRequest {
+    dateStart: string
+    dateEnd: string
+  }
+
+  interface SearchOrdersServiceRequest {
+    dateStart: string
+    dateEnd: string
+    sellerName: string
+    page: number
+    perpage: number
+  }
 }
 
 export {}

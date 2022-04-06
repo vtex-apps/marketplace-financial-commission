@@ -1,62 +1,21 @@
-import type { StatisticsDashboard } from 'vtex.marketplace-financial-commission'
-
+import { searchStatisticsService } from '../../../services/searchStatisticsService'
 import { validationParams } from '../../validationParams'
 
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 export async function searchStatistics(ctx: Context, next: () => Promise<any>) {
-  const {
-    clients: { statisticsDashboardClientMD },
-    query: { dateStart, dateEnd },
-  } = ctx
+  const dateStart = ctx.query.dateStart as string
+  const dateEnd = ctx.query.dateEnd as string
 
   await validationParams('Statistics', ctx.query)
 
-  const pagination = {
-    page: 1,
-    pageSize: 100,
-  }
+  const searchStatsParms = { dateStart, dateEnd }
 
-  const where = `dateCut between ${dateStart} AND ${dateEnd}`
-
-  const responseSearchMD = await statisticsDashboardClientMD.searchRaw(
-    pagination,
-    ['dateCut,statistics'],
-    'createdIn',
-    where
+  const { status, statisticsDashboard } = await searchStatisticsService(
+    ctx,
+    searchStatsParms
   )
 
-  const statisticsArray = responseSearchMD.data as StatisticsDashboard[]
-
-  const ordersCount = statisticsArray.reduce(
-    (total, count) => (total += count.statistics.ordersCount),
-    0
-  ) as number
-
-  console.info({ ordersCount })
-
-  const totalComission = statisticsArray.reduce(
-    (total, comis) => (total += comis.statistics.totalComission),
-    0
-  )
-
-  const totalOrderValue = statisticsArray.reduce(
-    (total, value) => (total += value.statistics.totalOrderValue),
-    0
-  )
-
-  const statistics: StatsSeller = {
-    ordersCount,
-    totalComission,
-    totalOrderValue,
-  }
-
-  const statisticsDashboard = {
-    dateStart,
-    dateEnd,
-    statistics,
-  }
-
-  ctx.status = 200
+  ctx.status = status
   ctx.body = statisticsDashboard
   ctx.set('Cache-Control', 'no-cache ')
 

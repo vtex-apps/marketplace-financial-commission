@@ -1,6 +1,5 @@
+import { searchOrdersService } from '../../services/searchOrdersService'
 import { validationParams } from '../validationParams'
-import { orderDetailCommission } from './orderDetailCommission'
-import { orderListSeller } from './orderListSeller'
 
 export async function orders(ctx: Context, next: () => Promise<Sellers>) {
   const dateStart = ctx.query.dateStart as string
@@ -11,23 +10,14 @@ export async function orders(ctx: Context, next: () => Promise<Sellers>) {
 
   await validationParams('Orders', ctx.query)
 
-  const listOrders = await orderListSeller(
-    ctx,
-    sellerName,
-    dateStart,
-    dateEnd,
-    page,
-    perpage
+  const searchOrdersParams = { dateStart, dateEnd, sellerName, page, perpage }
+
+  const { status, resultDetail } = await searchOrdersService(
+    searchOrdersParams,
+    ctx
   )
 
-  const ordersDetailCommission = await orderDetailCommission(ctx, listOrders)
-
-  const resultDetail = {
-    data: ordersDetailCommission,
-    paging: listOrders.paging,
-  }
-
-  ctx.status = 200
+  ctx.status = status
   ctx.body = resultDetail
   ctx.set('Cache-Control', 'no-cache ')
 

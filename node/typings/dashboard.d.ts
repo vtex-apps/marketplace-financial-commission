@@ -43,3 +43,9 @@ interface Pagination {
   pageSize: number
   totalPage: number
 }
+
+interface StatisticsGeneralDashboard {
+  dateStart: string
+  dateEnd: string
+  statistics: StatsSeller
+}

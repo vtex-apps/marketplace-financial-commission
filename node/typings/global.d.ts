@@ -61,6 +61,19 @@ declare global {
     page: number
     pageSize: number
   }
+
+  interface SearchStatsServiceRequest {
+    dateStart: string
+    dateEnd: string
+  }
+
+  interface SearchOrdersServiceRequest {
+    dateStart: string
+    dateEnd: string
+    sellerName: string
+    page: number
+    perpage: number
+  }
 }
 
 export {}

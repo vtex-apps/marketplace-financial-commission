@@ -4,7 +4,7 @@ import { findSeller } from '../middlewares/dashboard/search/findSeller'
 import { unificationSellers } from '../middlewares/dashboard/search/unificationSellers'
 
 export const searchSellersService = async (
-  { dateStart, dateEnd, sellerId, page, pageSize }: SearchSellersServiceRequest,
+  searchDashboardParams: SearchSellersServiceRequest,
   ctx: Context
 ) => {
   const {
@@ -16,7 +16,7 @@ export const searchSellersService = async (
     pageSize: 100,
   }
 
-  console.info(sellerId)
+  const { dateStart, dateEnd, sellerId, page, pageSize } = searchDashboardParams
 
   const vbaseId = `${dateStart.replace('-', '').replace('-', '')}-${dateEnd
     .replace('-', '')

@@ -3,11 +3,24 @@ type Query {
   Retrieve all onboarded sellers
   """
   getSellers: Sellers @cacheControl(scope: PUBLIC, maxAge: LONG)
+
+  """
+  Retrieve marketplace dashboard in a date range
+  """
   searchSellersDashboard(
-    dateStart: String!
-    dateEnd: String!
-    sellerId: String
-    page: Int
-    pageSize: Int
-  ): ResultSearch @cacheControl(scope: PUBLIC, maxAge: LONG)
+    searchDashboardParams: SearchDashboardParams
+  ): SearchResponse @cacheControl(scope: PUBLIC, maxAge: LONG)
+
+  """
+  Retrieve Statistics General to marketplace in a date range
+  """
+  searchStatisticsDashboard(
+    searchStatsDashboardParams: SearchStatsDashboardParams
+  ): SearchStatsResponse @cacheControl(scope: PUBLIC, maxAge: LONG)
+
+  """
+  Retrieve orders to seller
+  """
+  orders(searchOrdersParams: SearchOrdersParams): SearchOrdersResponse
+    @cacheControl(scope: PUBLIC, maxAge: LONG)
 }

@@ -49,6 +49,7 @@ function isValidDate(dateString: string, name: string) {
 
   if (!regexDate.test(dateString)) {
     throw new CustomError(
+      400,
       validationMessage.ERROR_MESSAGE_DATE_FORMAT,
       {
         field: name,
@@ -66,6 +67,7 @@ function isValidDate(dateString: string, name: string) {
   // Check the ranges of month and year
   if (year < 1000 || year > 3000 || month === 0 || month > 12) {
     throw new CustomError(
+      400,
       validationMessage.ERROR_MESSAGE_DATE_RANGE_MONTH_AND_YEAR,
       {
         field: name,
@@ -86,6 +88,7 @@ function isValidDate(dateString: string, name: string) {
 
   if (!rangeday) {
     throw new CustomError(
+      400,
       validationMessage.ERROR_MESSAGE_DATE_RANGE_DAY,
       {
         field: name,
@@ -98,6 +101,7 @@ function isValidDate(dateString: string, name: string) {
 function isRequerid(value: string | number, name: string) {
   if (!value || value === '' || value === null) {
     throw new CustomError(
+      400,
       validationMessage.DEFAULT_ERRORMESSAGE_FIELD_IS_REQUIRED,
       {
         field: name,
@@ -111,7 +115,9 @@ class CustomError extends Error {
   public field: any
   public type: any
 
+  // eslint-disable-next-line max-params
   constructor(
+    public status: number,
     message: string,
     { field }: { field: string },
     { type }: { type: string }

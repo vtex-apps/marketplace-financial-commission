@@ -108,6 +108,8 @@ const CommissionReport: FC = () => {
     dashboard()
 
     if (dataStats) {
+      if (!dataStats.stats) return
+
       setStatsTotalizer([
         {
           label: 'Number of Sellers',

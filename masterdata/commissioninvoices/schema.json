@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema#",
-  "title": "CommisionInvoice",
+  "title": "CommissionInvoice",
   "type": "object",
   "properties": {
     "invoiceId": {

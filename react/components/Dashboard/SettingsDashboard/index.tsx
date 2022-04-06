@@ -1,20 +1,10 @@
 import type { FC } from 'react'
 import React from 'react'
-import type { InjectedIntlProps } from 'react-intl'
-import { injectIntl } from 'react-intl'
-import { formatIOMessage } from 'vtex.native-types'
-import {
-  ButtonWithIcon,
-  IconCog,
-  ModalDialog,
-} from 'vtex.styleguide'
+import { FormattedMessage } from 'react-intl'
+import { ButtonWithIcon, IconCog, ModalDialog } from 'vtex.styleguide'
 
-import { message } from '../../../utils/definedMessages'
-
-
-const SettingsDashboard: FC<SettingsProps & InjectedIntlProps> = (props) => {
-
-  return(
+const SettingsDashboard: FC<SettingsProps> = (props) => {
+  return (
     <div>
       <div style={{ textAlign: 'right' }}>
         <ButtonWithIcon
@@ -29,11 +19,11 @@ const SettingsDashboard: FC<SettingsProps & InjectedIntlProps> = (props) => {
           isOpen={props.openModal}
           confirmation={{
             onClick: () => {},
-            label: `${formatIOMessage({id: message.ModalSend.id, intl: props.intl,}).toString()}`,
+            label: `${(<FormattedMessage id="admin/title-modal-send" />)}`,
           }}
           cancelation={{
             onClick: () => props.setOpenModal(false),
-            label: `${formatIOMessage({id: message.ModalCancel.id, intl: props.intl,}).toString()}`,
+            label: `${(<FormattedMessage id="admin/title-modal-cancel" />)}`,
           }}
           onClose={() => props.setOpenModal(false)}
         >
@@ -44,4 +34,4 @@ const SettingsDashboard: FC<SettingsProps & InjectedIntlProps> = (props) => {
   )
 }
 
-export default injectIntl(SettingsDashboard)
+export default SettingsDashboard

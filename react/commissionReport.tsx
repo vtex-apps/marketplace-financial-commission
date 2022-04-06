@@ -1,70 +1,222 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FC } from 'react'
-import React, { useState } from 'react'
-import { Layout, PageBlock, IconShoppingCart } from 'vtex.styleguide'
+import React, { useState, useEffect } from 'react'
+import {
+  Layout,
+  PageBlock,
+  IconShoppingCart,
+  IconUser,
+  IconArrowUp,
+  IconInfo,
+  PageHeader,
+} from 'vtex.styleguide'
+import { useLazyQuery, useQuery } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
-import type { InjectedIntlProps } from 'react-intl'
-import { injectIntl } from 'react-intl'
-import { formatIOMessage } from 'vtex.native-types'
+import { FormattedMessage } from 'react-intl'
 
-import { message } from './utils/definedMessages'
-// import TableComponent from './components/Dashboard/Table'
-import TableComponent from './components/Dashboard/Table/Tablev2'
-import Totalizer from './components/Dashboard/Totalizer'
-import Filter from './components/Dashboard/Filter'
-import SettingsDashboard from './components/Dashboard/SettingsDashboard'
+import {
+  TableComponent,
+  Totalizer,
+  Filter,
+  SettingsDashboard,
+} from './components'
+import { GETSELLERS, STATS, DASHBOARD } from './graphql'
 
-const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
+export const schemaTable = [
+  {
+    id: 'name',
+    title: 'Seller name',
+    sortable: true,
+  },
+  {
+    id: 'dateInvoiced',
+    title: 'Date Invoiced',
+  },
+  {
+    id: 'ordersCount',
+    title: 'Total Orders',
+  },
+  {
+    id: 'totalComission',
+    title: 'Total commission',
+  },
+  {
+    id: 'totalOrderValue',
+    title: 'Total Amount Orders',
+  },
+  {
+    id: 'actions',
+    title: 'Actions',
+    cellRenderer: () => {},
+  },
+]
+
+const CommissionReport: FC = () => {
   const { culture } = useRuntime()
+
+  const [optionsSelect, setOptionsSelect] = useState<any>([])
   const [openModal, setOpenModal] = useState(false)
+  const [sellersDashboard, setSellersDashboard] = useState<any>([])
+  const [sellersDashboardFilter, setSellersDashboardFilter] = useState<any>([])
+  const [statsTotalizer, setStatsTotalizer] = useState<StatsTotalizer[]>([
+    {
+      label: '',
+      value: '',
+      iconBackgroundColor: '',
+    },
+  ])
+
+  const [startDate, setStartDate] = useState('')
+  const [finalDate, setFinalDate] = useState('')
+
+  const [stats, { data: dataStats }] = useLazyQuery(STATS, {
+    ssr: false,
+    pollInterval: 0,
+  })
+
+  const { data: dataSellers } = useQuery(GETSELLERS, {
+    ssr: false,
+    pollInterval: 0,
+  })
+
+  const [dashboard, { data: dataDashboard }] = useLazyQuery(DASHBOARD, {
+    ssr: false,
+    pollInterval: 0,
+  })
+
+  useEffect(() => {
+    const defaultDate = new Date()
+    const defaultStart = new Date(
+      defaultDate.getFullYear(),
+      defaultDate.getMonth(),
+      1
+    )
+
+    const defaultStartString =
+      `${defaultStart.getFullYear()}-${defaultStart.getMonth() + 1}-` + `01`
+
+    const valueDate = defaultDate.getDate() - 1
+    const dateDefault = valueDate <= 9 ? `0${valueDate}` : valueDate
+    const defaultFinal = `${defaultDate.getFullYear()}-${
+      defaultDate.getMonth() + 1
+    }-${dateDefault}`
+
+    setStartDate(defaultStartString)
+    setFinalDate(defaultFinal)
+
+    stats()
+    dashboard()
+
+    if (dataStats) {
+      setStatsTotalizer([
+        {
+          label: 'Number of Sellers',
+          value: dataDashboard ? dataDashboard.dashboard.sellers.length : 0,
+          iconBackgroundColor: '#EAFCE3',
+          icon: <IconUser color="#79B03A" size={18} />,
+        },
+        {
+          label: 'Total Orders',
+          value: dataStats.stats.statistics.ordersCount,
+          iconBackgroundColor: '#CCE8FF',
+          icon: <IconShoppingCart color="#368DF7" size={18} />,
+        },
+        {
+          label: 'Total Amount Orders',
+          value: dataStats.stats.statistics.totalOrderValue
+            .toFixed(2)
+            .toString(),
+          iconBackgroundColor: '#FFDCF8',
+          icon: <IconArrowUp color="#F67CC7" size={14} />,
+        },
+        {
+          label: 'Total Commission',
+          value: dataStats.stats.statistics.totalComission
+            .toFixed(2)
+            .toString(),
+          iconBackgroundColor: '#FFF0EC',
+          icon: <IconInfo color="#F7634A" size={14} />,
+        },
+      ])
+    }
+
+    if (dataSellers) {
+      const builtSelectSeller: any = []
+
+      dataSellers.getSellers.items.forEach((seller: any) => {
+        builtSelectSeller.push({
+          value: { id: seller.id, name: seller.name },
+          label: seller.name,
+        })
+      })
+
+      setOptionsSelect(builtSelectSeller)
+    }
+
+    // eslint-disable-next-line vtex/prefer-early-return
+    if (dataDashboard) {
+      const dataTableDashboard: any = []
+
+      dataDashboard.dashboard.sellers.forEach((item: any) => {
+        dataTableDashboard.push({
+          name: item.name,
+          dateInvoiced: item.statistics.dateInvoiced,
+          ordersCount: item.statistics.ordersCount.toFixed(2),
+          totalComission: item.statistics.totalComission.toFixed(2),
+          totalOrderValue: item.statistics.totalOrderValue.toFixed(2),
+        })
+      })
+      setSellersDashboard(dataTableDashboard)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataStats, dataSellers, dataDashboard])
 
   return (
-    <Layout fullWidth>
-      <div className="mt9">
-        <h1 style={{ color: '#3F3F40', fontSize: '35px' }}>
-          {formatIOMessage({
-            id: message.dashboardTitle.id,
-            intl,
-          }).toString()}
-        </h1>
-      </div>
+    <Layout
+      fullWidth
+      pageHeader={
+        <PageHeader title={<FormattedMessage id="admin/navigation.title" />} />
+      }
+    >
       <div>
         <SettingsDashboard openModal={openModal} setOpenModal={setOpenModal} />
       </div>
+      {startDate && finalDate && (
+        <div className="mt4">
+          <PageBlock>
+            <div className="mt4 mb7">
+              <Filter
+                dataWithoutFilter={sellersDashboard}
+                setDataWithoutFilter={setSellersDashboardFilter}
+                startDatePicker={new Date(startDate)}
+                finalDatePicker={new Date(finalDate)}
+                locale={culture.locale}
+                optionsSelect={optionsSelect}
+                setStartDate={setStartDate}
+                setFinalDate={setFinalDate}
+              />
+            </div>
+          </PageBlock>
+        </div>
+      )}
       <div className="mt4">
         <PageBlock>
-          <div className="mt4 mb7">
-            <Filter
-              listSellers={[]}
-              sellersDashboard={[]}
-              startDatePicker={new Date()}
-              finalDate={new Date()}
-              locale={culture.locale}
-              optionsSelect={[]}
-            />
+          <div className="mt4 mb5">
+            <Totalizer item={statsTotalizer} />
           </div>
         </PageBlock>
       </div>
       <div className="mt4">
         <PageBlock>
           <div className="mt4 mb7">
-            <Totalizer
-              item={[
-                {
-                  label: 'test',
-                  value: 0,
-                  iconBackgroundColor: '#EAFCE3',
-                  icon: <IconShoppingCart color="#79B03A" size={18} />,
-                },
-              ]}
+            <TableComponent
+              schemaTable={schemaTable}
+              items={
+                sellersDashboardFilter.length
+                  ? sellersDashboardFilter
+                  : sellersDashboard
+              }
             />
-          </div>
-        </PageBlock>
-      </div>
-      <div className="mt4">
-        <PageBlock>
-          <div className="mt4 mb7">
-            {/* <TableComponent schemaTable={tempColumns} itemTable={[]} actions={[]}/> */}
-            <TableComponent />
           </div>
         </PageBlock>
       </div>
@@ -72,4 +224,4 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
   )
 }
 
-export default injectIntl(CommissionReport)
+export default CommissionReport

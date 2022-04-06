@@ -8,6 +8,7 @@ declare global {
     workflowInstance: string
     message: string
     exception?: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     request?: any
   }
 
@@ -75,5 +76,3 @@ declare global {
     perpage: number
   }
 }
-
-export {}

@@ -2,6 +2,7 @@ type Query {
   """
   Retrieve all onboarded sellers
   """
+  dashboard: DashboardsGRP @cacheControl(scope: PUBLIC, maxAge: LONG)
   getSellers: Sellers @cacheControl(scope: PUBLIC, maxAge: LONG)
   """
   Retrieve all Invoices for a given seller

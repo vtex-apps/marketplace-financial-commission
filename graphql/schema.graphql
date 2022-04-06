@@ -7,5 +7,24 @@ type Query {
   Retrieve all Invoices for a given seller
   """
   getInvoicesBySeller(seller: String!): Invoices
+
+  """
+  Retrieve marketplace dashboard in a date range
+  """
+  searchSellersDashboard(
+    searchDashboardParams: SearchDashboardParams
+  ): SearchResponse @cacheControl(scope: PUBLIC, maxAge: LONG)
+
+  """
+  Retrieve Statistics General to marketplace in a date range
+  """
+  searchStatisticsDashboard(
+    searchStatsDashboardParams: SearchStatsDashboardParams
+  ): SearchStatsResponse @cacheControl(scope: PUBLIC, maxAge: LONG)
+
+  """
+  Retrieve orders to seller
+  """
+  orders(searchOrdersParams: SearchOrdersParams): SearchOrdersResponse
     @cacheControl(scope: PUBLIC, maxAge: LONG)
 }

@@ -28,3 +28,8 @@ interface Rate {
   productCommissionPercentage: number
   freightCommissionPercentage: number
 }
+
+interface OrdersResponse {
+  data: Order[]
+  paging: Paging
+}

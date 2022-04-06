@@ -1,26 +1,17 @@
+import { validationParams } from '../middlewares/validationParams'
 import { searchSellersService } from '../services/searchSellersService'
 
 export const searchSellersDashboard = async (
   _: unknown,
   {
-    dateStart,
-    dateEnd,
-    sellerId,
-    page,
-    pageSize,
+    searchDashboardParams,
   }: {
-    dateStart: string
-    dateEnd: string
-    sellerId?: string
-    page: number
-    pageSize: number
+    searchDashboardParams: any
   },
   ctx: Context
 ): Promise<ResultSearch> => {
-  const { result } = await searchSellersService(
-    { dateStart, dateEnd, sellerId, page, pageSize },
-    ctx
-  )
+  await validationParams('Sellers', searchDashboardParams)
+  const { result } = await searchSellersService(searchDashboardParams, ctx)
 
   return result
 }

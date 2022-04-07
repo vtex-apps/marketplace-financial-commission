@@ -1,0 +1,28 @@
+query searchOrders($searchOrdersParams: SearchOrdersParams) {
+  orders(searchOrdersParams: $searchOrdersParams) {
+    data {
+      orderId
+      sellerOrderId
+      marketplaceOrderId
+      totalComission
+      totalOrderValue
+      status
+      statusDescription
+      creationDate
+      rate {
+        itemId
+        nameItem
+        rate {
+          productCommissionPercentage
+          freightCommissionPercentage
+        }
+      }
+    }
+    paging {
+      total
+      pages
+      currentPage
+      perPage
+    }
+  }
+}

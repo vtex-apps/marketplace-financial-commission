@@ -1,0 +1,11 @@
+query SEARCH_STATS($params: SearchStatsDashboardParams) {
+  searchStatisticsDashboard(searchStatsDashboardParams: $params) {
+    dateStart
+    dateEnd
+    statistics {
+      ordersCount
+      totalComission
+      totalOrderValue
+    }
+  }
+}

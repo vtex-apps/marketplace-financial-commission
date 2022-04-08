@@ -249,7 +249,7 @@ const CommissionReport: FC = () => {
       }
     >
       <div>
-        <SettingsDashboard openModal={openModal} setOpenModal={setOpenModal} />
+        <SettingsDashboard />
       </div>
       {startDate && finalDate && (
         <div className="mt2">

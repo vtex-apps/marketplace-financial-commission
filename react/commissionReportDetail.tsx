@@ -4,12 +4,11 @@ import { Layout, Tab, Tabs, PageBlock, PageHeader } from 'vtex.styleguide'
 import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
 
+import SettingsSeller from './components/SellerSettings'
 import Filter from './components/Dashboard/Filter'
-import SettingsDashboard from './components/Dashboard/SettingsDashboard'
 
 const CommissionReportDetail: FC = () => {
-  const { culture } = useRuntime()
-  const [openModal, setOpenModal] = useState(false)
+  const { culture, route } = useRuntime()
 
   const startDate = new Date()
 
@@ -48,10 +47,7 @@ const CommissionReportDetail: FC = () => {
           </p>
         </div>
         <div className="w-25" style={{ textAlign: 'end' }}>
-          <SettingsDashboard
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-          />
+          <SettingsSeller seller={route} isDisabled={false} />
         </div>
       </div>
       <div>

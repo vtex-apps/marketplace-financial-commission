@@ -14,6 +14,10 @@
   "admin/title-billing-cycle": "Title to info bar to identify Billing Cycle:",
   "admin/title-netx-billing": "Title to info bar to identify Next Billing:",
   "admin/title-current-commission": "Title to info bar to identify Current Commission:",
-  "admin/title-modal-send": "Title to button send of modal settings",
-  "admin/title-modal-cancel": "Title to button cancel of modal settings"
+  "admin/modal-settings.title": "Modal title",
+  "admin/modal-settings.confirm": "Title to button send of modal settings",
+  "admin/modal-settings.cancel": "Title to button cancel of modal settings",
+  "admin/modal-settings.alert-warning": "Warning about modifying settings",
+  "admin/modal-settings.billingCycle": "Section title for billing cycle",
+  "admin/modal-settings.billingCycle-helpText": "Repercution explanation about modifying billing cycle"
 }

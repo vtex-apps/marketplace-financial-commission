@@ -14,6 +14,10 @@
   "admin/title-billing-cycle": "Billing Cycle:",
   "admin/title-netx-billing": "Next Billing:",
   "admin/title-current-commission": "Current Commission:",
-  "admin/title-modal-send": "Send",
-  "admin/title-modal-cancel": "Cancel"
+  "admin/modal-settings.title": "Default settings for all sellers",
+  "admin/modal-settings.confirm": "Send",
+  "admin/modal-settings.cancel": "Cancel",
+  "admin/modal-settings.alert-warning": "Proceed with caution. All sellers that currently don't have individual settings will be affected",
+  "admin/modal-settings.billingCycle": "Billing cycle",
+  "admin/modal-settings.billingCycle-helpText": "Each cycle will trigger the creation of an Invoice; keep in mind that if this is changed, all sellers that follow the default settings will automatically generate an Invoice and start a new cycle following the new rule."
 }

@@ -70,10 +70,6 @@ interface TotalizerProps {
     }
   ]
 }
-interface SettingsProps {
-  openModal: boolean
-  setOpenModal: (open: boolean) => void
-}
 
 // eslint-disable-next-line no-restricted-syntax
 enum SortOrder {

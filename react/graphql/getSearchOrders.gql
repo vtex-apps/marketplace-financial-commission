@@ -1,4 +1,4 @@
-query searchOrders($searchOrdersParams: SearchOrdersParams) {
+query SEARCH_ORDERS($searchOrdersParams: SearchOrdersParams) {
   orders(searchOrdersParams: $searchOrdersParams) {
     data {
       orderId

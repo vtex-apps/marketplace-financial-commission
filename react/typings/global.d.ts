@@ -3,38 +3,37 @@ declare module '*.css'
 declare module 'vtex.render-runtime'
 declare module 'vtex.native-types'
 
-
 interface TableProps {
   schemaTable: {
-    properties:{
+    properties: {
       id?: {
-        title: string,
-        width: number,
+        title: string
+        width: number
         cellRenderer?: () => void
-      },
-      seller?:{
-        title: string,
-        width: number,
-      },
-      totalOrders?:{
-        title: string,
-        width: number,
-      },
-      amountOrders?:{
-        title: string,
-        width: number,
-      },
-      totalCommission?:{
-        title: string,
-        width: number,
-      },
-      outstanding?:{
-        title: string,
-        width: number,
-      },
-      actions?:{
-        title: string,
-        width: number,
+      }
+      seller?: {
+        title: string
+        width: number
+      }
+      totalOrders?: {
+        title: string
+        width: number
+      }
+      amountOrders?: {
+        title: string
+        width: number
+      }
+      totalCommission?: {
+        title: string
+        width: number
+      }
+      outstanding?: {
+        title: string
+        width: number
+      }
+      actions?: {
+        title: string
+        width: number
         cellRenderer?: () => void
       }
     }
@@ -42,21 +41,22 @@ interface TableProps {
   itemTable: []
   actions: []
   totalizers?: TotalizerProps
-  toolbar?:  {
+  toolbar?: {
     newLine: {
-      label: string,
+      label: string
       handleCallback: () => void
     }
   }
-
 }
 interface FilterProps {
-  listSellers?: []
-  sellersDashboard?: []
+  dataWithoutFilter?: []
+  setDataWithoutFilter?: any
   startDatePicker?: Date
-  finalDate?: Date
+  finalDatePicker?: Date
   locale: string
   optionsSelect?: []
+  setStartDate?: any
+  setFinalDate?: any
 }
 interface TotalizerProps {
   item: [
@@ -64,7 +64,7 @@ interface TotalizerProps {
       label: string
       value: number
       iconBackgroundColor: string
-      icon: object
+      icon: any
     }
   ]
 }
@@ -73,14 +73,26 @@ interface SettingsProps {
   setOpenModal: (open: boolean) => void
 }
 
+// eslint-disable-next-line no-restricted-syntax
 enum SortOrder {
   ASC = 'ASC',
   DSC = 'DSC',
 }
 
 type Sorted = {
-  /** order of the sorting */
   order?: SortOrder
-  /** reference prop */
   by?: string
+}
+
+interface StatsTotalizer {
+  label: string
+  value: string
+  iconBackgroundColor?: string
+  icon?: any
+}
+
+interface TableData {
+  items: any
+  schemaTable: any
+  loading: boolean
 }

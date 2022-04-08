@@ -3,38 +3,37 @@ declare module '*.css'
 declare module 'vtex.render-runtime'
 declare module 'vtex.native-types'
 
-
 interface TableProps {
   schemaTable: {
-    properties:{
+    properties: {
       id?: {
-        title: string,
-        width: number,
+        title: string
+        width: number
         cellRenderer?: () => void
-      },
-      seller?:{
-        title: string,
-        width: number,
-      },
-      totalOrders?:{
-        title: string,
-        width: number,
-      },
-      amountOrders?:{
-        title: string,
-        width: number,
-      },
-      totalCommission?:{
-        title: string,
-        width: number,
-      },
-      outstanding?:{
-        title: string,
-        width: number,
-      },
-      actions?:{
-        title: string,
-        width: number,
+      }
+      seller?: {
+        title: string
+        width: number
+      }
+      totalOrders?: {
+        title: string
+        width: number
+      }
+      amountOrders?: {
+        title: string
+        width: number
+      }
+      totalCommission?: {
+        title: string
+        width: number
+      }
+      outstanding?: {
+        title: string
+        width: number
+      }
+      actions?: {
+        title: string
+        width: number
         cellRenderer?: () => void
       }
     }
@@ -42,13 +41,12 @@ interface TableProps {
   itemTable: []
   actions: []
   totalizers?: TotalizerProps
-  toolbar?:  {
+  toolbar?: {
     newLine: {
-      label: string,
+      label: string
       handleCallback: () => void
     }
   }
-
 }
 interface FilterProps {
   listSellers?: []
@@ -67,10 +65,6 @@ interface TotalizerProps {
       icon: object
     }
   ]
-}
-interface SettingsProps {
-  openModal: boolean
-  setOpenModal: (open: boolean) => void
 }
 
 enum SortOrder {

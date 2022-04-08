@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import React, { useState } from 'react'
+import React from 'react'
 import { Layout, PageBlock, IconShoppingCart } from 'vtex.styleguide'
 import { useRuntime } from 'vtex.render-runtime'
 import type { InjectedIntlProps } from 'react-intl'
@@ -15,7 +15,6 @@ import SettingsDashboard from './components/Dashboard/SettingsDashboard'
 
 const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
   const { culture } = useRuntime()
-  const [openModal, setOpenModal] = useState(false)
 
   return (
     <Layout fullWidth>
@@ -28,7 +27,7 @@ const CommissionReport: FC<InjectedIntlProps> = ({ intl }) => {
         </h1>
       </div>
       <div>
-        <SettingsDashboard openModal={openModal} setOpenModal={setOpenModal} />
+        <SettingsDashboard />
       </div>
       <div className="mt4">
         <PageBlock>

@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@vtex/api": "6.45.11-beta",
+    "@vtex/api": "6.45.11-beta.0",
     "@vtex/clients": "^2.19.4",
     "co-body": "^6.0.0",
     "ramda": "^0.25.0"
@@ -10,12 +10,14 @@
     "@types/jest": "^27.4.1",
     "@types/node": "^12.0.0",
     "@types/ramda": "types/npm-ramda#dist",
-    "@vtex/api": "6.45.11-beta",
+    "@vtex/api": "6.45.11-beta.0",
     "@vtex/test-tools": "^3.4.3",
     "@vtex/tsconfig": "^0.5.6",
     "tslint": "^5.0.0",
     "tslint-config-vtex": "^2.1.0",
     "typescript": "3.9.7",
+    "vtex.format-currency": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.format-currency@0.3.0/public/@types/vtex.format-currency",
+    "vtex.marketplace-financial-commission": "https://sanz--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.marketplace-financial-commission@0.0.1+build1649335599/public/@types/vtex.marketplace-financial-commission",
     "vtex.native-types": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types",
     "vtex.render-runtime": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.132.4/public/@types/vtex.render-runtime",
     "vtex.sellers-graphql": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.sellers-graphql@8.5.3/public/@types/vtex.sellers-graphql",

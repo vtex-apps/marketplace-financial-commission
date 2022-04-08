@@ -29,13 +29,19 @@ const DATE_CUT_OPTIONS = [
   },
 ]
 
-const SettingsDashboard: FC = () => {
+const SellerSettings: FC<any> = (props) => {
   const [openModal, setOpenModal] = useState(false)
+
+  const { seller, isDisabled } = props
+
+  // eslint-disable-next-line no-console
+  console.log(seller)
 
   return (
     <div>
       <div style={{ textAlign: 'right' }}>
         <ButtonWithIcon
+          disabled={isDisabled}
           icon={<IconCog color="#3F3F40" size={20} />}
           variation="tertiary"
           onClick={() => setOpenModal(!openModal)}
@@ -47,7 +53,7 @@ const SettingsDashboard: FC = () => {
           centered
           isOpen={openModal}
           onClose={() => setOpenModal(false)}
-          title={<FormattedMessage id="admin/modal-settings.title" />}
+          title={`Settings for seller ${seller}`}
           bottomBar={
             <div className="nowrap">
               <span className="mr4">
@@ -98,4 +104,4 @@ const SettingsDashboard: FC = () => {
   )
 }
 
-export default SettingsDashboard
+export default SellerSettings

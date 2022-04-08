@@ -9,12 +9,11 @@ import { formatIOMessage } from 'vtex.native-types'
 import { message } from './utils/definedMessages'
 import TableComponent from './components/Dashboard/Table'
 import Filter from './components/Dashboard/Filter'
-import SettingsDashboard from './components/Dashboard/SettingsDashboard'
+import SettingsSeller from './components/SellerSettings'
 import InvoiceTable from './components/Invoices/InvoiceTable'
 
 const CommissionReportDetail: FC<InjectedIntlProps> = ({ intl }) => {
-  const { culture } = useRuntime()
-  const [openModal, setOpenModal] = useState(false)
+  const { culture, route } = useRuntime()
 
   const startDate = new Date()
 
@@ -70,10 +69,7 @@ const CommissionReportDetail: FC<InjectedIntlProps> = ({ intl }) => {
           </p>
         </div>
         <div className="w-25" style={{ textAlign: 'end' }}>
-          <SettingsDashboard
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-          />
+          <SettingsSeller seller={route} isDisabled={false} />
         </div>
       </div>
       <div>

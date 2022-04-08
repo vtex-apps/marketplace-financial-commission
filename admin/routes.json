@@ -5,6 +5,6 @@
   },
   "admin.app.detail": {
     "component": "commissionReportDetail",
-    "path": "/admin/app/commission-report/detail"
+    "path": "/admin/app/commission-report/detail/*seller"
   }
 }

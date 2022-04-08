@@ -9,3 +9,4 @@ query SEARCH_STATS($params: SearchStatsDashboardParams) {
     }
   }
 }
+

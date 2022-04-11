@@ -85,7 +85,10 @@ const Filter: FC<FilterProps> = (props) => {
             label={<FormattedMessage id="admin/table.title-seller-label" />}
             options={props.optionsSelect}
             onChange={(values: DataFilter[]) => setDataFilter(values)}
+<<<<<<< HEAD
             valuesMaxHeight={35}
+=======
+>>>>>>> f7052fe (Add a filter with validations to date and sellers. Buttons to clear and filter are working successfully)
           />
         </div>
       </div>

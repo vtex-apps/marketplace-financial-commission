@@ -20,9 +20,7 @@
     "vtex.native-types": "0.x",
     "vtex.format-currency": "0.x"
   },
-  "registries": [
-    "smartcheckout"
-  ],
+  "registries": ["smartcheckout"],
   "credentialType": "absolute",
   "policies": [
     {
@@ -30,6 +28,19 @@
     },
     {
       "name": "vbase-read-write"
+    },
+    {
+      "name": "OMSViewer"
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "api.vtex.com",
+        "path": "/api/*"
+      }
+    },
+    {
+      "name": "ADMIN_DS"
     },
     {
       "name": "OMSViewer"
@@ -57,22 +68,8 @@
     {
       "name": "outbound-access",
       "attrs": {
-        "host": "api.vtex.com",
-        "path": "*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "elefantqa.myvtex.com",
-        "path": "*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "deimer--elefantqa.myvtex.com",
-        "path": "*"
+        "host": "portal.vtexcommercestable.com.br",
+        "path": "/api/*"
       }
     }
   ],

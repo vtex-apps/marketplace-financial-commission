@@ -1,8 +1,6 @@
 import { searchStatisticsService } from '../../../services/searchStatisticsService'
 import { validationParams } from '../../validationParams'
 
-import { validationParams } from '../../validationParams'
-
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 export async function searchStatistics(ctx: Context, next: () => Promise<any>) {
   const dateStart = ctx.query.dateStart as string

@@ -14,23 +14,25 @@ import { addDays } from 'date-fns'
 import styles from '../../../styles.css'
 
 const Filter: FC<FilterProps> = (props) => {
-  const [dataFilter, setDataFilter] = useState([])
-  const [startDateFilter, setDateFilter] = useState('')
-  const [finalDateFilter, setFinalDateFilter] = useState('')
+  const [dataFilter, setDataFilter] = useState<DataFilter[] | []>([])
+  const [startDateFilter, setDateFilter] = useState<Date | string>('')
+  const [finalDateFilter, setFinalDateFilter] = useState<Date | string>('')
 
   const getDate = (date: string) => {
     const dateConverter = new Date(date)
     const month = dateConverter.getMonth() + 1
     const monthString = month <= 9 ? `0${month}` : month
-    const day = dateConverter.getDate() + 1
+    const day = dateConverter.getDate()
     const dayString = day <= 9 ? `0${day}` : day
 
     return `${dateConverter.getFullYear()}-${monthString}-${dayString}`
   }
 
   const changesValuesTable = () => {
-    const filterData = props.dataWithoutFilter?.filter((seller: any) =>
-      dataFilter?.some((item: any) => item.label === seller.name)
+    const filterData = props.dataWithoutFilter?.filter((seller: DataSeller) =>
+      dataFilter?.some((item: DataFilter) => {
+        return item.label === seller.name
+      })
     )
 
     if (filterData?.length) {
@@ -40,35 +42,37 @@ const Filter: FC<FilterProps> = (props) => {
     }
 
     if (startDateFilter !== '') {
-      const newDateStart = getDate(startDateFilter)
+      const newDateStart = getDate(startDateFilter.toString())
 
-      console.info('newDateStart ', newDateStart)
       props.setStartDate(newDateStart)
-    } else if (finalDateFilter !== '') {
-      const newDateFinal = getDate(finalDateFilter)
+    }
+
+    if (finalDateFilter !== '') {
+      const newDateFinal = getDate(finalDateFilter.toString())
 
       props.setFinalDate(newDateFinal)
     }
   }
 
-  const changeStartDate = (start: any) => {
-    setDateFilter(start)
-    /* if (props.finalDatePicker)
-      if (start.getTime() < props.finalDatePicker.getTime()) {
-        const newDate = getDate(start)
-
-        props.setStartDate(newDate)
-      } */
+  const changeStartDate = (start: Date) => {
+    if (!finalDateFilter) setDateFilter(start)
+    else if (start.getTime() <= new Date(finalDateFilter).getTime()) {
+      setDateFilter(start)
+    }
   }
 
-  const changeFinalDate = (final: any) => {
-    if (startDateFilter !== '') setFinalDateFilter(final)
-    /* if (props.startDatePicker)
-      if (final.getTime() > props.startDatePicker.getTime()) {
-        const newDate = getDate(final)
-
-        props.setFinalDate(newDate)
-      } */
+  const changeFinalDate = (final: Date) => {
+    if (
+      startDateFilter &&
+      final.getTime() >= new Date(startDateFilter).getTime()
+    )
+      setFinalDateFilter(final)
+    else if (
+      !startDateFilter &&
+      props.startDatePicker &&
+      final.getTime() >= props.startDatePicker.getTime()
+    )
+      setFinalDateFilter(final)
   }
 
   return (
@@ -76,10 +80,11 @@ const Filter: FC<FilterProps> = (props) => {
       <div className={`${styles.filter_container} w-50 mr4`}>
         <div>
           <Select
+            value={dataFilter}
             multi
             label={<FormattedMessage id="admin/table.title-seller-label" />}
             options={props.optionsSelect}
-            onChange={(values: any) => setDataFilter(values)}
+            onChange={(values: DataFilter[]) => setDataFilter(values)}
           />
         </div>
       </div>
@@ -90,7 +95,7 @@ const Filter: FC<FilterProps> = (props) => {
             startDateFilter !== '' ? startDateFilter : props.startDatePicker
           }
           maxDate={addDays(new Date(), -1)}
-          onChange={(start: any) => changeStartDate(start)}
+          onChange={(start: Date) => changeStartDate(start)}
           locale={props.locale}
         />
       </div>
@@ -104,7 +109,7 @@ const Filter: FC<FilterProps> = (props) => {
             finalDateFilter !== '' ? finalDateFilter : props.finalDatePicker
           }
           maxDate={addDays(new Date(), -1)}
-          onChange={(final: any) => changeFinalDate(final)}
+          onChange={(final: Date) => changeFinalDate(final)}
           locale={props.locale}
         />
       </div>
@@ -122,7 +127,22 @@ const Filter: FC<FilterProps> = (props) => {
             // eslint-disable-next-line react/jsx-key
             <ButtonWithIcon
               isActiveOfGroup={false}
-              onClick={() => {}}
+              onClick={() => {
+                setDataFilter([])
+                props.setDataWithoutFilter([])
+                props.setStartDate(props.defaultStartDate)
+                props.setFinalDate(props.defaultFinalDate)
+                setDateFilter(new Date(`${props.defaultStartDate}T00:00:00`))
+                setFinalDateFilter(
+                  new Date(`${props.defaultFinalDate}T00:00:00`)
+                )
+                console.info(
+                  'testtt ',
+                  props.defaultStartDate,
+                  ' ---- ',
+                  props.defaultFinalDate
+                )
+              }}
               icon={<IconDelete />}
             />,
           ]}

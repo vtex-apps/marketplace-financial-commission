@@ -5,6 +5,7 @@ import { searchSellers } from './middlewares/dashboard/search/searchSellers'
 import { searchStatistics } from './middlewares/dashboard/search/searchStatistics'
 import { sellers } from './middlewares/sellers/sellers'
 import { sellersResponse } from './middlewares/sellers/sellersresponse'
+import { template } from './middlewares/template/template'
 import { orders } from './middlewares/orders/orders'
 import {
   getInvoice,
@@ -29,6 +30,9 @@ const routes = {
     GET: [getInvoice],
     /* POST: [createInvoice],
     DELETE: [deleteInvoice], */
+  }),
+  template: method({
+    GET: [template],
   }),
   invoicesBySeller: method({
     GET: [invoicesBySeller],

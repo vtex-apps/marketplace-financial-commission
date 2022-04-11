@@ -23,7 +23,7 @@
           "effect": "allow",
           "actions": ["get"],
           "principals": [
-            "vrn:apps:*:*:*:app/vtex.vtex.marketplace-financial-commission-cron@*"
+            "vrn:apps:*:*:*:app/vtex.marketplace-financial-commission-cron@*"
           ]
         }
       ]

@@ -87,15 +87,18 @@
       <!-- <div style="flex: 1; border: 2px solid yellow"> -->
       <div>
         <h2>Invoice</h2>
-        <p>Invoice #5930499531<br />Date: 3/16/2022</p>
+        <p>Invoice #5930499531<br />Date: {{invoiceDueDate}}</p>
       </div>
     </div>
 
     <div class="row">
       <div>
         <p>
-          <span>To:</span><br />Ivan Telco Seller<br />Ivan Telco Seller<br />Street
-          Address<br />City, ST ZIP Code<br />Phone: Phone<br />
+          <span>To:</span><br />{{sellerData.name}}<br />
+          {{sellerData.address.street}}<br />
+          {{sellerData.address.city}}, {{sellerData.address.state}}
+          {{sellerData.address.postalCode}}<br />
+          Phone: {{sellerData.contact.phone}}<br />
         </p>
       </div>
       <div>

@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import {
   EXPERIMENTAL_Table as Table,
   EXPERIMENTAL_useTableMeasures as useTableMeasures,
@@ -12,8 +12,14 @@ const TableV2: FC<TableData> = (props) => {
   const sorting = useTableSort()
 
   /*eslint-disable */
-  const ascOrdering = (prop:any): (a: any, b: any) => 1 | -1 | 0 => (a, b) => a[prop] > b[prop] ? 1 : a[prop] < b[prop] ? -1 : 0
-  const dscOrdering = (prop:any): (a: any, b: any) => 1 | -1 | 0 => (a, b) => a[prop] > b[prop] ? -1 : a[prop] < b[prop] ? 1 : 0
+  const ascOrdering =
+    (prop: any): ((a: any, b: any) => 1 | -1 | 0) =>
+    (a, b) =>
+      a[prop] > b[prop] ? 1 : a[prop] < b[prop] ? -1 : 0
+  const dscOrdering =
+    (prop: any): ((a: any, b: any) => 1 | -1 | 0) =>
+    (a, b) =>
+      a[prop] > b[prop] ? -1 : a[prop] < b[prop] ? 1 : 0
 
   const items = useMemo(() => {
     const {
@@ -26,18 +32,30 @@ const TableV2: FC<TableData> = (props) => {
     const ascending = order === 'ASC'
     const comparator = ascending ? ascOrdering(by) : dscOrdering(by)
     return props.items.sort(comparator)
-  }
-    , [sorting.sorted, props.items])
+  }, [sorting.sorted, props.items])
 
   const measures = useTableMeasures({ size: items.length })
 
   console.info('ITEMSSSSSSSSSSSSSS ', items)
 
   const pagination = {
+    currentItemFrom: props.currentPage,
+    currentItemTo: props.pageSize,
     textOf: 'of',
     rowsOptions: [5, 10, 15, 20],
     textShowRows: 'Show rows',
-    totalItems: items.length,
+    totalItems: props.totalItems,
+    onRowsChange: (e: any) => {
+      props.setPageSize(parseInt(e.target.value))
+    },
+    onNextClick: () => {
+      const nextPage = props.currentPage + 1
+      props.setPage(nextPage)
+    },
+    onPrevClick: () => {
+      const previousPage = props.currentPage - 1
+      props.setPage(previousPage)
+    },
   }
 
   const ColumnsExample = () => {
@@ -47,7 +65,8 @@ const TableV2: FC<TableData> = (props) => {
         items={items}
         columns={props.schemaTable}
         highlightOnHover
-        sorting={sorting}>
+        sorting={sorting}
+      >
         <Table.Pagination {...pagination} />
       </Table>
     )
@@ -61,9 +80,7 @@ const TableV2: FC<TableData> = (props) => {
     )
   }
 
-  return (
-    <ColumnsExample />
-  )
+  return <ColumnsExample />
 }
 
 export default TableV2

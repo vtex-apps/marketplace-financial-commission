@@ -57,6 +57,8 @@ interface FilterProps {
   optionsSelect?: []
   setStartDate?: any
   setFinalDate?: any
+  defaultStartDate?: any
+  defaultFinalDate?: any
 }
 interface TotalizerProps {
   item: [
@@ -95,4 +97,26 @@ interface TableData {
   items: any
   schemaTable: any
   loading: boolean
+  currentPage: number
+  pageSize: number
+  totalPage: number
+  setPageSize: any
+  totalItems: number
+  setPage: any
+}
+
+interface DataFilter {
+  label: string
+  value: {
+    id: string
+    name: string
+  }
+}
+
+interface DataSeller {
+  dateInvoiced: string | undefined
+  name: string
+  ordersCount: string
+  totalComission: string
+  totalOrderValue: string
 }

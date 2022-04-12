@@ -55,9 +55,13 @@ const CommissionReport: FC = () => {
   const [optionsSelect, setOptionsSelect] = useState<any>([])
   const [startDate, setStartDate] = useState('')
   const [finalDate, setFinalDate] = useState('')
+  const [defaultStartDate, setDefaultStartDate] = useState('')
+  const [defaultFinalDate, setDefaultFinalDate] = useState('')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(5)
+  const [totalPage, setTotalPage] = useState(0)
   const [openModal, setOpenModal] = useState(false)
+  const [totalItems, setTotalItems] = useState(0)
   const [statsTotalizer, setStatsTotalizer] = useState<any[]>([
     {
       label: '',
@@ -102,44 +106,23 @@ const CommissionReport: FC = () => {
       },
     })
 
+  console.info('params services ', {
+    dateStart: startDate,
+    dateEnd: finalDate,
+    page,
+    pageSize,
+  })
+
   useEffect(() => {
-    const defaultDate = new Date()
-    const defaultStart = new Date(
-      defaultDate.getFullYear(),
-      defaultDate.getMonth(),
-      1
-    )
-
-    const defaultStartString =
-      `${defaultStart.getFullYear()}-${defaultStart.getMonth() + 1}-` + `01`
-
-    const valueDate = defaultDate.getDate() - 1
-    const dateDefault = valueDate <= 9 ? `0${valueDate}` : valueDate
-    const defaultFinal = `${defaultDate.getFullYear()}-${
-      defaultDate.getMonth() + 1
-    }-${dateDefault}`
-
-    setStartDate(defaultStartString)
-    setFinalDate(defaultFinal)
-
-    stats()
     dashboard()
-
     // eslint-disable-next-line vtex/prefer-early-return
-    if (dataSellers) {
-      const builtSelectSeller: any = []
-
-      dataSellers.getSellers.items.forEach((seller: any) => {
-        builtSelectSeller.push({
-          value: { id: seller.id, name: seller.name },
-          label: seller.name,
-        })
-      })
-      setOptionsSelect(builtSelectSeller)
-    }
-
     if (dataDashboard) {
       const dataTableDashboard: any = []
+
+      console.info(
+        'dataDashboard.searchSellersDashboard:::::::::: ',
+        dataDashboard.searchSellersDashboard
+      )
 
       dataDashboard.searchSellersDashboard.sellers.forEach((item: any) => {
         dataTableDashboard.push({
@@ -150,9 +133,15 @@ const CommissionReport: FC = () => {
           totalOrderValue: item.statistics.totalOrderValue.toFixed(2),
         })
       })
-      console.info('TESTTTT ', dataDashboard)
+
+      setPage(dataDashboard.searchSellersDashboard.pagination.currentPage)
+      setTotalPage(dataDashboard.searchSellersDashboard.pagination.totalPage)
       setSellersDashboard(dataTableDashboard)
     }
+  }, [dashboard, dataDashboard])
+
+  useEffect(() => {
+    stats()
 
     if (dataStats) {
       setStatsTotalizer([
@@ -188,7 +177,52 @@ const CommissionReport: FC = () => {
         },
       ])
     }
-  }, [dataSellers, dataDashboard, stats, dataStats, dashboard])
+  }, [dataDashboard, dataStats, stats])
+
+  const formatDate = (valueDate: number) => {
+    const validateDate = valueDate <= 9 ? `0${valueDate}` : valueDate
+
+    return validateDate
+  }
+
+  useEffect(() => {
+    const defaultDate = new Date()
+    const defaultStart = new Date(
+      defaultDate.getFullYear(),
+      defaultDate.getMonth(),
+      1
+    )
+
+    const defaultStartString =
+      `${defaultStart.getFullYear()}-${formatDate(
+        defaultStart.getMonth() + 1
+      )}-` + `01`
+
+    const valueDate = defaultDate.getDate() - 1
+    const valueMonth = defaultDate.getMonth() + 1
+    const defaultFinal = `${defaultDate.getFullYear()}-${formatDate(
+      valueMonth
+    )}-${formatDate(valueDate)}`
+
+    setStartDate(defaultStartString)
+    setFinalDate(defaultFinal)
+    setDefaultStartDate(defaultStartString)
+    setDefaultFinalDate(defaultFinal)
+
+    // eslint-disable-next-line vtex/prefer-early-return
+    if (dataSellers) {
+      const builtSelectSeller: any = []
+
+      dataSellers.getSellers.items.forEach((seller: any) => {
+        builtSelectSeller.push({
+          value: { id: seller.id, name: seller.name },
+          label: seller.name,
+        })
+      })
+      setOptionsSelect(builtSelectSeller)
+      setTotalItems(dataSellers.getSellers.items.length)
+    }
+  }, [dataSellers])
 
   return (
     <Layout
@@ -206,12 +240,14 @@ const CommissionReport: FC = () => {
               <Filter
                 dataWithoutFilter={sellersDashboard}
                 setDataWithoutFilter={setSellersDashboardFilter}
-                startDatePicker={new Date(startDate)}
-                finalDatePicker={new Date(finalDate)}
+                startDatePicker={new Date(`${startDate}T00:00:00`)}
+                finalDatePicker={new Date(`${finalDate}T00:00:00`)}
                 locale={culture.locale}
                 optionsSelect={optionsSelect}
                 setStartDate={setStartDate}
                 setFinalDate={setFinalDate}
+                defaultStartDate={defaultStartDate}
+                defaultFinalDate={defaultFinalDate}
               />
             </div>
           </PageBlock>
@@ -229,8 +265,18 @@ const CommissionReport: FC = () => {
           <div className="mt4 mb7">
             <TableComponent
               schemaTable={schemaTable}
-              items={sellersDashboard}
+              items={
+                sellersDashboardFilter.length > 0
+                  ? sellersDashboardFilter
+                  : sellersDashboard
+              }
               loading={loadingDataDashboard}
+              currentPage={page}
+              pageSize={pageSize}
+              totalPage={totalPage}
+              setPageSize={setPageSize}
+              totalItems={totalItems}
+              setPage={setPage}
             />
           </div>
         </PageBlock>

@@ -85,12 +85,13 @@ const Filter: FC<FilterProps> = (props) => {
             label={<FormattedMessage id="admin/table.title-seller-label" />}
             options={props.optionsSelect}
             onChange={(values: DataFilter[]) => setDataFilter(values)}
+            valuesMaxHeight={35}
           />
         </div>
       </div>
       <div className={`${styles.filter_container} w-15`} id="datepicker-left">
         <DatePicker
-          label="Start"
+          label={<FormattedMessage id="admin/table.title-datepicker-start" />}
           value={
             startDateFilter !== '' ? startDateFilter : props.startDatePicker
           }
@@ -104,7 +105,7 @@ const Filter: FC<FilterProps> = (props) => {
         id="datepicker-right"
       >
         <DatePicker
-          label="End"
+          label={<FormattedMessage id="admin/table.title-datepicker-final" />}
           value={
             finalDateFilter !== '' ? finalDateFilter : props.finalDatePicker
           }
@@ -135,12 +136,6 @@ const Filter: FC<FilterProps> = (props) => {
                 setDateFilter(new Date(`${props.defaultStartDate}T00:00:00`))
                 setFinalDateFilter(
                   new Date(`${props.defaultFinalDate}T00:00:00`)
-                )
-                console.info(
-                  'testtt ',
-                  props.defaultStartDate,
-                  ' ---- ',
-                  props.defaultFinalDate
                 )
               }}
               icon={<IconDelete />}

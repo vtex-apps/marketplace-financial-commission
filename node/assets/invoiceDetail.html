@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:v="urn:schemas-microsoft-com:vml"
+  style="
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #f1f1f1 !important;
+  "
+>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{_accountInfo.TradingName}}</title>
+    <style>
+      .row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-around;
+      }
+    </style>
+    <style>
+      @media (max-width: 600px) {
+        img {
+          max-width: 100% !important;
+          height: auto !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body
+    style="
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: #f1f1f1 !important;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Helvetica, Arial, sans-serif;
+    "
+  >
+    <div class="row">
+      <div>
+        <p>
+          9601 South Meridian Blvd<br />Englewood, CO<br />Phone: (303) 723-1000
+          Fax: (303) 723-1999
+        </p>
+      </div>
+      <div>
+        <h2>Invoice</h2>
+        <p>Invoice #5930499531<br />Date: {{invoiceDueDate}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <p>
+          <span>To:</span><br />{{sellerData.name}}<br />
+          {{sellerData.address.street}}<br />
+          {{sellerData.address.city}}, {{sellerData.address.state}}
+          {{sellerData.address.postalCode}}<br />
+          Phone: {{sellerData.contact.phone}}<br />
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <p class="t-small lh-copy">
+        <span class="t-action--small">Comments or special instructions:</span
+        ><br />N/A
+      </p>
+    </div>
+
+    <br /><br /><br /><br />
+
+    <div class="row">
+      <table width="100%" style="box-sizing: border-box; background: #f1f1f1">
+        <tr>
+          <th>QUANTITY</th>
+          <th>DESCRIPTION</th>
+          <th>UNIT PRICE</th>
+          <th>RATE</th>
+          <th>TOTAL</th>
+        </tr>
+        <tr>
+          <td>{{order.quantity}}</td>
+          <td>{{order.description}}</td>
+          <td>${{order.unitPrice}}</td>
+          <td>{{order.rate}}%</td>
+          <td>${{order.total}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <br /><br /><br /><br />
+
+    <div class="row">
+      <table width="100%" style="box-sizing: border-box">
+        <tr>
+          <th>SUBTOTAL:</th>
+          <td>{{totalizers.subtotal}}</td>
+        </tr>
+        <tr>
+          <th>SALES TAX:</th>
+          <td>{{totalizers.tax.value}}%</td>
+        </tr>
+        <tr>
+          <th>SERVICE FEE:</th>
+          <td>${{totalizers.fee}}</td>
+        </tr>
+        <tr>
+          <th>TOTAL DUE:</th>
+          <td>${{totalizers.total}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <br />
+
+    <p class="t-action lh-copy tc"><br />Thanks you for your business!</p>
+  </body>
+</html>

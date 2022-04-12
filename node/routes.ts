@@ -11,6 +11,9 @@ import {
   invoicesBySeller,
   generateInvoices,
 } from './middlewares/invoice'
+import { templateMethod } from './middlewares/template/template'
+
+const template = templateMethod
 
 const routes = {
   sellers: method({
@@ -29,6 +32,9 @@ const routes = {
     GET: [getInvoice],
     /* POST: [createInvoice],
     DELETE: [deleteInvoice], */
+  }),
+  template: method({
+    GET: [template],
   }),
   invoicesBySeller: method({
     GET: [invoicesBySeller],

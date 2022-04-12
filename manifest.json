@@ -26,6 +26,9 @@
   "credentialType": "absolute",
   "policies": [
     {
+      "name": "template-criar"
+    },
+    {
       "name": "vbase-read-write"
     },
     {

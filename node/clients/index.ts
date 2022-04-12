@@ -9,6 +9,7 @@ import { masterDataFor } from '@vtex/clients'
 
 import { OrdersClient } from './orders'
 import SellersIO from './sellers'
+import Template from './template'
 
 export class Clients extends IOClients {
   public get sellersIO() {
@@ -31,6 +32,10 @@ export class Clients extends IOClients {
       'statisticsDashboards',
       masterDataFor<StatisticsDashboard>('statisticsDashboards')
     )
+  }
+
+  public get template() {
+    return this.getOrSet('template', Template)
   }
 
   public get commissionInvoices() {

@@ -86,9 +86,13 @@ const Filter: FC<FilterProps> = (props) => {
             options={props.optionsSelect}
             onChange={(values: DataFilter[]) => setDataFilter(values)}
 <<<<<<< HEAD
+<<<<<<< HEAD
             valuesMaxHeight={35}
 =======
 >>>>>>> f7052fe (Add a filter with validations to date and sellers. Buttons to clear and filter are working successfully)
+=======
+            valuesMaxHeight={35}
+>>>>>>> 1029b98 (improvement of filters and add next and previous table)
           />
         </div>
       </div>

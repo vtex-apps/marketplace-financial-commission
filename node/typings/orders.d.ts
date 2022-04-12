@@ -1,0 +1,35 @@
+interface SellersOrdersDetail {
+  sellerId: string
+  sellerName: string
+  orders: Order[]
+  totalComission: float
+  totalOrderValue: float
+}
+
+interface Order {
+  orderId: string
+  sellerOrderId?: string
+  marketplaceOrderId?: string
+  totalComission: float
+  totalOrderValue: float
+  status: string
+  statusDescription: string
+  creationDate: string
+  rate: ItemsRate[]
+}
+
+interface ItemsRate {
+  itemId: string
+  nameItem: string
+  rate: Rate
+}
+
+interface Rate {
+  productCommissionPercentage: number
+  freightCommissionPercentage: number
+}
+
+interface OrdersResponse {
+  data: Order[]
+  paging: Paging
+}

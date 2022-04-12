@@ -1,10 +1,18 @@
-{
-  "section": "orders",
-  "titleId": "admin-example.navigation.label",
-  "subSectionItems": [
-    {
-      "labelId": "admin-example.navigation.commission",
-      "path": "/admin/commission-report"
-    }
-  ]
-}
+[
+  {
+    "adminVersion": 4,
+    "section": "orders",
+    "titleId": "admin/navigation.section-title",
+    "subSection": "commissionReport",
+    "subSectionItems": [
+      {
+        "labelId": "admin/navigation.dashboard-title",
+        "path": "/admin/commission-report"
+      },
+      {
+        "labelId": "admin/navigation.detail-title",
+        "path": "/admin/commission-report/detail"
+      }
+    ]
+  }
+]

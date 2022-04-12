@@ -1,10 +1,13 @@
-import token from './token'
-import saveToken from './saveToken'
-
-export const mutations = {
-  saveToken,
-}
+import { getSellers } from './getSellers'
+import { orders } from './orders'
+import { searchSellersDashboard } from './searchSellersDashboard'
+import { searchStatisticsDashboard } from './searchStatisticsDashboard'
 
 export const queries = {
-  token,
+  getSellers,
+  searchSellersDashboard,
+  searchStatisticsDashboard,
+  orders,
 }
+
+export const mutations = {}

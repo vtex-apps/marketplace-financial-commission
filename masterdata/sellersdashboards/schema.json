@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "SellersDashboard",
+  "type": "object",
+  "properties": {
+    "dateCut": {
+      "type": "string"
+    },
+    "sellers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "account": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "statistics": {
+            "type": "object",
+            "properties": {
+              "ordersCount": {
+                "type": "number"
+              },
+              "totalComission": {
+                "type": "number"
+              },
+              "totalOrderValue": {
+                "type": "number"
+              }
+            },
+            "required": ["ordersCount", "totalComission", "totalOrderValue"]
+          }
+        },
+        "required": ["id", "account", "name", "statistics"]
+      }
+    }
+  },
+  "required": ["dateCut", "sellers"],
+  "v-indexed": ["dateCut", "sellers"]
+}

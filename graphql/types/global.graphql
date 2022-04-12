@@ -1,0 +1,98 @@
+scalar Sellers
+scalar Invoices
+
+type SearchResponse {
+  dateStart: String
+  dateEnd: String
+  sellers: [SellersDashboardSearch]
+  pagination: PaginationSearch
+}
+
+type SellersDashboardSearch {
+  id: String
+  name: String
+  account: String
+  statistics: StatsSellerSearch
+}
+
+type StatsSellerSearch {
+  dateInvoiced: String
+  ordersCount: Int
+  totalComission: Float
+  totalOrderValue: Float
+  outstandingBalance: Float
+}
+
+type PaginationSearch {
+  currentPage: Int
+  pageSize: Int
+  totalPage: Int
+}
+
+input SearchDashboardParams {
+  dateStart: String!
+  dateEnd: String!
+  sellerId: String
+  page: Int!
+  pageSize: Int!
+}
+
+type SearchStatsResponse {
+  dateStart: String
+  dateEnd: String
+  statistics: StatsGeneralSearch
+}
+
+type StatsGeneralSearch {
+  ordersCount: Int
+  totalComission: Float
+  totalOrderValue: Float
+}
+
+input SearchStatsDashboardParams {
+  dateStart: String!
+  dateEnd: String!
+}
+
+input SearchOrdersParams {
+  dateStart: String!
+  dateEnd: String!
+  sellerName: String!
+  page: Int!
+  perpage: Int!
+}
+
+type OrderSearch {
+  orderId: String
+  sellerOrderId: String
+  marketplaceOrderId: String
+  totalComission: Float
+  totalOrderValue: Float
+  status: String
+  statusDescription: String
+  creationDate: String
+  rate: [ItemsRateOrdersSearch]
+}
+
+type ItemsRateOrdersSearch {
+  itemId: String
+  nameItem: String
+  rate: RateOrders
+}
+
+type RateOrders {
+  productCommissionPercentage: Int
+  freightCommissionPercentage: Int
+}
+
+type PagingOrders {
+  total: Int
+  pages: Int
+  currentPage: Int
+  perPage: Int
+}
+
+type SearchOrdersResponse {
+  data: [OrderSearch]
+  paging: PagingOrders
+}

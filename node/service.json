@@ -1,8 +1,60 @@
 {
-  "memory": 256,
-  "ttl": 10,
-  "timeout": 2,
+  "stack": "nodejs",
+  "memory": 512,
+  "ttl": 60,
+  "timeout": 60,
   "minReplicas": 2,
-  "maxReplicas": 4,
-  "workers": 1
+  "maxReplicas": 12,
+  "cpu": {
+    "type": "shared",
+    "value": 80,
+    "scalingPercentage": 95
+  },
+  "routes": {
+    "sellers": {
+      "path": "/_v/sellers",
+      "public": true
+    },
+    "template": {
+      "path": "/_v/template",
+      "public": true
+    },
+    "generateDashboard": {
+      "path": "/_v/dashboard/generate",
+      "public": false,
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": ["get"],
+          "principals": [
+            "vrn:apps:*:*:*:app/vtex.marketplace-financial-commission-cron@*"
+          ]
+        }
+      ]
+    },
+    "searchSellersDashboard": {
+      "path": "/_v/dashboard/sellers/search",
+      "public": true
+    },
+    "searchStatisticsDashboard": {
+      "path": "/_v/dashboard/statistics/search",
+      "public": true
+    },
+    "singleInvoice": {
+      "path": "/_v/financial-commission/invoice/:id",
+      "public": true
+    },
+    "invoicesBySeller": {
+      "path": "/_v/financial-commission/invoice/seller/:seller",
+      "public": true
+    },
+    "generateInvoices": {
+      "path": "/_v/financial-commission/generate-invoices",
+      "public": true
+    },
+    "orders": {
+      "path": "/_v/orders",
+      "public": true
+    }
+  }
 }

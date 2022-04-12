@@ -1,5 +1,5 @@
 {
-  "extends": "vtex",
+  "extends": ["vtex-react"],
   "root": true,
   "rules": {
     "prettier/prettier": [
@@ -9,5 +9,8 @@
       }
     ],
     "@typescript-eslint/no-explicit-any": 0
+  },
+  "env": {
+    "node": true
   }
 }

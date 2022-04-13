@@ -11,9 +11,11 @@ import {
   invoicesBySeller,
   generateInvoices,
 } from './middlewares/invoice'
-import { templateMethod } from './middlewares/template/template'
-
-const template = templateMethod
+import { createTokenAuth } from './middlewares/authentication/createTokenAuth'
+import { seller } from './middlewares/sellers/seller'
+import { authentication } from './middlewares/authentication/authentication'
+import { updateToken } from './middlewares/authentication/updateToken'
+import { getToken } from './middlewares/authentication/getToken'
 
 const routes = {
   sellers: method({
@@ -33,9 +35,6 @@ const routes = {
     /* POST: [createInvoice],
     DELETE: [deleteInvoice], */
   }),
-  template: method({
-    GET: [template],
-  }),
   invoicesBySeller: method({
     GET: [invoicesBySeller],
   }),
@@ -43,7 +42,12 @@ const routes = {
     GET: [generateInvoices],
   }),
   orders: method({
-    GET: [orders],
+    POST: [seller, authentication, orders],
+  }),
+  token: method({
+    POST: [seller, createTokenAuth],
+    PUT: [seller, updateToken],
+    GET: [seller, getToken],
   }),
 }
 

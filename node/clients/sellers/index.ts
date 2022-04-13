@@ -6,7 +6,7 @@ import type {
 } from '@vtex/api'
 import { AppGraphQLClient } from '@vtex/api'
 
-import { GET_SELLERS } from './queries'
+import { GET_SELLER, GET_SELLERS } from './queries'
 
 // interface SellersParams {
 //   pagination: Pagination
@@ -65,6 +65,29 @@ export default class SellersIO extends AppGraphQLClient {
       )
       .then((query) => {
         return query.data?.sellers as Sellers
+      })
+
+    return sellers
+  }
+
+  public async seller(sellerId: string): Promise<Seller> {
+    const sellers = await this.graphql
+      .query<Data, Record<string, unknown>>(
+        {
+          query: GET_SELLER,
+          variables: { sellerId },
+        },
+        {
+          metric: 'get-seller',
+        }
+      )
+      .then(
+        throwOnGraphQLErrors(
+          'Error getting items data from vtex.sellers-graphql'
+        )
+      )
+      .then((query) => {
+        return query.data?.seller as Seller
       })
 
     return sellers

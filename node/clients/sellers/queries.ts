@@ -15,3 +15,14 @@ query GetSellers {
     }
   }
 `
+
+export const GET_SELLER = `
+query getSeller($sellerId: ID!) {
+  seller(id: $sellerId) {
+    id,
+    name,
+    account,
+    isActive
+  }
+}
+`

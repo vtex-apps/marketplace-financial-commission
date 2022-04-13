@@ -1,5 +1,7 @@
 export const config = {
   BUCKET_VBASE: 'FinancialDSH',
+  BUCKET_VBASE_TOKEN: 'TokenConfig',
+  PRIVATE_KEY: 'daMud5nb5ZEHipscucqAGu5pPM224HUM',
 } as const
 
 export const validationMessage = {

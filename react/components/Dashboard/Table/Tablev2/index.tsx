@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import React, { useMemo, useState, useEffect } from 'react'
+import React, { useMemo } from 'react'
 import {
   EXPERIMENTAL_Table as Table,
   EXPERIMENTAL_useTableMeasures as useTableMeasures,

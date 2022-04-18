@@ -98,7 +98,7 @@ export const invoicingProcess = async (ctx: Context, seller: SellerInvoice) => {
         number: null,
       },
     },
-    orders: commissionByOrder,
+    orders: commissionByOrder as [],
     totalizers: {
       subTotal,
       tax,

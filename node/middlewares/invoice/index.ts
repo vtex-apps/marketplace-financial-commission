@@ -1,3 +1,6 @@
 export * from './generateInvoices'
 export * from './getInvoice'
+export * from './createOrUpdateInvoice'
+export * from './deleteInvoice'
 export * from './invoicesBySeller'
+export * from './resolveInvoice'

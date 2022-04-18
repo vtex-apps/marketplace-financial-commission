@@ -16,7 +16,8 @@
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": ["ES2020"]
   },
   "typeAcquisition": {
     "enable": false

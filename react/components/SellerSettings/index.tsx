@@ -29,13 +29,16 @@ const DATE_CUT_OPTIONS = [
   },
 ]
 
+/**
+ *
+ * @todo
+ * - que settings van para el seller?
+ * - tipear props
+ */
 const SellerSettings: FC<any> = (props) => {
   const [openModal, setOpenModal] = useState(false)
 
   const { seller, isDisabled } = props
-
-  // eslint-disable-next-line no-console
-  console.log(seller)
 
   return (
     <div>

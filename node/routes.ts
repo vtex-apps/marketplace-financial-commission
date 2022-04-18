@@ -1,16 +1,18 @@
 import { method } from '@vtex/api'
 
-import { generate } from './middlewares/dashboard/generate/generate'
-import { searchSellers } from './middlewares/dashboard/search/searchSellers'
-import { searchStatistics } from './middlewares/dashboard/search/searchStatistics'
-import { sellers } from './middlewares/sellers/sellers'
-import { sellersResponse } from './middlewares/sellers/sellersresponse'
-import { orders } from './middlewares/orders/orders'
 import {
-  getInvoice,
+  generate,
+  searchSellers,
+  searchStatistics,
+  sellers,
+  sellersResponse,
+  orders,
+  resolveInvoice,
   invoicesBySeller,
   generateInvoices,
-} from './middlewares/invoice'
+  errorHandler,
+  eligibleSellers,
+} from './middlewares'
 import { createTokenAuth } from './middlewares/authentication/createTokenAuth'
 import { seller } from './middlewares/sellers/seller'
 import { authentication } from './middlewares/authentication/authentication'
@@ -31,15 +33,15 @@ const routes = {
     GET: [searchStatistics],
   }),
   singleInvoice: method({
-    GET: [getInvoice],
-    /* POST: [createInvoice],
-    DELETE: [deleteInvoice], */
+    GET: [resolveInvoice],
+    POST: [resolveInvoice],
+    DELETE: [resolveInvoice],
   }),
   invoicesBySeller: method({
     GET: [invoicesBySeller],
   }),
   generateInvoices: method({
-    GET: [generateInvoices],
+    GET: [errorHandler, eligibleSellers, generateInvoices],
   }),
   orders: method({
     POST: [seller, authentication, orders],

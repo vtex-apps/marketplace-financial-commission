@@ -1,15 +1,47 @@
+const PAGE_DEFAULT = 1
+const PAGE_SIZE_DEFAULT = 5
+
 /**
  * @description Retrieves a specific Invoice by ID.
  * The Marketplace account has total access, while
  * the seller account can only fetch theirs.
  */
-export async function getInvoice(ctx: Context, next: () => Promise<any>) {
+export async function getInvoice(ctx: Context) {
   const {
     query: { id },
+    clients: { commissionInvoices },
+    state,
   } = ctx
 
-  ctx.status = 200
-  ctx.body = `ENDPOINT IN DEVELOPMENT. Invoice ID: ${id}`
+  /**
+   * @todo
+   * Reemplazar por el sistema de auth
+   */
+  const account = state.body.auth
+  const isMarketplace = true
 
-  await next()
+  const where = isMarketplace ? `id=${id}` : `id=${id} AND seller=${account}`
+
+  /**
+   * We should allow 'expected sections' for masterdata's _fields
+   */
+  const invoice = await commissionInvoices.search(
+    { page: PAGE_DEFAULT, pageSize: PAGE_SIZE_DEFAULT },
+    ['_all'],
+    '',
+    where
+  )
+
+  /**
+   * @todo como solucionar duplicados
+   */
+  if (invoice.length > 1) {
+    console.warn('Invoice duplication, seek resolution')
+  }
+
+  if (invoice.length > 0) {
+    return invoice[0]
+  }
+
+  return null
 }

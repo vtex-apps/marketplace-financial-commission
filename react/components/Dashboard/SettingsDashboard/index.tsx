@@ -10,6 +10,9 @@ import {
   EXPERIMENTAL_Select as Select,
 } from 'vtex.styleguide'
 
+/**
+ * @todo como vamos a manejar los valores de corte?
+ */
 const DATE_CUT_OPTIONS = [
   {
     value: 1,
@@ -29,6 +32,16 @@ const DATE_CUT_OPTIONS = [
   },
 ]
 
+/**
+ *
+ * @todo
+ * - Esto son los DEFAULT settings, hay que cambiar los textos acorde.
+ * Estos settings impactaran todos los sellers que no esten seteados previamente
+ * - tipear props
+ * - resolver 'isDisabled' si hay mas de 1 seller, o ninguno en los filtros,
+ * no se pueden editar settings.
+ * - Mensaje de alerta! (Mas abajo)
+ */
 const SettingsDashboard: FC = () => {
   const [openModal, setOpenModal] = useState(false)
 
@@ -59,6 +72,13 @@ const SettingsDashboard: FC = () => {
                 </Button>
               </span>
               <span>
+                {/**
+                 * @todo
+                 * Cuando se desee guardar, hay que mostrar un mensaje de alerta.
+                 * 'Estas seguro que deseas realizar esta accion? Esto provocara que
+                 * se invoiceen todas las ordenes para el seller SELLER desde START hasta
+                 * AYER, estas de acuerdo?'
+                 * */}
                 <Button variation="primary" onClick={() => setOpenModal(false)}>
                   <FormattedMessage id="admin/modal-settings.confirm" />
                 </Button>

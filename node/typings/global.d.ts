@@ -31,8 +31,15 @@ declare global {
   }
 
   interface Sellers {
+    /**
+     * @todo cuidado! Hay 2 interfaces con el nombre Item, hay que ser mas especificos
+     */
     items: Item[]
     paging: Paging
+  }
+
+  interface SellerInvoice extends Item, SellerSettings {
+    email: string
   }
 
   interface Data {
@@ -82,6 +89,28 @@ declare global {
     page: number
     perpage: number
   }
+
+  interface Settings {
+    billingCycle: string
+    nextCycle: string
+    startCycle: string
+  }
+
+  interface SellerSettings extends Settings {
+    email: string
+  }
+
+  type FullFilledResult = {
+    status: 'fullfilled'
+    value: any
+  }
+
+  type RejectResult = {
+    status: 'rejected'
+    reason: string
+  }
+
+  type PromiseResult = RejectResult | FullFilledResult
 }
 
 export {}

@@ -20,6 +20,9 @@ interface UnificationSellersDashboard extends SellersDashboard {
 interface StatsSeller {
   dateInvoiced?: string
   ordersCount: number
+  /**
+   * @todo float no es un type nativo, habria que generarlo
+   */
   totalComission: float
   totalOrderValue: float
   outstandingBalance?: float
@@ -27,8 +30,8 @@ interface StatsSeller {
 
 interface OrderComission {
   orderId: string
-  totalComission: float
-  totalOrderValue: float
+  totalComission: number
+  totalOrderValue: number
 }
 
 interface ResultSearch {

@@ -3,12 +3,12 @@
   "title": "CommissionInvoice",
   "type": "object",
   "properties": {
-    "invoiceId": {
+    "id": {
       "type": "string"
     },
     "status": {
       "type": "string",
-      "enum": ["unready", "ready", "unpaid", "paid"]
+      "enum": ["partial", "unpaid", "paid"]
     },
     "invoiceCreateDate": {
       "type": "string"
@@ -72,14 +72,14 @@
           "orderId": {
             "type": "string"
           },
-          "total": {
+          "totalComission": {
             "type": "number"
           },
-          "commission": {
+          "totalOrderValue": {
             "type": "number"
           },
           "totalOrderRate": {
-            "type": "number"
+            "type": ["number", "null"]
           }
         }
       }
@@ -99,7 +99,6 @@
       }
     }
   },
-  "v-default-fields": ["id", "status", "invoiceCreateDate", "invoiceDueDate"],
   "v-indexed": ["id", "status", "invoiceCreateDate", "invoiceDueDate"],
   "v-cache": false,
   "v-security": {

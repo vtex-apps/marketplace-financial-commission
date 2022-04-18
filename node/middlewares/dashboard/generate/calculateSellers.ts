@@ -40,7 +40,10 @@ export async function calculateSellers(
         ordersCount,
         totalComission,
         totalOrderValue: totalValueOrder,
-        outstandingBalance: 0, // TODO de donde obtener este valor
+        /**
+         * @todo de donde obtener este valor
+         */
+        outstandingBalance: 0,
       }
 
       const sellersComission: SellersDashboard = {

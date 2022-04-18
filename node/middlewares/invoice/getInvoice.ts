@@ -1,5 +1,4 @@
-const PAGE_DEFAULT = 1
-const PAGE_SIZE_DEFAULT = 5
+import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
 
 /**
  * @description Retrieves a specific Invoice by ID.
@@ -20,7 +19,9 @@ export async function getInvoice(ctx: Context) {
   const account = state.body.auth
   const isMarketplace = true
 
-  const where = isMarketplace ? `id=${id}` : `id=${id} AND seller=${account}`
+  const where = isMarketplace
+    ? `id=${id}`
+    : `id=${id} AND sellerData.name=${account}`
 
   /**
    * We should allow 'expected sections' for masterdata's _fields

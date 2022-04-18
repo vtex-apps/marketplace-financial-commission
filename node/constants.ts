@@ -25,3 +25,6 @@ export const INVOICE_STATUS = {
   PARTIAL: 'partial',
   PAID: 'paid',
 } as const
+
+export const PAGE_DEFAULT = 1
+export const PAGE_SIZE_DEFAULT = 5

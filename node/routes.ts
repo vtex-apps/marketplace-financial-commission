@@ -38,7 +38,7 @@ const routes = {
     DELETE: [resolveInvoice],
   }),
   invoicesBySeller: method({
-    GET: [invoicesBySeller],
+    POST: [invoicesBySeller],
   }),
   generateInvoices: method({
     GET: [errorHandler, eligibleSellers, generateInvoices],

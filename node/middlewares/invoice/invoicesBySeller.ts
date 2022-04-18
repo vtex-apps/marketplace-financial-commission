@@ -1,33 +1,52 @@
-import { MOCK_INVOICES } from '../../mocks/invoices'
+import { AuthenticationError, UserInputError } from '@vtex/api'
+/* import { json } from 'co-body' */
+
+import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
 
 /**
- * @description Retrieves all the invoices of a given seller.
+ * @description Retrieves a REFERENCE list of invoices for given seller.
  * The Marketplace account has total access, while
  * the seller account can only retrieve their own.
- * @todo CHECK FOR TOKEN AUTHORIZATION / MARKETPLACE EXCEMPT
- * @todo FETCH INVOICES FACTORY MASTERDATA
  */
 export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
   const {
-    vtex: { /* logger, */ account },
     query: { seller },
-    /* clients: { commissionInvoices }, */
+    clients: { commissionInvoices },
+    state,
+    /* req, */
   } = ctx
 
-  if (account !== seller) {
-    // eslint-disable-next-line no-console
-    console.log('UNAUTHORIZED REQUEST')
+  if (!seller) {
+    throw new UserInputError(`A seller name is required`)
   }
 
-  /* const sellerInvoices = commissionInvoices.scroll() */
+  /**
+   * @todo
+   * Reemplazar por el sistema de auth
+   */
+  const account = state.body.auth
+  const isMarketplace = true
 
-  /* logger.error({
-    message: 'An error ocurred while fetching invoices for seller {seller}',
-    data: null,
-  }) */
+  if (!isMarketplace && account !== seller) {
+    throw new AuthenticationError(`Cannot access invoices for ${seller}`)
+  }
+
+  /**
+   * @todo parsear los valores de pagination desde el front
+   */
+  // const requestBody = await json(req)
+
+  const fields = ['id, status, invoiceCreateDate, invoiceDueDate, totalizers']
+
+  const sellerInvoices = await commissionInvoices.search(
+    { page: PAGE_DEFAULT, pageSize: PAGE_SIZE_DEFAULT },
+    fields,
+    '',
+    `sellerData.name is ${seller}`
+  )
 
   ctx.status = 200
-  ctx.body = MOCK_INVOICES
+  ctx.body = sellerInvoices
 
   await next()
 }

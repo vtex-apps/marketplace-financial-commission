@@ -12,6 +12,7 @@ import {
   generateInvoices,
   errorHandler,
   eligibleSellers,
+  templateMethod,
 } from './middlewares'
 import { createTokenAuth } from './middlewares/authentication/createTokenAuth'
 import { seller } from './middlewares/sellers/seller'
@@ -19,12 +20,14 @@ import { authentication } from './middlewares/authentication/authentication'
 import { updateToken } from './middlewares/authentication/updateToken'
 import { getToken } from './middlewares/authentication/getToken'
 
+const template = templateMethod
+
 const routes = {
-  mail: method({
-    POST: [sendMail],
-  }),
   sellers: method({
     GET: [sellers, sellersResponse],
+  }),
+  template: method({
+    GET: [template],
   }),
   generateDashboard: method({
     GET: [sellers, generate],

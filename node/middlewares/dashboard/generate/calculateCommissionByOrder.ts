@@ -31,6 +31,8 @@ export async function calculateCommissionByOrder(
         orderId: order.orderId,
         totalComission,
         totalOrderValue,
+        // TODO: Calculete correctly
+        totalOrderRate: null,
       }
 
       return lines

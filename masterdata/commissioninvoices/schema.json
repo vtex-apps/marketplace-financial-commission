@@ -88,7 +88,7 @@
           "type": "number"
         },
         "fee": {
-          "type": ["string", "null"]
+          "type": ["number", "null"]
         },
         "total": {
           "type": "number"

@@ -9,7 +9,8 @@ export async function errorHandler(ctx: Context, next: () => Promise<void>) {
 
   try {
     await next()
-  } catch (error: any) {
+  } catch (err) {
+    const error = err as any
     const { message, status, payload } = error
 
     logger.error({

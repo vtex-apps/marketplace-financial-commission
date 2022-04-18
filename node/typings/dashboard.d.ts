@@ -32,6 +32,7 @@ interface OrderComission {
   orderId: string
   totalComission: number
   totalOrderValue: number
+  totalOrderRate?: number | null
 }
 
 interface ResultSearch {

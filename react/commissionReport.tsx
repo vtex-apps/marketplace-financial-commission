@@ -62,7 +62,6 @@ const CommissionReport: FC = () => {
   const [pageSize, setPageSize] = useState(5)
   const [itemFrom, setItemFrom] = useState(1)
   const [itemTo, setItemTo] = useState(5)
-  const [openModal, setOpenModal] = useState(false)
   const [totalItems, setTotalItems] = useState(0)
   const [statsTotalizer, setStatsTotalizer] = useState<any[]>([
     {

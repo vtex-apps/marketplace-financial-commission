@@ -2,16 +2,15 @@ import type { FC } from 'react'
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import {
-  EXPERIMENTAL_Select as Select,
-  DatePicker,
   ButtonWithIcon,
   IconFilter,
   IconDelete,
   ButtonGroup,
 } from 'vtex.styleguide'
-import { addDays } from 'date-fns'
 
 import styles from '../../../styles.css'
+import SelectComponent from './select'
+import DatePickerComponent from './datePicker'
 
 const Filter: FC<FilterProps> = (props) => {
   const [dataFilter, setDataFilter] = useState<DataFilter[] | []>([])
@@ -78,42 +77,20 @@ const Filter: FC<FilterProps> = (props) => {
   return (
     <div className={`${styles.filter} flex`}>
       <div className={`${styles.filter_container} w-50 mr4`}>
-        <div>
-          <Select
-            value={dataFilter}
-            multi
-            label={<FormattedMessage id="admin/table.title-seller-label" />}
-            options={props.optionsSelect}
-            onChange={(values: DataFilter[]) => setDataFilter(values)}
-            valuesMaxHeight={35}
-          />
-        </div>
-      </div>
-      <div className={`${styles.filter_container} w-15`} id="datepicker-left">
-        <DatePicker
-          label={<FormattedMessage id="admin/table.title-datepicker-start" />}
-          value={
-            startDateFilter !== '' ? startDateFilter : props.startDatePicker
-          }
-          maxDate={addDays(new Date(), -1)}
-          onChange={(start: Date) => changeStartDate(start)}
-          locale={props.locale}
+        <SelectComponent
+          options={props.optionsSelect}
+          dataFilter={dataFilter}
+          setDataFilter={setDataFilter}
         />
       </div>
-      <div
-        className={`${styles.filter_container} w-15 mr4`}
-        id="datepicker-right"
-      >
-        <DatePicker
-          label={<FormattedMessage id="admin/table.title-datepicker-final" />}
-          value={
-            finalDateFilter !== '' ? finalDateFilter : props.finalDatePicker
-          }
-          maxDate={addDays(new Date(), -1)}
-          onChange={(final: Date) => changeFinalDate(final)}
-          locale={props.locale}
-        />
-      </div>
+      <DatePickerComponent
+        startDateFilter={startDateFilter}
+        startDatePicker={props.startDatePicker}
+        changeStartDate={changeStartDate}
+        finalDateFilter={finalDateFilter}
+        finalDatePicker={props.finalDatePicker}
+        changeFinalDate={changeFinalDate}
+      />
       <div className="w-20 mt6">
         <ButtonGroup
           buttons={[

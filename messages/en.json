@@ -8,6 +8,8 @@
   "admin/table.title-datepicker-final": "Final",
   "admin/table.title-filter": "Filter",
   "admin/table.title-tab-commission": "Orders",
+  "admin/table.pagination-show": "Show rows",
+  "admin/table.pagination-textOf": "of",
   "admin/table.title-tab-invoices": "Invoices",
   "admin/title-billing-cycle": "Billing Cycle:",
   "admin/title-netx-billing": "Next Billing:",

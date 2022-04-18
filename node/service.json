@@ -11,6 +11,10 @@
     "scalingPercentage": 95
   },
   "routes": {
+    "mail": {
+      "path": "/_v/mail",
+      "public": true
+    },
     "sellers": {
       "path": "/_v/sellers",
       "public": true

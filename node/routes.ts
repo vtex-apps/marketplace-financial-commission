@@ -6,16 +6,20 @@ import { searchStatistics } from './middlewares/dashboard/search/searchStatistic
 import { sellers } from './middlewares/sellers/sellers'
 import { sellersResponse } from './middlewares/sellers/sellersresponse'
 import { orders } from './middlewares/orders/orders'
+import { sendMail } from './middlewares/mail/mail'
+import { templateMethod } from './middlewares/template/template'
 import {
   getInvoice,
   invoicesBySeller,
   generateInvoices,
 } from './middlewares/invoice'
-import { templateMethod } from './middlewares/template/template'
 
 const template = templateMethod
 
 const routes = {
+  mail: method({
+    POST: [sendMail],
+  }),
   sellers: method({
     GET: [sellers, sellersResponse],
   }),

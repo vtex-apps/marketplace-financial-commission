@@ -5,8 +5,9 @@ export const searchOrdersService = async (
   searchOrdersParams: SearchOrdersServiceRequest,
   ctx: Context
 ) => {
-  console.info('acaaaaa voy')
   const { dateStart, dateEnd, sellerName, page, perpage } = searchOrdersParams
+
+  console.info(sellerName)
 
   const listOrders = await orderListSeller(
     ctx,

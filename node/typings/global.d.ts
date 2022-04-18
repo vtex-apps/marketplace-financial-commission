@@ -36,7 +36,15 @@ declare global {
   }
 
   interface Data {
-    sellers: Sellers
+    sellers?: Sellers
+    seller?: Seller
+  }
+
+  interface Seller {
+    id: string
+    name: string
+    account: string
+    isActive: string
   }
 
   interface DataSellers {

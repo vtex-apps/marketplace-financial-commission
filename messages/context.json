@@ -8,6 +8,8 @@
   "admin/table.title-datepicker-final": "Title of table filter to identify Final Date",
   "admin/table.title-filter": "Title of table filter to identify Filter",
   "admin/table.title-tab-commission": "Title tab to identify Commissions",
+  "admin/table.pagination-show": "show rows",
+  "admin/table.pagination-textOf": "of",
   "admin/table.title-tab-invoices": "Title tab to Invoices",
   "admin/title-billing-cycle": "Title to info bar to identify Billing Cycle:",
   "admin/title-netx-billing": "Title to info bar to identify Next Billing:",

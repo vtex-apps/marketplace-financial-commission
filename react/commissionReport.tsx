@@ -20,6 +20,7 @@ import {
   TableComponent,
 } from './components'
 import { GET_SELLERS, SEARCH_STATS, SEARCH_SELLERS } from './graphql'
+import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
 
 export const schemaTable = [
   {
@@ -59,7 +60,8 @@ const CommissionReport: FC = () => {
   const [defaultFinalDate, setDefaultFinalDate] = useState('')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(5)
-  const [totalPage, setTotalPage] = useState(0)
+  const [itemFrom, setItemFrom] = useState(1)
+  const [itemTo, setItemTo] = useState(5)
   const [openModal, setOpenModal] = useState(false)
   const [totalItems, setTotalItems] = useState(0)
   const [statsTotalizer, setStatsTotalizer] = useState<any[]>([
@@ -106,24 +108,14 @@ const CommissionReport: FC = () => {
       },
     })
 
-  console.info('params services ', {
-    dateStart: startDate,
-    dateEnd: finalDate,
-    page,
-    pageSize,
-  })
-
   useEffect(() => {
     dashboard()
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataDashboard) {
       const dataTableDashboard: any = []
 
-      console.info(
-        'dataDashboard.searchSellersDashboard:::::::::: ',
-        dataDashboard.searchSellersDashboard
-      )
-
+      setPage(dataDashboard.searchSellersDashboard.pagination.currentPage)
+      setSellersDashboard(dataTableDashboard)
       dataDashboard.searchSellersDashboard.sellers.forEach((item: any) => {
         dataTableDashboard.push({
           name: item.name,
@@ -133,10 +125,6 @@ const CommissionReport: FC = () => {
           totalOrderValue: item.statistics.totalOrderValue.toFixed(2),
         })
       })
-
-      setPage(dataDashboard.searchSellersDashboard.pagination.currentPage)
-      setTotalPage(dataDashboard.searchSellersDashboard.pagination.totalPage)
-      setSellersDashboard(dataTableDashboard)
     }
   }, [dashboard, dataDashboard])
 
@@ -224,6 +212,36 @@ const CommissionReport: FC = () => {
     }
   }, [dataSellers])
 
+  const onNextClick = () => {
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    const nextPage = page + 1
+
+    const currentTo = pageSize * nextPage
+    const currentFrom = itemTo + 1
+
+    setItemTo(currentTo)
+    setItemFrom(currentFrom)
+    setPage(nextPage)
+  }
+
+  const changeRows = (row: number) => {
+    setPageSize(row)
+    setItemTo(row)
+    setItemFrom(1)
+    setPage(1)
+  }
+
+  const onPrevClick = () => {
+    const previousPage = page - 1
+
+    const currentTo = itemTo - pageSize
+    const currentFrom = itemFrom - pageSize
+
+    setItemTo(currentTo)
+    setItemFrom(currentFrom)
+    setPage(previousPage)
+  }
+
   return (
     <Layout
       pageHeader={
@@ -271,12 +289,16 @@ const CommissionReport: FC = () => {
                   : sellersDashboard
               }
               loading={loadingDataDashboard}
-              currentPage={page}
-              pageSize={pageSize}
-              totalPage={totalPage}
+            />
+            <PaginationComponent
               setPageSize={setPageSize}
-              totalItems={totalItems}
+              currentPage={itemFrom}
+              pageSize={itemTo}
               setPage={setPage}
+              totalItems={totalItems}
+              onNextClick={onNextClick}
+              changeRows={changeRows}
+              onPrevClick={onPrevClick}
             />
           </div>
         </PageBlock>

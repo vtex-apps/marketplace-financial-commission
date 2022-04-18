@@ -97,12 +97,6 @@ interface TableData {
   items: any
   schemaTable: any
   loading: boolean
-  currentPage: number
-  pageSize: number
-  totalPage: number
-  setPageSize: any
-  totalItems: number
-  setPage: any
 }
 
 interface DataFilter {
@@ -119,4 +113,30 @@ interface DataSeller {
   ordersCount: string
   totalComission: string
   totalOrderValue: string
+}
+
+interface PaginationProps {
+  setPageSize: any
+  currentPage: any
+  pageSize: any
+  setPage: any
+  totalItems: any
+  onNextClick: any
+  changeRows: any
+  onPrevClick: any
+}
+
+interface SelectProps {
+  options: any
+  dataFilter: any
+  setDataFilter: any
+}
+
+interface DatepickerProps {
+  startDateFilter: any
+  startDatePicker: any
+  changeStartDate: any
+  finalDateFilter: any
+  finalDatePicker: any
+  changeFinalDate: any
 }

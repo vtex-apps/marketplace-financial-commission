@@ -20,6 +20,9 @@ import { updateToken } from './middlewares/authentication/updateToken'
 import { getToken } from './middlewares/authentication/getToken'
 
 const routes = {
+  mail: method({
+    POST: [sendMail],
+  }),
   sellers: method({
     GET: [sellers, sellersResponse],
   }),

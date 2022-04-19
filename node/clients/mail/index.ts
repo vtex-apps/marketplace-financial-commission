@@ -33,12 +33,6 @@ export default class Mail extends JanusClient {
       ...mailData,
     }
 
-    console.info('Mail data----->')
-
-    console.info(JSON.stringify(data))
-
-    // Response 200 OK
-
     return this.http.post(`/api/mail-service/pvt/sendmail`, data)
   }
 }

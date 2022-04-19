@@ -111,6 +111,22 @@ declare global {
   }
 
   type PromiseResult = RejectResult | FullFilledResult
+
+  interface ResponseCreateToken {
+    message: string
+    sellerId: string
+    autheticationToken?: string
+    creationDate?: string
+    resultVBase: any
+  }
+
+  interface RequestUpdateToken {
+    enabled: boolean
+  }
+
+  interface ResponseUpdateToken extends ResponseCreateToken {
+    lastModificationDate: string
+  }
 }
 
 export {}

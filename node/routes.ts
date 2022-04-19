@@ -2,6 +2,7 @@ import { method } from '@vtex/api'
 
 import {
   generate,
+  sendMail,
   searchSellers,
   searchStatistics,
   sellers,
@@ -23,6 +24,9 @@ import { getToken } from './middlewares/authentication/getToken'
 const template = templateMethod
 
 const routes = {
+  mail: method({
+    POST: [sendMail],
+  }),
   sellers: method({
     GET: [sellers, sellersResponse],
   }),

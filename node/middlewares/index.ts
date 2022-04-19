@@ -1,4 +1,5 @@
 export * from './errorHandler'
+export * from './mail/mail'
 export * from './validationParams'
 export * from './dashboard/generate/generate'
 export * from './dashboard/search/searchSellers'

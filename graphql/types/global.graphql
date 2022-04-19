@@ -96,3 +96,37 @@ type SearchOrdersResponse {
   data: [OrderSearch]
   paging: PagingOrders
 }
+
+type CreateTokenResponse {
+  message: String
+  sellerId: String
+  autheticationToken: String
+  creationDate: String
+  resultVBase: [ResultVBase]
+}
+
+type ResultVBase {
+  path: String
+  hash: String
+}
+
+input TokenInput {
+  enabled: Boolean
+}
+
+type EditTokenResponse {
+  message: String
+  sellerId: String
+  lastModificationDate: String
+  resultVBase: [ResultVBase]
+}
+
+type GetTokenResponse {
+  id: String
+  account: String
+  name: String
+  autheticationToken: String
+  creationDate: String
+  lastModificationDate: String
+  enabled: Boolean
+}

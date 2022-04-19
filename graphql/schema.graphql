@@ -27,4 +27,15 @@ type Query {
   """
   orders(searchOrdersParams: SearchOrdersParams): SearchOrdersResponse
     @cacheControl(scope: PUBLIC, maxAge: LONG)
+
+  """
+  Get data token
+  """
+  getToken(sellerId: ID!): GetTokenResponse
+    @cacheControl(scope: PUBLIC, maxAge: LONG)
+}
+
+type Mutation {
+  createToken(sellerId: ID!): CreateTokenResponse
+  editToken(sellerId: ID!, tokenInput: TokenInput!): EditTokenResponse
 }

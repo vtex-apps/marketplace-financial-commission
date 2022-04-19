@@ -3,7 +3,7 @@ import { Service } from '@vtex/api'
 
 import clients from './clients'
 import type { Clients } from './clients'
-import { queries /* , mutations */ } from './resolvers'
+import { queries, mutations } from './resolvers'
 import { routes } from './routes'
 
 export default new Service<Clients, RecorderState, ParamsContext>({
@@ -13,10 +13,10 @@ export default new Service<Clients, RecorderState, ParamsContext>({
     resolvers: {
       Query: {
         ...queries,
-      } /*
+      },
       Mutation: {
         ...mutations,
-      }, */,
+      },
     },
   },
 })

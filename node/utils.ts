@@ -10,7 +10,7 @@ export function getDatesInvoiced(): DatesInvoice {
   }
 }
 
-export function createToken(): string {
+export function createKeyToken(): string {
   let result = ''
   const characters =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'

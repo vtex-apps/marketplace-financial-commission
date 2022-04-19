@@ -7,3 +7,4 @@
  - [Feature/invoice detail](https://github.com/vtex-apps/marketplace-financial-commission/pull/11)
  - [Feature/invoice detail](https://github.com/vtex-apps/marketplace-financial-commission/pull/12)
  - [Commit Authentication API Rest](https://github.com/vtex-apps/marketplace-financial-commission/pull/14)
+ - [resolvers graphql for token autentication](https://github.com/vtex-apps/marketplace-financial-commission/pull/18)

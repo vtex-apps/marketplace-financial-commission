@@ -31,6 +31,7 @@ const CommissionReport: FC = () => {
   const [finalDate, setFinalDate] = useState('')
   const [defaultStartDate, setDefaultStartDate] = useState('')
   const [defaultFinalDate, setDefaultFinalDate] = useState('')
+  const [sellerId, setSellerId] = useState('')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(5)
   const [itemFrom, setItemFrom] = useState(1)
@@ -77,7 +78,7 @@ const CommissionReport: FC = () => {
           dateEnd: finalDate,
           page,
           pageSize,
-          sellerId: '',
+          sellerId,
         },
       },
     })
@@ -136,7 +137,6 @@ const CommissionReport: FC = () => {
       const dataTableDashboard: any = []
 
       setPage(dataDashboard.searchSellersDashboard.pagination.currentPage)
-      setSellersDashboard(dataTableDashboard)
       dataDashboard.searchSellersDashboard.sellers.forEach((item: any) => {
         dataTableDashboard.push({
           id: item.id,
@@ -147,6 +147,7 @@ const CommissionReport: FC = () => {
           totalOrderValue: item.statistics.totalOrderValue.toFixed(2),
         })
       })
+      setSellersDashboard(dataTableDashboard)
     }
   }, [dashboard, dataDashboard])
 
@@ -289,6 +290,7 @@ const CommissionReport: FC = () => {
                 defaultStartDate={defaultStartDate}
                 defaultFinalDate={defaultFinalDate}
                 setTotalItems={setTotalItemsFilter}
+                setSellerId={setSellerId}
               />
             </div>
           </PageBlock>

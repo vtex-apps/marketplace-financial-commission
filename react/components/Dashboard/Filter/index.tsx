@@ -28,6 +28,7 @@ const Filter: FC<FilterProps> = (props) => {
   }
 
   const changesValuesTable = () => {
+    console.info('props.dataWithoutFilter::::::::: ', props.dataWithoutFilter)
     const filterData = props.dataWithoutFilter?.filter((seller: DataSeller) =>
       dataFilter?.some((item: DataFilter) => {
         return item.label === seller.name
@@ -36,8 +37,10 @@ const Filter: FC<FilterProps> = (props) => {
 
     if (filterData?.length) {
       props.setDataWithoutFilter(filterData)
+      props.setTotalItems(filterData?.length)
     } else {
       props.setDataWithoutFilter([])
+      props.setTotalItems(0)
     }
 
     if (startDateFilter !== '') {
@@ -114,6 +117,7 @@ const Filter: FC<FilterProps> = (props) => {
                 setFinalDateFilter(
                   new Date(`${props.defaultFinalDate}T00:00:00`)
                 )
+                props.setTotalItems(0)
               }}
               icon={<IconDelete />}
             />,

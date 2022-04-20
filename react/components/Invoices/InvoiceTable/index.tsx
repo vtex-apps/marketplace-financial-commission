@@ -71,7 +71,7 @@ function Actions({ data }: any) {
       }}
       options={[
         {
-          label: `${data.sellerData.name}`,
+          label: `test`,
         },
       ]}
     />

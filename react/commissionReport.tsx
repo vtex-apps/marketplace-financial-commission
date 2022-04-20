@@ -8,6 +8,8 @@ import {
   IconArrowUp,
   IconInfo,
   PageHeader,
+  ActionMenu,
+  IconOptionsDots,
 } from 'vtex.styleguide'
 import { useQuery, useLazyQuery } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
@@ -22,37 +24,8 @@ import {
 import { GET_SELLERS, SEARCH_STATS, SEARCH_SELLERS } from './graphql'
 import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
 
-export const schemaTable = [
-  {
-    id: 'name',
-    title: 'Seller name',
-    sortable: true,
-  },
-  {
-    id: 'dateInvoiced',
-    title: 'Date Invoiced',
-  },
-  {
-    id: 'ordersCount',
-    title: 'Total Orders',
-  },
-  {
-    id: 'totalComission',
-    title: 'Total commission',
-  },
-  {
-    id: 'totalOrderValue',
-    title: 'Total Amount Orders',
-  },
-  {
-    id: 'actions',
-    title: 'Actions',
-    cellRenderer: () => {},
-  },
-]
-
 const CommissionReport: FC = () => {
-  const { culture } = useRuntime()
+  const { culture, navigate } = useRuntime()
   const [optionsSelect, setOptionsSelect] = useState<any>([])
   const [startDate, setStartDate] = useState('')
   const [finalDate, setFinalDate] = useState('')
@@ -63,6 +36,7 @@ const CommissionReport: FC = () => {
   const [itemFrom, setItemFrom] = useState(1)
   const [itemTo, setItemTo] = useState(5)
   const [totalItems, setTotalItems] = useState(0)
+  const [totalItemsFilter, setTotalItemsFilter] = useState(0)
   const [statsTotalizer, setStatsTotalizer] = useState<any[]>([
     {
       label: '',
@@ -103,20 +77,69 @@ const CommissionReport: FC = () => {
           dateEnd: finalDate,
           page,
           pageSize,
+          sellerId: '',
         },
       },
     })
+
+  const schemaTable = [
+    {
+      id: 'name',
+      title: 'Seller name',
+      cellRenderer: (props: any) => {
+        return <span>{props.data}</span>
+      },
+    },
+    {
+      id: 'ordersCount',
+      title: 'Total Orders',
+    },
+    {
+      id: 'totalComission',
+      title: 'Total commission',
+    },
+    {
+      id: 'totalOrderValue',
+      title: 'Total Amount Orders',
+    },
+    {
+      id: 'id',
+      title: 'Actions',
+      cellRenderer: (props: any) => {
+        return (
+          <ActionMenu
+            buttonProps={{
+              variation: 'tertiary',
+              icon: <IconOptionsDots />,
+            }}
+            options={[
+              {
+                label: 'Detail',
+                onClick: () => {
+                  navigate({
+                    to: `/admin/app/commission-report/detail/${props.data}`,
+                  })
+                },
+              },
+            ]}
+          />
+        )
+      },
+    },
+  ]
 
   useEffect(() => {
     dashboard()
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataDashboard) {
+      console.info('dataDashboard:::::--- ', dataDashboard)
       const dataTableDashboard: any = []
 
       setPage(dataDashboard.searchSellersDashboard.pagination.currentPage)
       setSellersDashboard(dataTableDashboard)
       dataDashboard.searchSellersDashboard.sellers.forEach((item: any) => {
         dataTableDashboard.push({
+          id: item.id,
           name: item.name,
           dateInvoiced: item.statistics.dateInvoiced,
           ordersCount: item.statistics.ordersCount.toFixed(2),
@@ -265,6 +288,7 @@ const CommissionReport: FC = () => {
                 setFinalDate={setFinalDate}
                 defaultStartDate={defaultStartDate}
                 defaultFinalDate={defaultFinalDate}
+                setTotalItems={setTotalItemsFilter}
               />
             </div>
           </PageBlock>
@@ -294,7 +318,7 @@ const CommissionReport: FC = () => {
               currentPage={itemFrom}
               pageSize={itemTo}
               setPage={setPage}
-              totalItems={totalItems}
+              totalItems={totalItemsFilter > 0 ? totalItemsFilter : totalItems}
               onNextClick={onNextClick}
               changeRows={changeRows}
               onPrevClick={onPrevClick}

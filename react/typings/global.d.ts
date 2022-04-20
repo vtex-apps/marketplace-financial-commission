@@ -60,6 +60,7 @@ interface FilterProps {
   defaultStartDate?: any
   defaultFinalDate?: any
   setTotalItems?: any
+  setSellerId?: any
 }
 interface TotalizerProps {
   item: [

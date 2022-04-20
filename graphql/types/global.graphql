@@ -32,7 +32,7 @@ type PaginationSearch {
 input SearchDashboardParams {
   dateStart: String!
   dateEnd: String!
-  sellerId: String
+  sellersId: String
   page: Int!
   pageSize: Int!
 }

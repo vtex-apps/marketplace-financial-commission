@@ -72,7 +72,7 @@ declare global {
   interface SearchSellersServiceRequest {
     dateStart: string
     dateEnd: string
-    sellerId?: string
+    sellersId?: string
     page: number
     pageSize: number
   }

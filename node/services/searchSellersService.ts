@@ -16,7 +16,8 @@ export const searchSellersService = async (
     pageSize: 100,
   }
 
-  const { dateStart, dateEnd, sellerId, page, pageSize } = searchDashboardParams
+  const { dateStart, dateEnd, sellersId, page, pageSize } =
+    searchDashboardParams
 
   const vbaseId = `${dateStart.replace('-', '').replace('-', '')}-${dateEnd
     .replace('-', '')
@@ -67,8 +68,8 @@ export const searchSellersService = async (
 
     console.info({ responseSaveVbase: JSON.stringify(result) })
 
-    if (sellerId) {
-      const searchSellerId = findSeller(dashboard, sellerId)
+    if (sellersId) {
+      const searchSellerId = findSeller(dashboard, sellersId)
 
       const searchResult: ResultSearch = {
         dateStart,
@@ -107,8 +108,8 @@ export const searchSellersService = async (
   } else {
     const sellerDashboardVbase: Dashboards = vbaseResponse.data
 
-    if (sellerId) {
-      const searchSellerId = findSeller(sellerDashboardVbase, sellerId)
+    if (sellersId) {
+      const searchSellerId = findSeller(sellerDashboardVbase, sellersId)
 
       result = {
         dateStart,

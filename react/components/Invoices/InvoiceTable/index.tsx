@@ -62,7 +62,7 @@ const columns = [
   },
 ]
 
-function Actions({ data }: any) {
+function Actions() {
   return (
     <ActionMenu
       buttonProps={{

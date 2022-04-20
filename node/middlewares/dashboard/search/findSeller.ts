@@ -1,7 +1,8 @@
 export const findSeller = (dashboard: Dashboards, sellerId: string) => {
-  const searchSeller = dashboard.sellers.find(
-    (v) => v.id === sellerId
-  ) as SellersDashboard
+  const sellerIds = sellerId.split(',')
+  const searchSeller = dashboard.sellers.filter((v) =>
+    sellerIds.includes(v.id)
+  ) as SellersDashboard[]
 
   return searchSeller
 }

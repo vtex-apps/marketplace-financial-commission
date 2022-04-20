@@ -69,14 +69,11 @@ export const searchSellersService = async (
 
     if (sellerId) {
       const searchSellerId = findSeller(dashboard, sellerId)
-      const sellerArray: SellersDashboard[] = []
-
-      sellerArray.push(searchSellerId)
 
       const searchResult: ResultSearch = {
         dateStart,
         dateEnd,
-        sellers: sellerArray,
+        sellers: searchSellerId,
         pagination: {
           currentPage: 1,
           pageSize: 1,
@@ -112,14 +109,11 @@ export const searchSellersService = async (
 
     if (sellerId) {
       const searchSellerId = findSeller(sellerDashboardVbase, sellerId)
-      const sellerArray: SellersDashboard[] = []
-
-      sellerArray.push(searchSellerId)
 
       result = {
         dateStart,
         dateEnd,
-        sellers: sellerArray,
+        sellers: searchSellerId,
         pagination: {
           currentPage: 1,
           pageSize: 1,

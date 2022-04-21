@@ -74,6 +74,12 @@ function Actions() {
         {
           label: `test`,
         },
+        {
+          label: 'detail',
+          onClick: () => {
+            // TODO: Show modal with invoice detail
+          },
+        },
       ]}
     />
   )

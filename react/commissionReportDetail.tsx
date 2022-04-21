@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl'
 
 import SettingsSeller from './components/SellerSettings'
 import Filter from './components/Dashboard/Filter'
+import InvoiceTable from './components/Invoices/InvoiceTable'
 
 const CommissionReportDetail: FC = () => {
   const { culture, route } = useRuntime()
@@ -86,6 +87,7 @@ const CommissionReportDetail: FC = () => {
             <div className="mt5">
               <PageBlock>
                 {/* <TableComponent schemaTable={tempColumns} itemTable={[]} actions={[]}/> */}
+                <InvoiceTable />
               </PageBlock>
             </div>
           </Tab>

@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import React from 'react'
-import { useQuery } from 'react-apollo'
+// import { useQuery } from 'react-apollo'
 import {
   Spinner,
   Tag,
@@ -11,7 +11,8 @@ import {
 } from 'vtex.styleguide'
 import { FormattedCurrency } from 'vtex.format-currency'
 
-import SELLER_INVOICES from '../../../graphql/getInvoicesBySeller.gql'
+// import SELLER_INVOICES from '../../../graphql/getInvoicesBySeller.gql'
+import { MOCK_INVOICES } from '../../../../node/mocks/invoices'
 
 const columns = [
   {
@@ -79,8 +80,12 @@ function Actions() {
 }
 
 const InvoiceTable: FC = () => {
-  const { data, loading } = useQuery(SELLER_INVOICES)
-  const measures = useTableMeasures({ size: data?.invoices?.length ?? 0 })
+  // TODO: use real data
+  // const { data, loading } = useQuery(SELLER_INVOICES)
+  const data = MOCK_INVOICES
+  const loading = false
+
+  const measures = useTableMeasures({ size: data?.length ?? 0 })
 
   if (loading) {
     return <Spinner block />
@@ -89,7 +94,8 @@ const InvoiceTable: FC = () => {
   return (
     <Table
       measures={measures}
-      items={data.invoices}
+      // items={data.invoices}
+      items={data}
       columns={columns}
       highlightOnHover
     />

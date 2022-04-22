@@ -5,10 +5,10 @@ import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
 
 import SettingsSeller from './components/SellerSettings'
-import Filter from './components/Dashboard/Filter'
+// import Filter from './components/Dashboard/Filter'
 
 const CommissionReportDetail: FC = () => {
-  const { culture, route } = useRuntime()
+  const { route } = useRuntime()
 
   const startDate = new Date()
 
@@ -53,13 +53,10 @@ const CommissionReportDetail: FC = () => {
       <div>
         <PageBlock>
           <div className="mt4 mb7">
-            <Filter
-              dataWithoutFilter={[]}
-              setDataWithoutFilter={[]}
+            {/* <Filter
               startDatePicker={new Date(startDate)}
               finalDatePicker={new Date(finalDate)}
-              locale={culture.locale}
-            />
+            /> */}
           </div>
         </PageBlock>
       </div>

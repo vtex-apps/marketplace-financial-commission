@@ -3,64 +3,32 @@ declare module '*.css'
 declare module 'vtex.render-runtime'
 declare module 'vtex.native-types'
 
-interface TableProps {
-  schemaTable: {
-    properties: {
-      id?: {
-        title: string
-        width: number
-        cellRenderer?: () => void
-      }
-      seller?: {
-        title: string
-        width: number
-      }
-      totalOrders?: {
-        title: string
-        width: number
-      }
-      amountOrders?: {
-        title: string
-        width: number
-      }
-      totalCommission?: {
-        title: string
-        width: number
-      }
-      outstanding?: {
-        title: string
-        width: number
-      }
-      actions?: {
-        title: string
-        width: number
-        cellRenderer?: () => void
-      }
-    }
+interface SchemaTable {
+  id: string
+  title: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cellRenderer?: (props: any) => void
+}
+
+interface SellerSelect {
+  value: {
+    id: string
+    name: string
   }
-  itemTable: []
-  actions: []
-  totalizers?: TotalizerProps
-  toolbar?: {
-    newLine: {
-      label: string
-      handleCallback: () => void
-    }
-  }
+  label: string
 }
 interface FilterProps {
-  dataWithoutFilter?: []
-  setDataWithoutFilter?: any
-  startDatePicker?: Date
-  finalDatePicker?: Date
-  locale: string
-  optionsSelect?: []
-  setStartDate?: any
-  setFinalDate?: any
-  defaultStartDate?: any
-  defaultFinalDate?: any
-  setTotalItems?: any
+  startDatePicker: Date
+  finalDatePicker: Date
+  optionsSelect: SellerSelect[]
+  setStartDate: function
+  setFinalDate: function
+  defaultStartDate: string
+  defaultFinalDate: string
+  setTotalItems: (v: number) => void
+  setSellerId: (v: string) => void
 }
+
 interface TotalizerProps {
   item: [
     {
@@ -92,7 +60,7 @@ interface StatsTotalizer {
 
 interface TableData {
   items: any
-  schemaTable: any
+  schemaTable: SchemaTable[]
   loading: boolean
 }
 
@@ -113,27 +81,27 @@ interface DataSeller {
 }
 
 interface PaginationProps {
-  setPageSize: any
-  currentPage: any
-  pageSize: any
-  setPage: any
-  totalItems: any
-  onNextClick: any
-  changeRows: any
-  onPrevClick: any
+  setPageSize: (v: number) => void
+  currentPage: number
+  pageSize: number
+  setPage: (v: number) => void
+  totalItems: number
+  onNextClick: () => void
+  changeRows: (row: number) => void
+  onPrevClick: () => void
 }
 
 interface SelectProps {
-  options: any
-  dataFilter: any
-  setDataFilter: any
+  options: DataFilter[]
+  dataFilter: DataFilter[]
+  setDataFilter: (v: DataFilter[]) => void
 }
 
 interface DatepickerProps {
-  startDateFilter: any
-  startDatePicker: any
-  changeStartDate: any
-  finalDateFilter: any
-  finalDatePicker: any
-  changeFinalDate: any
+  startDateFilter: Date | string
+  startDatePicker: Date | undefined
+  changeStartDate: (start: Date) => void
+  finalDateFilter: Date | string
+  finalDatePicker: Date | undefined
+  changeFinalDate: (final: Date) => void
 }

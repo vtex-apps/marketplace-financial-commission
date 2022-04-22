@@ -9,6 +9,7 @@ import {
 } from 'vtex.styleguide'
 
 const TableV2: FC<TableData> = (props) => {
+  console.info('props table:::: ', props)
   const measures = useTableMeasures({ size: props.items.length })
 
   const ColumnsExample = () => {

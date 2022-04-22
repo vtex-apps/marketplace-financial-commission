@@ -99,12 +99,12 @@ const CommissionReport: FC = () => {
       title: 'Total Orders',
     },
     {
-      id: 'totalComission',
-      title: 'Total commission',
-    },
-    {
       id: 'totalOrderValue',
       title: 'Total Amount Orders',
+    },
+    {
+      id: 'totalComission',
+      title: 'Total commission',
     },
     {
       id: 'id',
@@ -138,8 +138,8 @@ const CommissionReport: FC = () => {
     if (dataDashboard) {
       if (sellersId) {
         let totalOrdersCount = 0
-        let totalAmountCount = 0
-        let totalCommissionCount = 0
+        let totalAmountCount = 0.0
+        let totalCommissionCount = 0.0
 
         dataDashboard.searchSellersDashboard.sellers.forEach((seller: any) => {
           totalOrdersCount += seller.statistics.ordersCount
@@ -147,8 +147,8 @@ const CommissionReport: FC = () => {
           totalCommissionCount += seller.statistics.totalComission
         })
 
-        setTotalCommission(parseInt(totalCommissionCount.toFixed(2), 10))
-        setTotalAmout(parseInt(totalAmountCount.toFixed(2), 10))
+        setTotalCommission(parseFloat(totalCommissionCount.toFixed(2)))
+        setTotalAmout(parseFloat(totalAmountCount.toFixed(2)))
         setTotalOrder(totalOrdersCount)
 
         console.info('totalOrdersCount ', totalOrdersCount)
@@ -171,6 +171,7 @@ const CommissionReport: FC = () => {
           totalOrderValue: item.statistics.totalOrderValue.toFixed(2),
         })
       })
+      console.info('type dashboard ', dataTableDashboard)
       setSellersDashboard(dataTableDashboard)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -183,7 +184,7 @@ const CommissionReport: FC = () => {
     if (dataStats) {
       const totalStats = totalItemsFilter > 0 ? totalItemsFilter : totalItems
 
-      console.info('totalOrder ', totalOrder)
+      console.info('totalOrder ', dataStats.searchStatisticsDashboard)
 
       setStatsTotalizer([
         {
@@ -203,20 +204,20 @@ const CommissionReport: FC = () => {
         {
           label: 'Total Amount Orders',
           value: sellersId
-            ? totalAmount
-            : dataStats.searchStatisticsDashboard.statistics.totalOrderValue
+            ? `$${totalAmount}`
+            : `$${dataStats.searchStatisticsDashboard.statistics.totalOrderValue
                 .toFixed(2)
-                .toString(),
+                .toString()}`,
           iconBackgroundColor: '#FFDCF8',
           icon: <IconArrowUp color="#F67CC7" size={14} />,
         },
         {
           label: 'Total Commission',
           value: sellersId
-            ? totalCommission
-            : dataStats.searchStatisticsDashboard.statistics.totalComission
+            ? `$${totalCommission}`
+            : `$${dataStats.searchStatisticsDashboard.statistics.totalComission
                 .toFixed(2)
-                .toString(),
+                .toString()}`,
           iconBackgroundColor: '#FFF0EC',
           icon: <IconInfo color="#F7634A" size={14} />,
         },

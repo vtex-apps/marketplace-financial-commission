@@ -117,6 +117,7 @@ const Filter: FC<FilterProps> = (props) => {
                 props.setSellerId('')
                 props.setTotalItems(0)
                 props.setSellerId('')
+                props.setTotalItems(0)
               }}
               icon={<IconDelete />}
             />,

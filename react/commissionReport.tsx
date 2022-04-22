@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
 import {
@@ -25,18 +26,21 @@ import { GET_SELLERS, SEARCH_STATS, SEARCH_SELLERS } from './graphql'
 import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
 
 const CommissionReport: FC = () => {
-  const { culture, navigate } = useRuntime()
+  const { navigate } = useRuntime()
   const [optionsSelect, setOptionsSelect] = useState<any>([])
   const [startDate, setStartDate] = useState('')
   const [finalDate, setFinalDate] = useState('')
   const [defaultStartDate, setDefaultStartDate] = useState('')
   const [defaultFinalDate, setDefaultFinalDate] = useState('')
-  const [sellerId, setSellerId] = useState('')
+  const [sellersId, setSellersId] = useState('')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(5)
   const [itemFrom, setItemFrom] = useState(1)
   const [itemTo, setItemTo] = useState(5)
   const [totalItems, setTotalItems] = useState(0)
+  const [totalAmount, setTotalAmout] = useState(0)
+  const [totalCommission, setTotalCommission] = useState(0)
+  const [totalOrder, setTotalOrder] = useState(0)
   const [totalItemsFilter, setTotalItemsFilter] = useState(0)
   const [statsTotalizer, setStatsTotalizer] = useState<any[]>([
     {
@@ -47,7 +51,6 @@ const CommissionReport: FC = () => {
   ])
 
   const [sellersDashboard, setSellersDashboard] = useState<any>([])
-  const [sellersDashboardFilter, setSellersDashboardFilter] = useState<any>([])
 
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
@@ -78,7 +81,7 @@ const CommissionReport: FC = () => {
           dateEnd: finalDate,
           page,
           pageSize,
-          sellerId,
+          sellersId,
         },
       },
     })
@@ -133,7 +136,28 @@ const CommissionReport: FC = () => {
     dashboard()
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataDashboard) {
-      console.info('dataDashboard:::::--- ', dataDashboard)
+      if (sellersId) {
+        let totalOrdersCount = 0
+        let totalAmountCount = 0
+        let totalCommissionCount = 0
+
+        dataDashboard.searchSellersDashboard.sellers.forEach((seller: any) => {
+          totalOrdersCount += seller.statistics.ordersCount
+          totalAmountCount += seller.statistics.totalOrderValue
+          totalCommissionCount += seller.statistics.totalComission
+        })
+
+        setTotalCommission(parseInt(totalCommissionCount.toFixed(2), 10))
+        setTotalAmout(parseInt(totalAmountCount.toFixed(2), 10))
+        setTotalOrder(totalOrdersCount)
+
+        console.info('totalOrdersCount ', totalOrdersCount)
+      } else {
+        setTotalCommission(0)
+        setTotalAmout(0)
+        setTotalOrder(0)
+      }
+
       const dataTableDashboard: any = []
 
       setPage(dataDashboard.searchSellersDashboard.pagination.currentPage)
@@ -149,46 +173,66 @@ const CommissionReport: FC = () => {
       })
       setSellersDashboard(dataTableDashboard)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dashboard, dataDashboard])
 
   useEffect(() => {
     stats()
 
+    // eslint-disable-next-line vtex/prefer-early-return
     if (dataStats) {
+      const totalStats = totalItemsFilter > 0 ? totalItemsFilter : totalItems
+
+      console.info('totalOrder ', totalOrder)
+
       setStatsTotalizer([
         {
           label: 'Number of Sellers',
-          value: dataDashboard
-            ? dataDashboard.searchSellersDashboard.sellers.length
-            : 0,
+          value: totalStats,
           iconBackgroundColor: '#EAFCE3',
           icon: <IconUser color="#79B03A" size={18} />,
         },
         {
           label: 'Total Orders',
-          value: dataStats.searchStatisticsDashboard.statistics.ordersCount,
+          value: sellersId
+            ? totalOrder
+            : dataStats.searchStatisticsDashboard.statistics.ordersCount,
           iconBackgroundColor: '#CCE8FF',
           icon: <IconShoppingCart color="#368DF7" size={18} />,
         },
         {
           label: 'Total Amount Orders',
-          value: dataStats.searchStatisticsDashboard.statistics.totalOrderValue
-            .toFixed(2)
-            .toString(),
+          value: sellersId
+            ? totalAmount
+            : dataStats.searchStatisticsDashboard.statistics.totalOrderValue
+                .toFixed(2)
+                .toString(),
           iconBackgroundColor: '#FFDCF8',
           icon: <IconArrowUp color="#F67CC7" size={14} />,
         },
         {
           label: 'Total Commission',
-          value: dataStats.searchStatisticsDashboard.statistics.totalComission
-            .toFixed(2)
-            .toString(),
+          value: sellersId
+            ? totalCommission
+            : dataStats.searchStatisticsDashboard.statistics.totalComission
+                .toFixed(2)
+                .toString(),
           iconBackgroundColor: '#FFF0EC',
           icon: <IconInfo color="#F7634A" size={14} />,
         },
       ])
     }
-  }, [dataDashboard, dataStats, stats])
+  }, [
+    dataDashboard,
+    dataStats,
+    sellersId,
+    stats,
+    totalAmount,
+    totalCommission,
+    totalItems,
+    totalItemsFilter,
+    totalOrder,
+  ])
 
   const formatDate = (valueDate: number) => {
     const validateDate = valueDate <= 9 ? `0${valueDate}` : valueDate
@@ -231,6 +275,10 @@ const CommissionReport: FC = () => {
         })
       })
       setOptionsSelect(builtSelectSeller)
+      console.info(
+        'dataSellers.getSellers.items.length ',
+        dataSellers.getSellers.items.length
+      )
       setTotalItems(dataSellers.getSellers.items.length)
     }
   }, [dataSellers])
@@ -279,18 +327,15 @@ const CommissionReport: FC = () => {
           <PageBlock>
             <div className="mt4 mb5">
               <Filter
-                dataWithoutFilter={sellersDashboard}
-                setDataWithoutFilter={setSellersDashboardFilter}
                 startDatePicker={new Date(`${startDate}T00:00:00`)}
                 finalDatePicker={new Date(`${finalDate}T00:00:00`)}
-                locale={culture.locale}
                 optionsSelect={optionsSelect}
                 setStartDate={setStartDate}
                 setFinalDate={setFinalDate}
                 defaultStartDate={defaultStartDate}
                 defaultFinalDate={defaultFinalDate}
                 setTotalItems={setTotalItemsFilter}
-                setSellerId={setSellerId}
+                setSellerId={setSellersId}
               />
             </div>
           </PageBlock>
@@ -308,11 +353,7 @@ const CommissionReport: FC = () => {
           <div className="mt4 mb7">
             <TableComponent
               schemaTable={schemaTable}
-              items={
-                sellersDashboardFilter.length > 0
-                  ? sellersDashboardFilter
-                  : sellersDashboard
-              }
+              items={sellersDashboard}
               loading={loadingDataDashboard}
             />
             <PaginationComponent

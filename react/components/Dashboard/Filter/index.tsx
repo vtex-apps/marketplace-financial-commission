@@ -28,22 +28,18 @@ const Filter: FC<FilterProps> = (props) => {
   }
 
   const changesValuesTable = () => {
-    dataFilter.forEach((item: any) => {
-      props.setSellerId(item.value.id)
-    })
-    /* const filterData = props.dataWithoutFilter?.filter((seller: DataSeller) =>
-      dataFilter?.some((item: DataFilter) => {
-        return item.label === seller.name
-      })
-    )
+    // eslint-disable-next-line prefer-const
+    let stringSellers = ''
+    let countTotalItems = 0
 
-    if (filterData?.length) {
-      props.setDataWithoutFilter(filterData)
-      props.setTotalItems(filterData?.length)
-    } else {
-      props.setDataWithoutFilter([])
-      props.setTotalItems(0)
-    } */
+    dataFilter.forEach((item: any) => {
+      stringSellers += `${item.value.id},`
+      countTotalItems += 1
+    })
+
+    stringSellers = stringSellers.substring(0, stringSellers.length - 1)
+    props.setSellerId(stringSellers)
+    props.setTotalItems(countTotalItems)
 
     if (startDateFilter !== '') {
       const newDateStart = getDate(startDateFilter.toString())
@@ -112,15 +108,14 @@ const Filter: FC<FilterProps> = (props) => {
               isActiveOfGroup={false}
               onClick={() => {
                 setDataFilter([])
-                props.setDataWithoutFilter([])
                 props.setStartDate(props.defaultStartDate)
                 props.setFinalDate(props.defaultFinalDate)
                 setDateFilter(new Date(`${props.defaultStartDate}T00:00:00`))
                 setFinalDateFilter(
                   new Date(`${props.defaultFinalDate}T00:00:00`)
                 )
-                props.setTotalItems(0)
                 props.setSellerId('')
+                props.setTotalItems(0)
               }}
               icon={<IconDelete />}
             />,

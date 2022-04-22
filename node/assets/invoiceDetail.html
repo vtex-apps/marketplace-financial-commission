@@ -63,7 +63,7 @@
       </div>
       <div>
         <h2>Invoice</h2>
-        <p>Invoice #5930499531<br />Date: {{invoiceDueDate}}</p>
+        <p>Invoice #{{id}}<br />Date: {{invoiceDueDate}}</p>
       </div>
     </div>
 
@@ -82,7 +82,7 @@
     <div class="row">
       <p class="t-small lh-copy">
         <span class="t-action--small">Comments or special instructions:</span
-        ><br />N/A
+        ><br />{{sellerData.comment}}
       </p>
     </div>
 

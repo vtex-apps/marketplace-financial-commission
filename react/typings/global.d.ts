@@ -49,11 +49,8 @@ interface TableProps {
   }
 }
 interface FilterProps {
-  dataWithoutFilter?: []
-  setDataWithoutFilter?: any
   startDatePicker?: Date
   finalDatePicker?: Date
-  locale: string
   optionsSelect?: []
   setStartDate?: any
   setFinalDate?: any

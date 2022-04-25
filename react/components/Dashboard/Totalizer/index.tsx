@@ -8,7 +8,6 @@ type TotalizerProps = {
 }
 
 const TotalizerComponent: FC<TotalizerProps> = (props) => {
-  console.info('propssss stats ', props)
   if (props.loading) {
     return (
       <div className="tc">

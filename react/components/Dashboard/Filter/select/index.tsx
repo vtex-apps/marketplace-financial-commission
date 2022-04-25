@@ -4,8 +4,6 @@ import { FormattedMessage } from 'react-intl'
 import { EXPERIMENTAL_Select as Select } from 'vtex.styleguide'
 
 const SelectComponent: FC<SelectProps> = (props) => {
-  console.info('props select ', props)
-
   return (
     <div>
       <Select

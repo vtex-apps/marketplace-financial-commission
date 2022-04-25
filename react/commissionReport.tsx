@@ -27,22 +27,22 @@ import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination
 
 const CommissionReport: FC = () => {
   const { navigate } = useRuntime()
-  const [optionsSelect, setOptionsSelect] = useState<any>([])
+  const [optionsSelect, setOptionsSelect] = useState<DataFilter[]>([])
   const [startDate, setStartDate] = useState('')
   const [finalDate, setFinalDate] = useState('')
   const [defaultStartDate, setDefaultStartDate] = useState('')
   const [defaultFinalDate, setDefaultFinalDate] = useState('')
   const [sellersId, setSellersId] = useState('')
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(5)
+  const [pageSize, setPageSize] = useState(20)
   const [itemFrom, setItemFrom] = useState(1)
-  const [itemTo, setItemTo] = useState(5)
+  const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
   const [totalAmount, setTotalAmout] = useState(0)
   const [totalCommission, setTotalCommission] = useState(0)
   const [totalOrder, setTotalOrder] = useState(0)
   const [totalItemsFilter, setTotalItemsFilter] = useState(0)
-  const [statsTotalizer, setStatsTotalizer] = useState<any[]>([
+  const [statsTotalizer, setStatsTotalizer] = useState<StatsTotalizer[]>([
     {
       label: '',
       value: '',
@@ -50,7 +50,7 @@ const CommissionReport: FC = () => {
     },
   ])
 
-  const [sellersDashboard, setSellersDashboard] = useState<any>([])
+  const [sellersDashboard, setSellersDashboard] = useState<DataSeller[]>([])
 
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
@@ -90,7 +90,7 @@ const CommissionReport: FC = () => {
     {
       id: 'name',
       title: 'Seller name',
-      cellRenderer: (props: any) => {
+      cellRenderer: (props: CellRendererProps) => {
         return <span>{props.data}</span>
       },
     },
@@ -109,7 +109,7 @@ const CommissionReport: FC = () => {
     {
       id: 'id',
       title: 'Actions',
-      cellRenderer: (props: any) => {
+      cellRenderer: (props: CellRendererProps) => {
         return (
           <ActionMenu
             buttonProps={{
@@ -141,37 +141,37 @@ const CommissionReport: FC = () => {
         let totalAmountCount = 0.0
         let totalCommissionCount = 0.0
 
-        dataDashboard.searchSellersDashboard.sellers.forEach((seller: any) => {
-          totalOrdersCount += seller.statistics.ordersCount
-          totalAmountCount += seller.statistics.totalOrderValue
-          totalCommissionCount += seller.statistics.totalComission
-        })
+        dataDashboard.searchSellersDashboard.sellers.forEach(
+          (seller: DataDashboardSeller) => {
+            totalOrdersCount += seller.statistics.ordersCount
+            totalAmountCount += seller.statistics.totalOrderValue
+            totalCommissionCount += seller.statistics.totalComission
+          }
+        )
 
         setTotalCommission(parseFloat(totalCommissionCount.toFixed(2)))
         setTotalAmout(parseFloat(totalAmountCount.toFixed(2)))
         setTotalOrder(totalOrdersCount)
-
-        console.info('totalOrdersCount ', totalOrdersCount)
       } else {
         setTotalCommission(0)
         setTotalAmout(0)
         setTotalOrder(0)
       }
 
-      const dataTableDashboard: any = []
+      const dataTableDashboard: DataSeller[] = []
 
       setPage(dataDashboard.searchSellersDashboard.pagination.currentPage)
-      dataDashboard.searchSellersDashboard.sellers.forEach((item: any) => {
-        dataTableDashboard.push({
-          id: item.id,
-          name: item.name,
-          dateInvoiced: item.statistics.dateInvoiced,
-          ordersCount: item.statistics.ordersCount.toFixed(2),
-          totalComission: item.statistics.totalComission.toFixed(2),
-          totalOrderValue: item.statistics.totalOrderValue.toFixed(2),
-        })
-      })
-      console.info('type dashboard ', dataTableDashboard)
+      dataDashboard.searchSellersDashboard.sellers.forEach(
+        (item: DataDashboardSeller) => {
+          dataTableDashboard.push({
+            id: item.id,
+            name: item.name,
+            ordersCount: item.statistics.ordersCount.toString(),
+            totalComission: item.statistics.totalComission.toFixed(2),
+            totalOrderValue: item.statistics.totalOrderValue.toFixed(2),
+          })
+        }
+      )
       setSellersDashboard(dataTableDashboard)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -183,8 +183,6 @@ const CommissionReport: FC = () => {
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataStats) {
       const totalStats = totalItemsFilter > 0 ? totalItemsFilter : totalItems
-
-      console.info('totalOrder ', dataStats.searchStatisticsDashboard)
 
       setStatsTotalizer([
         {
@@ -267,19 +265,15 @@ const CommissionReport: FC = () => {
 
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataSellers) {
-      const builtSelectSeller: any = []
+      const builtSelectSeller: DataFilter[] = []
 
-      dataSellers.getSellers.items.forEach((seller: any) => {
+      dataSellers.getSellers.items.forEach((seller: DataSellerSelect) => {
         builtSelectSeller.push({
           value: { id: seller.id, name: seller.name },
           label: seller.name,
         })
       })
       setOptionsSelect(builtSelectSeller)
-      console.info(
-        'dataSellers.getSellers.items.length ',
-        dataSellers.getSellers.items.length
-      )
       setTotalItems(dataSellers.getSellers.items.length)
     }
   }, [dataSellers])

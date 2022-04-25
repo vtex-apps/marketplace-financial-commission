@@ -6,8 +6,7 @@ declare module 'vtex.native-types'
 interface SchemaTable {
   id: string
   title: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  cellRenderer?: (props: any) => void
+  cellRenderer?: (props: CellRendererProps) => void
 }
 
 interface SellerSelect {
@@ -64,6 +63,29 @@ interface TableData {
   loading: boolean
 }
 
+interface DataSellerSelect {
+  account: string
+  freightCommissionPercentage: number
+  id: string
+  isActive: boolean
+  name: string
+  productCommissionPercentage: number
+}
+
+interface DataDashboardSeller {
+  account: string
+  id: string
+  name: string
+  statistics: DataStatistics
+}
+
+interface DataStatistics {
+  ordersCount: number
+  outstandingBalance: number
+  totalComission: number
+  totalOrderValue: number
+}
+
 interface DataFilter {
   label: string
   value: {
@@ -73,7 +95,7 @@ interface DataFilter {
 }
 
 interface DataSeller {
-  dateInvoiced: string | undefined
+  id: string
   name: string
   ordersCount: string
   totalComission: string
@@ -104,4 +126,14 @@ interface DatepickerProps {
   finalDateFilter: Date | string
   finalDatePicker: Date | undefined
   changeFinalDate: (final: Date) => void
+}
+
+interface CellRendererProps {
+  data: string
+  density: string
+  motion: {
+    transaction: string
+    willChange: string
+  }
+  rowHeight: number
 }

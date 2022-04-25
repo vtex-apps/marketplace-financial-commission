@@ -32,7 +32,7 @@ const Filter: FC<FilterProps> = (props) => {
     let stringSellers = ''
     let countTotalItems = 0
 
-    dataFilter.forEach((item: any) => {
+    dataFilter.forEach((item: DataFilter) => {
       stringSellers += `${item.value.id},`
       countTotalItems += 1
     })
@@ -76,53 +76,62 @@ const Filter: FC<FilterProps> = (props) => {
   }
 
   return (
-    <div className={`${styles.filter} flex`}>
-      <div className={`${styles.filter_container} w-50 mr4`}>
+    <div>
+      <div className={`${styles.filter_container} w-100`}>
         <SelectComponent
           options={props.optionsSelect}
           dataFilter={dataFilter}
           setDataFilter={setDataFilter}
         />
       </div>
-      <DatePickerComponent
-        startDateFilter={startDateFilter}
-        startDatePicker={props.startDatePicker}
-        changeStartDate={changeStartDate}
-        finalDateFilter={finalDateFilter}
-        finalDatePicker={props.finalDatePicker}
-        changeFinalDate={changeFinalDate}
-      />
-      <div className="w-20 mt6">
-        <ButtonGroup
-          buttons={[
-            // eslint-disable-next-line react/jsx-key
-            <ButtonWithIcon
-              isActiveOfGroup
-              onClick={() => changesValuesTable()}
-              icon={<IconFilter />}
-            >
-              {<FormattedMessage id="admin/table.title-filter" />}
-            </ButtonWithIcon>,
-            // eslint-disable-next-line react/jsx-key
-            <ButtonWithIcon
-              isActiveOfGroup={false}
-              onClick={() => {
-                setDataFilter([])
-                props.setStartDate(props.defaultStartDate)
-                props.setFinalDate(props.defaultFinalDate)
-                setDateFilter(new Date(`${props.defaultStartDate}T00:00:00`))
-                setFinalDateFilter(
-                  new Date(`${props.defaultFinalDate}T00:00:00`)
-                )
-                props.setSellerId('')
-                props.setTotalItems(0)
-                props.setSellerId('')
-                props.setTotalItems(0)
-              }}
-              icon={<IconDelete />}
-            />,
-          ]}
-        />
+      <div className="flex mt5">
+        <div className="w-30" />
+        <div className="w-50">
+          <DatePickerComponent
+            startDateFilter={startDateFilter}
+            startDatePicker={props.startDatePicker}
+            changeStartDate={changeStartDate}
+            finalDateFilter={finalDateFilter}
+            finalDatePicker={props.finalDatePicker}
+            changeFinalDate={changeFinalDate}
+          />
+        </div>
+        <div className="w-20 mt6">
+          <div className="fr">
+            <ButtonGroup
+              buttons={[
+                // eslint-disable-next-line react/jsx-key
+                <ButtonWithIcon
+                  isActiveOfGroup
+                  onClick={() => changesValuesTable()}
+                  icon={<IconFilter />}
+                >
+                  {<FormattedMessage id="admin/table.title-filter" />}
+                </ButtonWithIcon>,
+                // eslint-disable-next-line react/jsx-key
+                <ButtonWithIcon
+                  isActiveOfGroup={false}
+                  onClick={() => {
+                    setDataFilter([])
+                    props.setStartDate(props.defaultStartDate)
+                    props.setFinalDate(props.defaultFinalDate)
+                    setDateFilter(
+                      new Date(`${props.defaultStartDate}T00:00:00`)
+                    )
+                    setFinalDateFilter(
+                      new Date(`${props.defaultFinalDate}T00:00:00`)
+                    )
+                    props.setSellerId('')
+                    props.setTotalItems(0)
+                    props.setSellerId('')
+                    props.setTotalItems(0)
+                  }}
+                  icon={<IconDelete />}
+                />,
+              ]}
+            />
+          </div>
+        </div>
       </div>
     </div>
   )

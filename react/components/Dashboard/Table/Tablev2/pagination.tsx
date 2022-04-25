@@ -7,7 +7,7 @@ const PaginationComponent: FC<PaginationProps> = (props) => {
   return (
     <div>
       <Pagination
-        rowsOptions={[5, 10, 20, 30, 40, 50]}
+        rowsOptions={[20, 30, 40, 50]}
         currentItemFrom={props.currentPage}
         currentItemTo={props.pageSize}
         textOf={<FormattedMessage id="admin/table.pagination-textOf" />}

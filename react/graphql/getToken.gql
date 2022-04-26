@@ -1,0 +1,6 @@
+query GET_TOKEN($sellerId: ID!) {
+  getToken(sellerId: $sellerId) {
+    name
+    autheticationToken
+  }
+}

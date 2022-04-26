@@ -25,7 +25,7 @@
     },
     "generateDashboard": {
       "path": "/_v/dashboard/generate",
-      "public": false,
+      "public": true,
       "policies": [
         {
           "effect": "allow",

@@ -1,15 +1,6 @@
 import { getDatesInvoiced } from '../../../utils'
 
 /**
- * @todo
- * tipear el formato de fecha que pide la API (ISO format)
- */
-interface DateRange {
-  start: string
-  end: string
-}
-
-/**
  * Given a Seller and an optional Date range, return
  * all orders marked as INVOICED
  * @param sellersName the seller to query orders from
@@ -19,15 +10,15 @@ interface DateRange {
 export async function orderListInvoicedBySeller(
   ctx: Context,
   sellersName: string,
-  dateRange?: DateRange
+  dateRange?: DateRange | undefined
 ): Promise<VtexListOrder[]> {
   const {
     clients: { ordersClient },
   } = ctx
 
-  const dateInvoiced = getDatesInvoiced()
-  const dateStart = dateRange?.start ?? dateInvoiced.dateInvoiceInitial
-  const dateEnd = dateRange?.end ?? dateInvoiced.dateInvoiceEnd
+  const dateInvoiced = getDatesInvoiced(dateRange)
+  const dateStart = dateInvoiced.dateInvoiceInitial
+  const dateEnd = dateInvoiced.dateInvoiceEnd
   const page = 1
 
   const orderListIni = await ordersClient.listOrders({

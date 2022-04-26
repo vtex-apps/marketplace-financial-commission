@@ -9,7 +9,7 @@ import { CustomError } from '../../utils/customError'
 export async function eligibleSellers(
   ctx: Context,
   next: () => Promise<Sellers>,
-  retrySellers?: Item[]
+  retrySellers?: ItemSeller[]
 ) {
   /**
    * @todo

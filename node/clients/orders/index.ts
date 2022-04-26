@@ -1,11 +1,12 @@
 import type { InstanceOptions, IOContext } from '@vtex/api'
 import { JanusClient } from '@vtex/api'
-
-const baseURL = 'api/oms/pvt/orders'
+import Polly from 'polly-js'
+import fetch from 'node-fetch'
 
 const routes = {
-  getOrder: (orderId: string) => `${baseURL}/${orderId}`,
-  listOrders: (params: ParamsListOrders) => {
+  getOrder: (account: string, orderId: string) =>
+    `${routes.baseUrl(account)}/${orderId}`,
+  listOrders: (account: string, params: ParamsListOrders) => {
     const {
       fStatus,
       fieldDate,
@@ -17,10 +18,14 @@ const routes = {
       perpage,
     } = params
 
-    return `${baseURL}?f_status=${fStatus}&f_${fieldDate}=${fieldDate}:[${fieldDateStart} TO ${fieldDateEnd}]&f_sellerNames=${sellerName}&orderBy=${orderBy},desc&page=${page}&per_page=${
+    return `${routes.baseUrl(
+      account
+    )}?f_status=${fStatus}&f_${fieldDate}=${fieldDate}:[${fieldDateStart} TO ${fieldDateEnd}]&f_sellerNames=${sellerName}&orderBy=${orderBy},desc&page=${page}&per_page=${
       perpage ?? 100
     }`
   },
+  baseUrl: (account: string) =>
+    `https://${account}.vtexcommercestable.com.br/api/oms/pvt/orders`,
 }
 
 export class OrdersClient extends JanusClient {
@@ -39,7 +44,28 @@ export class OrdersClient extends JanusClient {
     const { logger } = this.context
 
     try {
-      const order = await this.http.get(routes.getOrder(orderId))
+      const loadData = () => {
+        return Polly()
+          .waitAndRetry([1000, 2000, 3000, 4000, 5000, 6000, 7000])
+          .executeForPromise(async () => {
+            const rsp = await fetch(
+              routes.getOrder(this.context.account, orderId),
+              {
+                method: 'get',
+                headers: this.options?.headers,
+              }
+            )
+
+            if (rsp.ok) {
+              return rsp.json()
+            }
+
+            return Promise.reject(rsp)
+          })
+      }
+      // const order = await this.http.get(routes.getOrder(orderId))
+
+      const order = await loadData()
 
       return order
     } catch (err) {
@@ -58,11 +84,33 @@ export class OrdersClient extends JanusClient {
     const { logger } = this.context
 
     try {
-      const order = await this.http.get<VtexListOrder>(
-        routes.listOrders(params)
-      )
+      const loadData = () => {
+        return Polly()
+          .waitAndRetry([1000, 2000, 3000, 4000, 5000, 6000, 7000])
+          .executeForPromise(async () => {
+            const rsp = await fetch(
+              routes.listOrders(this.context.account, params),
+              {
+                method: 'get',
+                headers: this.options?.headers,
+              }
+            )
 
-      return order
+            if (rsp.ok) {
+              return rsp.json()
+            }
+
+            return Promise.reject(rsp)
+          })
+      }
+
+      const listOrders = await loadData()
+
+      // const order = await this.http.get<VtexListOrder>(
+      //   routes.listOrders(params)
+      // )
+
+      return listOrders
     } catch (err) {
       logger.error({
         workflowInstance: 'GetListOrders',

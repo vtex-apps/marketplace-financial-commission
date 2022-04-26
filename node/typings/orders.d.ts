@@ -2,16 +2,16 @@ interface SellersOrdersDetail {
   sellerId: string
   sellerName: string
   orders: Order[]
-  totalComission: float
-  totalOrderValue: float
+  totalComission: number
+  totalOrderValue: number
 }
 
 interface Order {
   orderId: string
   sellerOrderId?: string
   marketplaceOrderId?: string
-  totalComission: float
-  totalOrderValue: float
+  totalComission: number
+  totalOrderValue: number
   status: string
   statusDescription: string
   creationDate: string

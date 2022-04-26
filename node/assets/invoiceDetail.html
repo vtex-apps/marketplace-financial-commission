@@ -54,7 +54,13 @@
         Helvetica, Arial, sans-serif;
     "
   >
-    <div class="row">
+    <div
+      style="
+        display: flex;
+        align-items: baseline;
+        justify-content: space-around;
+      "
+    >
       <div>
         <p>
           9601 South Meridian Blvd<br />Englewood, CO<br />Phone: (303) 723-1000
@@ -63,7 +69,7 @@
       </div>
       <div>
         <h2>Invoice</h2>
-        <p>Invoice #5930499531<br />Date: {{invoiceDueDate}}</p>
+        <p>Invoice #{{id}}<br />Date: {{invoiceDueDate}}</p>
       </div>
     </div>
 
@@ -82,7 +88,7 @@
     <div class="row">
       <p class="t-small lh-copy">
         <span class="t-action--small">Comments or special instructions:</span
-        ><br />N/A
+        ><br />{{sellerData.comment}}
       </p>
     </div>
 
@@ -91,19 +97,19 @@
     <div class="row">
       <table width="100%" style="box-sizing: border-box; background: #f1f1f1">
         <tr>
-          <th>QUANTITY</th>
-          <th>DESCRIPTION</th>
-          <th>UNIT PRICE</th>
-          <th>RATE</th>
+          <th>ID</th>
           <th>TOTAL</th>
+          <th>COMMISSION</th>
+          <th>RATE</th>
         </tr>
+        {{#each orders}}
         <tr>
-          <td>{{order.quantity}}</td>
-          <td>{{order.description}}</td>
-          <td>${{order.unitPrice}}</td>
-          <td>{{order.rate}}%</td>
-          <td>${{order.total}}</td>
+          <td style="text-align: center">{{this.orderId}}</td>
+          <td style="text-align: center">{{this.total}}</td>
+          <td style="text-align: center">${{this.commission}}</td>
+          <td style="text-align: center">{{this.totalOrderRate}}%</td>
         </tr>
+        {{/each}}
       </table>
     </div>
 

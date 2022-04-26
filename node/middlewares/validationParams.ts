@@ -38,6 +38,27 @@ export async function validationParams(type: string, query: any) {
       break
     }
 
+    case 'Generate': {
+      const { dateStart, dateEnd } = query
+
+      if (
+        (!dateStart && dateEnd) ||
+        (dateStart && !dateEnd) ||
+        (dateStart && dateEnd)
+      ) {
+        isRequerid(dateStart, 'dateStart')
+        isRequerid(dateEnd, 'dateEnd')
+        isValidDate(dateStart, 'dateStart')
+        isValidDate(dateEnd, 'dateEnd')
+
+        numberOfDays(new Date(dateStart), new Date(dateEnd))
+
+        isToday(dateEnd)
+      }
+
+      break
+    }
+
     default:
       break
   }
@@ -107,6 +128,62 @@ function isRequerid(value: string | number, name: string) {
         field: name,
       },
       { type: typeof value }
+    )
+  }
+}
+
+function numberOfDays(date1: Date, date2: Date) {
+  const date1utc = Date.UTC(
+    date1.getFullYear(),
+    date1.getMonth(),
+    date1.getDate()
+  )
+
+  const date2utc = Date.UTC(
+    date2.getFullYear(),
+    date2.getMonth(),
+    date2.getDate()
+  )
+
+  const day = 1000 * 60 * 60 * 24
+  const numberDays = (date2utc - date1utc) / day + 1
+
+  if (numberDays > 30) {
+    throw new CustomError(
+      400,
+      validationMessage.ERROR_MESSAGE_DATE_BETWEEN_DAYS,
+      {
+        field: `dateStart and dateEnd `,
+      },
+      { type: typeof date1 }
+    )
+  }
+}
+
+function isToday(dateEnd: string) {
+  const [date1] = new Date().toISOString().split('T')
+
+  console.info(date1)
+
+  if (date1 === dateEnd) {
+    throw new CustomError(
+      400,
+      validationMessage.ERROR_MESSAGE_DATE_END_EQUAL_OR_GREATER,
+      {
+        field: `dateEnd `,
+      },
+      { type: typeof date1 }
+    )
+  }
+
+  if (dateEnd >= date1) {
+    throw new CustomError(
+      400,
+      validationMessage.ERROR_MESSAGE_DATE_END_EQUAL_OR_GREATER,
+      {
+        field: `dateEnd `,
+      },
+      { type: typeof date1 }
     )
   }
 }

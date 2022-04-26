@@ -34,7 +34,7 @@ const routes = {
     GET: [template],
   }),
   generateDashboard: method({
-    GET: [sellers, generate],
+    POST: [sellers, generate],
   }),
   searchSellersDashboard: method({
     GET: [searchSellers],

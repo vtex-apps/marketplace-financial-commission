@@ -17,12 +17,12 @@ declare global {
     formattedDate: string
   }
 
-  interface Item {
+  interface ItemSeller {
     id: string
     name: string
     account: string
-    productCommissionPercentage: float
-    freightCommissionPercentage: float
+    productCommissionPercentage: number
+    freightCommissionPercentage: number
     isActive: boolean
   }
 
@@ -31,14 +31,11 @@ declare global {
   }
 
   interface Sellers {
-    /**
-     * @todo cuidado! Hay 2 interfaces con el nombre Item, hay que ser mas especificos
-     */
-    items: Item[]
+    items: ItemSeller[]
     paging: Paging
   }
 
-  interface SellerInvoice extends Item, SellerSettings {
+  interface SellerInvoice extends ItemSeller, SellerSettings {
     email: string
   }
 
@@ -126,6 +123,11 @@ declare global {
 
   interface ResponseUpdateToken extends ResponseCreateToken {
     lastModificationDate: string
+  }
+
+  interface DateRange {
+    start: string
+    end: string
   }
 }
 

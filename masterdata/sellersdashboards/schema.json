@@ -31,15 +31,35 @@
               },
               "totalOrderValue": {
                 "type": "number"
+              },
+              "totalDiscounts": {
+                "type": "number"
+              },
+              "totalOrdersItems": {
+                "type": "number"
+              },
+              "totalShipping": {
+                "type": "number"
+              },
+              "totalTax": {
+                "type": "number"
               }
             },
-            "required": ["ordersCount", "totalComission", "totalOrderValue"]
+            "required": [
+              "ordersCount",
+              "totalComission",
+              "totalOrderValue",
+              "totalOrdersItems"
+            ]
           }
         },
         "required": ["id", "account", "name", "statistics"]
       }
+    },
+    "idGenerate": {
+      "type": "string"
     }
   },
-  "required": ["dateCut", "sellers"],
+  "required": ["dateCut", "sellers", "idGenerate"],
   "v-indexed": ["dateCut", "sellers"]
 }

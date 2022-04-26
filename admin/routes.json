@@ -10,5 +10,9 @@
   "admin.app.settings": {
     "component": "commissionReportSettings",
     "path": "/admin/app/commission-report/settings"
+  },
+  "admin.app.settings-detail": {
+    "component": "commissionReportSettingsDetail",
+    "path": "/admin/app/commission-report/settings/detail/*sellerId"
   }
 }

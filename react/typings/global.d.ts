@@ -79,6 +79,11 @@ interface DataDashboardSeller {
   statistics: DataStatistics
 }
 
+interface SettingsSellers {
+  id: string
+  name: string
+}
+
 interface DataStatistics {
   ordersCount: number
   outstandingBalance: number

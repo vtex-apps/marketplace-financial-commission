@@ -1,16 +1,26 @@
+/* eslint-disable vtex/prefer-early-return */
 import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
-import { Layout, PageBlock, PageHeader } from 'vtex.styleguide'
-import { useRuntime } from 'vtex.render-runtime'
+import {
+  Layout,
+  PageBlock,
+  PageHeader,
+  ActionMenu,
+  IconOptionsDots,
+} from 'vtex.styleguide'
 import { FormattedMessage } from 'react-intl'
 import { useQuery } from 'react-apollo'
+import { useRuntime } from 'vtex.render-runtime'
 
 import { GET_SELLERS } from './graphql'
-import Filter from './components/Dashboard/Filter'
+import SelectComponent from './components/Dashboard/Filter/select'
+import { TableComponent } from './components'
 
 const CommissionReportSettings: FC = () => {
-  const { culture } = useRuntime()
+  const { navigate } = useRuntime()
+  const [dataFilter, setDataFilter] = useState<DataFilter[] | []>([])
   const [optionsSelect, setOptionsSelect] = useState<any>([])
+  const [sellersResult, setSellersRestul] = useState<SettingsSellers[] | []>([])
 
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
@@ -18,16 +28,61 @@ const CommissionReportSettings: FC = () => {
   })
 
   useEffect(() => {
-    const builtSelectSeller: DataFilter[] = []
+    if (dataSellers) {
+      const builtSelectSeller: DataFilter[] = []
+      const dataTableDashboard: SettingsSellers[] = []
 
-    dataSellers.getSellers.items.forEach((seller: DataSeller) => {
-      builtSelectSeller.push({
-        value: { id: seller.id, name: seller.name },
-        label: seller.name,
+      dataSellers.getSellers.items.forEach((seller: DataSeller) => {
+        builtSelectSeller.push({
+          value: { id: seller.id, name: seller.name },
+          label: seller.name,
+        })
+        dataTableDashboard.push({
+          id: seller.id,
+          name: seller.name,
+        })
       })
-    })
-    setOptionsSelect(builtSelectSeller)
+      setSellersRestul(dataTableDashboard)
+      setOptionsSelect(builtSelectSeller)
+    }
   }, [dataSellers])
+
+  const Actions = ({ data }: any) => {
+    return (
+      <ActionMenu
+        buttonProps={{
+          variation: 'tertiary',
+          icon: <IconOptionsDots />,
+        }}
+        options={[
+          {
+            label: 'Detail',
+            onClick: () => {
+              navigate({
+                to: `/admin/app/commission-report/settings/detail/${data.id}`,
+              })
+            },
+          },
+        ]}
+      />
+    )
+  }
+
+  const schemaTable = [
+    {
+      id: 'name',
+      title: 'Seller name',
+      cellRenderer: (props: CellRendererProps) => {
+        return <span>{props.data}</span>
+      },
+    },
+    {
+      id: 'id',
+      title: 'Actions',
+      cellRenderer: (props: any) => <Actions {...props} />,
+      extended: true,
+    },
+  ]
 
   return (
     <Layout
@@ -41,18 +96,23 @@ const CommissionReportSettings: FC = () => {
       <div>
         <PageBlock>
           <div className="mt4 mb7">
-            <Filter
-              dataWithoutFilter={[]}
-              optionsSelect={optionsSelect}
-              setDataWithoutFilter={[]}
-              locale={culture.locale}
+            <SelectComponent
+              options={optionsSelect}
+              dataFilter={dataFilter}
+              setDataFilter={setDataFilter}
             />
           </div>
         </PageBlock>
       </div>
       <div className="mt2">
         <PageBlock>
-          <div className="mt4 mb7">Settings</div>
+          <div className="mt4 mb7">
+            <TableComponent
+              schemaTable={schemaTable}
+              items={sellersResult}
+              loading={false}
+            />
+          </div>
         </PageBlock>
       </div>
     </Layout>

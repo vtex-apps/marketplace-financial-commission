@@ -24,6 +24,7 @@ export const searchSellersService = async (
 
   let result: any = ''
   let vbaseResponse: any | null = null
+  let vbaseSellers: SellersDashboard[] | null = null
 
   try {
     vbaseResponse = await vbase.getRawJSON<Dashboards>(
@@ -31,12 +32,14 @@ export const searchSellersService = async (
       vbaseId
     )
 
-    result = vbaseResponse.data
+    const sellerDashboardVbase: Dashboards = vbaseResponse.data
+
+    vbaseSellers = sellerDashboardVbase.sellers
   } catch (error) {
     console.info('No exist data')
   }
 
-  if (vbaseResponse === null) {
+  if (vbaseResponse === null || vbaseSellers?.length === 0) {
     const dashboardResponse = await sellersDashboardClientMD.search(
       pagination,
       ['_all'],

@@ -4,7 +4,8 @@ import type {
   StatisticsDashboard,
 } from 'vtex.marketplace-financial-commission'
 
-import { getDatesInvoiced } from '../../../utils'
+import { createKeyToken, getDatesInvoiced, numberOfDays } from '../../../utils'
+import { validationParams } from '../../validationParams'
 import { calculateSellers } from './calculateSellers'
 
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
@@ -16,61 +17,136 @@ export async function generate(ctx: Context, next: () => Promise<Dashboards>) {
     clients: { sellersDashboardClientMD, statisticsDashboardClientMD },
   } = ctx
 
-  const getDates = getDatesInvoiced()
-  const dateCut = getDates.formattedDate
+  const start = ctx.query.dateStart as string
+  const end = ctx.query.dateEnd as string
 
-  const responseCalculateSellers = await calculateSellers(ctx, sellers)
+  await validationParams('Generate', ctx.query)
 
-  const {
-    sellersDashboard,
-    statistics: { ordersCount, totalComission, totalOrderValue },
-  } = responseCalculateSellers
+  const numDays = numberOfDays(new Date(start), new Date(end))
 
-  const dashboard: SellersDashboard = {
-    dateCut,
-    sellers: sellersDashboard as [],
+  console.info(`Number Days-------> ${numDays}`)
+
+  const processGenerate = async () => {
+    const getDates = getDatesInvoiced({
+      start,
+      end,
+    })
+
+    let loop = new Date(getDates.dateInvoiceInitial)
+    const endLoop = new Date(getDates.dateInvoiceEnd)
+    const responseSellersMD = []
+    const responseStatisticsMD = []
+
+    // eslint-disable-next-line no-console
+    console.time('generateLoop')
+    while (loop <= endLoop) {
+      const [dayToProcess] = loop.toISOString().split('T')
+      const dateRange: DateRange = {
+        start: dayToProcess,
+        end: dayToProcess,
+      }
+
+      const responseCalculateSellers = await calculateSellers(
+        ctx,
+        sellers,
+        dateRange
+      )
+
+      const {
+        sellersDashboard,
+        statistics: {
+          ordersCount,
+          totalComission,
+          totalOrderValue,
+          totalDiscounts,
+          totalOrdersItems,
+          totalShipping,
+          totalTax,
+        },
+      } = responseCalculateSellers
+
+      const dashboard: SellersDashboard = {
+        dateCut: dayToProcess,
+        sellers: sellersDashboard as [],
+        idGenerate: createKeyToken(),
+      }
+
+      const dashboardWithId = {
+        id: `DSH-${ctx.vtex.account}-${dayToProcess}`,
+        ...dashboard,
+      }
+
+      const dashboardSaveMD = await sellersDashboardClientMD.saveOrUpdate(
+        dashboardWithId
+      )
+
+      responseSellersMD.push(dashboardSaveMD)
+
+      const statsGeneral: StatisticsDashboard = {
+        dateCut: dayToProcess,
+        statistics: {
+          ordersCount,
+          totalComission,
+          totalOrderValue,
+          totalDiscounts,
+          totalOrdersItems,
+          totalShipping,
+          totalTax,
+        },
+        idStatistics: createKeyToken(),
+      }
+
+      const dashboardstatsWithId = {
+        id: `DSH-Statistics-${ctx.vtex.account}-${dayToProcess}`,
+        ...statsGeneral,
+      }
+
+      let responseStats
+
+      try {
+        responseStats = await statisticsDashboardClientMD.saveOrUpdate(
+          dashboardstatsWithId
+        )
+        responseStatisticsMD.push(responseStats)
+      } catch (err) {
+        const error = err as any
+        const { message, status, payload } = error
+
+        responseStats = { message, status, payload }
+
+        responseStatisticsMD.push(responseStats)
+      }
+
+      const newDate = loop.setDate(loop.getDate() + 1)
+
+      loop = new Date(newDate)
+    }
+
+    const responseGenerateDashboard = {
+      Sellers: responseSellersMD,
+      Statistics: responseStatisticsMD,
+    }
+
+    // eslint-disable-next-line no-console
+    console.timeEnd('generateLoop')
+
+    console.info(`Process completed`)
+
+    return responseGenerateDashboard
   }
 
-  const dashboardWithId = {
-    id: `DSH-${ctx.vtex.account}-${getDates.formattedDate}`,
-    ...dashboard,
+  if (numDays > 5) {
+    processGenerate()
+    ctx.status = 200
+    ctx.body = {
+      message: 'We are processing your request, please validate in 15 minutes.',
+    }
+    ctx.set('Cache-Control', 'no-cache ')
+    await next()
+  } else {
+    ctx.status = 200
+    ctx.body = await processGenerate() // responseGenerateDashboard
+    ctx.set('Cache-Control', 'no-cache ')
+    await next()
   }
-
-  const dashboardSaveMD = await sellersDashboardClientMD.saveOrUpdate(
-    dashboardWithId
-  )
-
-  const statsGeneral: StatisticsDashboard = {
-    dateCut,
-    statistics: {
-      ordersCount,
-      totalComission,
-      totalOrderValue,
-    },
-  }
-
-  const dashboardstatsWithId = {
-    id: `DSH-Statistics-${ctx.vtex.account}-${getDates.formattedDate}`,
-    ...statsGeneral,
-  }
-
-  let responseStatistics
-
-  try {
-    responseStatistics = await statisticsDashboardClientMD.saveOrUpdate(
-      dashboardstatsWithId
-    )
-  } catch (error) {
-    responseStatistics = '304 Not Modified'
-  }
-
-  const responseGenerateDashboard = {
-    Sellers: dashboardSaveMD,
-    Statistics: responseStatistics,
-  }
-
-  ctx.status = 200
-  ctx.body = responseGenerateDashboard
-  ctx.set('Cache-Control', 'no-cache ')
-  await next()
 }

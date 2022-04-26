@@ -51,7 +51,7 @@ export class Clients extends IOClients {
   }
 }
 
-const TIMEOUT_MS = 20000
+const TIMEOUT_MS = 60000
 const memoryCache = new LRUCache<string, any>({ max: 5000 })
 
 metrics.trackCache('financial-commission', memoryCache)

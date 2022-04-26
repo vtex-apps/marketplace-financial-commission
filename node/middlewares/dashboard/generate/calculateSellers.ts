@@ -9,16 +9,25 @@ interface CalculateSellers {
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 export async function calculateSellers(
   ctx: Context,
-  sellers: Sellers
+  sellers: Sellers,
+  dateRange?: DateRange | undefined
 ): Promise<CalculateSellers> {
   const sellersDashboard: SellersDashboard[] = []
   let ordersCountStats = 0
   let totalComissionStats = 0
   let totalOrderValueStats = 0
+  let totalDiscountsStats = 0
+  let totalOrdersItemsStats = 0
+  let totalShippingStats = 0
+  let totalTaxStats = 0
 
   await Promise.all(
     sellers.items.map(async (item) => {
-      const orderListBySeller = await orderListInvoicedBySeller(ctx, item.name)
+      const orderListBySeller = await orderListInvoicedBySeller(
+        ctx,
+        item.name,
+        dateRange
+      )
 
       const commissionByOrder = await calculateCommissionByOrder(
         ctx,
@@ -31,17 +40,41 @@ export async function calculateSellers(
         0
       )
 
-      const totalValueOrder = commissionByOrder.reduce(
+      const totalOrderValue = commissionByOrder.reduce(
         (total, value) => (total += value.totalOrderValue),
+        0
+      )
+
+      const totalDiscounts = commissionByOrder.reduce(
+        (total, value) => (total += value.totalDiscounts ?? 0),
+        0
+      )
+
+      const totalOrdersItems = commissionByOrder.reduce(
+        (total, value) => (total += value.totalOrdersItems ?? 0),
+        0
+      )
+
+      const totalShipping = commissionByOrder.reduce(
+        (total, value) => (total += value.totalShipping ?? 0),
+        0
+      )
+
+      const totalTax = commissionByOrder.reduce(
+        (total, value) => (total += value.totalTax ?? 0),
         0
       )
 
       const statsOrder: StatsSeller = {
         ordersCount,
         totalComission,
-        totalOrderValue: totalValueOrder,
+        totalOrderValue,
+        totalDiscounts,
+        totalOrdersItems,
+        totalShipping,
+        totalTax,
         /**
-         * @todo de donde obtener este valor
+         * TODO @todo de donde obtener este valor
          */
         outstandingBalance: 0,
       }
@@ -55,11 +88,17 @@ export async function calculateSellers(
 
       ordersCountStats += ordersCount
       totalComissionStats += totalComission
-      totalOrderValueStats += totalValueOrder
+      totalOrderValueStats += totalOrderValue
+      totalDiscountsStats += totalDiscounts
+      totalOrdersItemsStats += totalOrdersItems
+      totalShippingStats += totalShipping
+      totalTaxStats += totalTax
 
       sellersDashboard.push(sellersComission)
     })
   )
+
+  // TODO  BORRAR---> console.info({ sellersDashboard: JSON.stringify(sellersDashboard) })
 
   const responseCalculateDashboard: CalculateSellers = {
     sellersDashboard,
@@ -67,6 +106,10 @@ export async function calculateSellers(
       ordersCount: ordersCountStats,
       totalComission: totalComissionStats,
       totalOrderValue: totalOrderValueStats,
+      totalDiscounts: totalDiscountsStats,
+      totalOrdersItems: totalOrdersItemsStats,
+      totalShipping: totalShippingStats,
+      totalTax: totalTaxStats,
     },
   }
 

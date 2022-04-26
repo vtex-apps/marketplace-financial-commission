@@ -17,9 +17,24 @@
         },
         "totalOrderValue": {
           "type": "number"
+        },
+        "totalDiscounts": {
+          "type": "number"
+        },
+        "totalOrdersItems": {
+          "type": "number"
+        },
+        "totalShipping": {
+          "type": "number"
+        },
+        "totalTax": {
+          "type": "number"
         }
       },
       "required": ["ordersCount", "totalComission", "totalOrderValue"]
+    },
+    "idStatistics": {
+      "type": "string"
     }
   },
   "required": ["dateCut", "statistics"],

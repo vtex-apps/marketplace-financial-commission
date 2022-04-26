@@ -22,15 +22,36 @@ export async function calculateCommissionByOrder(
         0
       )
 
-      const totalOrderValue = orderData.items.reduce(
-        (total, x) => (total += formatVtexNumber(x.price)),
-        0
+      // const totalOrderValue = orderData.items.reduce(
+      //   (total, x) => (total += formatVtexNumber(x.price)),
+      //   0
+      // )
+
+      const totalOrderValue = formatVtexNumber(orderData.value)
+      const [totalDiscounts] = orderData.totals.flatMap((x) =>
+        x.id === 'Discounts' ? formatVtexNumber(x.value) : 0
+      )
+
+      const [totalOrdersItems] = orderData.totals.flatMap((x) =>
+        x.id === 'Items' ? formatVtexNumber(x.value) : 0
+      )
+
+      const [totalShipping] = orderData.totals.flatMap((x) =>
+        x.id === 'Shipping' ? formatVtexNumber(x.value) : 0
+      )
+
+      const [totalTax] = orderData.totals.flatMap((x) =>
+        x.id === 'Tax' ? formatVtexNumber(x.value) : 0
       )
 
       const lines: OrderComission = {
         orderId: order.orderId,
         totalComission,
         totalOrderValue,
+        totalDiscounts,
+        totalOrdersItems,
+        totalShipping,
+        totalTax,
         // TODO: Calculete correctly
         totalOrderRate: null,
       }

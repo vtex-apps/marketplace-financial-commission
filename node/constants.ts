@@ -12,6 +12,10 @@ export const validationMessage = {
     'Invalid date format. The date format is yyyy-mm-dd.',
   ERROR_MESSAGE_DATE_RANGE_MONTH_AND_YEAR: 'Range of year or month incorrect',
   ERROR_MESSAGE_DATE_RANGE_DAY: 'Day incorrect',
+  ERROR_MESSAGE_DATE_BETWEEN_DAYS:
+    'Only a date range of no more than 30 days is allowed.',
+  ERROR_MESSAGE_DATE_END_EQUAL_OR_GREATER:
+    'End date cannot be equal to or greater than the current current day or date..',
 } as const
 
 export const JOB_STATUS = {

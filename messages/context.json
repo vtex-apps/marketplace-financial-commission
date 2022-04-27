@@ -2,7 +2,7 @@
   "admin/navigation.title": "Dashboard Main Title ",
   "admin/navigation.section-title": "Commission Report",
   "admin/navigation.dashboard-title": "Dashboard",
-  "admin/navigation.detail-title": "Detailed records",
+  "admin/navigation.detail-title": "Seller Invoice Detail",
   "admin/table.title-seller-label": "Title of table filter to identify Choose seller name",
   "admin/table.title-datepicker-start": "Title of table filter to identify Start Date",
   "admin/table.title-datepicker-final": "Title of table filter to identify Final Date",

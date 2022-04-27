@@ -11,8 +11,10 @@ import {
 import styles from '../../../styles.css'
 import SelectComponent from './select'
 import DatePickerComponent from './datePicker'
+import FilterBarComponent from './filterBar'
 
 const Filter: FC<FilterProps> = (props) => {
+  console.info('props ', props)
   const [dataFilter, setDataFilter] = useState<DataFilter[] | []>([])
   const [startDateFilter, setDateFilter] = useState<Date | string>('')
   const [finalDateFilter, setFinalDateFilter] = useState<Date | string>('')
@@ -38,8 +40,15 @@ const Filter: FC<FilterProps> = (props) => {
     })
 
     stringSellers = stringSellers.substring(0, stringSellers.length - 1)
-    props.setSellerId(stringSellers)
+    if (
+      !props.setStartDate ||
+      !props.setFinalDate ||
+      !props.setSellerId ||
+      !props.setTotalItems
+    )
+      return
     props.setTotalItems(countTotalItems)
+    props.setSellerId(stringSellers)
 
     if (startDateFilter !== '') {
       const newDateStart = getDate(startDateFilter.toString())
@@ -85,7 +94,9 @@ const Filter: FC<FilterProps> = (props) => {
         />
       </div>
       <div className="flex mt5">
-        <div className="w-30" />
+        <div className="w-30 pt6">
+          <FilterBarComponent />
+        </div>
         <div className="w-50">
           <DatePickerComponent
             startDateFilter={startDateFilter}
@@ -113,18 +124,27 @@ const Filter: FC<FilterProps> = (props) => {
                   isActiveOfGroup={false}
                   onClick={() => {
                     setDataFilter([])
-                    props.setStartDate(props.defaultStartDate)
-                    props.setFinalDate(props.defaultFinalDate)
+                    if (
+                      !props.setStartDate ||
+                      !props.setFinalDate ||
+                      !props.setSellerId ||
+                      !props.setTotalItems
+                    )
+                      return
+                    props.setStartDate(
+                      props.defaultStartDate ? props.defaultStartDate : ''
+                    )
+                    props.setFinalDate(
+                      props.defaultFinalDate ? props.defaultFinalDate : ''
+                    )
                     setDateFilter(
                       new Date(`${props.defaultStartDate}T00:00:00`)
                     )
                     setFinalDateFilter(
                       new Date(`${props.defaultFinalDate}T00:00:00`)
                     )
-                    props.setSellerId('')
                     props.setTotalItems(0)
                     props.setSellerId('')
-                    props.setTotalItems(0)
                   }}
                   icon={<IconDelete />}
                 />,

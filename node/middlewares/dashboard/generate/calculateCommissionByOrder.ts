@@ -22,27 +22,22 @@ export async function calculateCommissionByOrder(
         0
       )
 
-      // const totalOrderValue = orderData.items.reduce(
-      //   (total, x) => (total += formatVtexNumber(x.price)),
-      //   0
-      // )
-
       const totalOrderValue = formatVtexNumber(orderData.value)
-      const [totalDiscounts] = orderData.totals.flatMap((x) =>
-        x.id === 'Discounts' ? formatVtexNumber(x.value) : 0
-      )
+      const totalDiscounts = orderData.totals
+        .filter((x) => x.id === 'Discounts')
+        .reduce((total, x) => (total += formatVtexNumber(x.value)), 0)
 
-      const [totalOrdersItems] = orderData.totals.flatMap((x) =>
-        x.id === 'Items' ? formatVtexNumber(x.value) : 0
-      )
+      const totalOrdersItems = orderData.totals
+        .filter((x) => x.id === 'Items')
+        .reduce((total, x) => (total += formatVtexNumber(x.value)), 0)
 
-      const [totalShipping] = orderData.totals.flatMap((x) =>
-        x.id === 'Shipping' ? formatVtexNumber(x.value) : 0
-      )
+      const totalShipping = orderData.totals
+        .filter((x) => x.id === 'Shipping')
+        .reduce((total, x) => (total += formatVtexNumber(x.value)), 0)
 
-      const [totalTax] = orderData.totals.flatMap((x) =>
-        x.id === 'Tax' ? formatVtexNumber(x.value) : 0
-      )
+      const totalTax = orderData.totals
+        .filter((x) => x.id === 'Tax')
+        .reduce((total, x) => (total += formatVtexNumber(x.value)), 0)
 
       const lines: OrderComission = {
         orderId: order.orderId,

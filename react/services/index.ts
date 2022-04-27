@@ -35,3 +35,18 @@ export async function getSellers() {
     throw e
   }
 }
+
+export async function getTemplate() {
+  try {
+    const response = await fetch(config.getUrl('template'), {
+      method: 'GET',
+      headers,
+    })
+
+    const res = await response.json()
+
+    return res
+  } catch (e) {
+    throw e
+  }
+}

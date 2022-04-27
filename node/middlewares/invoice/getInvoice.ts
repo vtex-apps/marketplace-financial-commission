@@ -7,21 +7,20 @@ import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
  */
 export async function getInvoice(ctx: Context) {
   const {
-    query: { id },
+    query: { id, sellerName },
     clients: { commissionInvoices },
-    state,
+    vtex: { account },
   } = ctx
 
   /**
    * @todo
-   * Reemplazar por el sistema de auth
+   * Resolver marketplace
    */
-  const account = state.body.auth
-  const isMarketplace = true
+  const isMarketplace = account === sellerName
 
   const where = isMarketplace
     ? `id=${id}`
-    : `id=${id} AND sellerData.name=${account}`
+    : `id=${id} AND sellerData.name=${sellerName}`
 
   /**
    * We should allow 'expected sections' for masterdata's _fields

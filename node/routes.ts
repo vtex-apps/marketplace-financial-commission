@@ -43,12 +43,13 @@ const routes = {
     GET: [searchStatistics],
   }),
   singleInvoice: method({
-    GET: [resolveInvoice],
+    GET: [authentication, resolveInvoice],
     POST: [resolveInvoice],
     DELETE: [resolveInvoice],
+    PATCH: [resolveInvoice],
   }),
   invoicesBySeller: method({
-    POST: [invoicesBySeller],
+    POST: [authentication, invoicesBySeller],
   }),
   generateInvoices: method({
     GET: [errorHandler, eligibleSellers, generateInvoices],

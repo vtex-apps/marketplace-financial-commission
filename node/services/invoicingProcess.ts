@@ -1,123 +1,61 @@
-import { config, INVOICE_STATUS, JOB_STATUS } from '../constants'
-import { calculateCommissionByOrder } from '../middlewares/dashboard/generate/calculateCommissionByOrder'
-import { orderListInvoicedBySeller } from '../middlewares/dashboard/generate/orderListInvoicedBySeller'
-import { randomId } from '../utils/randomId'
+import { config, JOB_STATUS } from '../constants'
+import { draftInvoice } from '../utils/draftInvoice'
 
 interface JobHistory {
-  referenceId: string
+  referenceId: string | null
   sellerId: string
   status: JobStatus
   message: string | null
 }
 
-type JobStatus = 'ongoing' | 'complete' | 'error'
+type JobStatus = 'ONGOING' | 'COMPLETE' | 'ERROR' | 'OMITTED'
 
-export const invoicingProcess = async (ctx: Context, seller: SellerInvoice) => {
+export const invoicingProcess = async (
+  ctx: Context,
+  seller: SellerInvoice,
+  automated?: boolean
+): Promise<string> => {
   const {
-    clients: { vbase, commissionInvoices },
-    state,
+    clients: { vbase, commissionInvoices, mail },
   } = ctx
 
-  const { id, name, startCycle, nextCycle } = seller
+  const { id: sellerId, name: SELLER_NAME, email } = seller
 
-  const documentId = randomId(name)
+  const BUCKET = automated ? config.AUTO_JOB_BUCKET : config.MANUAL_JOB_BUCKET
 
   const HISTORY = {
-    referenceId: documentId,
-    sellerId: id,
+    referenceId: null,
+    sellerId,
     status: JOB_STATUS.ONGOING,
     message: null,
   }
 
-  await vbase.saveJSON<JobHistory>(config.OUTSTANDING_BUCKET, name, HISTORY)
+  await vbase.saveJSON<JobHistory>(BUCKET, SELLER_NAME, HISTORY)
 
-  /**
-   * @todo
-   * Reconocer ordenes en invoices manuales y filtrarlas
-   */
-  const sellerOrders = await orderListInvoicedBySeller(ctx, name, {
-    start: startCycle,
-    end: nextCycle,
-  })
+  const invoice = await draftInvoice(ctx, seller)
 
-  if (!sellerOrders[0].list.length) {
-    await vbase.saveJSON<JobHistory>(config.OUTSTANDING_BUCKET, name, {
+  if (!invoice) {
+    await vbase.saveJSON<JobHistory>(BUCKET, SELLER_NAME, {
       ...HISTORY,
-      status: JOB_STATUS.COMPLETE,
+      status: JOB_STATUS.OMITTED,
+      message: 'No eligible orders to invoice for given date range',
     })
 
-    return true
+    return JOB_STATUS.OMITTED
   }
 
-  /**
-   * @todo falta el totalOrderRate, como se calcula?
-   */
-  const commissionByOrder = await calculateCommissionByOrder(ctx, sellerOrders)
+  const document = await commissionInvoices.save(invoice)
 
-  const subTotal = commissionByOrder.reduce(
-    (total, { totalComission }) => Number(total + totalComission),
-    0
-  )
+  await mail.sendMail({
+    templateName: '',
+    jsonData: { message: { to: email } },
+  })
 
-  const { email } = seller
-
-  /**
-   * @todo como manejamos el FEE y el TAX?
-   */
-  const fee = 0
-  const sellerTax = { type: 'percentage', value: 0 }
-  const tax =
-    sellerTax.type === 'percentage'
-      ? subTotal / sellerTax.value
-      : sellerTax.value
-
-  const invoice = {
-    id: documentId,
-    status: INVOICE_STATUS.UNPAID,
-    invoiceCreateData: state.body.today,
-    /**
-     * @todo calcular due date
-     */
-    invoiceDueDate: state.body.today,
-    sellerData: {
-      name,
-      id,
-      contact: {
-        email,
-        phone: null,
-      },
-      /**
-       * @todo faltan los datos del seller, como los manejamos?
-       */
-      address: {
-        postalCode: null,
-        city: null,
-        state: null,
-        country: null,
-        street: null,
-        number: null,
-      },
-    },
-    orders: commissionByOrder as [],
-    totalizers: {
-      subTotal,
-      tax,
-      fee,
-      total: subTotal + tax + fee,
-    },
-  }
-
-  await commissionInvoices.save(invoice)
-
-  /**
-   * @todo usar el cliente de emails y enviarselo al seller
-   */
-  // await sendMessage(email, invoice)
-
-  await vbase.saveJSON<JobHistory>(config.OUTSTANDING_BUCKET, name, {
+  await vbase.saveJSON<JobHistory>(BUCKET, SELLER_NAME, {
     ...HISTORY,
+    referenceId: document.DocumentId,
     status: JOB_STATUS.COMPLETE,
   })
 
-  return true
+  return document.DocumentId
 }

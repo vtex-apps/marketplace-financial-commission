@@ -1,6 +1,6 @@
 import { invoicingProcess } from '../../services/invoicingProcess'
 import { assertRejected } from '../../utils/assertRejected'
-import { CustomError } from '../../utils/customError'
+import { ErorrWithPayload } from '../../utils/errorWithPayload'
 
 /**
  * @description Starts the process which will create
@@ -22,7 +22,7 @@ export async function generateInvoices(ctx: Context) {
   const rejected = results.filter(assertRejected)
 
   if (rejected.length > 0) {
-    throw new CustomError({
+    throw new ErorrWithPayload({
       message: "Couldn't complete the invoicing process for some sellers",
       status: 409,
       payload: rejected,

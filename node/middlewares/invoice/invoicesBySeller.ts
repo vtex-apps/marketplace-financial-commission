@@ -10,9 +10,9 @@ import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
  */
 export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
   const {
-    query: { seller },
+    query: { seller, sellerName },
     clients: { commissionInvoices },
-    state,
+    vtex: { account },
     /* req, */
   } = ctx
 
@@ -22,10 +22,9 @@ export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
 
   /**
    * @todo
-   * Reemplazar por el sistema de auth
+   * Resolver marketplace
    */
-  const account = state.body.auth
-  const isMarketplace = true
+  const isMarketplace = account === sellerName
 
   if (!isMarketplace && account !== seller) {
     throw new AuthenticationError(`Cannot access invoices for ${seller}`)

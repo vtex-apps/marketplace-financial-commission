@@ -89,8 +89,8 @@ declare global {
 
   interface Settings {
     billingCycle: string
-    nextCycle: string
-    startCycle: string
+    endDate: string
+    startDate: string
   }
 
   interface SellerSettings extends Settings {

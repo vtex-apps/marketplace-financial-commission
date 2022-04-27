@@ -2,8 +2,7 @@ import { getInvoice } from './getInvoice'
 
 /**
  * @description Attempts to delete a specific Invoice by ID.
- * The Marketplace account has total access, while
- * the seller account can only delete theirs.
+ * Only the Marketplace account has access to this resource
  */
 export async function deleteInvoice(ctx: Context) {
   const {

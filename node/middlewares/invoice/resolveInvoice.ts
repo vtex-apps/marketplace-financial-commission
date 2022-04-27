@@ -1,7 +1,12 @@
 /* eslint-disable padding-line-between-statements */
 import type { CommissionInvoice } from 'vtex.marketplace-financial-commission'
 
-import { getInvoice, createOrUpdateInvoice, deleteInvoice } from './index'
+import {
+  getInvoice,
+  createInvoice,
+  deleteInvoice,
+  updateInvoice,
+} from './index'
 
 type InvoiceEndpointResponse = CommissionInvoice | string | null
 
@@ -15,8 +20,11 @@ export async function resolveInvoice(ctx: Context) {
 
   switch (method) {
     case 'PATCH':
+      body = await updateInvoice(ctx)
+      break
+
     case 'POST':
-      body = await createOrUpdateInvoice(ctx)
+      body = await createInvoice(ctx)
       break
 
     case 'DELETE':

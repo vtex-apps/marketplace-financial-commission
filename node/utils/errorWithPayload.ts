@@ -2,7 +2,7 @@
  * We extend native Errors to be able to catch status in the
  * error handler. Allowing us to pass additional data.
  */
-export class CustomError extends Error {
+export class ErorrWithPayload extends Error {
   public readonly status: number
   public readonly payload: any
 

@@ -1,5 +1,5 @@
 import { config } from '../../constants'
-import { CustomError } from '../../utils/customError'
+import { ErorrWithPayload } from '../../utils/errorWithPayload'
 
 /**
  * @middleware
@@ -38,7 +38,7 @@ export async function eligibleSellers(
   )
 
   if (!DEFAULT_SETTINGS) {
-    throw new CustomError({
+    throw new ErorrWithPayload({
       message:
         "No default Marketplace's settings found, please configure them in the Admin panel",
       status: 500,
@@ -54,7 +54,7 @@ export async function eligibleSellers(
      * @todo
      * Esto lo manejamos como un error? O solo retornamos un warning?
      */
-    throw new CustomError({
+    throw new ErorrWithPayload({
       message: "There're no active sellers for this Marketplace",
       status: 204,
     })
@@ -74,7 +74,7 @@ export async function eligibleSellers(
        * Revisar que manejemos las fechas de una manera exacta.
        * Desde los settings, los calculos y hasta los clientes.
        */
-      if (sellerSettings.nextCycle <= today) {
+      if (sellerSettings.endDate <= today) {
         return { ...seller, ...sellerSettings }
       }
 

@@ -3,7 +3,8 @@ export const config = {
   BUCKET_VBASE_TOKEN: 'TokenConfig',
   PRIVATE_KEY: 'daMud5nb5ZEHipscucqAGu5pPM224HUM',
   SETTINGS_BUCKET: 'settings',
-  OUTSTANDING_BUCKET: 'outstanding',
+  MANUAL_JOB_BUCKET: 'manual',
+  AUTO_JOB_BUCKET: 'automatic',
 } as const
 
 export const validationMessage = {
@@ -19,9 +20,10 @@ export const validationMessage = {
 } as const
 
 export const JOB_STATUS = {
-  ONGOING: 'ongoing',
-  COMPLETE: 'complete',
-  ERROR: 'error',
+  ONGOING: 'ONGOING',
+  COMPLETE: 'COMPLETE',
+  ERROR: 'ERROR',
+  OMITTED: 'OMITTED',
 } as const
 
 export const INVOICE_STATUS = {

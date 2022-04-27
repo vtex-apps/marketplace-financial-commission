@@ -1,9 +1,7 @@
-export async function sellers(ctx: Context, next: () => Promise<Sellers>) {
-  const {
-    clients: { sellersIO },
-  } = ctx
+import { listSellers } from './listSellers'
 
-  const respsellers = await sellersIO.getSellers()
+export async function sellers(ctx: Context, next: () => Promise<Sellers>) {
+  const respsellers = await listSellers(ctx)
 
   ctx.state.body = { sellers: respsellers }
 

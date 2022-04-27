@@ -130,3 +130,9 @@ type GetTokenResponse {
   lastModificationDate: String
   enabled: Boolean
 }
+
+input ListSellersParams {
+  sellersId: String
+  page: Int
+  pageSize: Int
+}

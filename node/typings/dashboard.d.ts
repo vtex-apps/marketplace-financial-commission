@@ -50,7 +50,7 @@ interface ResultSearch {
 interface Pagination {
   currentPage: number
   pageSize: number
-  totalPage: number
+  totalPage?: number
 }
 
 interface StatisticsGeneralDashboard {

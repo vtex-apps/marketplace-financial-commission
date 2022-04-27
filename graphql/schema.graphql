@@ -2,7 +2,8 @@ type Query {
   """
   Retrieve all onboarded sellers
   """
-  getSellers: Sellers @cacheControl(scope: PUBLIC, maxAge: LONG)
+  getSellers(listSellersParams: ListSellersParams): Sellers
+    @cacheControl(scope: PUBLIC, maxAge: LONG)
   """
   Retrieve all Invoices for a given seller
   """

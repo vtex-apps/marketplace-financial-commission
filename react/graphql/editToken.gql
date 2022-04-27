@@ -1,0 +1,5 @@
+mutation EDIT_TOKEN($sellerId: ID!, $isEnable: Boolean!) {
+  editToken(sellerId: $sellerId, tokenInput: { enabled: $isEnable }) {
+    message
+  }
+}

@@ -8,3 +8,4 @@
  - [Feature/invoice detail](https://github.com/vtex-apps/marketplace-financial-commission/pull/12)
  - [Commit Authentication API Rest](https://github.com/vtex-apps/marketplace-financial-commission/pull/14)
  - [resolvers graphql for token autentication](https://github.com/vtex-apps/marketplace-financial-commission/pull/18)
+ - [Commit the generateDashboard endpoint changes the public field from t&](https://github.com/vtex-apps/marketplace-financial-commission/pull/29)

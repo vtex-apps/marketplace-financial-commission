@@ -59,6 +59,15 @@ export async function validationParams(type: string, query: any) {
       break
     }
 
+    case 'ListSellers': {
+      const { page, pageSize } = query
+
+      isRequerid(page, 'page')
+      isRequerid(pageSize, 'pageSize')
+
+      break
+    }
+
     default:
       break
   }

@@ -47,7 +47,7 @@ export default class SellersIO extends AppGraphQLClient {
     })
   }
 
-  public async getSellers(...sellersParams: []): Promise<Sellers> {
+  public async getSellers(sellersParams?: SellerListParams): Promise<Sellers> {
     const sellers = await this.graphql
       .query<Data, Record<string, unknown>>(
         {

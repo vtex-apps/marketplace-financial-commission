@@ -1,7 +1,6 @@
 import { method } from '@vtex/api'
 
 import {
-  generate,
   sendMail,
   searchSellers,
   searchStatistics,
@@ -20,6 +19,7 @@ import { seller } from './middlewares/sellers/seller'
 import { authentication } from './middlewares/authentication/authentication'
 import { updateToken } from './middlewares/authentication/updateToken'
 import { getToken } from './middlewares/authentication/getToken'
+import { generate } from './middlewares/dashboard/generate/generate'
 
 const template = templateMethod
 

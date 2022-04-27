@@ -1,0 +1,5 @@
+mutation CREATE_TOKEN($sellerId: ID!) {
+  createToken(sellerId: $sellerId) {
+    autheticationToken
+  }
+}

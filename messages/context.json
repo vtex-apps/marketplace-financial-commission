@@ -4,6 +4,7 @@
   "admin/navigation.dashboard-title": "Dashboard",
   "admin/navigation.detail-title": "Seller Invoice Detail",
   "admin/navigation.settings": "Settings",
+  "admin/navigation.setting": "Setting - {name}",
   "admin/table.title-seller-label": "Title of table filter to identify Choose seller name",
   "admin/table.title-datepicker-start": "Title of table filter to identify Start Date",
   "admin/table.title-datepicker-final": "Title of table filter to identify Final Date",
@@ -20,5 +21,7 @@
   "admin/modal-settings.cancel": "Title to button cancel of modal settings",
   "admin/modal-settings.alert-warning": "Warning about modifying settings",
   "admin/modal-settings.billingCycle": "Section title for billing cycle",
-  "admin/modal-settings.billingCycle-helpText": "Repercution explanation about modifying billing cycle"
+  "admin/modal-settings.billingCycle-helpText": "Repercution explanation about modifying billing cycle",
+  "admin/form-settings.button-new": "Generate a new one",
+  "admin/form-settings.is-enable": "Actived"
 }

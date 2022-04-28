@@ -26,13 +26,20 @@ declare global {
     isActive: boolean
   }
 
-  interface Paging {
-    total: number
+  interface PagingSellers {
+    total?: number
+    from?: number
+    to?: number
   }
 
   interface Sellers {
     items: ItemSeller[]
-    paging: Paging
+    paging: PagingSellers
+  }
+
+  interface SellerListParams {
+    pagination?: PagingSellers
+    sellerId?: string
   }
 
   interface SellerInvoice extends ItemSeller, SellerSettings {
@@ -128,6 +135,11 @@ declare global {
   interface DateRange {
     start: string
     end: string
+  }
+
+  interface ResultSearchSellerList {
+    sellers: ItemSeller[]
+    pagination: Pagination
   }
 }
 

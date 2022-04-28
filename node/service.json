@@ -16,7 +16,7 @@
       "public": true
     },
     "sellers": {
-      "path": "/_v/sellers",
+      "path": "/_v/sellers/list",
       "public": true
     },
     "template": {
@@ -24,7 +24,7 @@
       "public": true
     },
     "generateDashboard": {
-      "path": "/_v/dashboard/generate",
+      "path": "/dashboard/generate",
       "public": false,
       "policies": [
         {

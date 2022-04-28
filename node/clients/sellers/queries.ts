@@ -1,6 +1,6 @@
 export const GET_SELLERS = `
-query GetSellers {
-    sellers {
+query GetSellers($sellersParams: SellersParams) {
+  sellers(parameters: $sellersParams){
       items {
         id
         name
@@ -10,6 +10,8 @@ query GetSellers {
         isActive
       },
       paging {
+        from
+        to
         total
       }
     }

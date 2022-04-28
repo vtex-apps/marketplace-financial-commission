@@ -57,24 +57,15 @@ export const MOCK_INVOICES = [
     status: 'unpaid',
     invoiceCreatedDate: '25/02/2022',
     invoiceDueDate: '15/03/2022',
-    sellerData: {
+    seller: {
       name: 'Seller A',
       id: 'SellerId',
       contact: {
         phone: '+34874958678',
-        fax: null,
         email: 'sesarocampo@sellera.com',
       },
-      address: {
-        postalCode: 'EC1Y 8TZ',
-        city: 'Random',
-        state: 'State of Liberty',
-        country: 'GBR',
-        street: 'Carrer de Sardenya',
-        number: null,
-      },
-      comment: null,
     },
+    comment: null,
     orders: [
       {
         orderId: '10012931-12',

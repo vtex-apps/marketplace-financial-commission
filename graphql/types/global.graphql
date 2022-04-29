@@ -5,6 +5,7 @@ type SearchResponse {
   dateStart: String
   dateEnd: String
   sellers: [SellersDashboardSearch]
+  statistics: StatsGeneralSearch
   pagination: PaginationSearch
 }
 
@@ -60,6 +61,7 @@ input SearchOrdersParams {
   sellerName: String!
   page: Int!
   perpage: Int!
+  status: String
 }
 
 type OrderSearch {

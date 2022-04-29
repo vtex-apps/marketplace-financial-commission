@@ -12,19 +12,25 @@ export async function orderDetailCommission(
     orderListBySeller.list.map(async (order) => {
       const orderData = await ordersClient.getOrder(order.orderId)
 
-      const totalComission = orderData.items.reduce(
-        (total, x) =>
-          total +
-          (formatVtexNumber(x.price) *
-            formatVtexNumber(formatVtexNumber(x.commission)) +
-            formatVtexNumber(x.shippingPrice ?? 0) *
-              formatVtexNumber(formatVtexNumber(x.freightCommission ?? 0))),
-        0
+      const totalComission = Number(
+        orderData.items
+          .reduce(
+            (total, x) =>
+              total +
+              x.quantity *
+                (formatVtexNumber(x.price) *
+                  formatVtexNumber(formatVtexNumber(x.commission)) +
+                  formatVtexNumber(x.shippingPrice ?? 0) *
+                    formatVtexNumber(
+                      formatVtexNumber(x.freightCommission ?? 0)
+                    )),
+            0
+          )
+          .toFixed(2)
       )
 
-      const totalOrderValue = orderData.items.reduce(
-        (total, x) => (total += formatVtexNumber(x.price)),
-        0
+      const totalOrderValue = Number(
+        formatVtexNumber(orderData.value).toFixed(2)
       )
 
       const itemsRate: ItemsRate[] = orderData.items.map((item) => {
@@ -32,8 +38,12 @@ export async function orderDetailCommission(
           itemId: item.id,
           nameItem: item.name,
           rate: {
-            freightCommissionPercentage: item.freightCommission,
-            productCommissionPercentage: item.commission,
+            freightCommissionPercentage: Number(
+              formatVtexNumber(item.freightCommission).toFixed(2)
+            ),
+            productCommissionPercentage: Number(
+              formatVtexNumber(item.commission).toFixed(2)
+            ),
           },
         }
       })

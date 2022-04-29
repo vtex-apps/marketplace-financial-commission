@@ -15,10 +15,11 @@ export async function calculateCommissionByOrder(
       const totalComission = orderData.items.reduce(
         (total, x) =>
           total +
-          (formatVtexNumber(x.price) *
-            formatVtexNumber(formatVtexNumber(x.commission)) +
-            formatVtexNumber(x.shippingPrice ?? 0) *
-              formatVtexNumber(formatVtexNumber(x.freightCommission ?? 0))),
+          x.quantity *
+            (formatVtexNumber(x.price) *
+              formatVtexNumber(formatVtexNumber(x.commission)) +
+              formatVtexNumber(x.shippingPrice ?? 0) *
+                formatVtexNumber(formatVtexNumber(x.freightCommission ?? 0))),
         0
       )
 

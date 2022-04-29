@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import type { StatisticsDashboard } from 'vtex.marketplace-financial-commission'
 
 export const searchStatisticsService = async (
@@ -26,21 +27,24 @@ export const searchStatisticsService = async (
 
   const statisticsArray = responseSearchMD.data as StatisticsDashboard[]
 
-  const ordersCount = statisticsArray.reduce(
-    (total, count) => (total += count.statistics.ordersCount),
-    0
+  const ordersCount = Number(
+    statisticsArray
+      .reduce((total, count) => (total += count.statistics.ordersCount), 0)
+      .toFixed(2)
   ) as number
 
   console.info({ ordersCount })
 
-  const totalComission = statisticsArray.reduce(
-    (total, comis) => (total += comis.statistics.totalComission),
-    0
+  const totalComission = Number(
+    statisticsArray
+      .reduce((total, comis) => (total += comis.statistics.totalComission), 0)
+      .toFixed(2)
   )
 
-  const totalOrderValue = statisticsArray.reduce(
-    (total, value) => (total += value.statistics.totalOrderValue),
-    0
+  const totalOrderValue = Number(
+    statisticsArray
+      .reduce((total, value) => (total += value.statistics.totalOrderValue), 0)
+      .toFixed(2)
   )
 
   const statistics: StatsSeller = {

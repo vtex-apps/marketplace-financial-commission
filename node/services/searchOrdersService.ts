@@ -7,6 +7,8 @@ export const searchOrdersService = async (
 ) => {
   const { dateStart, dateEnd, sellerName, page, perpage } = searchOrdersParams
 
+  const status = searchOrdersParams.status as string
+
   console.info(sellerName)
 
   const listOrders = await orderListSeller(
@@ -15,7 +17,8 @@ export const searchOrdersService = async (
     dateStart,
     dateEnd,
     page,
-    perpage
+    perpage,
+    status
   )
 
   const ordersDetailCommission = await orderDetailCommission(ctx, listOrders)

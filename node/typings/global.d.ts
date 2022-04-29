@@ -79,6 +79,7 @@ declare global {
     sellersId?: string
     page: number
     pageSize: number
+    reIndex?: boolean
   }
 
   interface SearchStatsServiceRequest {
@@ -92,6 +93,7 @@ declare global {
     sellerName: string
     page: number
     perpage: number
+    status?: string
   }
 
   interface Settings {

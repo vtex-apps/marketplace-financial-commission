@@ -7,10 +7,18 @@ export async function orders(ctx: Context, next: () => Promise<Sellers>) {
   const sellerName = ctx.query.sellerName as string
   const page = Number(ctx.query.page)
   const perpage = Number(ctx.query.perpage)
+  const statusVtex = ctx.query.status as string
 
   await validationParams('Orders', ctx.query)
 
-  const searchOrdersParams = { dateStart, dateEnd, sellerName, page, perpage }
+  const searchOrdersParams = {
+    dateStart,
+    dateEnd,
+    sellerName,
+    page,
+    perpage,
+    status: statusVtex,
+  }
 
   const { status, resultDetail } = await searchOrdersService(
     searchOrdersParams,

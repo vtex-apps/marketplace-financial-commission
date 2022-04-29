@@ -10,3 +10,4 @@
  - [resolvers graphql for token autentication](https://github.com/vtex-apps/marketplace-financial-commission/pull/18)
  - [Commit the generateDashboard endpoint changes the public field from t&](https://github.com/vtex-apps/marketplace-financial-commission/pull/29)
  - [Feature/list sellers](https://github.com/vtex-apps/marketplace-financial-commission/pull/31)
+ - [Commit search sellers and search orders](https://github.com/vtex-apps/marketplace-financial-commission/pull/32)

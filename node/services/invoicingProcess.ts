@@ -17,6 +17,9 @@ export const invoicingProcess = async (
 ): Promise<string> => {
   const {
     clients: { vbase, commissionInvoices, mail },
+    state: {
+      body: { today },
+    },
   } = ctx
 
   const { id: sellerId, name: SELLER_NAME, email } = seller
@@ -32,7 +35,7 @@ export const invoicingProcess = async (
 
   await vbase.saveJSON<JobHistory>(BUCKET, SELLER_NAME, HISTORY)
 
-  const invoice = await draftInvoice(ctx, seller)
+  let invoice = await draftInvoice(ctx, seller)
 
   if (!invoice) {
     await vbase.saveJSON<JobHistory>(BUCKET, SELLER_NAME, {
@@ -42,6 +45,10 @@ export const invoicingProcess = async (
     })
 
     return JOB_STATUS.OMITTED
+  }
+
+  if (automated) {
+    invoice = { ...invoice, comment: `Invoice manually created on ${today}` }
   }
 
   const document = await commissionInvoices.save(invoice)

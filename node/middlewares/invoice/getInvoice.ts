@@ -20,7 +20,7 @@ export async function getInvoice(ctx: Context) {
 
   const where = isMarketplace
     ? `id=${id}`
-    : `id=${id} AND sellerData.name=${sellerName}`
+    : `id=${id} AND seller.name=${sellerName}`
 
   /**
    * We should allow 'expected sections' for masterdata's _fields

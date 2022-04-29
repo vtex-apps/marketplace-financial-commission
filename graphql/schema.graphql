@@ -5,9 +5,17 @@ type Query {
   getSellers(listSellersParams: ListSellersParams): Sellers
     @cacheControl(scope: PUBLIC, maxAge: LONG)
   """
+  Retrieve Invoices for a given seller
+  """
+  getInvoicesBySeller(
+    seller: String!
+    startDate: String!
+    endDate: String!
+  ): Invoices
+  """
   Retrieve all Invoices for a given seller
   """
-  getInvoicesBySeller(seller: String!): Invoices
+  getInvoice(id: String!): Invoice
 
   """
   Retrieve marketplace dashboard in a date range

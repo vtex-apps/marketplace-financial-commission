@@ -1,4 +1,5 @@
 scalar Sellers
+scalar Invoice
 scalar Invoices
 
 type SearchResponse {

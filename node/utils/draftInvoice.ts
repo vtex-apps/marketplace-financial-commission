@@ -55,23 +55,12 @@ export async function draftInvoice(
      * @todo calcular due date
      */
     invoiceDueDate: today,
-    sellerData: {
+    seller: {
       name: sellerName,
       id,
       contact: {
         email,
         phone: null,
-      },
-      /**
-       * @todo faltan los datos del seller, como los manejamos?
-       */
-      address: {
-        postalCode: null,
-        city: null,
-        state: null,
-        country: null,
-        street: null,
-        number: null,
       },
     },
     orders: commissionByOrder as [],
@@ -81,5 +70,6 @@ export async function draftInvoice(
       fee,
       total: subTotal + tax + fee,
     },
+    comment: null,
   }
 }

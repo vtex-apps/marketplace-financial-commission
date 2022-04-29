@@ -20,7 +20,7 @@
       "public": true
     },
     "template": {
-      "path": "/_v/template",
+      "path": "/_v/segment/template",
       "public": true
     },
     "generateDashboard": {
@@ -45,11 +45,11 @@
       "public": true
     },
     "singleInvoice": {
-      "path": "/_v/financial-commission/invoice/:id",
+      "path": "/_v/financial-commission/:sellerId/invoice/:id",
       "public": true
     },
     "invoicesBySeller": {
-      "path": "/_v/financial-commission/invoice/seller/:seller",
+      "path": "/_v/financial-commission/:seller/invoices",
       "public": true
     },
     "generateInvoices": {

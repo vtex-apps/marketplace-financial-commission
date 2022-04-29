@@ -1,5 +1,5 @@
 import { AuthenticationError, UserInputError } from '@vtex/api'
-/* import { json } from 'co-body' */
+import { json } from 'co-body'
 
 import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
 
@@ -13,7 +13,7 @@ export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
     query: { seller, sellerName },
     clients: { commissionInvoices },
     vtex: { account },
-    /* req, */
+    req,
   } = ctx
 
   if (!seller) {
@@ -30,18 +30,15 @@ export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
     throw new AuthenticationError(`Cannot access invoices for ${seller}`)
   }
 
-  /**
-   * @todo parsear los valores de pagination desde el front
-   */
-  // const requestBody = await json(req)
+  const { page = PAGE_DEFAULT, pageSize = PAGE_SIZE_DEFAULT } = await json(req)
 
   const fields = ['id, status, invoiceCreateDate, invoiceDueDate, totalizers']
 
   const sellerInvoices = await commissionInvoices.search(
-    { page: PAGE_DEFAULT, pageSize: PAGE_SIZE_DEFAULT },
+    { page, pageSize },
     fields,
     '',
-    `sellerData.name is ${seller}`
+    `seller.name is ${seller}`
   )
 
   ctx.status = 200

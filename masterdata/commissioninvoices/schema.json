@@ -5,11 +5,7 @@
   "properties": {
     "status": {
       "type": "string",
-      "enum": [
-        "partial",
-        "unpaid",
-        "paid"
-      ]
+      "enum": ["partial", "unpaid", "paid"]
     },
     "invoiceCreateDate": {
       "type": "string"
@@ -17,7 +13,7 @@
     "invoiceDueDate": {
       "type": "string"
     },
-    "sellerData": {
+    "seller": {
       "type": "object",
       "properties": {
         "id": {
@@ -30,21 +26,12 @@
           "type": "object",
           "properties": {
             "phone": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             },
             "email": {
               "type": "string"
             }
           }
-        },
-        "comment": {
-          "type": [
-            "string",
-            "null"
-          ]
         }
       }
     },
@@ -63,10 +50,7 @@
             "type": "number"
           },
           "totalOrderRate": {
-            "type": [
-              "number",
-              "null"
-            ]
+            "type": ["number", "null"]
           }
         }
       }
@@ -78,43 +62,24 @@
           "type": "number"
         },
         "fee": {
-          "type": [
-            "number",
-            "null"
-          ]
+          "type": ["number", "null"]
         },
         "total": {
           "type": "number"
         }
       }
+    },
+    "comment": {
+      "type": ["string", "null"]
     }
   },
-  "v-indexed": [
-    "id",
-    "status",
-    "invoiceCreateDate",
-    "invoiceDueDate"
-  ],
+  "v-indexed": ["id", "status", "invoiceCreateDate", "invoiceDueDate"],
   "v-cache": false,
   "v-security": {
     "publicJsonSchema": true,
     "allowGetAll": true,
-    "publicRead": [
-      "id",
-      "status",
-      "invoiceCreateDate",
-      "invoiceDueDate"
-    ],
-    "publicWrite": [
-      "status",
-      "invoiceCreateDate",
-      "invoiceDueDate"
-    ],
-    "publicFilter": [
-      "id",
-      "status",
-      "invoiceCreateDate",
-      "invoiceDueDate"
-    ]
+    "publicRead": ["id", "status", "invoiceCreateDate", "invoiceDueDate"],
+    "publicWrite": ["status", "invoiceCreateDate", "invoiceDueDate"],
+    "publicFilter": ["id", "status", "invoiceCreateDate", "invoiceDueDate"]
   }
 }

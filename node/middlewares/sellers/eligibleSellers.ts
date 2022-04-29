@@ -11,13 +11,6 @@ export async function eligibleSellers(
   next: () => Promise<Sellers>,
   retrySellers?: ItemSeller[]
 ) {
-  /**
-   * @todo
-   * Es un retry así util?
-   *
-   * Se saltea comprobaciones y va directo a reintentar
-   * los sellers que devuelve el scheduler
-   */
   if (retrySellers) {
     ctx.state.body = { sellers: retrySellers }
 
@@ -50,10 +43,6 @@ export async function eligibleSellers(
   const activeSellers = allSellers.items.filter(({ isActive }) => isActive)
 
   if (!activeSellers) {
-    /**
-     * @todo
-     * Esto lo manejamos como un error? O solo retornamos un warning?
-     */
     throw new ErorrWithPayload({
       message: "There're no active sellers for this Marketplace",
       status: 204,
@@ -69,11 +58,6 @@ export async function eligibleSellers(
           true
         )) || DEFAULT_SETTINGS
 
-      /**
-       * @todo
-       * Revisar que manejemos las fechas de una manera exacta.
-       * Desde los settings, los calculos y hasta los clientes.
-       */
       if (sellerSettings.endDate <= today) {
         return { ...seller, ...sellerSettings }
       }

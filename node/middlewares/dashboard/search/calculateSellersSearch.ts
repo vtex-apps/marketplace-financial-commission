@@ -5,19 +5,22 @@ export async function calculateSellersSearch(
   const calculateSellers: SellersDashboard[] = []
 
   unificationSellers.forEach((item) => {
-    const ordersCount = item.statistics.reduce(
-      (total, x) => (total += x.ordersCount),
-      0
+    const ordersCount = Number(
+      item.statistics
+        .reduce((total, x) => (total += x.ordersCount), 0)
+        .toFixed(2)
     )
 
-    const totalComission = item.statistics.reduce(
-      (total, x) => (total += x.totalComission),
-      0
+    const totalComission = Number(
+      item.statistics
+        .reduce((total, x) => (total += x.totalComission), 0)
+        .toFixed(2)
     )
 
-    const totalOrderValue = item.statistics.reduce(
-      (total, x) => (total += x.totalOrderValue),
-      0
+    const totalOrderValue = Number(
+      item.statistics
+        .reduce((total, x) => (total += x.totalOrderValue), 0)
+        .toFixed(2)
     )
 
     const outstandingBalance = 0

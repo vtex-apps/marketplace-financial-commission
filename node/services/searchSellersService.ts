@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { config } from '../constants'
 import { calculateSellersSearch } from '../middlewares/dashboard/search/calculateSellersSearch'
 import { findSeller } from '../middlewares/dashboard/search/findSeller'
@@ -16,7 +17,7 @@ export const searchSellersService = async (
     pageSize: 100,
   }
 
-  const { dateStart, dateEnd, sellersId, page, pageSize } =
+  const { dateStart, dateEnd, sellersId, page, pageSize, reIndex } =
     searchDashboardParams
 
   const vbaseId = `${dateStart.replace('-', '').replace('-', '')}-${dateEnd
@@ -40,7 +41,11 @@ export const searchSellersService = async (
     console.info('No exist data')
   }
 
-  if (vbaseResponse === null || vbaseSellers?.length === 0) {
+  if (
+    vbaseResponse === null ||
+    vbaseSellers?.length === 0 ||
+    reIndex === true
+  ) {
     const dashboardResponse = await sellersDashboardClientMD.search(
       pagination,
       ['_all'],
@@ -58,26 +63,55 @@ export const searchSellersService = async (
       sellers: calculateSellers,
     }
 
-    const responseSaveVbase = await vbase.saveJSON<Dashboards>(
-      config.BUCKET_VBASE,
-      vbaseId,
-      dashboard
+    console.info(
+      `lenght ------------------------------->${calculateSellers.length}`
     )
 
-    result = {
-      message: 'Save to VBase',
-      responseSaveVbase,
-    }
+    if (calculateSellers.length > 0) {
+      console.info(
+        `entre aca ------------------------------->${calculateSellers.length}`
+      )
+      const responseSaveVbase = await vbase.saveJSON<Dashboards>(
+        config.BUCKET_VBASE,
+        vbaseId,
+        dashboard
+      )
 
-    console.info({ responseSaveVbase: JSON.stringify(result) })
+      result = {
+        message: 'Save to VBase',
+        responseSaveVbase,
+      }
+
+      console.info({ responseSaveVbase: JSON.stringify(result) })
+    }
 
     if (sellersId) {
       const searchSellerId = findSeller(dashboard, sellersId)
 
-      const searchResult: ResultSearch = {
+      const sortSellers = searchSellerId.sort((a, b) =>
+        a.id.localeCompare(b.id)
+      )
+
+      const ordersCount = sortSellers.length
+      const totalComission = sortSellers.reduce(
+        (total, comis) => (total += Number(comis.statistics?.totalComission)),
+        0
+      )
+
+      const totalOrderValue = sortSellers.reduce(
+        (total, value) => (total += Number(value.statistics?.totalOrderValue)),
+        0
+      )
+
+      const searchResult = {
         dateStart,
         dateEnd,
-        sellers: searchSellerId,
+        sellers: sortSellers,
+        statistics: {
+          ordersCount,
+          totalComission,
+          totalOrderValue,
+        },
         pagination: {
           currentPage: 1,
           pageSize: 1,
@@ -88,12 +122,17 @@ export const searchSellersService = async (
       result = searchResult
     } else {
       const initialOffset = (page - 1) * pageSize
-      const sellersDashboardOffset = dashboard.sellers.slice(
+
+      const sortSellers = dashboard.sellers.sort((a, b) =>
+        a.id.localeCompare(b.id)
+      )
+
+      const sellersDashboardOffset = sortSellers.slice(
         initialOffset,
         page * pageSize
       )
 
-      const totalPage = Math.round(dashboard.sellers.length / pageSize + 1)
+      const totalPage = Math.ceil(dashboard.sellers.length / pageSize)
 
       const searchResult: ResultSearch = {
         dateStart,
@@ -111,13 +150,35 @@ export const searchSellersService = async (
   } else {
     const sellerDashboardVbase: Dashboards = vbaseResponse.data
 
+    console.info({ sellersId })
+
     if (sellersId) {
       const searchSellerId = findSeller(sellerDashboardVbase, sellersId)
+
+      const sortSellers = searchSellerId.sort((a, b) =>
+        a.id.localeCompare(b.id)
+      )
+
+      const ordersCount = sortSellers.length
+      const totalComission = sortSellers.reduce(
+        (total, comis) => (total += Number(comis.statistics?.totalComission)),
+        0
+      )
+
+      const totalOrderValue = sortSellers.reduce(
+        (total, value) => (total += Number(value.statistics?.totalOrderValue)),
+        0
+      )
 
       result = {
         dateStart,
         dateEnd,
-        sellers: searchSellerId,
+        sellers: sortSellers,
+        statistics: {
+          ordersCount,
+          totalComission,
+          totalOrderValue,
+        },
         pagination: {
           currentPage: 1,
           pageSize: 1,
@@ -126,13 +187,18 @@ export const searchSellersService = async (
       }
     } else {
       const initialOffset = (page - 1) * pageSize
-      const sellersDashboardOffset = sellerDashboardVbase.sellers.slice(
+
+      const sortSellers = sellerDashboardVbase.sellers.sort((a, b) =>
+        a.id.localeCompare(b.id)
+      )
+
+      const sellersDashboardOffset = sortSellers.slice(
         initialOffset,
         page * pageSize
       )
 
-      const totalPage = Math.round(
-        sellerDashboardVbase.sellers.length / pageSize + 1
+      const totalPage = Math.ceil(
+        sellerDashboardVbase.sellers.length / pageSize
       )
 
       result = {

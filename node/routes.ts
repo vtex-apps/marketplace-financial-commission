@@ -55,7 +55,7 @@ const routes = {
     GET: [errorHandler, eligibleSellers, generateInvoices],
   }),
   orders: method({
-    POST: [seller, authentication, orders],
+    GET: [seller, authentication, orders],
   }),
   token: method({
     POST: [seller, createTokenAuth],

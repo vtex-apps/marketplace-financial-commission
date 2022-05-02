@@ -56,7 +56,7 @@ export async function draftInvoice(
   return {
     id: randomId(sellerName),
     status: INVOICE_STATUS.UNPAID,
-    invoiceCreateDate: today,
+    invoiceCreatedDate: today,
     /**
      * @todo calcular due date
      */

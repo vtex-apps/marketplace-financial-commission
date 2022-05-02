@@ -1,6 +1,16 @@
 scalar Sellers
 scalar Invoice
-scalar Invoices
+scalar InvoiceData
+
+input Dates {
+  startDate: String
+  endDate: String
+}
+
+input Pagination {
+  page: Number
+  pageSize: Number
+}
 
 type SearchResponse {
   dateStart: String

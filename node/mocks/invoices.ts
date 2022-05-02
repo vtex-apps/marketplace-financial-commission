@@ -2,7 +2,7 @@ export const MOCK_INVOICES = [
   {
     id: 'sellerA_3918239129',
     status: 'paid',
-    invoiceCreateDate: '25/02/2022',
+    invoiceCreatedDate: '25/02/2022',
     invoiceDueDate: '15/03/2022',
     sellerData: {
       name: 'Seller A',
@@ -55,7 +55,7 @@ export const MOCK_INVOICES = [
   {
     id: 'sellerA_3913758129',
     status: 'unpaid',
-    invoiceCreateDate: '25/02/2022',
+    invoiceCreatedDate: '25/02/2022',
     invoiceDueDate: '15/03/2022',
     sellerData: {
       name: 'Seller A',
@@ -108,7 +108,7 @@ export const MOCK_INVOICES = [
   {
     id: 'sellerA_1537839129',
     status: 'paid',
-    invoiceCreateDate: '25/02/2022',
+    invoiceCreatedDate: '25/02/2022',
     invoiceDueDate: '15/03/2022',
     sellerData: {
       name: 'Seller A',
@@ -161,7 +161,7 @@ export const MOCK_INVOICES = [
   {
     id: 'sellerA_3918227568',
     status: 'unpaid',
-    invoiceCreateDate: '25/02/2022',
+    invoiceCreatedDate: '25/02/2022',
     invoiceDueDate: '15/03/2022',
     sellerData: {
       name: 'Seller A',

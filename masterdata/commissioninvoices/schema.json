@@ -7,7 +7,7 @@
       "type": "string",
       "enum": ["partial", "unpaid", "paid"]
     },
-    "invoiceCreateDate": {
+    "invoiceCreatedDate": {
       "type": "string"
     },
     "invoiceDueDate": {
@@ -73,13 +73,13 @@
       "type": ["string", "null"]
     }
   },
-  "v-indexed": ["id", "status", "invoiceCreateDate", "invoiceDueDate"],
+  "v-indexed": ["id", "status", "invoiceCreatedDate", "invoiceDueDate"],
   "v-cache": false,
   "v-security": {
     "publicJsonSchema": true,
     "allowGetAll": true,
-    "publicRead": ["id", "status", "invoiceCreateDate", "invoiceDueDate"],
-    "publicWrite": ["status", "invoiceCreateDate", "invoiceDueDate"],
-    "publicFilter": ["id", "status", "invoiceCreateDate", "invoiceDueDate"]
+    "publicRead": ["id", "status", "invoiceCreatedDate", "invoiceDueDate"],
+    "publicWrite": ["status", "invoiceCreatedDate", "invoiceDueDate"],
+    "publicFilter": ["id", "status", "invoiceCreatedDate", "invoiceDueDate"]
   }
 }

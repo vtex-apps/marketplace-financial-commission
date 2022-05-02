@@ -37,7 +37,7 @@ export async function sendMail(ctx: Context, next: () => Promise<any>) {
     const invoice = {
       id: 'sellerA_3918239129',
       status: 'paid',
-      invoiceCreateDate: '25/02/2022',
+      invoiceCreatedDate: '25/02/2022',
       invoiceDueDate: '15/03/2022',
       sellerData: {
         name: 'Seller A',

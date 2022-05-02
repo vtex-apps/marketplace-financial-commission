@@ -19,7 +19,7 @@ const columns = [
     title: 'ID',
   },
   {
-    id: 'invoiceCreateDate',
+    id: 'invoiceCreatedDate',
     title: 'Created Date',
   },
   {

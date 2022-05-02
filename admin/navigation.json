@@ -12,6 +12,10 @@
       {
         "labelId": "admin/navigation.detail-title",
         "path": "/admin/commission-report/detail"
+      },
+      {
+        "labelId": "admin/navigation.settings",
+        "path": "/admin/commission-report/settings"
       }
     ]
   }

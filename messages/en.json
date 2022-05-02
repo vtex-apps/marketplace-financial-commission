@@ -3,6 +3,7 @@
   "admin/navigation.section-title": "Commission Report",
   "admin/navigation.dashboard-title": "Dashboard",
   "admin/navigation.detail-title": "Seller Invoice Detail",
+  "admin/navigation.settings": "Settings",
   "admin/table.title-seller-label": "Choose seller name",
   "admin/table.title-datepicker-start": "Start",
   "admin/table.title-datepicker-final": "Final",

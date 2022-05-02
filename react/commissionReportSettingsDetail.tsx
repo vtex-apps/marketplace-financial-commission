@@ -1,6 +1,13 @@
 import type { FC } from 'react'
 import React, { useState, useEffect } from 'react'
-import { Layout, PageHeader, Input, Button, Checkbox } from 'vtex.styleguide'
+import {
+  Layout,
+  PageHeader,
+  Input,
+  Button,
+  Checkbox,
+  Divider,
+} from 'vtex.styleguide'
 import { FormattedMessage } from 'react-intl'
 import { useRuntime } from 'vtex.render-runtime'
 import { useMutation, useQuery } from 'react-apollo'
@@ -88,6 +95,7 @@ const CommissionReportSettingsDetail: FC = () => {
       }
     >
       <div className="mt7">
+        <h2 className="mt0 mb6">Autentication Token</h2>
         <div className="mb5">
           <Input
             placeholder="Token"
@@ -117,6 +125,11 @@ const CommissionReportSettingsDetail: FC = () => {
             </Button>
           </span>
         </div>
+        <div className="mv6">
+          <Divider orientation="horizontal" />
+        </div>
+
+        <h2 className="mt0 mb6">Billing cycle</h2>
       </div>
     </Layout>
   )

@@ -9,6 +9,7 @@ import {
   Tag,
   IconVisibilityOff,
   ButtonWithIcon,
+  EmptyState,
 } from 'vtex.styleguide'
 import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
@@ -223,29 +224,37 @@ const CommissionReportDetail: FC = () => {
             active={tabs === 1}
             onClick={() => setTabs(1)}
           >
-            <div className="mt5">
-              <PageBlock>
-                <div className="mt2">
-                  <TableComponent
-                    schemaTable={schemaTable}
-                    items={dataTableOrders}
-                    loading={loadingDataOrders}
-                  />
-                  <PaginationComponent
-                    setPageSize={setPageSize}
-                    currentPage={itemFrom}
-                    pageSize={itemTo}
-                    setPage={setPage}
-                    totalItems={
-                      totalItemsFilter > 0 ? totalItemsFilter : totalItems
-                    }
-                    onNextClick={() => {}}
-                    changeRows={() => {}}
-                    onPrevClick={() => {}}
-                  />
-                </div>
-              </PageBlock>
-            </div>
+            {dataTableOrders.length > 0 ? (
+              <div className="mt5">
+                <PageBlock>
+                  <div className="mt2">
+                    <TableComponent
+                      schemaTable={schemaTable}
+                      items={dataTableOrders}
+                      loading={loadingDataOrders}
+                    />
+                    <PaginationComponent
+                      setPageSize={setPageSize}
+                      currentPage={itemFrom}
+                      pageSize={itemTo}
+                      setPage={setPage}
+                      totalItems={
+                        totalItemsFilter > 0 ? totalItemsFilter : totalItems
+                      }
+                      onNextClick={() => {}}
+                      changeRows={() => {}}
+                      onPrevClick={() => {}}
+                    />
+                  </div>
+                </PageBlock>
+              </div>
+            ) : (
+              <div className="mt5">
+                <EmptyState title="There aren't data to show">
+                  <p>Search a seller in the filter to show the information</p>
+                </EmptyState>
+              </div>
+            )}
           </Tab>
           <Tab
             label={<FormattedMessage id="admin/table.title-tab-invoices" />}

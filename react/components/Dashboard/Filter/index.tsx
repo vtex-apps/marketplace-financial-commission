@@ -108,7 +108,7 @@ const Filter: FC<FilterProps> = (props) => {
           />
         </div>
         <div className="w-20 mt6">
-          <div className="fr">
+          <div className={`fr ${styles.buttonGroup}`}>
             <ButtonGroup
               buttons={[
                 // eslint-disable-next-line react/jsx-key

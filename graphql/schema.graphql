@@ -7,7 +7,7 @@ type Query {
   """
   Retrieve paginated Invoices for a given seller
   """
-  getInvoicesBySeller(
+  invoicesBySeller(
     sellerName: String!
     pagination: Pagination
     dates: Dates!

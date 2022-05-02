@@ -8,8 +8,8 @@ input Dates {
 }
 
 input Pagination {
-  page: Number
-  pageSize: Number
+  page: Int
+  pageSize: Int
 }
 
 type SearchResponse {

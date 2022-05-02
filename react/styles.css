@@ -7,6 +7,10 @@
   font-size: 15px;
 }
 
+.buttonGroup button{
+  z-index: 0 !important;
+}
+
 @media (max-width: 800px) {
   .filter {
     flex-direction: column;
@@ -19,8 +23,4 @@
   .btn_filter{
     width: 100%
   }
-}
-
-button{
-  z-index: 0 !important;
 }

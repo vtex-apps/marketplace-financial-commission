@@ -5,14 +5,12 @@ import { useRuntime } from 'vtex.render-runtime'
 import { DatePicker } from 'vtex.styleguide'
 import { addDays } from 'date-fns'
 
-import styles from '../../../../styles.css'
-
 const DatePickerComponent: FC<DatepickerProps> = (props) => {
   const { culture } = useRuntime()
 
   return (
     <div className="flex">
-      <div className={`${styles.filter_container} w-15`} id="datepicker-left">
+      <div className="w-15" id="datepicker-left">
         <DatePicker
           label={<FormattedMessage id="admin/table.title-datepicker-start" />}
           value={
@@ -25,10 +23,7 @@ const DatePickerComponent: FC<DatepickerProps> = (props) => {
           locale={culture.locale}
         />
       </div>
-      <div
-        className={`${styles.filter_container} w-15 mr4`}
-        id="datepicker-right"
-      >
+      <div className="w-15 mr4" id="datepicker-right">
         <DatePicker
           label={<FormattedMessage id="admin/table.title-datepicker-final" />}
           value={

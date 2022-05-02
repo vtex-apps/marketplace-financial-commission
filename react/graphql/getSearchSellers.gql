@@ -11,7 +11,13 @@ query SEARCH_SELLERS($param: SearchDashboardParams) {
         totalComission
         totalOrderValue
         outstandingBalance
+        dateInvoiced
       }
+    }
+    statistics {
+      ordersCount
+      totalComission
+      totalOrderValue
     }
     pagination {
       currentPage

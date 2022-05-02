@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{_accountInfo.TradingName}}</title>
+  </head>
+  <body style="background-color: #F1F1F1;">
+    <center>
+      <table style="border-bottom-color: #e7e9ee;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 150%;
+    margin: 0px;
+    min-width: 800px; background-color: #fff;" align="center" border="0" cellpading="0" cellspacing="0" width="800">
+      <tbody style="background-color: #fff;
+      font-family: Helvetica,Arial,sans-serif;
+      line-height: 150%;
+      margin: 0px;
+      min-width: 600px;">
+          <tr style="font-family: Helvetica,Arial,sans-serif;
+          line-height: 150%;
+          margin: 0px;">
+              <td style="font-family: Helvetica,Arial,sans-serif;
+              line-height: 150%;
+              margin: 0px;
+              padding: 22px 30px;">
+                <a href="https://vtex.com" style="color: #f71963; fill: #f71963;"><img width="95px" height="34px" src="https://ci3.googleusercontent.com/proxy/wQdJ5VbzzATP0FsJYOOBLSwXkDNNHz_OYdHji00BJNyaPmMYdPE4AyXr6VvsP0S3wxoLVdY4JeJpZpjKz_X56N6EtRy2Ou8Cpp7ANGiZahkXQBay_xibj4ExFmDTsOIdKw=s0-d-e1-ft#https://dev-vtex-site.pantheonsite.io/wp-content/uploads/2020/01/logo-vtex.png" style="max-width:540px" class="CToWUd"></a>
+              </td>
+              <td align="right" valign="center" style="font-family: Helvetica,Arial,sans-serif;
+              line-height: 150%;
+              margin: 0px;
+              padding: 22px 30px;">
+                <h2 style="color: #717786;font-size: 16px;">Invoice</h2>
+                <p style="color: #717786;font-size: 12px;">Invoice #{{id}}<br />Date: {{invoiceDueDate}}</p>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+    <table style="
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 150%;
+    border-bottom-color: #e7e9ee;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    margin: 0px;" align="center" border="0" cellpading="0" cellspacing="0" width="800">
+      <tbody style="font-family: Helvetica,Arial,sans-serif;
+      line-height: 150%;
+      margin: 0px;">
+          <tr style="background-color: #fff;
+          font-family: Helvetica,Arial,sans-serif;
+          line-height: 150%;
+          margin: 0px;">
+              <td style="font-family: Helvetica,Arial,sans-serif;
+              line-height: 150%;
+              margin: 0px;
+              padding: 52px 30px 20px; width: 50%;">
+                <p>
+                  9601 South Meridian Blvd<br />Englewood, CO<br />Phone: (303) 723-1000
+                  Fax: (303) 723-1999
+                </p>
+              </td>
+              <td style="font-family: Helvetica,Arial,sans-serif;
+              line-height: 150%;
+              margin: 0px;
+              padding: 52px 30px 20px; width: 50%;">
+                  <p>
+                  <span>To:</span><br />{{seller.name}}<br />
+                </p>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+    <table style="
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 150%;
+    margin: 0px;" align="center" border="0" cellpading="0" cellspacing="0" width="800">
+        <tbody style="font-family: Helvetica,Arial,sans-serif;
+        line-height: 150%;
+        margin: 0px;">
+            <tr style="background-color: #fff;
+            font-family: Helvetica,Arial,sans-serif;
+            line-height: 150%;
+            margin: 0px;">
+                <td style="font-family: Helvetica,Arial,sans-serif;
+                line-height: 150%;
+                margin: 0px;
+                padding: 20px 30px 64px;" align="center">
+                  <p>
+                    <b><span>Comments or special instructions:</span></b>
+                    <br />{{comment}}
+                  </p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table style="
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 150%;
+    margin: 0px;" align="center" border="0" cellpading="0" cellspacing="0" width="800">
+        <tbody style="font-family: Helvetica,Arial,sans-serif;
+        line-height: 150%;
+        margin: 0px;">
+            <tr style="background-color: #fff;
+            font-family: Helvetica,Arial,sans-serif;
+            line-height: 150%;
+            margin: 0px;">
+              <th style="font-size: 15px;">ID</th>
+              <th style="font-size: 15px;">TOTAL</th>
+              <th style="font-size: 15px;">COMMISSION</th>
+              <th style="font-size: 15px;">RATE</th>
+            </tr>
+            <!--{{#each orders}} -->
+            <tr>
+              <td style="text-align: center; background-color: #fff; padding-bottom: 60px;">{{this.orderId}}</td>
+              <td style="text-align: center; background-color: #fff; padding-bottom: 60px;">{{this.total}}</td>
+              <td style="text-align: center; background-color: #fff; padding-bottom: 60px;">${{this.commission}}</td>
+              <td style="text-align: center; background-color: #fff; padding-bottom: 60px;">{{this.totalOrderRate}}%</td>
+            </tr>
+            <!-- {{/each}} -->
+        </tbody>
+    </table>
+    <table style="
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 150%;
+    border-bottom-color: #e7e9ee;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    margin: 0px;" align="center" border="0" cellpading="0" cellspacing="0" width="800">
+      <tbody style="font-family: Helvetica,Arial,sans-serif;
+      line-height: 150%;
+      margin: 0px;">
+          <tr style="background-color: #fff;
+          font-family: Helvetica,Arial,sans-serif;
+          line-height: 150%;
+          margin: 0px;">
+            <th align="center" tyle="font-size: 15px;">SUBTOTAL:</th>
+            <td align="center">{{totalizers.subtotal}}</td>
+          </tr>
+          <tr style="background-color: #fff;
+          font-family: Helvetica,Arial,sans-serif;
+          line-height: 150%;
+          margin: 0px;">
+            <th align="center" tyle="font-size: 15px;">SALES TAX:</th>
+            <td align="center">{{totalizers.tax.value}}%</td>
+          </tr>
+          <tr style="background-color: #fff;
+          font-family: Helvetica,Arial,sans-serif;
+          line-height: 150%;
+          margin: 0px;">
+            <th align="center" tyle="font-size: 15px;">SERVICE FEE:</th>
+            <td align="center">${{totalizers.fee}}</td>
+          </tr>
+          <tr style="background-color: #fff;
+          font-family: Helvetica,Arial,sans-serif;
+          line-height: 150%;
+          margin: 0px;">
+            <th align="center" style="padding-bottom: 30px; font-size: 15px;">TOTAL DUE:</th>
+            <td align="center" style="padding-bottom: 30px;">${{totalizers.total}}</td>
+          </tr>
+      </tbody>
+    </table>
+    <table style="
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 150%;
+    margin: 0px;" align="center" border="0" cellpading="0" cellspacing="0" width="800">
+      <tbody style="font-family: Helvetica,Arial,sans-serif;
+      line-height: 150%;
+      margin: 0px;">
+          <tr style="background-color: #fff;
+          font-family: Helvetica,Arial,sans-serif;
+          line-height: 150%;
+          margin: 0px;">
+              <td style="font-family: Helvetica,Arial,sans-serif;
+              line-height: 150%;
+              margin: 0px;
+              padding: 50px 30px 24px;" align="left">
+                <p>
+                  <b>Thanks you for your business!</b>
+                </p>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+    </center>
+  </body>
+</html>

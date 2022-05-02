@@ -86,6 +86,8 @@ const CommissionReport: FC = () => {
       },
     })
 
+  console.info('startDate ', startDate, ' finalDate ', finalDate)
+
   const schemaTable = [
     {
       id: 'name',
@@ -107,7 +109,7 @@ const CommissionReport: FC = () => {
       title: 'Total commission',
     },
     {
-      id: 'id',
+      id: 'name',
       title: 'Actions',
       cellRenderer: (props: CellRendererProps) => {
         return (
@@ -121,7 +123,7 @@ const CommissionReport: FC = () => {
                 label: 'Detail',
                 onClick: () => {
                   navigate({
-                    to: `/admin/app/commission-report/detail/${props.data}`,
+                    to: `/admin/app/commission-report/detail?sellerName=${props.data}`,
                   })
                 },
               },

@@ -2,7 +2,7 @@ type Query {
   """
   Retrieve all onboarded sellers
   """
-  getSellers(listSellersParams: ListSellersParams): Sellers
+  getSellers(listSellersParams: ListSellersParams): PaginatedSellers
     @cacheControl(scope: PUBLIC, maxAge: LONG)
   """
   Retrieve paginated Invoices for a given seller

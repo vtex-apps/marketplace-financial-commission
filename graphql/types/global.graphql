@@ -1,6 +1,52 @@
-scalar Sellers
-scalar Invoice
 scalar InvoiceData
+
+type Invoice {
+  status: String
+  invoiceCreatedDate: string
+  invoiceDueDate: string
+  seller: SellerData
+  orders: [Order]
+  totalizers: Totalizers
+  comment: String
+}
+
+type Totalizers {
+  subtotal: Int
+  fee: Int
+  total: Int
+}
+
+type Order {
+  orderId: String
+  totalComission: Int
+  totalOrderValue: Int
+  totalOrderRate: Int
+}
+
+type SellerInvoiceData {
+  id: String
+  name: String
+  contact: SellerContact
+}
+
+type SellerContact {
+  phone: String
+  email: String
+}
+
+type PaginatedSellers {
+  sellers: [Seller]
+  pagination: PaginationSearch
+}
+
+type Seller {
+  id: String
+  name: String
+  account: String
+  productCommissionPercentage: Int
+  freightCommissionPercentage: Int
+  isActive: Boolean
+}
 
 input Dates {
   startDate: String
@@ -8,8 +54,8 @@ input Dates {
 }
 
 input Pagination {
-  page: Number
-  pageSize: Number
+  page: Int
+  pageSize: Int
 }
 
 type SearchResponse {

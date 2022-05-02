@@ -12,7 +12,7 @@ type JobStatus = 'ONGOING' | 'COMPLETE' | 'ERROR' | 'OMITTED'
 
 export const invoicingProcess = async (
   ctx: Context,
-  seller: SellerInvoice,
+  sellerData: SellerInvoice,
   automated?: boolean
 ): Promise<string> => {
   const {
@@ -22,7 +22,7 @@ export const invoicingProcess = async (
     },
   } = ctx
 
-  const { id: sellerId, name: SELLER_NAME, email } = seller
+  const { id: sellerId, name: SELLER_NAME, email } = sellerData
 
   const BUCKET = automated ? config.AUTO_JOB_BUCKET : config.MANUAL_JOB_BUCKET
 
@@ -35,7 +35,7 @@ export const invoicingProcess = async (
 
   await vbase.saveJSON<JobHistory>(BUCKET, SELLER_NAME, HISTORY)
 
-  let invoice = await draftInvoice(ctx, seller)
+  let invoice = await draftInvoice(ctx, sellerData)
 
   if (!invoice) {
     await vbase.saveJSON<JobHistory>(BUCKET, SELLER_NAME, {

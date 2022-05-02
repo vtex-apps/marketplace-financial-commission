@@ -1,5 +1,7 @@
+import { ResolverError } from '@vtex/api'
+
 import { config } from '../../constants'
-import { ErorrWithPayload } from '../../utils/errorWithPayload'
+import { listSellers } from './listSellers'
 
 /**
  * @middleware
@@ -8,21 +10,26 @@ import { ErorrWithPayload } from '../../utils/errorWithPayload'
  */
 export async function eligibleSellers(
   ctx: Context,
-  next: () => Promise<Sellers>,
-  retrySellers?: ItemSeller[]
+  next: () => Promise<Sellers>
 ) {
-  if (retrySellers) {
-    ctx.state.body = { sellers: retrySellers }
-
-    await next()
-  }
-
   const {
-    clients: { sellersIO, vbase },
+    clients: { vbase },
     vtex: { account: marketplace },
   } = ctx
 
   const [today] = new Date().toISOString().split('T')
+
+  const retrySellers = await vbase.getJSON<any>(
+    config.RETRY_SELLERS_BUCKET,
+    marketplace,
+    true
+  )
+
+  if (retrySellers) {
+    ctx.state.body = { sellers: JSON.parse(retrySellers) }
+
+    await next()
+  }
 
   const DEFAULT_SETTINGS = await vbase.getJSON<Settings>(
     config.SETTINGS_BUCKET,
@@ -31,22 +38,21 @@ export async function eligibleSellers(
   )
 
   if (!DEFAULT_SETTINGS) {
-    throw new ErorrWithPayload({
-      message:
-        "No default Marketplace's settings found, please configure them in the Admin panel",
-      status: 500,
-    })
+    throw new ResolverError(
+      "No default Marketplace's settings found, please configure them in the Admin panel",
+      500
+    )
   }
 
-  const allSellers = await sellersIO.getSellers()
+  const allSellers = await listSellers(ctx)
 
   const activeSellers = allSellers.items.filter(({ isActive }) => isActive)
 
   if (!activeSellers) {
-    throw new ErorrWithPayload({
-      message: "There're no active sellers for this Marketplace",
-      status: 204,
-    })
+    throw new ResolverError(
+      "There're no active sellers for this Marketplace",
+      204
+    )
   }
 
   const sellersToInvoice = await Promise.all(

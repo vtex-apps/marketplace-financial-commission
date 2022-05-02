@@ -5,32 +5,36 @@ import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
 
 /**
  * @description Retrieves a REFERENCE list of invoices for given seller.
- * The Marketplace account has total access, while
- * the seller account can only retrieve their own.
  */
 export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
   const {
-    query: { seller, sellerName },
+    query: { sellerName },
     clients: { commissionInvoices },
-    vtex: { account },
+    state: {
+      body: { seller },
+    },
     req,
   } = ctx
 
-  if (!seller) {
-    throw new UserInputError(`A seller name is required`)
-  }
-
-  /**
-   * @todo
-   * Resolver marketplace
-   */
-  const isMarketplace = account === sellerName
-
-  if (!isMarketplace && account !== seller) {
+  /* This means the seller wants to access other seller's invoices */
+  if (sellerName !== seller) {
     throw new AuthenticationError(`Cannot access invoices for ${seller}`)
   }
 
-  const { page = PAGE_DEFAULT, pageSize = PAGE_SIZE_DEFAULT } = await json(req)
+  const {
+    page = PAGE_DEFAULT,
+    pageSize = PAGE_SIZE_DEFAULT,
+    startDate,
+    endDate,
+  } = await json(req)
+
+  if (!startDate || !endDate) {
+    throw new UserInputError(
+      'startDate and/or endDate not provided in the request'
+    )
+  }
+
+  const where = `seller.name is ${seller} AND (invoiceCreateDate between ${startDate} AND ${endDate})`
 
   const fields = ['id, status, invoiceCreateDate, invoiceDueDate, totalizers']
 
@@ -38,7 +42,7 @@ export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
     { page, pageSize },
     fields,
     '',
-    `seller.name is ${seller}`
+    where
   )
 
   ctx.status = 200

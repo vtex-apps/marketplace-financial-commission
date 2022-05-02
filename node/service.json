@@ -45,11 +45,11 @@
       "public": true
     },
     "singleInvoice": {
-      "path": "/_v/financial-commission/:sellerId/invoice/:id",
+      "path": "/_v/financial-commission/:sellerId/invoice/*id",
       "public": true
     },
     "invoicesBySeller": {
-      "path": "/_v/financial-commission/:seller/invoices",
+      "path": "/_v/financial-commission/:sellerId/invoices",
       "public": true
     },
     "generateInvoices": {

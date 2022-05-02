@@ -1,3 +1,4 @@
+import { AuthenticationError, UserInputError } from '@vtex/api'
 import { json } from 'co-body'
 
 import { JOB_STATUS } from '../../constants'
@@ -5,14 +6,32 @@ import { invoicingProcess } from '../../services/invoicingProcess'
 
 /**
  * @description Attempts to create an Invoice.
- * Only the Marketplace account has access to this resource.
  */
 export async function createInvoice(ctx: Context) {
-  const { req } = ctx
+  const {
+    query: { sellerName, sellerId },
+    state: {
+      body: { seller },
+    },
+    req,
+  } = ctx
 
-  const seller = await json(req)
+  /* This means the seller wants to access other seller's invoices */
+  if (sellerName !== seller) {
+    throw new AuthenticationError(`Cannot access invoices for ${seller}`)
+  }
 
-  const invoice = await invoicingProcess(ctx, seller)
+  const requestData = await json(req)
+
+  if (!requestData.startDate || !requestData.endDate) {
+    throw new UserInputError(
+      'startDate and/or endDate not provided in the request'
+    )
+  }
+
+  const sellerData = { ...requestData, id: sellerId, name: seller }
+
+  const invoice = await invoicingProcess(ctx, sellerData)
 
   if (invoice === JOB_STATUS.OMITTED) {
     return 'No eligible orders to invoice for given date range'

@@ -11,9 +11,15 @@ import { randomId } from './randomId'
  */
 export async function draftInvoice(
   ctx: Context,
-  data: any
+  sellerData: SellerInvoice
 ): Promise<CommissionInvoice | null> {
-  const { sellerName, startDate, endDate, id, email } = data
+  const {
+    name: sellerName,
+    startDate,
+    endDate,
+    id: sellerId,
+    email,
+  } = sellerData
 
   /**
    * @todo
@@ -57,7 +63,7 @@ export async function draftInvoice(
     invoiceDueDate: today,
     seller: {
       name: sellerName,
-      id,
+      id: sellerId,
       contact: {
         email,
         phone: null,

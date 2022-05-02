@@ -1,30 +1,26 @@
+import { AuthenticationError } from '@vtex/api'
+
 import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
 
 /**
  * @description Retrieves a specific Invoice by ID.
- * The Marketplace account has total access, while
- * the seller account can only fetch theirs.
  */
 export async function getInvoice(ctx: Context) {
   const {
     query: { id, sellerName },
     clients: { commissionInvoices },
-    vtex: { account },
+    state: {
+      body: { seller },
+    },
   } = ctx
 
-  /**
-   * @todo
-   * Resolver marketplace
-   */
-  const isMarketplace = account === sellerName
+  /* This means the seller wants to access other seller's invoices */
+  if (sellerName !== seller) {
+    throw new AuthenticationError(`Cannot access invoices for ${seller}`)
+  }
 
-  const where = isMarketplace
-    ? `id=${id}`
-    : `id=${id} AND seller.name=${sellerName}`
+  const where = `id=${id} AND seller.name=${sellerName}`
 
-  /**
-   * We should allow 'expected sections' for masterdata's _fields
-   */
   const invoice = await commissionInvoices.search(
     { page: PAGE_DEFAULT, pageSize: PAGE_SIZE_DEFAULT },
     ['_all'],

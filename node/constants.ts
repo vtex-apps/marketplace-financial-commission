@@ -3,6 +3,7 @@ export const config = {
   BUCKET_VBASE_TOKEN: 'TokenConfig',
   PRIVATE_KEY: 'daMud5nb5ZEHipscucqAGu5pPM224HUM',
   SETTINGS_BUCKET: 'settings',
+  RETRY_SELLERS_BUCKET: 'retry',
   MANUAL_JOB_BUCKET: 'manual',
   AUTO_JOB_BUCKET: 'automatic',
 } as const

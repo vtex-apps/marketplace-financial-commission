@@ -13,10 +13,10 @@ import {
 } from 'vtex.styleguide'
 import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
-import { useLazyQuery } from 'react-apollo'
+import { useLazyQuery, useQuery } from 'react-apollo'
 
 import SettingsSeller from './components/SellerSettings'
-import { SEARCH_ORDERS } from './graphql'
+import { SEARCH_ORDERS, GET_SELLERS } from './graphql'
 import { TableComponent, Filter } from './components'
 import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
 import { status } from './typings/constants'
@@ -34,7 +34,8 @@ const CommissionReportDetail: FC = () => {
   const [itemFrom, setItemFrom] = useState(1)
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
-
+  const [optionsSelect, setOptionsSelect] = useState<DataFilter[]>([])
+  const [sellerName, setSellerName] = useState('')
   const [tabs, setTabs] = useState(1)
   const [dataTableOrders, setDataTableOrders] = useState<any>([])
 
@@ -90,6 +91,18 @@ const CommissionReportDetail: FC = () => {
     },
   ]
 
+  const { data: dataSellers } = useQuery(GET_SELLERS, {
+    ssr: false,
+    pollInterval: 0,
+    variables: {
+      listSellersParams: {
+        sellersId: '',
+        page: 1,
+        pageSize: 100,
+      },
+    },
+  })
+
   const [getDataOrders, { data: dataOrders, loading: loadingDataOrders }] =
     useLazyQuery(SEARCH_ORDERS, {
       ssr: false,
@@ -98,7 +111,7 @@ const CommissionReportDetail: FC = () => {
         searchOrdersParams: {
           dateStart: '2022-04-01',
           dateEnd: '2022-04-25',
-          sellerName: query.sellerName,
+          sellerName: !sellerName ? query.sellerName : sellerName,
           page: 1,
           perpage: 20,
         },
@@ -110,6 +123,36 @@ const CommissionReportDetail: FC = () => {
 
     return validateDate
   }
+
+  useEffect(() => {
+    // eslint-disable-next-line vtex/prefer-early-return
+    if (sellersId) {
+      const nameSellerFilter = optionsSelect.find(
+        (seller: any) => seller.value.id === sellersId
+      )
+
+      const nameFilterOrders = nameSellerFilter?.value.name ?? ''
+
+      setSellerName(nameFilterOrders)
+      console.info('nameSellerFilter?.value.name ', nameFilterOrders)
+    }
+  }, [optionsSelect, sellersId])
+
+  useEffect(() => {
+    // eslint-disable-next-line vtex/prefer-early-return
+    if (dataSellers) {
+      console.info('dataSellers:::::::::::----- ', dataSellers)
+      const builtSelectSeller: DataFilter[] = []
+
+      dataSellers.getSellers.sellers.forEach((seller: DataSellerSelect) => {
+        builtSelectSeller.push({
+          value: { id: seller.id, name: seller.name },
+          label: seller.name,
+        })
+      })
+      setOptionsSelect(builtSelectSeller)
+    }
+  }, [dataSellers])
 
   useEffect(() => {
     getDataOrders()
@@ -130,8 +173,6 @@ const CommissionReportDetail: FC = () => {
     const defaultFinal = `${defaultDate.getFullYear()}-${formatDate(
       valueMonth
     )}-${formatDate(valueDate)}`
-
-    console.info('defaultStartString ::::::::::: ', defaultStartString)
 
     setStartDate(defaultStartString)
     setFinalDate(defaultFinal)
@@ -204,7 +245,7 @@ const CommissionReportDetail: FC = () => {
                 <Filter
                   startDatePicker={new Date(`${startDate}T00:00:00`)}
                   finalDatePicker={new Date(`${finalDate}T00:00:00`)}
-                  optionsSelect={[]}
+                  optionsSelect={optionsSelect}
                   setStartDate={setStartDate}
                   setFinalDate={setFinalDate}
                   defaultStartDate={defaultStartDate}
@@ -250,9 +291,11 @@ const CommissionReportDetail: FC = () => {
               </div>
             ) : (
               <div className="mt5">
-                <EmptyState title="There aren't data to show">
-                  <p>Search a seller in the filter to show the information</p>
-                </EmptyState>
+                <PageBlock>
+                  <EmptyState title="There aren't data to show">
+                    <p>Use the filters to search data and show information</p>
+                  </EmptyState>
+                </PageBlock>
               </div>
             )}
           </Tab>

@@ -11,6 +11,7 @@ import {
   PageHeader,
   ActionMenu,
   IconOptionsDots,
+  EmptyState,
 } from 'vtex.styleguide'
 import { useQuery, useLazyQuery } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
@@ -55,6 +56,13 @@ const CommissionReport: FC = () => {
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
     pollInterval: 0,
+    variables: {
+      listSellersParams: {
+        sellersId: '',
+        page: 1,
+        pageSize: 100,
+      },
+    },
   })
 
   const [stats, { data: dataStats, loading: loadingStats }] = useLazyQuery(
@@ -85,8 +93,6 @@ const CommissionReport: FC = () => {
         },
       },
     })
-
-  console.info('startDate ', startDate, ' finalDate ', finalDate)
 
   const schemaTable = [
     {
@@ -139,21 +145,15 @@ const CommissionReport: FC = () => {
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataDashboard) {
       if (sellersId) {
-        let totalOrdersCount = 0
-        let totalAmountCount = 0.0
-        let totalCommissionCount = 0.0
-
-        dataDashboard.searchSellersDashboard.sellers.forEach(
-          (seller: DataDashboardSeller) => {
-            totalOrdersCount += seller.statistics.ordersCount
-            totalAmountCount += seller.statistics.totalOrderValue
-            totalCommissionCount += seller.statistics.totalComission
-          }
+        setTotalCommission(
+          dataDashboard.searchSellersDashboard.statistics.totalComission
         )
-
-        setTotalCommission(parseFloat(totalCommissionCount.toFixed(2)))
-        setTotalAmout(parseFloat(totalAmountCount.toFixed(2)))
-        setTotalOrder(totalOrdersCount)
+        setTotalAmout(
+          dataDashboard.searchSellersDashboard.statistics.totalOrderValue
+        )
+        setTotalOrder(
+          dataDashboard.searchSellersDashboard.statistics.ordersCount
+        )
       } else {
         setTotalCommission(0)
         setTotalAmout(0)
@@ -181,10 +181,20 @@ const CommissionReport: FC = () => {
 
   useEffect(() => {
     stats()
-
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataStats) {
-      const totalStats = totalItemsFilter > 0 ? totalItemsFilter : totalItems
+      console.info('STATSSSSSSSSSSSSSS ', dataStats)
+      let valueSellersStats = 0
+
+      if (dataDashboard)
+        valueSellersStats = dataDashboard.searchSellersDashboard.sellers.length
+
+      const totalStats =
+        valueSellersStats <= 0
+          ? 0
+          : totalItemsFilter > 0
+          ? totalItemsFilter
+          : totalItems
 
       setStatsTotalizer([
         {
@@ -269,14 +279,14 @@ const CommissionReport: FC = () => {
     if (dataSellers) {
       const builtSelectSeller: DataFilter[] = []
 
-      dataSellers.getSellers.items.forEach((seller: DataSellerSelect) => {
+      dataSellers.getSellers.sellers.forEach((seller: DataSellerSelect) => {
         builtSelectSeller.push({
           value: { id: seller.id, name: seller.name },
           label: seller.name,
         })
       })
       setOptionsSelect(builtSelectSeller)
-      setTotalItems(dataSellers.getSellers.items.length)
+      setTotalItems(dataSellers.getSellers.sellers.length)
     }
   }, [dataSellers])
 
@@ -345,27 +355,39 @@ const CommissionReport: FC = () => {
           </div>
         </PageBlock>
       </div>
-      <div className="mt2">
-        <PageBlock>
-          <div className="mt4 mb7">
-            <TableComponent
-              schemaTable={schemaTable}
-              items={sellersDashboard}
-              loading={loadingDataDashboard}
-            />
-            <PaginationComponent
-              setPageSize={setPageSize}
-              currentPage={itemFrom}
-              pageSize={itemTo}
-              setPage={setPage}
-              totalItems={totalItemsFilter > 0 ? totalItemsFilter : totalItems}
-              onNextClick={onNextClick}
-              changeRows={changeRows}
-              onPrevClick={onPrevClick}
-            />
-          </div>
-        </PageBlock>
-      </div>
+      {sellersDashboard.length > 0 ? (
+        <div className="mt2">
+          <PageBlock>
+            <div className="mt4 mb7">
+              <TableComponent
+                schemaTable={schemaTable}
+                items={sellersDashboard}
+                loading={loadingDataDashboard}
+              />
+              <PaginationComponent
+                setPageSize={setPageSize}
+                currentPage={itemFrom}
+                pageSize={itemTo}
+                setPage={setPage}
+                totalItems={
+                  totalItemsFilter > 0 ? totalItemsFilter : totalItems
+                }
+                onNextClick={onNextClick}
+                changeRows={changeRows}
+                onPrevClick={onPrevClick}
+              />
+            </div>
+          </PageBlock>
+        </div>
+      ) : (
+        <div className="mt2">
+          <PageBlock>
+            <EmptyState title="There aren't data to show">
+              <p>Use the filters to search data and show information</p>
+            </EmptyState>
+          </PageBlock>
+        </div>
+      )}
     </Layout>
   )
 }

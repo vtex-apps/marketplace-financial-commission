@@ -92,7 +92,11 @@ export const searchSellersService = async (
         a.id.localeCompare(b.id)
       )
 
-      const ordersCount = sortSellers.length
+      const ordersCount = sortSellers.reduce(
+        (total, comis) => (total += Number(comis.statistics?.ordersCount)),
+        0
+      )
+
       const totalComission = sortSellers.reduce(
         (total, comis) => (total += Number(comis.statistics?.totalComission)),
         0
@@ -159,7 +163,11 @@ export const searchSellersService = async (
         a.id.localeCompare(b.id)
       )
 
-      const ordersCount = sortSellers.length
+      const ordersCount = sortSellers.reduce(
+        (total, comis) => (total += Number(comis.statistics?.ordersCount)),
+        0
+      )
+
       const totalComission = sortSellers.reduce(
         (total, comis) => (total += Number(comis.statistics?.totalComission)),
         0

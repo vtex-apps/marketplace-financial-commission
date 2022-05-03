@@ -94,13 +94,6 @@ const CommissionReportDetail: FC = () => {
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
     pollInterval: 0,
-    variables: {
-      listSellersParams: {
-        sellersId: '',
-        page: 1,
-        pageSize: 100,
-      },
-    },
   })
 
   const [getDataOrders, { data: dataOrders, loading: loadingDataOrders }] =

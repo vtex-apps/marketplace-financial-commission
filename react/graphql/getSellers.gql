@@ -1,5 +1,5 @@
-query GET_SELLERS($listSellersParams: ListSellersParams) {
-  getSellers (listSellersParams: $listSellersParams) {
+query GET_SELLERS {
+  getSellers  {
     sellers {
       id
       name

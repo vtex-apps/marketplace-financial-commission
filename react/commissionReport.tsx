@@ -56,6 +56,13 @@ const CommissionReport: FC = () => {
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
     pollInterval: 0,
+    variables: {
+      listSellersParams: {
+        sellersId: '',
+        page: 1,
+        pageSize: 100,
+      },
+    },
   })
 
   const [stats, { data: dataStats, loading: loadingStats }] = useLazyQuery(
@@ -272,14 +279,14 @@ const CommissionReport: FC = () => {
     if (dataSellers) {
       const builtSelectSeller: DataFilter[] = []
 
-      dataSellers.getSellers.items.forEach((seller: DataSellerSelect) => {
+      dataSellers.getSellers.sellers.forEach((seller: DataSellerSelect) => {
         builtSelectSeller.push({
           value: { id: seller.id, name: seller.name },
           label: seller.name,
         })
       })
       setOptionsSelect(builtSelectSeller)
-      setTotalItems(dataSellers.getSellers.items.length)
+      setTotalItems(dataSellers.getSellers.sellers.length)
     }
   }, [dataSellers])
 

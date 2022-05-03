@@ -2,9 +2,9 @@ scalar InvoiceData
 
 type Invoice {
   status: String
-  invoiceCreatedDate: string
-  invoiceDueDate: string
-  seller: SellerData
+  invoiceCreatedDate: String
+  invoiceDueDate: String
+  seller: SellerInvoiceData
   orders: [Order]
   totalizers: Totalizers
   comment: String

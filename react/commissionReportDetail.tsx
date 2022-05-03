@@ -94,9 +94,14 @@ const CommissionReportDetail: FC = () => {
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
     pollInterval: 0,
+    variables: {
+      listSellersParams: {
+        sellersId: '',
+        page: 1,
+        pageSize: 100,
+      },
+    },
   })
-
-  console.info('sellerName ', !sellerName)
 
   const [getDataOrders, { data: dataOrders, loading: loadingDataOrders }] =
     useLazyQuery(SEARCH_ORDERS, {
@@ -136,9 +141,10 @@ const CommissionReportDetail: FC = () => {
   useEffect(() => {
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataSellers) {
+      console.info('dataSellers:::::::::::----- ', dataSellers)
       const builtSelectSeller: DataFilter[] = []
 
-      dataSellers.getSellers.items.forEach((seller: DataSellerSelect) => {
+      dataSellers.getSellers.sellers.forEach((seller: DataSellerSelect) => {
         builtSelectSeller.push({
           value: { id: seller.id, name: seller.name },
           label: seller.name,

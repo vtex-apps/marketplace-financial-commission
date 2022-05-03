@@ -25,7 +25,7 @@ const routes = {
     }`
   },
   baseUrl: (account: string) =>
-    `https://${account}.vtexcommercestable.com.br/api/oms/pvt/orders`,
+    `http://${account}.vtexcommercestable.com.br/api/oms/pvt/orders`,
 }
 
 export class OrdersClient extends JanusClient {

@@ -13,3 +13,4 @@
  - [Commit search sellers and search orders](https://github.com/vtex-apps/marketplace-financial-commission/pull/32)
  - [Feature/filter component](https://github.com/vtex-apps/marketplace-financial-commission/pull/35)
  - [solved problems about typings to query seller](https://github.com/vtex-apps/marketplace-financial-commission/pull/36)
+ - [Feature/filter component](https://github.com/vtex-apps/marketplace-financial-commission/pull/37)

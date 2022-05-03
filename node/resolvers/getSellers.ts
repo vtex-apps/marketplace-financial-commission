@@ -10,7 +10,7 @@ export const getSellers = async (
     listSellersParams?: any
   },
   ctx: Context
-): Promise<Sellers> => {
+): Promise<ResultSearchSellerList> => {
   let result: any = ''
 
   const respsellers = await listSellers(ctx)
@@ -58,6 +58,17 @@ export const getSellers = async (
 
       result = searchResult
     }
+  } else {
+    const searchResult: ResultSearchSellerList = {
+      sellers: respsellers.items,
+      pagination: {
+        currentPage: 1,
+        pageSize: 1,
+        totalPage: respsellers.items.length,
+      },
+    }
+
+    result = searchResult
   }
 
   return result

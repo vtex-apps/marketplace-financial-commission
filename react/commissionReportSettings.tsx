@@ -32,7 +32,7 @@ const CommissionReportSettings: FC = () => {
       const builtSelectSeller: DataFilter[] = []
       const dataTableDashboard: SettingsSellers[] = []
 
-      dataSellers.getSellers.items.forEach((seller: DataSeller) => {
+      dataSellers.getSellers.sellers.forEach((seller: DataSeller) => {
         builtSelectSeller.push({
           value: { id: seller.id, name: seller.name },
           label: seller.name,

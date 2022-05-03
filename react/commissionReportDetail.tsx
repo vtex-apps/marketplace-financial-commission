@@ -94,6 +94,7 @@ const CommissionReportDetail: FC = () => {
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
     pollInterval: 0,
+<<<<<<< HEAD
     variables: {
       listSellersParams: {
         sellersId: '',
@@ -103,6 +104,12 @@ const CommissionReportDetail: FC = () => {
     },
   })
 
+=======
+  })
+
+  console.info('sellerName ', !sellerName)
+
+>>>>>>> eb56222c1993b3f5b42e090abf866db35d436564
   const [getDataOrders, { data: dataOrders, loading: loadingDataOrders }] =
     useLazyQuery(SEARCH_ORDERS, {
       ssr: false,

@@ -1,7 +1,7 @@
 {
   "vendor": "vtex",
   "name": "marketplace-financial-commission",
-  "version": "0.2.1-beta.0",
+  "version": "0.2.1-beta.1",
   "title": "Financial commission for Marketplace",
   "description": "Streamline the commissioning flows between a marketplace operator and the sellers",
   "builders": {
@@ -20,7 +20,9 @@
     "vtex.native-types": "0.x",
     "vtex.format-currency": "0.x"
   },
-  "registries": ["smartcheckout"],
+  "registries": [
+    "smartcheckout"
+  ],
   "credentialType": "absolute",
   "policies": [
     {

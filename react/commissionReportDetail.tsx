@@ -144,7 +144,12 @@ const CommissionReportDetail: FC = () => {
         })
       })
       setOptionsSelect(builtSelectSeller)
+      setItemFrom(1)
+      setItemTo(20)
+      setTotalItems(0)
+      console.info(page, pageSize)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSellers])
 
   useEffect(() => {

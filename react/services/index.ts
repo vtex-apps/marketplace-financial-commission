@@ -38,7 +38,7 @@ export async function getSellers() {
 
 export async function getTemplate() {
   try {
-    const response = await fetch(config.getUrl('template'), {
+    const response = await fetch(config.getUrl('segment/template'), {
       method: 'GET',
       headers,
     })

@@ -29,7 +29,9 @@
       "policies": [
         {
           "effect": "allow",
-          "actions": ["get"],
+          "actions": [
+            "get"
+          ],
           "principals": [
             "vrn:apps:*:*:*:app/vtex.marketplace-financial-commission-cron@*"
           ]
@@ -46,11 +48,36 @@
     },
     "singleInvoice": {
       "path": "/_v/financial-commission/:sellerId/invoice/*id",
-      "public": true
+      "public": false,
+      "access": "authorized",
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": [
+            "get",
+            "post"
+          ],
+          "principals": [
+            "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*"
+          ]
+        }
+      ]
     },
     "invoicesBySeller": {
       "path": "/_v/financial-commission/:sellerId/invoices",
-      "public": true
+      "public": false,
+      "access": "authorized",
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": [
+            "get"
+          ],
+          "principals": [
+            "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*"
+          ]
+        }
+      ]
     },
     "generateInvoices": {
       "path": "/_v/financial-commission/generate-invoices",

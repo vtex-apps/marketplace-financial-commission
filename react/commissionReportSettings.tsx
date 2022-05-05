@@ -72,6 +72,7 @@ const CommissionReportSettings: FC = () => {
     {
       id: 'name',
       title: 'Seller name',
+      width: '90em',
       cellRenderer: (props: CellRendererProps) => {
         return <span>{props.data}</span>
       },
@@ -79,14 +80,14 @@ const CommissionReportSettings: FC = () => {
     {
       id: 'id',
       title: 'Actions',
-      cellRenderer: (props: any) => <Actions {...props} />,
+      width: '10em',
+      cellRenderer: (props: CellRendererProps) => <Actions {...props} />,
       extended: true,
     },
   ]
 
   return (
     <Layout
-      fullWidth
       pageHeader={
         <PageHeader
           title={<FormattedMessage id="admin/navigation.settings" />}

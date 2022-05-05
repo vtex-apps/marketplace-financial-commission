@@ -54,8 +54,13 @@ export const invoicingProcess = async (
   const document = await commissionInvoices.save(invoice)
 
   await mail.sendMail({
-    templateName: '',
-    jsonData: { message: { to: email } },
+    templateName: config.INVOICE_MAIL_TEMPLATE,
+    jsonData: {
+      message: {
+        to: email,
+      },
+      ...invoice,
+    },
   })
 
   await vbase.saveJSON<JobHistory>(BUCKET, SELLER_NAME, {

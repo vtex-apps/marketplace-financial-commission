@@ -6,6 +6,7 @@ export const config = {
   RETRY_SELLERS_BUCKET: 'retry',
   MANUAL_JOB_BUCKET: 'manual',
   AUTO_JOB_BUCKET: 'automatic',
+  INVOICE_MAIL_TEMPLATE: 'invoice-detail',
 } as const
 
 export const validationMessage = {

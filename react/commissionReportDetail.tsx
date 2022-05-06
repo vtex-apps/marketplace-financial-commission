@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import type { FC } from 'react'
 import React, { useState, useEffect } from 'react'
 import {
@@ -10,6 +11,8 @@ import {
   IconVisibilityOff,
   ButtonWithIcon,
   EmptyState,
+  Divider,
+  Modal,
 } from 'vtex.styleguide'
 import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
@@ -38,6 +41,8 @@ const CommissionReportDetail: FC = () => {
   const [sellerName, setSellerName] = useState('')
   const [tabs, setTabs] = useState(1)
   const [dataTableOrders, setDataTableOrders] = useState<any>([])
+  const [openModal, setOpenModal] = useState(false)
+  const [dateRate, setDataRate] = useState<any>([])
 
   const schemaTable = [
     {
@@ -68,11 +73,19 @@ const CommissionReportDetail: FC = () => {
     {
       id: 'rate',
       title: 'Rate',
-      cellRenderer: () => {
+      cellRenderer: (props: any) => {
         return (
-          <span>
-            <ButtonWithIcon icon={<IconVisibilityOff />} variation="tertiary" />
-          </span>
+          <div>
+            <ButtonWithIcon
+              icon={<IconVisibilityOff />}
+              variation="tertiary"
+              onClick={() => {
+                console.info('props rate:::::: ', props)
+                setOpenModal(!openModal)
+                setDataRate(props.data)
+              }}
+            />
+          </div>
         )
       },
     },
@@ -80,8 +93,6 @@ const CommissionReportDetail: FC = () => {
       id: 'status',
       title: 'Status',
       cellRenderer: (props: any) => {
-        console.info('props ', props.data)
-
         return (
           <Tag bgColor={props.data.bgColor} color={props.data.fontColor}>
             {props.data.status}
@@ -105,8 +116,8 @@ const CommissionReportDetail: FC = () => {
           dateStart: '2022-04-01',
           dateEnd: '2022-04-25',
           sellerName: !sellerName ? query.sellerName : sellerName,
-          page: 1,
-          perpage: 20,
+          page,
+          perpage: pageSize,
         },
       },
     })
@@ -144,10 +155,6 @@ const CommissionReportDetail: FC = () => {
         })
       })
       setOptionsSelect(builtSelectSeller)
-      setItemFrom(1)
-      setItemTo(20)
-      setTotalItems(0)
-      console.info(page, pageSize)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSellers])
@@ -178,6 +185,7 @@ const CommissionReportDetail: FC = () => {
     setDefaultFinalDate(defaultFinal)
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataOrders) {
+      console.info('dataOrders ', dataOrders.orders.paging.total)
       const dataTable: any = []
 
       dataOrders.orders.data.forEach((item: any) => {
@@ -194,7 +202,7 @@ const CommissionReportDetail: FC = () => {
           ),
           totalOrder: item.totalOrderValue,
           totalCommission: item.totalComission,
-          rate: '',
+          rate: item.rate,
           status: {
             status: item.status,
             bgColor: keyColor ? status[keyColor].bgColor : '',
@@ -203,9 +211,40 @@ const CommissionReportDetail: FC = () => {
         })
       })
       setDataTableOrders(dataTable)
+      setTotalItems(dataOrders.orders.paging.total)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataOrders])
+
+  const onNextClick = () => {
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    const nextPage = page + 1
+
+    const currentTo = pageSize * nextPage
+    const currentFrom = itemTo + 1
+
+    setItemTo(currentTo)
+    setItemFrom(currentFrom)
+    setPage(nextPage)
+  }
+
+  const changeRows = (row: number) => {
+    setPageSize(row)
+    setItemTo(row)
+    setItemFrom(1)
+    setPage(1)
+  }
+
+  const onPrevClick = () => {
+    const previousPage = page - 1
+
+    const currentTo = itemTo - pageSize
+    const currentFrom = itemFrom - pageSize
+
+    setItemTo(currentTo)
+    setItemFrom(currentFrom)
+    setPage(previousPage)
+  }
 
   return (
     <Layout
@@ -213,6 +252,31 @@ const CommissionReportDetail: FC = () => {
         <PageHeader title={<FormattedMessage id="admin/navigation.title" />} />
       }
     >
+      <Modal
+        centered
+        isOpen={openModal}
+        onClose={() => setOpenModal(!openModal)}
+      >
+        <div className="mb3">
+          {dateRate.map((elmRate: any) => (
+            <div>
+              <h2>Item ID: #{elmRate.itemId}</h2>
+              <p>
+                <b>Name Item: </b> {elmRate.nameItem}
+              </p>
+              <p>
+                <b>Freight Commission Percentage: </b>
+                {elmRate.rate.freightCommissionPercentage}%
+              </p>
+              <p>
+                <b>Producto Commission Percentage: </b>
+                {elmRate.rate.productCommissionPercentage}%
+              </p>
+              <Divider />
+            </div>
+          ))}
+        </div>
+      </Modal>
       <div className="flex">
         <div className="w-25">
           <p className="ml3">
@@ -280,9 +344,9 @@ const CommissionReportDetail: FC = () => {
                       totalItems={
                         totalItemsFilter > 0 ? totalItemsFilter : totalItems
                       }
-                      onNextClick={() => {}}
-                      changeRows={() => {}}
-                      onPrevClick={() => {}}
+                      onNextClick={onNextClick}
+                      changeRows={changeRows}
+                      onPrevClick={onPrevClick}
                     />
                   </div>
                 </PageBlock>

@@ -124,6 +124,7 @@ interface SelectProps {
   options: DataFilter[]
   dataFilter: DataFilter[]
   setDataFilter: (v: DataFilter[]) => void
+  multi: boolean
 }
 
 interface DatepickerProps {

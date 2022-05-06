@@ -91,6 +91,7 @@ const Filter: FC<FilterProps> = (props) => {
           options={props.optionsSelect}
           dataFilter={dataFilter}
           setDataFilter={setDataFilter}
+          multi
         />
       </div>
       <div className="flex mt5">

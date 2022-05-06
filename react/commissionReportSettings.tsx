@@ -18,7 +18,7 @@ import { TableComponent } from './components'
 
 const CommissionReportSettings: FC = () => {
   const { navigate } = useRuntime()
-  const [dataFilter, setDataFilter] = useState<DataFilter[] | []>([])
+  const [dataFilter, setDataFilter] = useState<DataFilter[]>([])
   const [optionsSelect, setOptionsSelect] = useState<any>([])
   const [sellersResult, setSellersRestul] = useState<SettingsSellers[] | []>([])
 
@@ -26,6 +26,19 @@ const CommissionReportSettings: FC = () => {
     ssr: false,
     pollInterval: 0,
   })
+
+  useEffect(() => {
+    if (dataFilter) {
+      console.info('dataFilter ', dataFilter)
+      // eslint-disable-next-line array-callback-return
+      // const sellerFilterResult = sellersResult.filter(
+      //   (item) => item.id === dataFilter.value.id
+      // )
+
+      // console.info('sellerFilterResult ', sellerFilterResult)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataFilter])
 
   useEffect(() => {
     if (dataSellers) {
@@ -72,6 +85,7 @@ const CommissionReportSettings: FC = () => {
     {
       id: 'name',
       title: 'Seller name',
+      width: '90em',
       cellRenderer: (props: CellRendererProps) => {
         return <span>{props.data}</span>
       },
@@ -79,14 +93,14 @@ const CommissionReportSettings: FC = () => {
     {
       id: 'id',
       title: 'Actions',
-      cellRenderer: (props: any) => <Actions {...props} />,
+      width: '10em',
+      cellRenderer: (props: CellRendererProps) => <Actions {...props} />,
       extended: true,
     },
   ]
 
   return (
     <Layout
-      fullWidth
       pageHeader={
         <PageHeader
           title={<FormattedMessage id="admin/navigation.settings" />}
@@ -95,11 +109,12 @@ const CommissionReportSettings: FC = () => {
     >
       <div>
         <PageBlock>
-          <div className="mt4 mb7">
+          <div className="mt2 mb2">
             <SelectComponent
               options={optionsSelect}
               dataFilter={dataFilter}
               setDataFilter={setDataFilter}
+              multi={false}
             />
           </div>
         </PageBlock>

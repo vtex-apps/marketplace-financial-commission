@@ -38,11 +38,18 @@ export const updateTokenService = async (
     throw new NotFoundError('Seller not configured')
   }
 
-  const vbaseBody: TokenConfiguration = {
-    ...vbaseData,
-    enabled,
-    lastModificationDate,
-  }
+  const vbaseBody: TokenConfiguration = enabled
+    ? {
+        ...vbaseData,
+        enabled,
+        lastModificationDate,
+      }
+    : {
+        ...vbaseData,
+        enabled,
+        lastModificationDate,
+        autheticationToken: '',
+      }
 
   const resultVBase = await vbase.saveJSON(
     config.BUCKET_VBASE_TOKEN,

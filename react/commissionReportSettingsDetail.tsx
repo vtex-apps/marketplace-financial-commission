@@ -5,8 +5,9 @@ import {
   PageHeader,
   Input,
   Button,
-  Checkbox,
-  Divider,
+  EXPERIMENTAL_Select as Select,
+  Toggle,
+  Box,
 } from 'vtex.styleguide'
 import { FormattedMessage } from 'react-intl'
 import { useRuntime } from 'vtex.render-runtime'
@@ -14,10 +15,31 @@ import { useMutation, useQuery } from 'react-apollo'
 
 import { CREATE_TOKEN, EDIT_TOKEN, GET_TOKEN } from './graphql'
 
+const DATE_CUT_OPTIONS = [
+  {
+    value: 1,
+    label: 'Daily',
+  },
+  {
+    value: 7,
+    label: 'Weekly',
+  },
+  {
+    value: 15,
+    label: 'Bi-weekly',
+  },
+  {
+    value: 30,
+    label: 'Monthly',
+  },
+]
+
 const CommissionReportSettingsDetail: FC = () => {
   const { navigate, route } = useRuntime()
   const [sellerSettingsToken, setSellerSettingsToken] =
     useState<SellerSettingsToken>({})
+
+  const [selectedValue, setSelectValue] = useState({})
 
   const { data: getToken } = useQuery(GET_TOKEN, {
     ssr: false,
@@ -27,10 +49,15 @@ const CommissionReportSettingsDetail: FC = () => {
     },
   })
 
+  /* const [billingCycle, { data: createBilling, loading: loadingBilling }] =
+    useMutation(CREATE_TOKEN) */
+
   const [
     authenticationToken,
     { data: createToken, loading: loadingCreateToken },
   ] = useMutation(CREATE_TOKEN)
+
+  const [billingCycle] = useMutation(CREATE_TOKEN)
 
   const [editTokenMutation] = useMutation(EDIT_TOKEN)
 
@@ -38,10 +65,17 @@ const CommissionReportSettingsDetail: FC = () => {
     authenticationToken({ variables: { sellerId: route.params.sellerId } })
   }
 
+  const handleSaveBilling = () => {
+    billingCycle({})
+  }
+
   const handleIsEnable = () => {
     setSellerSettingsToken({
       ...sellerSettingsToken,
       enabled: !sellerSettingsToken.enabled,
+      authenticationToken: !sellerSettingsToken.enabled
+        ? sellerSettingsToken.authenticationToken
+        : '',
     })
     editTokenMutation({
       variables: {
@@ -51,8 +85,17 @@ const CommissionReportSettingsDetail: FC = () => {
     })
   }
 
+  /* useEffect(() => {
+    if (selectedValue) {
+      billingCycle({ variables: { sellerName: sellerSettingsToken.name } })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedValue]) */
+
   useEffect(() => {
+    // eslint-disable-next-line vtex/prefer-early-return
     if (getToken) {
+      console.info('selectedValue ', selectedValue)
       const tokenData: SellerSettingsToken = {
         authenticationToken: getToken.getToken.autheticationToken,
         name: getToken.getToken.name,
@@ -61,22 +104,26 @@ const CommissionReportSettingsDetail: FC = () => {
 
       setSellerSettingsToken(tokenData)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getToken])
 
   useEffect(() => {
+    // eslint-disable-next-line vtex/prefer-early-return
     if (createToken) {
       const newToken = createToken.createToken.autheticationToken
+
+      console.info('selectedValue ', selectedValue)
 
       setSellerSettingsToken({
         ...sellerSettingsToken,
         authenticationToken: newToken,
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createToken, sellerSettingsToken])
 
   return (
     <Layout
-      fullWidth
       pageHeader={
         <PageHeader
           title={
@@ -95,41 +142,68 @@ const CommissionReportSettingsDetail: FC = () => {
       }
     >
       <div className="mt7">
-        <h2 className="mt0 mb6">Autentication Token</h2>
-        <div className="mb5">
-          <Input
-            placeholder="Token"
-            readOnly
-            label="Seller Token"
-            value={sellerSettingsToken.authenticationToken}
-          />
-        </div>
-        <div className="mb3">
-          <Checkbox
-            checked={sellerSettingsToken.enabled}
-            id="option-0"
-            label={<FormattedMessage id="admin/form-settings.is-enable" />}
-            name="default-checkbox-group"
-            onChange={() => handleIsEnable()}
-            value="option-0"
-          />
-        </div>
-        <div className="mb4">
-          <span className="mb4">
-            <Button
-              variation="primary"
-              loading={loadingCreateToken}
-              onClick={handleCreateToken}
-            >
-              {<FormattedMessage id="admin/form-settings.button-new" />}
-            </Button>
-          </span>
-        </div>
-        <div className="mv6">
-          <Divider orientation="horizontal" />
-        </div>
-
-        <h2 className="mt0 mb6">Billing cycle</h2>
+        <Box>
+          <h2 className="mt0 mb6">Autentication Token</h2>
+          <div className="mt2 mb8">
+            <Toggle
+              label={sellerSettingsToken.enabled ? 'Activated' : 'Deactivated'}
+              checked={sellerSettingsToken.enabled}
+              semantic
+              onChange={() => handleIsEnable()}
+            />
+          </div>
+          <div className="mb5">
+            <Input
+              placeholder="Token"
+              readOnly
+              label="Seller Token"
+              value={sellerSettingsToken.authenticationToken}
+            />
+          </div>
+          <div className="mb4">
+            <span className="mb4">
+              <Button
+                variation="primary"
+                loading={loadingCreateToken}
+                onClick={handleCreateToken}
+                disabled={!sellerSettingsToken.enabled}
+              >
+                {<FormattedMessage id="admin/form-settings.button-new" />}
+              </Button>
+            </span>
+          </div>
+        </Box>
+      </div>
+      <div className="mt4">
+        <Box>
+          <h2 className="mt0 mb6">Billing cycle</h2>
+          <div className="mb5 flex w-100">
+            <div className="w-90">
+              <Select
+                menuPosition="fixed"
+                options={DATE_CUT_OPTIONS}
+                multi={false}
+                onChange={(values: any) => {
+                  setSelectValue(JSON.stringify(values, null, 2))
+                }}
+              />
+            </div>
+            <div className="w-10 pl2">
+              <Button
+                variation="primary"
+                loading={loadingCreateToken}
+                onClick={handleSaveBilling}
+              >
+                SAVE
+              </Button>
+            </div>
+          </div>
+          <div className="w-100">
+            <p className="t-small w-100 c-muted-1">
+              <FormattedMessage id="admin/modal-settings.billingCycle-helpText" />
+            </p>
+          </div>
+        </Box>
       </div>
     </Layout>
   )

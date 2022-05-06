@@ -5,7 +5,6 @@ import {
   PageHeader,
   Input,
   Button,
-  Checkbox,
   EXPERIMENTAL_Select as Select,
   Toggle,
   Box,
@@ -94,7 +93,9 @@ const CommissionReportSettingsDetail: FC = () => {
   }, [selectedValue]) */
 
   useEffect(() => {
+    // eslint-disable-next-line vtex/prefer-early-return
     if (getToken) {
+      console.info('selectedValue ', selectedValue)
       const tokenData: SellerSettingsToken = {
         authenticationToken: getToken.getToken.autheticationToken,
         name: getToken.getToken.name,
@@ -103,6 +104,7 @@ const CommissionReportSettingsDetail: FC = () => {
 
       setSellerSettingsToken(tokenData)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getToken])
 
   useEffect(() => {

@@ -8,11 +8,11 @@ const SelectComponent: FC<SelectProps> = (props) => {
     <div>
       <Select
         value={props.dataFilter}
-        multi
         label={<FormattedMessage id="admin/table.title-seller-label" />}
         options={props.options}
         onChange={(values: DataFilter[]) => props.setDataFilter(values)}
         valuesMaxHeight={35}
+        multi={props.multi}
       />
     </div>
   )

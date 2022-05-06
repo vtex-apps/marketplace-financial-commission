@@ -40,7 +40,7 @@ const CommissionReportSettingsDetail: FC = () => {
   const [sellerSettingsToken, setSellerSettingsToken] =
     useState<SellerSettingsToken>({})
 
-  const [checked, setChecked] = useState(false)
+  const [selectedValue, setSelectValue] = useState({})
 
   const { data: getToken } = useQuery(GET_TOKEN, {
     ssr: false,
@@ -50,10 +50,15 @@ const CommissionReportSettingsDetail: FC = () => {
     },
   })
 
+  /* const [billingCycle, { data: createBilling, loading: loadingBilling }] =
+    useMutation(CREATE_TOKEN) */
+
   const [
     authenticationToken,
     { data: createToken, loading: loadingCreateToken },
   ] = useMutation(CREATE_TOKEN)
+
+  const [billingCycle] = useMutation(CREATE_TOKEN)
 
   const [editTokenMutation] = useMutation(EDIT_TOKEN)
 
@@ -61,10 +66,17 @@ const CommissionReportSettingsDetail: FC = () => {
     authenticationToken({ variables: { sellerId: route.params.sellerId } })
   }
 
+  const handleSaveBilling = () => {
+    billingCycle({})
+  }
+
   const handleIsEnable = () => {
     setSellerSettingsToken({
       ...sellerSettingsToken,
       enabled: !sellerSettingsToken.enabled,
+      authenticationToken: !sellerSettingsToken.enabled
+        ? sellerSettingsToken.authenticationToken
+        : '',
     })
     editTokenMutation({
       variables: {
@@ -73,6 +85,13 @@ const CommissionReportSettingsDetail: FC = () => {
       },
     })
   }
+
+  /* useEffect(() => {
+    if (selectedValue) {
+      billingCycle({ variables: { sellerName: sellerSettingsToken.name } })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedValue]) */
 
   useEffect(() => {
     if (getToken) {
@@ -117,8 +136,16 @@ const CommissionReportSettingsDetail: FC = () => {
       }
     >
       <div className="mt7">
-        <h2 className="mt0 mb6">Autentication Token</h2>
         <Box>
+          <h2 className="mt0 mb6">Autentication Token</h2>
+          <div className="mt2 mb8">
+            <Toggle
+              label={sellerSettingsToken.enabled ? 'Activated' : 'Deactivated'}
+              checked={sellerSettingsToken.enabled}
+              semantic
+              onChange={() => handleIsEnable()}
+            />
+          </div>
           <div className="mb5">
             <Input
               placeholder="Token"
@@ -127,20 +154,13 @@ const CommissionReportSettingsDetail: FC = () => {
               value={sellerSettingsToken.authenticationToken}
             />
           </div>
-          <div className="mt3 mb5">
-            <Toggle
-              label={sellerSettingsToken.enabled ? 'Activated' : 'Deactivated'}
-              checked={sellerSettingsToken.enabled}
-              semantic
-              onChange={() => handleIsEnable()}
-            />
-          </div>
           <div className="mb4">
             <span className="mb4">
               <Button
                 variation="primary"
                 loading={loadingCreateToken}
                 onClick={handleCreateToken}
+                disabled={!sellerSettingsToken.enabled}
               >
                 {<FormattedMessage id="admin/form-settings.button-new" />}
               </Button>
@@ -158,10 +178,7 @@ const CommissionReportSettingsDetail: FC = () => {
                 options={DATE_CUT_OPTIONS}
                 multi={false}
                 onChange={(values: any) => {
-                  // eslint-disable-next-line no-console
-                  console.log(
-                    `[Select] Selected: ${JSON.stringify(values, null, 2)}`
-                  )
+                  setSelectValue(JSON.stringify(values, null, 2))
                 }}
               />
             </div>
@@ -169,7 +186,7 @@ const CommissionReportSettingsDetail: FC = () => {
               <Button
                 variation="primary"
                 loading={loadingCreateToken}
-                onClick={handleCreateToken}
+                onClick={handleSaveBilling}
               >
                 SAVE
               </Button>

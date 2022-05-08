@@ -10,11 +10,22 @@ export async function authentication(ctx: Context, next: () => Promise<any>) {
     state: {
       body: { seller },
     },
+    headers,
   } = ctx
 
   const accountMarketplace = ctx.vtex.account
 
   const { name, account } = seller as Seller
+
+  const caller = headers['x-vtex-caller']
+
+  if (caller?.includes('seller-financial-commission')) {
+    ctx.query.sellerName = name
+
+    await next()
+
+    return
+  }
 
   const keyBucket = `${accountMarketplace}-${name}-${account}`
 

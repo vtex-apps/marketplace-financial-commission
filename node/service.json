@@ -49,7 +49,7 @@
     "singleInvoice": {
       "path": "/_v/financial-commission/:sellerId/invoice/*id",
       "public": false,
-      "access": "authorized",
+      "access": "authenticated",
       "policies": [
         {
           "effect": "allow",
@@ -58,7 +58,8 @@
             "post"
           ],
           "principals": [
-            "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*"
+            "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*",
+            "vrn:vtex.vtex-id:*:*:*:user/*@vtex.com.br"
           ]
         }
       ]
@@ -66,7 +67,7 @@
     "invoicesBySeller": {
       "path": "/_v/financial-commission/:sellerId/invoices",
       "public": false,
-      "access": "authorized",
+      "access": "authenticated",
       "policies": [
         {
           "effect": "allow",
@@ -74,7 +75,8 @@
             "get"
           ],
           "principals": [
-            "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*"
+            "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*",
+            "vrn:vtex.vtex-id:*:*:*:user/*@vtex.com.br"
           ]
         }
       ]

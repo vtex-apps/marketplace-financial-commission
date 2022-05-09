@@ -20,12 +20,15 @@ interface FilterProps {
   startDatePicker: Date
   finalDatePicker: Date
   optionsSelect: SellerSelect[]
-  setStartDate?: (v: string) => void
-  setFinalDate?: (v: string) => void
+  setStartDate: (v: string) => void
+  setFinalDate: (v: string) => void
   defaultStartDate?: string
   defaultFinalDate?: string
   setTotalItems?: (v: number) => void
-  setSellerId?: (v: string) => void
+  setSellerId: (v: string) => void
+  multiValue: boolean
+  optionsStatus?: any
+  setStatusOrders?: any
 }
 
 interface TotalizerProps {
@@ -125,6 +128,7 @@ interface SelectProps {
   dataFilter: DataFilter[]
   setDataFilter: (v: DataFilter[]) => void
   multi: boolean
+  customLabel: any
 }
 
 interface DatepickerProps {

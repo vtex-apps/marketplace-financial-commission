@@ -7,6 +7,10 @@ import {
   PageHeader,
   ActionMenu,
   IconOptionsDots,
+  Alert,
+  EXPERIMENTAL_Select as Select,
+  Box,
+  Button,
 } from 'vtex.styleguide'
 import { FormattedMessage } from 'react-intl'
 import { useQuery } from 'react-apollo'
@@ -21,15 +25,36 @@ const CommissionReportSettings: FC = () => {
   const [dataFilter, setDataFilter] = useState<DataFilter[]>([])
   const [optionsSelect, setOptionsSelect] = useState<any>([])
   const [sellersResult, setSellersRestul] = useState<SettingsSellers[] | []>([])
+  const [selectedValue, setSelectValue] = useState({})
 
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
     pollInterval: 0,
   })
 
+  const DATE_CUT_OPTIONS = [
+    {
+      value: 1,
+      label: 'Daily',
+    },
+    {
+      value: 7,
+      label: 'Weekly',
+    },
+    {
+      value: 15,
+      label: 'Bi-weekly',
+    },
+    {
+      value: 30,
+      label: 'Monthly',
+    },
+  ]
+
   useEffect(() => {
     if (dataFilter) {
       console.info('dataFilter ', dataFilter)
+      console.info('selectedValue ', selectedValue)
       // eslint-disable-next-line array-callback-return
       // const sellerFilterResult = sellersResult.filter(
       //   (item) => item.id === dataFilter.value.id
@@ -107,7 +132,44 @@ const CommissionReportSettings: FC = () => {
         />
       }
     >
-      <div>
+      <div className="mb6">
+        <Box>
+          <h2>
+            <FormattedMessage id="admin/modal-settings.billingCycle" />
+          </h2>
+          <div className="mb4">
+            <Alert type="warning">
+              <FormattedMessage id="admin/modal-settings.alert-warning" />
+            </Alert>
+            <div className="mb5 flex w-100 mt6">
+              <div className="w-90">
+                <Select
+                  menuPosition="fixed"
+                  options={DATE_CUT_OPTIONS}
+                  multi={false}
+                  onChange={(values: any) => {
+                    setSelectValue(JSON.stringify(values, null, 2))
+                  }}
+                />
+              </div>
+              <div className="w-10 pl2">
+                <Button variation="primary" onClick={() => {}}>
+                  SAVE
+                </Button>
+              </div>
+            </div>
+            <div className="w-100">
+              <p className="t-small mw9 c-muted-1">
+                <FormattedMessage id="admin/modal-settings.billingCycle-helpText" />
+              </p>
+            </div>
+          </div>
+        </Box>
+      </div>
+      <p className="c-action-primary hover-c-action-primary fw5 ml2 mt6">
+        Billing Cycle Detail
+      </p>
+      <div className="mt6">
         <PageBlock>
           <div className="mt2 mb2">
             <SelectComponent
@@ -115,6 +177,9 @@ const CommissionReportSettings: FC = () => {
               dataFilter={dataFilter}
               setDataFilter={setDataFilter}
               multi={false}
+              customLabel={
+                <FormattedMessage id="admin/table.title-seller-label" />
+              }
             />
           </div>
         </PageBlock>

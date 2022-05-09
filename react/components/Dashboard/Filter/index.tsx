@@ -14,8 +14,8 @@ import DatePickerComponent from './datePicker'
 import FilterBarComponent from './filterBar'
 
 const Filter: FC<FilterProps> = (props) => {
-  console.info('props ', props)
-  const [dataFilter, setDataFilter] = useState<DataFilter[] | []>([])
+  const [dataFilter, setDataFilter] = useState<DataFilter[]>([])
+  const [statusFilter, setStatusfilter] = useState<any[]>([])
   const [startDateFilter, setDateFilter] = useState<Date | string>('')
   const [finalDateFilter, setFinalDateFilter] = useState<Date | string>('')
 
@@ -39,15 +39,19 @@ const Filter: FC<FilterProps> = (props) => {
       countTotalItems += 1
     })
 
+    if (props.setStatusOrders && statusFilter.length > 0) {
+      let stringStatus = ''
+
+      statusFilter.forEach((status) => {
+        stringStatus += `${status.label},`
+      })
+      props.setStatusOrders(stringStatus.slice(0, -1))
+    } else {
+      props.setStatusOrders('')
+    }
+
     stringSellers = stringSellers.substring(0, stringSellers.length - 1)
-    if (
-      !props.setStartDate ||
-      !props.setFinalDate ||
-      !props.setSellerId ||
-      !props.setTotalItems
-    )
-      return
-    props.setTotalItems(countTotalItems)
+
     props.setSellerId(stringSellers)
 
     if (startDateFilter !== '') {
@@ -61,6 +65,9 @@ const Filter: FC<FilterProps> = (props) => {
 
       props.setFinalDate(newDateFinal)
     }
+
+    if (!props.setTotalItems) return
+    props.setTotalItems(countTotalItems)
   }
 
   const changeStartDate = (start: Date) => {
@@ -91,13 +98,28 @@ const Filter: FC<FilterProps> = (props) => {
           options={props.optionsSelect}
           dataFilter={dataFilter}
           setDataFilter={setDataFilter}
-          multi
+          multi={props.multiValue}
+          customLabel={<FormattedMessage id="admin/table.title-seller-label" />}
         />
       </div>
       <div className="flex mt5">
-        <div className="w-30 pt6">
-          <FilterBarComponent />
-        </div>
+        {props.optionsStatus ? (
+          <div className="w-30 pr6">
+            <SelectComponent
+              options={props.optionsStatus}
+              dataFilter={statusFilter}
+              setDataFilter={setStatusfilter}
+              multi
+              customLabel={
+                <FormattedMessage id="admin/table.title-status-label" />
+              }
+            />
+          </div>
+        ) : (
+          <div className="w-30 pt6">
+            <FilterBarComponent />
+          </div>
+        )}
         <div className="w-50">
           <DatePickerComponent
             startDateFilter={startDateFilter}
@@ -125,13 +147,7 @@ const Filter: FC<FilterProps> = (props) => {
                   isActiveOfGroup={false}
                   onClick={() => {
                     setDataFilter([])
-                    if (
-                      !props.setStartDate ||
-                      !props.setFinalDate ||
-                      !props.setSellerId ||
-                      !props.setTotalItems
-                    )
-                      return
+                    setStatusfilter([])
                     props.setStartDate(
                       props.defaultStartDate ? props.defaultStartDate : ''
                     )
@@ -144,8 +160,9 @@ const Filter: FC<FilterProps> = (props) => {
                     setFinalDateFilter(
                       new Date(`${props.defaultFinalDate}T00:00:00`)
                     )
-                    props.setTotalItems(0)
                     props.setSellerId('')
+                    if (props.setTotalItems) props.setTotalItems(0)
+                    if (props.setStatusOrders) props.setStatusOrders('')
                   }}
                   icon={<IconDelete />}
                 />,

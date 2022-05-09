@@ -1,3 +1,3 @@
 export const config = {
-  getUrl: (path?: string) => `https://${window.location.host}/_v/${path ?? ''}`,
+  getUrl: (path?: string) => `https://${window.location.host}/${path ?? ''}`,
 }

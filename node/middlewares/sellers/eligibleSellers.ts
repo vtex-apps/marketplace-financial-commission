@@ -75,7 +75,7 @@ export async function eligibleSellers(
   // Filter sellers that fall outside this cycle
   const sellers = sellersToInvoice.filter(Boolean) as SellerInvoice[]
 
-  ctx.state.body = { sellers, today }
+  ctx.state.body = { sellers }
 
   await next()
 }

@@ -1,4 +1,10 @@
-scalar InvoiceData
+input InvoiceDataInput {
+  id: String
+  name: String
+  email: String
+  startDate: String
+  endDate: String
+}
 
 type Invoice {
   status: String

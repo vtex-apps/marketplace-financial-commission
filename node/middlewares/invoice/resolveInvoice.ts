@@ -10,7 +10,9 @@ import {
 
 type InvoiceEndpointResponse = CommissionInvoice | string | null
 
-export async function resolveInvoice(ctx: Context) {
+export async function resolveInvoice(
+  ctx: Context
+): Promise<InvoiceEndpointResponse> {
   const {
     method,
     query: { id },

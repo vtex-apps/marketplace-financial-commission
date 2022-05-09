@@ -10,6 +10,22 @@ interface JobHistory {
 
 type JobStatus = 'ONGOING' | 'COMPLETE' | 'ERROR' | 'OMITTED'
 
+/**
+ * @description
+ * Attempts to save a Commission Invoice document in MasterData.
+ * @param sellerData
+ * Data required to submit a document to the data entity
+ * - id (Seller id)
+ * - name (Seller name)
+ * - email (Seller email)
+ * - startDate (Orders lookup start)
+ * - endDate (Orders lookup end)
+ * @param automated
+ * Used to either state the invoice was made manually or automatically
+ * @returns
+ * - If no orders are available, returns an 'omitted' message
+ * - If the process completed, returns the masterdata document ID
+ */
 export const invoicingProcess = async (
   ctx: Context,
   sellerData: SellerInvoice,
@@ -17,10 +33,9 @@ export const invoicingProcess = async (
 ): Promise<string> => {
   const {
     clients: { vbase, commissionInvoices, mail },
-    state: {
-      body: { today },
-    },
   } = ctx
+
+  const [today] = new Date().toISOString().split('T')
 
   const { id: sellerId, name: SELLER_NAME, email } = sellerData
 

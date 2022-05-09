@@ -4,9 +4,11 @@ import { config } from '../../constants'
 import { invoicingProcess } from '../../services/invoicingProcess'
 
 /**
- * @description Starts the process which will create
+ * @description
+ * Starts the process which will create
  * an invoice for each seller.
- * @throws {409 - Conflict} If any fails we will store them and error out.
+ * @throws {409 - Conflict}
+ * If any fails we will store them and error out.
  * This will cause the scheduler to retry, which will
  * make the sellers to be those that failed.
  */
@@ -52,7 +54,7 @@ export async function generateInvoices(ctx: Context) {
     )
   }
 
-  // The retry bucket is purged if all succeed
+  // The retry bucket is purged if all succeeded
   await vbase.saveJSON(config.RETRY_SELLERS_BUCKET, marketplace, null)
 
   return (ctx.status = 200)

@@ -1,10 +1,12 @@
 import { json } from 'co-body'
 
 /**
- * @description Attempts to update an Invoice.
- * Only the Marketplace account has access to this resource.
+ * @description
+ * Attempts to update an Invoice.
+ * @returns
+ * Message confirming the update
  */
-export async function updateInvoice(ctx: Context) {
+export async function updateInvoice(ctx: Context): Promise<string> {
   const {
     clients: { commissionInvoices },
     query: { id },

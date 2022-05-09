@@ -6,8 +6,18 @@ import { orderListInvoicedBySeller } from '../middlewares/dashboard/generate/ord
 import { randomId } from './randomId'
 
 /**
- * @description Returns an Invoice shaped object or null
- * if no orders are available for the selected date range
+ * @summary
+ * Creates an `object` following the schema model of commission invoice
+ * @param sellerData
+ * Data required to draft the object
+ * - id (Seller id)
+ * - name (Seller name)
+ * - email (Seller email)
+ * - startDate (Orders lookup start)
+ * - endDate (Orders lookup end)
+ * @returns
+ * - An Invoice shaped object
+ * - `null` if no orders are available for the selected date range
  */
 export async function draftInvoice(
   ctx: Context,

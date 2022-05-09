@@ -49,5 +49,5 @@ type Mutation {
   """
   Attempts to create an Invoice
   """
-  createInvoice(invoiceData: InvoiceData!): String
+  createInvoice(invoiceData: InvoiceDataInput!): String
 }

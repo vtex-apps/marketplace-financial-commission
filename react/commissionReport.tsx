@@ -17,12 +17,7 @@ import { useQuery, useLazyQuery } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
 
-import {
-  Filter,
-  SettingsDashboard,
-  Totalizer,
-  TableComponent,
-} from './components'
+import { Filter, Totalizer, TableComponent } from './components'
 import { GET_SELLERS, SEARCH_STATS, SEARCH_SELLERS } from './graphql'
 import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
 
@@ -176,7 +171,6 @@ const CommissionReport: FC = () => {
     stats()
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataStats) {
-      console.info('STATSSSSSSSSSSSSSS ', dataStats)
       let valueSellersStats = 0
 
       if (dataDashboard)
@@ -319,9 +313,6 @@ const CommissionReport: FC = () => {
         <PageHeader title={<FormattedMessage id="admin/navigation.title" />} />
       }
     >
-      <div>
-        <SettingsDashboard />
-      </div>
       {startDate && finalDate && (
         <div className="mt2">
           <PageBlock>
@@ -334,8 +325,9 @@ const CommissionReport: FC = () => {
                 setFinalDate={setFinalDate}
                 defaultStartDate={defaultStartDate}
                 defaultFinalDate={defaultFinalDate}
-                setTotalItems={setTotalItemsFilter}
                 setSellerId={setSellersId}
+                setTotalItems={setTotalItemsFilter}
+                multiValue
               />
             </div>
           </PageBlock>
@@ -375,8 +367,8 @@ const CommissionReport: FC = () => {
       ) : (
         <div className="mt2">
           <PageBlock>
-            <EmptyState title="There aren't data to show">
-              <p>Use the filters to search data and show information</p>
+            <EmptyState title="There is no data data to show">
+              <p>Use the filters to search and show information</p>
             </EmptyState>
           </PageBlock>
         </div>

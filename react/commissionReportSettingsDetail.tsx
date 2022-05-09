@@ -41,6 +41,8 @@ const CommissionReportSettingsDetail: FC = () => {
 
   const [selectedValue, setSelectValue] = useState({})
 
+  console.info('selectedValue ', selectedValue)
+
   const { data: getToken } = useQuery(GET_TOKEN, {
     ssr: false,
     pollInterval: 0,
@@ -95,7 +97,6 @@ const CommissionReportSettingsDetail: FC = () => {
   useEffect(() => {
     // eslint-disable-next-line vtex/prefer-early-return
     if (getToken) {
-      console.info('selectedValue ', selectedValue)
       const tokenData: SellerSettingsToken = {
         authenticationToken: getToken.getToken.autheticationToken,
         name: getToken.getToken.name,

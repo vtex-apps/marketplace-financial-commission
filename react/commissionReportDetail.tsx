@@ -10,29 +10,29 @@ import {
   Tag,
   IconVisibilityOff,
   ButtonWithIcon,
-  EmptyState,
   Divider,
   Modal,
+  // IconCalendar,
+  // IconArrowUp,
+  // IconClock,
 } from 'vtex.styleguide'
 import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
 import { useLazyQuery, useQuery } from 'react-apollo'
 
-import SettingsSeller from './components/SellerSettings'
 import { SEARCH_ORDERS, GET_SELLERS } from './graphql'
-import { TableComponent, Filter } from './components'
+import { TableComponent, Filter, EmptyTable } from './components'
 import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
 import { status } from './typings/constants'
+import { config } from './utils/config'
 
 const CommissionReportDetail: FC = () => {
-  const { route, query } = useRuntime()
+  const { query } = useRuntime()
   const [startDate, setStartDate] = useState('')
   const [finalDate, setFinalDate] = useState('')
   const [defaultStartDate, setDefaultStartDate] = useState('')
   const [defaultFinalDate, setDefaultFinalDate] = useState('')
-  const [totalItemsFilter, setTotalItemsFilter] = useState(0)
   const [page, setPage] = useState(1)
-  const [sellersId, setSellersId] = useState('')
   const [pageSize, setPageSize] = useState(20)
   const [itemFrom, setItemFrom] = useState(1)
   const [itemTo, setItemTo] = useState(20)
@@ -43,13 +43,25 @@ const CommissionReportDetail: FC = () => {
   const [dataTableOrders, setDataTableOrders] = useState<any>([])
   const [openModal, setOpenModal] = useState(false)
   const [dateRate, setDataRate] = useState<any>([])
+  const [optionsStatus, setOptionsStatus] = useState<any>([])
+  const [statusOrders, setStatusOrders] = useState('')
 
   const schemaTable = [
     {
       id: 'id',
       title: 'Order ID',
       cellRenderer: (props: CellRendererProps) => {
-        return <span>{props.data}</span>
+        return (
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          <a
+            href={config.getUrl(`admin/checkout/#/orders/${props.data}`)}
+            style={{ color: '#0C389F' }}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {props.data}
+          </a>
+        )
       },
     },
     {
@@ -80,7 +92,6 @@ const CommissionReportDetail: FC = () => {
               icon={<IconVisibilityOff />}
               variation="tertiary"
               onClick={() => {
-                console.info('props rate:::::: ', props)
                 setOpenModal(!openModal)
                 setDataRate(props.data)
               }}
@@ -118,6 +129,7 @@ const CommissionReportDetail: FC = () => {
           sellerName: !sellerName ? query.sellerName : sellerName,
           page,
           perpage: pageSize,
+          status: statusOrders,
         },
       },
     })
@@ -130,22 +142,41 @@ const CommissionReportDetail: FC = () => {
 
   useEffect(() => {
     // eslint-disable-next-line vtex/prefer-early-return
-    if (sellersId) {
+    if (sellerName) {
       const nameSellerFilter = optionsSelect.find(
-        (seller: any) => seller.value.id === sellersId
+        (seller: any) => seller.value.id === sellerName
       )
+
+      if (!nameSellerFilter) return
 
       const nameFilterOrders = nameSellerFilter?.value.name ?? ''
 
       setSellerName(nameFilterOrders)
-      console.info('nameSellerFilter?.value.name ', nameFilterOrders)
     }
-  }, [optionsSelect, sellersId])
+
+    if (sellerName === '' && query.sellerName === undefined)
+      setDataTableOrders([])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [optionsSelect, sellerName])
+
+  useEffect(() => {
+    // eslint-disable-next-line vtex/prefer-early-return
+    if (!optionsStatus.length) {
+      const buildSelectStatus: any[] = []
+
+      Object.keys(status).forEach((orderStatus) => {
+        buildSelectStatus.push({
+          value: { id: orderStatus, name: orderStatus },
+          label: orderStatus,
+        })
+      })
+      setOptionsStatus(buildSelectStatus)
+    }
+  }, [optionsStatus])
 
   useEffect(() => {
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataSellers) {
-      console.info('dataSellers:::::::::::----- ', dataSellers)
       const builtSelectSeller: DataFilter[] = []
 
       dataSellers.getSellers.sellers.forEach((seller: DataSellerSelect) => {
@@ -185,7 +216,6 @@ const CommissionReportDetail: FC = () => {
     setDefaultFinalDate(defaultFinal)
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataOrders) {
-      console.info('dataOrders ', dataOrders.orders.paging.total)
       const dataTable: any = []
 
       dataOrders.orders.data.forEach((item: any) => {
@@ -277,28 +307,6 @@ const CommissionReportDetail: FC = () => {
           ))}
         </div>
       </Modal>
-      <div className="flex">
-        <div className="w-25">
-          <p className="ml3">
-            <FormattedMessage id="admin/title-billing-cycle" />
-            25/03/2022
-          </p>
-        </div>
-        <div className="w-25">
-          <p className="ml3">
-            <FormattedMessage id="admin/title-netx-billing" />2 weeks
-          </p>
-        </div>
-        <div className="w-25">
-          <p className="ml3">
-            <FormattedMessage id="admin/title-current-commission" />
-            10%
-          </p>
-        </div>
-        <div className="w-25" style={{ textAlign: 'end' }}>
-          <SettingsSeller seller={route} isDisabled={false} />
-        </div>
-      </div>
       <div className="mt4 mb7">
         {startDate && finalDate && (
           <div className="mt2">
@@ -312,8 +320,10 @@ const CommissionReportDetail: FC = () => {
                   setFinalDate={setFinalDate}
                   defaultStartDate={defaultStartDate}
                   defaultFinalDate={defaultFinalDate}
-                  setTotalItems={setTotalItemsFilter}
-                  setSellerId={setSellersId}
+                  setSellerId={setSellerName}
+                  multiValue={false}
+                  optionsStatus={optionsStatus}
+                  setStatusOrders={setStatusOrders}
                 />
               </div>
             </PageBlock>
@@ -341,9 +351,7 @@ const CommissionReportDetail: FC = () => {
                       currentPage={itemFrom}
                       pageSize={itemTo}
                       setPage={setPage}
-                      totalItems={
-                        totalItemsFilter > 0 ? totalItemsFilter : totalItems
-                      }
+                      totalItems={totalItems}
                       onNextClick={onNextClick}
                       changeRows={changeRows}
                       onPrevClick={onPrevClick}
@@ -352,13 +360,7 @@ const CommissionReportDetail: FC = () => {
                 </PageBlock>
               </div>
             ) : (
-              <div className="mt5">
-                <PageBlock>
-                  <EmptyState title="There aren't data to show">
-                    <p>Use the filters to search data and show information</p>
-                  </EmptyState>
-                </PageBlock>
-              </div>
+              <EmptyTable />
             )}
           </Tab>
           <Tab
@@ -366,11 +368,14 @@ const CommissionReportDetail: FC = () => {
             active={tabs === 2}
             onClick={() => setTabs(2)}
           >
-            <div className="mt5">
+            {/* decomentar esto cuando se tenga el invoice <div className="mt5">
               <PageBlock>
-                {/* <TableComponent schemaTable={tempColumns} itemTable={[]} actions={[]}/> */}
+                <div>
+                  <TableComponent schemaTable={[]} items={[]} loading={false} />
+                </div>
               </PageBlock>
-            </div>
+            </div> */}
+            <EmptyTable />
           </Tab>
         </Tabs>
       </div>

@@ -46,4 +46,6 @@ export async function resolveInvoice(
 
   ctx.status = 200
   ctx.body = body
+
+  return null
 }

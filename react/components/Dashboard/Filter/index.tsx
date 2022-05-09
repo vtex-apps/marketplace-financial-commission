@@ -39,18 +39,21 @@ const Filter: FC<FilterProps> = (props) => {
       countTotalItems += 1
     })
 
-    if (props.setStatusOrders && statusFilter.length > 0) {
-      let stringStatus = ''
+    if (props.setStatusOrders) {
+      if (statusFilter.length > 0) {
+        let stringStatus = ''
 
-      statusFilter.forEach((status) => {
-        stringStatus += `${status.label},`
-      })
-      props.setStatusOrders(stringStatus.slice(0, -1))
-    } else {
-      props.setStatusOrders('')
+        statusFilter.forEach((status) => {
+          stringStatus += `${status.label},`
+        })
+        props.setStatusOrders(stringStatus.slice(0, -1))
+      } else {
+        props.setStatusOrders('')
+      }
     }
 
     stringSellers = stringSellers.substring(0, stringSellers.length - 1)
+    console.info('stringSellers ', stringSellers)
 
     props.setSellerId(stringSellers)
 

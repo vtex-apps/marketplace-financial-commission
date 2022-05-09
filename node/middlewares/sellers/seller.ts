@@ -1,5 +1,15 @@
 import { NotFoundError, UserInputError } from '@vtex/api'
 
+/**
+ * @description
+ * Takes the sellerId from the query or route to retrieve
+ * the Seller data, and then write it in the state body.
+ * @state {Seller}
+ * - id
+ * - name
+ * - account
+ * - isActive
+ */
 export async function seller(ctx: Context, next: () => Promise<Seller>) {
   const {
     clients: { sellersIO },

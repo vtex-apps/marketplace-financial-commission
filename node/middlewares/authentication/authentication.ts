@@ -2,6 +2,14 @@ import { AuthenticationError } from '@vtex/api'
 
 import { config } from '../../constants'
 
+/**
+ * @description
+ * Performs a custom authentication. Uses the seller to retrieve
+ * their token. Can be skipped by being called through the seller app.
+ * Writes a new query.
+ * @query {sellerName}
+ * Name of the seller; different from the id
+ */
 export async function authentication(ctx: Context, next: () => Promise<any>) {
   const {
     clients: { vbase },

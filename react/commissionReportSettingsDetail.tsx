@@ -109,14 +109,18 @@ const CommissionReportSettingsDetail: FC = () => {
   }, [getToken])
 
   useEffect(() => {
+    // eslint-disable-next-line vtex/prefer-early-return
     if (createToken) {
       const newToken = createToken.createToken.autheticationToken
+
+      console.info('selectedValue ', selectedValue)
 
       setSellerSettingsToken({
         ...sellerSettingsToken,
         authenticationToken: newToken,
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createToken, sellerSettingsToken])
 
   return (

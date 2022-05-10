@@ -70,7 +70,7 @@
       "type": ["string", "null"]
     }
   },
-  "v-indexed": ["id", "invoiceCreatedDate", "seller"],
+  "v-indexed": ["id", "status", "invoiceCreatedDate", "seller"],
   "required": [
     "status",
     "invoiceCreatedDate",

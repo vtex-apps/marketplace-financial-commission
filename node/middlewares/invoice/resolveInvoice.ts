@@ -1,5 +1,4 @@
 /* eslint-disable padding-line-between-statements */
-import type { CommissionInvoice } from 'vtex.marketplace-financial-commission'
 
 import {
   getInvoice,
@@ -7,8 +6,6 @@ import {
   deleteInvoice,
   updateInvoice,
 } from './index'
-
-type InvoiceEndpointResponse = CommissionInvoice | string | null
 
 export async function resolveInvoice(ctx: Context): Promise<void> {
   const {

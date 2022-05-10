@@ -1,5 +1,3 @@
-import type { CommissionInvoice } from 'vtex.marketplace-financial-commission'
-
 import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
 
 export const invoicesBySeller = async (

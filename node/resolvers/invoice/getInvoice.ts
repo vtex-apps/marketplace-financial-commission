@@ -1,12 +1,10 @@
-import type { CommissionInvoice } from 'vtex.marketplace-financial-commission'
-
 import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
 
 export const getInvoice = async (
   _: unknown,
   params: any,
   ctx: Context
-): Promise<CommissionInvoice | null> => {
+): Promise<any> => {
   const {
     clients: { commissionInvoices },
   } = ctx

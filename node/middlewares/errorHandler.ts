@@ -18,12 +18,6 @@ export async function errorHandler(ctx: Context, next: () => Promise<void>) {
       data: error,
     })
 
-    /**
-     * @todo
-     * Le mandamos al CRON un custom status para retries?
-     * Podriamos enviarle un payload[] con los sellers que fallaron,
-     * y reintentar esos. (Hasta 3 veces)
-     */
     ctx.status = status || 500
     ctx.body = payload ? { message, payload } : message
   }

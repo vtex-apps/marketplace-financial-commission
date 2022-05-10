@@ -31,10 +31,6 @@ export async function draftInvoice(
     email,
   } = sellerData
 
-  /**
-   * @todo
-   * Reconocer ordenes en invoices manuales y filtrarlas
-   */
   const sellerOrders = await orderListInvoicedBySeller(ctx, sellerName, {
     start: startDate,
     end: endDate,
@@ -54,23 +50,19 @@ export async function draftInvoice(
   const [today] = new Date().toISOString().split('T')
 
   /**
-   * @todo como manejamos el FEE y el TAX?
+   * @todo FEE & TAX
    */
   const fee = 0
-  const sellerTax = { type: null, value: 0 }
+  /*   const sellerTax = { type: null, value: 0 }
   const tax =
     sellerTax.type === 'percentage'
       ? subTotal / sellerTax.value
-      : sellerTax.value
+      : sellerTax.value */
 
   return {
     id: randomId(sellerName),
     status: INVOICE_STATUS.UNPAID,
     invoiceCreatedDate: today,
-    /**
-     * @todo calcular due date
-     */
-    invoiceDueDate: today,
     seller: {
       name: sellerName,
       id: sellerId,
@@ -82,9 +74,8 @@ export async function draftInvoice(
     orders: commissionByOrder as [],
     totalizers: {
       subTotal,
-      tax,
       fee,
-      total: subTotal + tax + fee,
+      total: subTotal + fee,
     },
     comment: null,
   }

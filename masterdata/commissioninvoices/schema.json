@@ -10,9 +10,6 @@
     "invoiceCreatedDate": {
       "type": "string"
     },
-    "invoiceDueDate": {
-      "type": "string"
-    },
     "seller": {
       "type": "object",
       "properties": {
@@ -73,13 +70,13 @@
       "type": ["string", "null"]
     }
   },
-  "v-indexed": ["id", "status", "invoiceCreatedDate", "invoiceDueDate"],
+  "v-indexed": ["id", "status", "invoiceCreatedDate", "seller"],
   "v-cache": false,
   "v-security": {
     "publicJsonSchema": true,
     "allowGetAll": true,
-    "publicRead": ["id", "status", "invoiceCreatedDate", "invoiceDueDate"],
-    "publicWrite": ["status", "invoiceCreatedDate", "invoiceDueDate"],
-    "publicFilter": ["id", "status", "invoiceCreatedDate", "invoiceDueDate"]
+    "publicRead": ["id", "status", "invoiceCreatedDate"],
+    "publicWrite": ["status", "invoiceCreatedDate"],
+    "publicFilter": ["id", "status", "invoiceCreatedDate"]
   }
 }

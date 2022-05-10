@@ -56,7 +56,7 @@ export const invoicingProcess = async (
     await vbase.saveJSON<JobHistory>(BUCKET, SELLER_NAME, {
       ...HISTORY,
       status: JOB_STATUS.OMITTED,
-      message: 'No eligible orders to invoice for given date range',
+      message: `No eligible orders to invoice between ${sellerData.startDate} and ${sellerData.endDate}`,
     })
 
     return JOB_STATUS.OMITTED
@@ -83,6 +83,10 @@ export const invoicingProcess = async (
     referenceId: document.DocumentId,
     status: JOB_STATUS.COMPLETE,
   })
+
+  /**
+   * @todo save new dates for seller settings
+   */
 
   return document.DocumentId
 }

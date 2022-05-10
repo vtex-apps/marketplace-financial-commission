@@ -9,7 +9,6 @@ input InvoiceDataInput {
 type Invoice {
   status: String
   invoiceCreatedDate: String
-  invoiceDueDate: String
   seller: SellerInvoiceData
   orders: [Order]
   totalizers: Totalizers

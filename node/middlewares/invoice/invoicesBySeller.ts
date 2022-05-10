@@ -4,7 +4,7 @@ import { json } from 'co-body'
 import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
 
 /**
- * @description Retrieves a REFERENCE list of invoices for given seller.
+ * @description Retrieves a REFERENCE list of invoices for a given seller.
  */
 export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
   const {

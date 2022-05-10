@@ -10,12 +10,6 @@ export async function deleteInvoice(ctx: Context) {
     clients: { commissionInvoices },
   } = ctx
 
-  /**
-   * @todo pensar como eliminar invoices en bulk;
-   * por ejemplo:
-   * - Elegir 1 seller y borrar todas sus invoices
-   * - Elegir un rango de fechas y borrar todas
-   */
   const invoiceToDelete = await getInvoice(ctx)
 
   if (!invoiceToDelete) {

@@ -22,9 +22,6 @@ export const getInvoice = async (
     where
   )
 
-  /**
-   * @todo como solucionar duplicados
-   */
   if (invoice.length > 1) {
     console.warn('Invoice duplication, seek resolution')
   }

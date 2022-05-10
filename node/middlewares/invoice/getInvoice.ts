@@ -28,9 +28,6 @@ export async function getInvoice(ctx: Context) {
     where
   )
 
-  /**
-   * @todo como solucionar duplicados
-   */
   if (invoice.length > 1) {
     console.warn('Invoice duplication, seek resolution')
   }

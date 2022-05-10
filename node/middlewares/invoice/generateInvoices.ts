@@ -23,7 +23,7 @@ export async function generateInvoices(ctx: Context) {
   const sellers = state.body.sellers as SellerInvoice[]
 
   const unresolvedInvoices = sellers.map((seller) =>
-    invoicingProcess(ctx, seller)
+    invoicingProcess(ctx, seller, true)
   )
 
   const results = (await Promise.allSettled(

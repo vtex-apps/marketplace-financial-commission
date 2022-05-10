@@ -57,7 +57,7 @@ export async function draftInvoice(
    * @todo como manejamos el FEE y el TAX?
    */
   const fee = 0
-  const sellerTax = { type: 'percentage', value: 0 }
+  const sellerTax = { type: null, value: 0 }
   const tax =
     sellerTax.type === 'percentage'
       ? subTotal / sellerTax.value

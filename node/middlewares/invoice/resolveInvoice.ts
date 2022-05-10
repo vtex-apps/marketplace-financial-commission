@@ -10,15 +10,13 @@ import {
 
 type InvoiceEndpointResponse = CommissionInvoice | string | null
 
-export async function resolveInvoice(
-  ctx: Context
-): Promise<InvoiceEndpointResponse> {
+export async function resolveInvoice(ctx: Context): Promise<void> {
   const {
     method,
     query: { id },
   } = ctx
 
-  let body: InvoiceEndpointResponse
+  let body: any
 
   switch (method) {
     case 'PATCH':
@@ -46,6 +44,4 @@ export async function resolveInvoice(
 
   ctx.status = 200
   ctx.body = body
-
-  return null
 }

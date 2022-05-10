@@ -6,7 +6,7 @@ export const invoicesBySeller = async (
   _: unknown,
   params: any,
   ctx: Context
-): Promise<CommissionInvoice[]> => {
+): Promise<any> => {
   const {
     clients: { commissionInvoices },
   } = ctx

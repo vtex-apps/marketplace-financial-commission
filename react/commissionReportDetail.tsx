@@ -9,6 +9,7 @@ import {
   PageHeader,
   Tag,
   IconVisibilityOff,
+  Button,
   ButtonWithIcon,
   Divider,
   Modal,
@@ -146,6 +147,17 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
         )
       },
     },
+    {
+      id: 'createInvoice',
+      title : "Create Invoice",
+      cellRenderer: () => {
+        return (
+          <Tag onClick={() => {
+            setOpenInvoiceModal(!openInvoiceModal)
+          }}>Create Invoice</Tag>
+        )
+      }
+    }
   ]
 
   const { data: dataSellers } = useQuery(GET_SELLERS, {
@@ -195,6 +207,8 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
 
     return validateDate
   }
+
+  const handleCreateInvoice = () => {}
 
   useEffect(() => {
     if (sellerName === '' && !query.sellerName) {
@@ -340,6 +354,19 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
         />
       }
     >
+      <Modal
+        centered
+        isOpen={openInvoiceModal}
+        onClose={()=> setOpenInvoiceModal(!openInvoiceModal)}
+      >
+        <div className='mb3'>
+          Hola
+          <Button onClick={() => {
+            handleCreateInvoice()
+          }}>Create</Button>
+        </div>
+        
+      </Modal>
       <Modal
         centered
         isOpen={openModal}

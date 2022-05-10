@@ -70,13 +70,13 @@
       "type": ["string", "null"]
     }
   },
-  "v-indexed": ["id", "status", "invoiceCreatedDate", "seller"],
-  "v-cache": false,
-  "v-security": {
-    "publicJsonSchema": true,
-    "allowGetAll": true,
-    "publicRead": ["id", "status", "invoiceCreatedDate"],
-    "publicWrite": ["status", "invoiceCreatedDate"],
-    "publicFilter": ["id", "status", "invoiceCreatedDate"]
-  }
+  "v-indexed": ["id", "invoiceCreatedDate", "seller"],
+  "required": [
+    "status",
+    "invoiceCreatedDate",
+    "seller",
+    "orders",
+    "totalizers"
+  ],
+  "v-cache": false
 }

@@ -6,7 +6,9 @@ export const createInvoice = async (
   params: any,
   ctx: Context
 ): Promise<any> => {
-  const invoice = await invoicingProcess(ctx, params)
+  const { invoiceData } = params
+
+  const invoice = await invoicingProcess(ctx, invoiceData)
 
   if (invoice === JOB_STATUS.OMITTED) {
     return 'No eligible orders to invoice for given date range'

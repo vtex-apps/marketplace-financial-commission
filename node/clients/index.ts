@@ -45,8 +45,8 @@ export class Clients extends IOClients {
 
   public get commissionInvoices() {
     return this.getOrSet(
-      'commission-invoices',
-      masterDataFor<CommissionInvoice>('Invoices')
+      'commissioninvoices',
+      masterDataFor<CommissionInvoice>('commissioninvoices')
     )
   }
 }

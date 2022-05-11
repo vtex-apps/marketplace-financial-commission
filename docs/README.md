@@ -16,3 +16,4 @@
  - [Feature/filter component](https://github.com/vtex-apps/marketplace-financial-commission/pull/37)
  - [Feature/filter component](https://github.com/vtex-apps/marketplace-financial-commission/pull/38)
  - [Feature/filter component](https://github.com/vtex-apps/marketplace-financial-commission/pull/40)
+ - [Add query to search from url](https://github.com/vtex-apps/marketplace-financial-commission/pull/41)

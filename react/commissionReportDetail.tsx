@@ -19,8 +19,7 @@ import {
 } from 'vtex.styleguide'
 import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
-import { useLazyQuery, useQuery } from 'react-apollo'
-import type { DocumentNode } from 'graphql'
+import { useLazyQuery, useMutation, useQuery } from 'react-apollo'
 
 import { SEARCH_ORDERS, GET_SELLERS, SELLER_INVOICES } from './graphql'
 import { TableComponent, Filter, EmptyTable } from './components'
@@ -208,7 +207,32 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
     return validateDate
   }
 
-  const handleCreateInvoice = () => {}
+  const [createInvoice, { data, loading }] = useMutation(CREATE_INVOICE)
+  
+  const handleCreateInvoice = () => {
+    createInvoice({
+      variables: {
+        invoiceData: {
+          id: "sell21octandrei113",
+          name: "Sell21oct_Andrei",
+          email: "andres.moreno@vtex.com.br",
+          startDate: "2022-01-01",
+          endDate: "2022-05-10"
+        }
+      }
+    })
+
+    if (loading) {
+      console.info("Loading***********")
+      return
+    }
+
+    if (data) {
+      console.info("------------------Response from createInvoice---------------------")
+      console.info(data)
+      console.info("------------------------------------------------------------------")
+    }
+  }
 
   useEffect(() => {
     if (sellerName === '' && !query.sellerName) {
@@ -361,9 +385,8 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
       >
         <div className='mb3'>
           Hola
-          <Button onClick={() => {
-            handleCreateInvoice()
-          }}>Create</Button>
+          <br/>
+          <Button onClick={handleCreateInvoice}>Create</Button>
         </div>
         
       </Modal>

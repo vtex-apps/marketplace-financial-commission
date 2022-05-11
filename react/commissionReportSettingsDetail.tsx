@@ -41,8 +41,6 @@ const CommissionReportSettingsDetail: FC = () => {
 
   const [selectedValue, setSelectValue] = useState({})
 
-  console.info('selectedValue ', selectedValue)
-
   const { data: getToken } = useQuery(GET_TOKEN, {
     ssr: false,
     pollInterval: 0,
@@ -69,6 +67,7 @@ const CommissionReportSettingsDetail: FC = () => {
 
   const handleSaveBilling = () => {
     billingCycle({})
+    console.info(selectedValue)
   }
 
   const handleIsEnable = () => {
@@ -112,8 +111,6 @@ const CommissionReportSettingsDetail: FC = () => {
     // eslint-disable-next-line vtex/prefer-early-return
     if (createToken) {
       const newToken = createToken.createToken.autheticationToken
-
-      console.info('selectedValue ', selectedValue)
 
       setSellerSettingsToken({
         ...sellerSettingsToken,

@@ -124,8 +124,8 @@ const CommissionReportDetail: FC = () => {
       pollInterval: 0,
       variables: {
         searchOrdersParams: {
-          dateStart: '2022-04-01',
-          dateEnd: '2022-04-25',
+          dateStart: startDate,
+          dateEnd: finalDate,
           sellerName: !sellerName ? query.sellerName : sellerName,
           page,
           perpage: pageSize,

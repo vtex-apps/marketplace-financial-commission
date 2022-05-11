@@ -27,6 +27,8 @@ const CommissionReportSettings: FC = () => {
   const [sellersResult, setSellersRestul] = useState<SettingsSellers[] | []>([])
   const [selectedValue, setSelectValue] = useState({})
 
+  console.info(selectedValue)
+
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
     pollInterval: 0,
@@ -50,20 +52,6 @@ const CommissionReportSettings: FC = () => {
       label: 'Monthly',
     },
   ]
-
-  useEffect(() => {
-    if (dataFilter) {
-      console.info('dataFilter ', dataFilter)
-      console.info('selectedValue ', selectedValue)
-      // eslint-disable-next-line array-callback-return
-      // const sellerFilterResult = sellersResult.filter(
-      //   (item) => item.id === dataFilter.value.id
-      // )
-
-      // console.info('sellerFilterResult ', sellerFilterResult)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataFilter])
 
   useEffect(() => {
     if (dataSellers) {

@@ -15,6 +15,13 @@ type Invoice {
   comment: String
 }
 
+type InvoiceList {
+  id: String
+  status: String
+  invoiceCreatedDate: String
+  totalizers: Totalizers
+}
+
 type Totalizers {
   subtotal: Int
   fee: Int

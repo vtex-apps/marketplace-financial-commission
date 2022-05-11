@@ -11,7 +11,7 @@ type Query {
     sellerName: String!
     pagination: Pagination
     dates: Dates!
-  ): [Invoice] @cacheControl(scope: PRIVATE, maxAge: LONG)
+  ): [InvoiceList] @cacheControl(scope: PRIVATE, maxAge: LONG)
   """
   Retrieves an Invoice
   """

@@ -17,7 +17,7 @@ export const invoicesBySeller = async (
 
   const where = `seller.name=${sellerName} AND (invoiceCreatedDate between ${startDate} AND ${endDate})`
 
-  const fields = ['id, status, invoiceCreatedDate, invoiceDueDate, totalizers']
+  const fields = ['id', 'status', 'invoiceCreatedDate', 'totalizers']
 
   const sellerInvoices = await commissionInvoices.search(
     { page, pageSize },

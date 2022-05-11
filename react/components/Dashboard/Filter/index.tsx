@@ -151,9 +151,7 @@ const Filter: FC<FilterProps> = (props) => {
             />
           </div>
         ) : (
-          <div className="w-30 pt6">
-            <FilterBarComponent />
-          </div>
+          <div className="w-30 pt6" />
         )}
         <div className="w-50">
           <DatePickerComponent

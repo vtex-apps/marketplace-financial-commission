@@ -18,3 +18,4 @@
  - [Feature/filter component](https://github.com/vtex-apps/marketplace-financial-commission/pull/40)
  - [Add query to search from url](https://github.com/vtex-apps/marketplace-financial-commission/pull/41)
  - [Feature/filter component](https://github.com/vtex-apps/marketplace-financial-commission/pull/42)
+ - [Commit fix seller's name with ampersand when calling VTEX ListOrders &](https://github.com/vtex-apps/marketplace-financial-commission/pull/44)

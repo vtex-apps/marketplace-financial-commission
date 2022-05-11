@@ -78,5 +78,6 @@
     "orders",
     "totalizers"
   ],
-  "v-cache": false
+  "v-cache": false,
+  "v-immediate-indexing": true
 }

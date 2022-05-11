@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import {
   ButtonWithIcon,
@@ -7,6 +7,7 @@ import {
   IconDelete,
   ButtonGroup,
 } from 'vtex.styleguide'
+import { useRuntime } from 'vtex.render-runtime'
 
 import styles from '../../../styles.css'
 import SelectComponent from './select'
@@ -18,6 +19,7 @@ const Filter: FC<FilterProps> = (props) => {
   const [statusFilter, setStatusfilter] = useState<any[]>([])
   const [startDateFilter, setDateFilter] = useState<Date | string>('')
   const [finalDateFilter, setFinalDateFilter] = useState<Date | string>('')
+  const { setQuery, query } = useRuntime()
 
   const getDate = (date: string) => {
     const dateConverter = new Date(date)
@@ -32,10 +34,12 @@ const Filter: FC<FilterProps> = (props) => {
   const changesValuesTable = () => {
     // eslint-disable-next-line prefer-const
     let stringSellers = ''
+    let stringSellersName = ''
     let countTotalItems = 0
 
     dataFilter.forEach((item: DataFilter) => {
       stringSellers += `${item.value.id},`
+      stringSellersName += `${item.label},`
       countTotalItems += 1
     })
 
@@ -53,7 +57,9 @@ const Filter: FC<FilterProps> = (props) => {
     }
 
     stringSellers = stringSellers.substring(0, stringSellers.length - 1)
-    console.info('stringSellers ', stringSellers)
+    stringSellersName = stringSellersName.slice(0, -1)
+    stringSellersName = encodeURIComponent(stringSellersName)
+    if (stringSellersName) setQuery({ sellerName: stringSellersName })
 
     props.setSellerId(stringSellers)
 
@@ -72,6 +78,32 @@ const Filter: FC<FilterProps> = (props) => {
     if (!props.setTotalItems) return
     props.setTotalItems(countTotalItems)
   }
+
+  useEffect(() => {
+    if (!query.sellerName) return
+
+    // eslint-disable-next-line vtex/prefer-early-return
+    if (props.optionsSelect.length > 0) {
+      const queryData = query.sellerName.split(',')
+      const filterQueryData: any = []
+
+      queryData.forEach((sellerQuery: any) => {
+        sellerQuery = decodeURIComponent(sellerQuery)
+        const filterSeller = props.optionsSelect.find(
+          (item) => item.label === sellerQuery
+        )
+
+        filterQueryData.push(filterSeller)
+      })
+      setDataFilter(filterQueryData)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.optionsSelect])
+
+  useEffect(() => {
+    if (dataFilter.length && query.sellerName) changesValuesTable()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataFilter])
 
   const changeStartDate = (start: Date) => {
     if (!finalDateFilter) setDateFilter(start)
@@ -164,6 +196,7 @@ const Filter: FC<FilterProps> = (props) => {
                       new Date(`${props.defaultFinalDate}T00:00:00`)
                     )
                     props.setSellerId('')
+                    setQuery({})
                     if (props.setTotalItems) props.setTotalItems(0)
                     if (props.setStatusOrders) props.setStatusOrders('')
                   }}

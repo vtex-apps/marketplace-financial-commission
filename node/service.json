@@ -86,8 +86,21 @@
       "public": true
     },
     "orders": {
-      "path": "/_v/private/orders",
-      "public": true
+      "path": "/_v/private/:sellerId/orders",
+      "public": false,
+      "access": "authenticated",
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": [
+            "get"
+          ],
+          "principals": [
+            "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*",
+            "vrn:vtex.vtex-id:*:*:*:user/*@vtex.com.br"
+          ]
+        }
+      ]
     },
     "token": {
       "path": "/_v/token/:sellerId",

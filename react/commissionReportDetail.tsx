@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import type { FC } from 'react'
 import React, { useState, useEffect } from 'react'
 import {
@@ -12,13 +11,11 @@ import {
   ButtonWithIcon,
   Divider,
   Modal,
-  // IconCalendar,
-  // IconArrowUp,
-  // IconClock,
 } from 'vtex.styleguide'
 import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
 import { useLazyQuery, useQuery } from 'react-apollo'
+import type { DocumentNode } from 'graphql'
 
 import { SEARCH_ORDERS, GET_SELLERS } from './graphql'
 import { TableComponent, Filter, EmptyTable } from './components'
@@ -26,7 +23,12 @@ import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination
 import { status } from './typings/constants'
 import { config } from './utils/config'
 
-const CommissionReportDetail: FC = () => {
+interface DetailProps {
+  account?: string
+  ordersQuery?: DocumentNode
+}
+
+const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
   const { query } = useRuntime()
   const [startDate, setStartDate] = useState('')
   const [finalDate, setFinalDate] = useState('')
@@ -38,7 +40,7 @@ const CommissionReportDetail: FC = () => {
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
   const [optionsSelect, setOptionsSelect] = useState<DataFilter[]>([])
-  const [sellerName, setSellerName] = useState('')
+  const [sellerName, setSellerName] = useState(account || '')
   const [tabs, setTabs] = useState(1)
   const [dataTableOrders, setDataTableOrders] = useState<any>([])
   const [openModal, setOpenModal] = useState(false)
@@ -116,10 +118,11 @@ const CommissionReportDetail: FC = () => {
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
     pollInterval: 0,
+    skip: Boolean(account),
   })
 
   const [getDataOrders, { data: dataOrders, loading: loadingDataOrders }] =
-    useLazyQuery(SEARCH_ORDERS, {
+    useLazyQuery(ordersQuery || SEARCH_ORDERS, {
       ssr: false,
       pollInterval: 0,
       variables: {
@@ -141,7 +144,6 @@ const CommissionReportDetail: FC = () => {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line vtex/prefer-early-return
     if (sellerName) {
       const nameSellerFilter = optionsSelect.find(
         (seller: any) => seller.value.id === sellerName
@@ -160,33 +162,36 @@ const CommissionReportDetail: FC = () => {
   }, [optionsSelect, sellerName])
 
   useEffect(() => {
-    // eslint-disable-next-line vtex/prefer-early-return
-    if (!optionsStatus.length) {
-      const buildSelectStatus: any[] = []
-
-      Object.keys(status).forEach((orderStatus) => {
-        buildSelectStatus.push({
-          value: { id: orderStatus, name: orderStatus },
-          label: orderStatus,
-        })
-      })
-      setOptionsStatus(buildSelectStatus)
+    if (optionsStatus.length) {
+      return
     }
+
+    const buildSelectStatus: any[] = []
+
+    Object.keys(status).forEach((orderStatus) => {
+      buildSelectStatus.push({
+        value: { id: orderStatus, name: orderStatus },
+        label: orderStatus,
+      })
+    })
+    setOptionsStatus(buildSelectStatus)
   }, [optionsStatus])
 
   useEffect(() => {
-    // eslint-disable-next-line vtex/prefer-early-return
-    if (dataSellers) {
-      const builtSelectSeller: DataFilter[] = []
-
-      dataSellers.getSellers.sellers.forEach((seller: DataSellerSelect) => {
-        builtSelectSeller.push({
-          value: { id: seller.id, name: seller.name },
-          label: seller.name,
-        })
-      })
-      setOptionsSelect(builtSelectSeller)
+    if (!dataSellers) {
+      return
     }
+
+    const builtSelectSeller: DataFilter[] = []
+
+    dataSellers.getSellers.sellers.forEach((seller: DataSellerSelect) => {
+      builtSelectSeller.push({
+        value: { id: seller.id, name: seller.name },
+        label: seller.name,
+      })
+    })
+    setOptionsSelect(builtSelectSeller)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSellers])
 
@@ -214,40 +219,41 @@ const CommissionReportDetail: FC = () => {
     setFinalDate(defaultFinal)
     setDefaultStartDate(defaultStartString)
     setDefaultFinalDate(defaultFinal)
-    // eslint-disable-next-line vtex/prefer-early-return
-    if (dataOrders) {
-      const dataTable: any = []
 
-      dataOrders.orders.data.forEach((item: any) => {
-        // eslint-disable-next-line array-callback-return
-        const keyColor = Object.keys(status).find(
-          (itemStatus: any) => itemStatus === item.status
-        )
-
-        dataTable.push({
-          id: item.orderId,
-          creationDate: item.creationDate.substring(
-            0,
-            item.creationDate.indexOf('T')
-          ),
-          totalOrder: item.totalOrderValue,
-          totalCommission: item.totalComission,
-          rate: item.rate,
-          status: {
-            status: item.status,
-            bgColor: keyColor ? status[keyColor].bgColor : '',
-            fontColor: keyColor ? status[keyColor].fontColor : '',
-          },
-        })
-      })
-      setDataTableOrders(dataTable)
-      setTotalItems(dataOrders.orders.paging.total)
+    if (!dataOrders) {
+      return
     }
+
+    const dataTable: any = []
+
+    dataOrders.orders.data.forEach((item: any) => {
+      const keyColor = Object.keys(status).find(
+        (itemStatus: any) => itemStatus === item.status
+      )
+
+      dataTable.push({
+        id: item.orderId,
+        creationDate: item.creationDate.substring(
+          0,
+          item.creationDate.indexOf('T')
+        ),
+        totalOrder: item.totalOrderValue,
+        totalCommission: item.totalComission,
+        rate: item.rate,
+        status: {
+          status: item.status,
+          bgColor: keyColor ? status[keyColor].bgColor : '',
+          fontColor: keyColor ? status[keyColor].fontColor : '',
+        },
+      })
+    })
+    setDataTableOrders(dataTable)
+    setTotalItems(dataOrders.orders.paging.total)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataOrders])
 
   const onNextClick = () => {
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     const nextPage = page + 1
 
     const currentTo = pageSize * nextPage
@@ -289,7 +295,7 @@ const CommissionReportDetail: FC = () => {
       >
         <div className="mb3">
           {dateRate.map((elmRate: any) => (
-            <div>
+            <div key={elmRate.itemId}>
               <h2>Item ID: #{elmRate.itemId}</h2>
               <p>
                 <b>Name Item: </b> {elmRate.nameItem}
@@ -324,6 +330,7 @@ const CommissionReportDetail: FC = () => {
                   multiValue={false}
                   optionsStatus={optionsStatus}
                   setStatusOrders={setStatusOrders}
+                  disabled={Boolean(account)}
                 />
               </div>
             </PageBlock>

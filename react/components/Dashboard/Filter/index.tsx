@@ -134,6 +134,7 @@ const Filter: FC<FilterProps> = (props) => {
           setDataFilter={setDataFilter}
           multi={props.multiValue}
           customLabel={<FormattedMessage id="admin/table.title-seller-label" />}
+          disabled={props.disabled}
         />
       </div>
       <div className="flex mt5">

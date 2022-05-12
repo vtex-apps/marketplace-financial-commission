@@ -57,7 +57,7 @@
       "public": true
     },
     "orders": {
-      "path": "/_v/private/:sellerId/orders",
+      "path": "/_v/private/orders",
       "public": true
     },
     "token": {

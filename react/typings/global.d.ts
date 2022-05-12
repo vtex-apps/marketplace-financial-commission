@@ -29,7 +29,7 @@ interface FilterProps {
   multiValue: boolean
   optionsStatus?: any
   setStatusOrders?: any
-  disabled: boolean
+  disabled?: boolean
 }
 
 interface TotalizerProps {

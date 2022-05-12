@@ -3,6 +3,9 @@ declare module '*.css'
 declare module 'vtex.render-runtime'
 declare module 'vtex.native-types'
 
+interface ModalConfirmData {
+  buttonMessage: string
+}
 interface SchemaTable {
   id: string
   title: string

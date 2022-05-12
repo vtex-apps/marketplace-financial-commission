@@ -450,6 +450,9 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
               <div className="mt5">
                 <PageBlock>
                   <div className="mt2">
+                    <ModalConfirm
+                      buttonMessage="Create invoice"
+                    />
                     <TableComponent
                       schemaTable={schemaTable}
                       items={dataTableOrders}

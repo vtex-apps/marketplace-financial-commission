@@ -29,7 +29,7 @@ interface FilterProps {
   multiValue: boolean
   optionsStatus?: any
   setStatusOrders?: any
-  disabled?: boolean
+  disableSelect?: boolean
 }
 
 interface TotalizerProps {
@@ -130,7 +130,6 @@ interface SelectProps {
   setDataFilter: (v: DataFilter[]) => void
   multi: boolean
   customLabel: any
-  disabled?: boolean
 }
 
 interface DatepickerProps {

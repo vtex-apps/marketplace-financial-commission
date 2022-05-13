@@ -48,9 +48,39 @@
       "path": "/_v/financial-commission/:sellerId/invoice/*id",
       "public": true
     },
+    "_singleInvoice": {
+      "path": "/_v/policy/financial-commission/:sellerId/invoice/*id",
+      "public": false,
+      "access": "authenticated",
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": ["get"],
+          "principals": [
+            "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*",
+            "vrn:vtex.vtex-id:*:*:*:user/*@vtex.com.br"
+          ]
+        }
+      ]
+    },
     "invoicesBySeller": {
       "path": "/_v/financial-commission/:sellerId/invoices",
       "public": true
+    },
+    "_invoicesBySeller": {
+      "path": "/_v/policy/financial-commission/:sellerId/invoices",
+      "public": false,
+      "access": "authenticated",
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": ["get"],
+          "principals": [
+            "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*",
+            "vrn:vtex.vtex-id:*:*:*:user/*@vtex.com.br"
+          ]
+        }
+      ]
     },
     "generateInvoices": {
       "path": "/_v/financial-commission/generate-invoices",
@@ -59,6 +89,21 @@
     "orders": {
       "path": "/_v/private/orders",
       "public": true
+    },
+    "_orders": {
+      "path": "/_v/policy/private/orders",
+      "public": false,
+      "access": "authenticated",
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": ["get"],
+          "principals": [
+            "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*",
+            "vrn:vtex.vtex-id:*:*:*:user/*@vtex.com.br"
+          ]
+        }
+      ]
     },
     "token": {
       "path": "/_v/token/:sellerId",

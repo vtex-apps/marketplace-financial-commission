@@ -127,16 +127,19 @@ const Filter: FC<FilterProps> = (props) => {
 
   return (
     <div>
-      <div className={`${styles.filter_container} w-100`}>
-        <SelectComponent
-          options={props.optionsSelect}
-          dataFilter={dataFilter}
-          setDataFilter={setDataFilter}
-          multi={props.multiValue}
-          customLabel={<FormattedMessage id="admin/table.title-seller-label" />}
-          disabled={props.disabled}
-        />
-      </div>
+      {!props.disableSelect && (
+        <div className={`${styles.filter_container} w-100`}>
+          <SelectComponent
+            options={props.optionsSelect}
+            dataFilter={dataFilter}
+            setDataFilter={setDataFilter}
+            multi={props.multiValue}
+            customLabel={
+              <FormattedMessage id="admin/table.title-seller-label" />
+            }
+          />
+        </div>
+      )}
       <div className="flex mt5">
         {props.optionsStatus ? (
           <div className="w-30 pr6">

@@ -13,6 +13,7 @@ import {
   errorHandler,
   eligibleSellers,
   templateMethod,
+  policy,
 } from './middlewares'
 import { createTokenAuth } from './middlewares/authentication/createTokenAuth'
 import { seller } from './middlewares/sellers/seller'
@@ -48,14 +49,24 @@ const routes = {
     DELETE: [resolveInvoice],
     PATCH: [resolveInvoice],
   }),
+  _singleInvoice: method({
+    GET: [seller, policy, resolveInvoice],
+    POST: [seller, policy, resolveInvoice],
+  }),
   invoicesBySeller: method({
     POST: [seller, authentication, invoicesBySeller],
+  }),
+  _invoicesBySeller: method({
+    POST: [seller, policy, invoicesBySeller],
   }),
   generateInvoices: method({
     GET: [errorHandler, eligibleSellers, generateInvoices],
   }),
   orders: method({
     GET: [seller, authentication, orders],
+  }),
+  _orders: method({
+    GET: [seller, policy, orders],
   }),
   token: method({
     POST: [seller, createTokenAuth],

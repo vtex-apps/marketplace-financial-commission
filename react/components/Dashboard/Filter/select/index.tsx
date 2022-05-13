@@ -15,7 +15,6 @@ const SelectComponent: FC<SelectProps> = (props) => {
         }}
         valuesMaxHeight={35}
         multi={props.multi}
-        disabled={props.disabled}
       />
     </div>
   )

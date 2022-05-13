@@ -232,7 +232,7 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
       )
 
       dataTable.push({
-        id: item.orderId,
+        id: account ? item.sellerOrderId : item.orderId,
         creationDate: item.creationDate.substring(
           0,
           item.creationDate.indexOf('T')
@@ -330,7 +330,7 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
                   multiValue={false}
                   optionsStatus={optionsStatus}
                   setStatusOrders={setStatusOrders}
-                  disabled={Boolean(account)}
+                  disableSelect={Boolean(account)}
                 />
               </div>
             </PageBlock>

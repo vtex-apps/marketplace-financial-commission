@@ -37,6 +37,7 @@ const Filter: FC<FilterProps> = (props) => {
     let countTotalItems = 0
 
     dataFilter.forEach((item: DataFilter) => {
+      if (!item) return
       stringSellers += `${item.value.id},`
       stringSellersName += `${item.label},`
       countTotalItems += 1
@@ -53,14 +54,25 @@ const Filter: FC<FilterProps> = (props) => {
       } else {
         props.setStatusOrders('')
       }
+
+      props.setSellerId(stringSellersName)
+    } else {
+      props.setSellerId(stringSellers)
     }
+
+    if (!stringSellers && !stringSellersName) props.setSellerId('')
 
     stringSellers = stringSellers.substring(0, stringSellers.length - 1)
     stringSellersName = stringSellersName.slice(0, -1)
     stringSellersName = encodeURIComponent(stringSellersName)
     if (stringSellersName) setQuery({ sellerName: stringSellersName })
 
-    props.setSellerId(stringSellers)
+    console.info(
+      'FILTERRRRRRRRR::::::: ',
+      stringSellers,
+      ' -------- ',
+      stringSellersName
+    )
 
     if (startDateFilter !== '') {
       const newDateStart = getDate(startDateFilter.toString())
@@ -197,7 +209,7 @@ const Filter: FC<FilterProps> = (props) => {
                       new Date(`${props.defaultFinalDate}T00:00:00`)
                     )
                     props.setSellerId('')
-                    setQuery({})
+                    setQuery({ sellerName: null })
                     if (props.setTotalItems) props.setTotalItems(0)
                     if (props.setStatusOrders) props.setStatusOrders('')
                   }}

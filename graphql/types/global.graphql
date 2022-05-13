@@ -6,6 +6,17 @@ input InvoiceDataInput {
   endDate: String
 }
 
+input SettingsDataInput {
+  id: String
+  startCycle: String
+}
+
+type SettingsSeller {
+  id: String
+  startCycle: String
+}
+
+
 type Invoice {
   status: String
   invoiceCreatedDate: String

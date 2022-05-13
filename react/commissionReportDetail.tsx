@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import type { FC } from 'react'
 import React, { useState, useEffect } from 'react'
 import {
@@ -11,11 +12,13 @@ import {
   ButtonWithIcon,
   Divider,
   Modal,
+  // IconCalendar,
+  // IconArrowUp,
+  // IconClock,
 } from 'vtex.styleguide'
 import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
 import { useLazyQuery, useQuery } from 'react-apollo'
-import type { DocumentNode } from 'graphql'
 
 import { SEARCH_ORDERS, GET_SELLERS } from './graphql'
 import { TableComponent, Filter, EmptyTable } from './components'
@@ -23,12 +26,7 @@ import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination
 import { status } from './typings/constants'
 import { config } from './utils/config'
 
-interface DetailProps {
-  account?: string
-  ordersQuery?: DocumentNode
-}
-
-const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
+const CommissionReportDetail: FC = () => {
   const { query } = useRuntime()
   const [startDate, setStartDate] = useState('')
   const [finalDate, setFinalDate] = useState('')
@@ -40,7 +38,7 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
   const [optionsSelect, setOptionsSelect] = useState<DataFilter[]>([])
-  const [sellerName, setSellerName] = useState(account ?? '')
+  const [sellerName, setSellerName] = useState('')
   const [tabs, setTabs] = useState(1)
   const [dataTableOrders, setDataTableOrders] = useState<any>([])
   const [openModal, setOpenModal] = useState(false)
@@ -118,24 +116,36 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
     pollInterval: 0,
-    skip: Boolean(account),
   })
 
   const [getDataOrders, { data: dataOrders, loading: loadingDataOrders }] =
-    useLazyQuery(ordersQuery ?? SEARCH_ORDERS, {
+    useLazyQuery(SEARCH_ORDERS, {
       ssr: false,
       pollInterval: 0,
       variables: {
         searchOrdersParams: {
           dateStart: startDate,
           dateEnd: finalDate,
-          sellerName: !sellerName ? query.sellerName : sellerName,
+          sellerName,
           page,
           perpage: pageSize,
           status: statusOrders,
         },
       },
     })
+
+  console.info({
+    searchOrdersParams: {
+      dateStart: startDate,
+      dateEnd: finalDate,
+      sellerName,
+      page,
+      perpage: pageSize,
+      status: statusOrders,
+    },
+  })
+
+  console.info('----------- ', sellerName, ' ---- ', query)
 
   const formatDate = (valueDate: number) => {
     const validateDate = valueDate <= 9 ? `0${valueDate}` : valueDate
@@ -144,59 +154,41 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
   }
 
   useEffect(() => {
-    if (sellerName) {
-      const nameSellerFilter = optionsSelect.find(
-        (seller: any) => seller.value.id === sellerName
-      )
-
-      if (!nameSellerFilter) return
-
-      const nameFilterOrders = nameSellerFilter?.value.name ?? ''
-
-      setSellerName(nameFilterOrders)
-    }
-
-    if (sellerName === '' && query.sellerName === undefined)
-      setDataTableOrders([])
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [optionsSelect, sellerName])
+    if (sellerName === '' && !query.sellerName) setDataTableOrders([])
+  }, [query, sellerName])
 
   useEffect(() => {
-    if (optionsStatus.length) {
-      return
-    }
+    // eslint-disable-next-line vtex/prefer-early-return
+    if (!optionsStatus.length) {
+      const buildSelectStatus: any[] = []
 
-    const buildSelectStatus: any[] = []
-
-    Object.keys(status).forEach((orderStatus) => {
-      buildSelectStatus.push({
-        value: { id: orderStatus, name: orderStatus },
-        label: orderStatus,
+      Object.keys(status).forEach((orderStatus) => {
+        buildSelectStatus.push({
+          value: { id: orderStatus, name: orderStatus },
+          label: orderStatus,
+        })
       })
-    })
-    setOptionsStatus(buildSelectStatus)
+      setOptionsStatus(buildSelectStatus)
+    }
   }, [optionsStatus])
 
   useEffect(() => {
-    if (!dataSellers) {
-      return
-    }
+    // eslint-disable-next-line vtex/prefer-early-return
+    if (dataSellers) {
+      const builtSelectSeller: DataFilter[] = []
 
-    const builtSelectSeller: DataFilter[] = []
-
-    dataSellers.getSellers.sellers.forEach((seller: DataSellerSelect) => {
-      builtSelectSeller.push({
-        value: { id: seller.id, name: seller.name },
-        label: seller.name,
+      dataSellers.getSellers.sellers.forEach((seller: DataSellerSelect) => {
+        builtSelectSeller.push({
+          value: { id: seller.id, name: seller.name },
+          label: seller.name,
+        })
       })
-    })
-    setOptionsSelect(builtSelectSeller)
-
+      setOptionsSelect(builtSelectSeller)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSellers])
 
   useEffect(() => {
-    getDataOrders()
     const defaultDate = new Date()
     const defaultStart = new Date(
       defaultDate.getFullYear(),
@@ -219,41 +211,45 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
     setFinalDate(defaultFinal)
     setDefaultStartDate(defaultStartString)
     setDefaultFinalDate(defaultFinal)
+  }, [])
 
-    if (!dataOrders) {
-      return
-    }
+  useEffect(() => {
+    getDataOrders()
+    // eslint-disable-next-line vtex/prefer-early-return
+    if (dataOrders) {
+      console.info('datosss obtenidos ', dataOrders)
+      const dataTable: any = []
 
-    const dataTable: any = []
+      dataOrders.orders.data.forEach((item: any) => {
+        // eslint-disable-next-line array-callback-return
+        const keyColor = Object.keys(status).find(
+          (itemStatus: any) => itemStatus === item.status
+        )
 
-    dataOrders.orders.data.forEach((item: any) => {
-      const keyColor = Object.keys(status).find(
-        (itemStatus: any) => itemStatus === item.status
-      )
-
-      dataTable.push({
-        id: account ? item.sellerOrderId : item.orderId,
-        creationDate: item.creationDate.substring(
-          0,
-          item.creationDate.indexOf('T')
-        ),
-        totalOrder: item.totalOrderValue,
-        totalCommission: item.totalComission,
-        rate: item.rate,
-        status: {
-          status: item.status,
-          bgColor: keyColor ? status[keyColor].bgColor : '',
-          fontColor: keyColor ? status[keyColor].fontColor : '',
-        },
+        dataTable.push({
+          id: item.orderId,
+          creationDate: item.creationDate.substring(
+            0,
+            item.creationDate.indexOf('T')
+          ),
+          totalOrder: item.totalOrderValue,
+          totalCommission: item.totalComission,
+          rate: item.rate,
+          status: {
+            status: item.status,
+            bgColor: keyColor ? status[keyColor].bgColor : '',
+            fontColor: keyColor ? status[keyColor].fontColor : '',
+          },
+        })
       })
-    })
-    setDataTableOrders(dataTable)
-    setTotalItems(dataOrders.orders.paging.total)
-
+      setDataTableOrders(dataTable)
+      setTotalItems(dataOrders.orders.paging.total)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataOrders])
+  }, [dataOrders, sellerName])
 
   const onNextClick = () => {
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     const nextPage = page + 1
 
     const currentTo = pageSize * nextPage
@@ -285,7 +281,9 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
   return (
     <Layout
       pageHeader={
-        <PageHeader title={<FormattedMessage id="admin/navigation.title" />} />
+        <PageHeader
+          title={<FormattedMessage id="admin/navigation.detail-title" />}
+        />
       }
     >
       <Modal
@@ -295,7 +293,7 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
       >
         <div className="mb3">
           {dateRate.map((elmRate: any) => (
-            <div key={elmRate.itemId}>
+            <div>
               <h2>Item ID: #{elmRate.itemId}</h2>
               <p>
                 <b>Name Item: </b> {elmRate.nameItem}
@@ -330,7 +328,6 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
                   multiValue={false}
                   optionsStatus={optionsStatus}
                   setStatusOrders={setStatusOrders}
-                  disableSelect={Boolean(account)}
                 />
               </div>
             </PageBlock>

@@ -40,6 +40,9 @@
           "orderId": {
             "type": "string"
           },
+          "sellerOrderId": {
+            "type": "string"
+          },
           "totalComission": {
             "type": "number"
           },

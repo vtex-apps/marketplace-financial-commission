@@ -20,7 +20,7 @@
     "tslint-config-vtex": "^2.1.0",
     "typescript": "3.9.7",
     "vtex.format-currency": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.format-currency@0.3.0/public/@types/vtex.format-currency",
-    "vtex.marketplace-financial-commission": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.marketplace-financial-commission@0.3.0/public/@types/vtex.marketplace-financial-commission",
+    "vtex.marketplace-financial-commission": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.marketplace-financial-commission@0.3.2/public/@types/vtex.marketplace-financial-commission",
     "vtex.native-types": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types",
     "vtex.render-runtime": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.132.4/public/@types/vtex.render-runtime",
     "vtex.sellers-graphql": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.sellers-graphql@8.5.3/public/@types/vtex.sellers-graphql",

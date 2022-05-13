@@ -31,6 +31,7 @@ interface StatsSeller {
 
 interface OrderComission {
   orderId: string
+  sellerOrderId?: string
   totalComission: number
   totalOrdersItems?: number
   totalDiscounts?: number

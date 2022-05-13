@@ -42,6 +42,7 @@ export async function calculateCommissionByOrder(
 
       const lines: OrderComission = {
         orderId: order.orderId,
+        sellerOrderId: orderData.sellerOrderId,
         totalComission,
         totalOrderValue,
         totalDiscounts,

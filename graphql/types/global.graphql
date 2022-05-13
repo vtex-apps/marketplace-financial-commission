@@ -23,16 +23,16 @@ type InvoiceList {
 }
 
 type Totalizers {
-  subtotal: Int
-  fee: Int
-  total: Int
+  subtotal: Float
+  fee: Float
+  total: Float
 }
 
 type Order {
   orderId: String
-  totalComission: Int
-  totalOrderValue: Int
-  totalOrderRate: Int
+  totalComission: Float
+  totalOrderValue: Float
+  totalOrderRate: Float
 }
 
 type SellerInvoiceData {

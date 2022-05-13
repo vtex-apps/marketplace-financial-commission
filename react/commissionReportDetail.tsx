@@ -20,7 +20,7 @@ import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
 import { useLazyQuery, useQuery } from 'react-apollo'
 
-import { SEARCH_ORDERS, GET_SELLERS } from './graphql'
+import { SEARCH_ORDERS, GET_SELLERS, SELLER_INVOICES } from './graphql'
 import { TableComponent, Filter, EmptyTable } from './components'
 import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
 import { status } from './typings/constants'
@@ -41,10 +41,39 @@ const CommissionReportDetail: FC = () => {
   const [sellerName, setSellerName] = useState('')
   const [tabs, setTabs] = useState(1)
   const [dataTableOrders, setDataTableOrders] = useState<any>([])
+  const [dataTableInvoice, setDataTableInvoice] = useState<any>([])
   const [openModal, setOpenModal] = useState(false)
   const [dateRate, setDataRate] = useState<any>([])
   const [optionsStatus, setOptionsStatus] = useState<any>([])
   const [statusOrders, setStatusOrders] = useState('')
+
+  const schemaTableInvoice = [
+    {
+      id: 'id',
+      title: 'ID invoice',
+      cellRenderer: (props: CellRendererProps) => {
+        return (
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          <a
+            href="#"
+            style={{ color: '#0C389F' }}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {props.data}
+          </a>
+        )
+      },
+    },
+    {
+      id: 'invoiceCreatedDate',
+      title: 'Invoice Created Date',
+    },
+    {
+      id: 'status',
+      title: 'Status',
+    },
+  ]
 
   const schemaTable = [
     {
@@ -134,18 +163,26 @@ const CommissionReportDetail: FC = () => {
       },
     })
 
-  console.info({
-    searchOrdersParams: {
-      dateStart: startDate,
-      dateEnd: finalDate,
-      sellerName,
-      page,
-      perpage: pageSize,
-      status: statusOrders,
-    },
-  })
-
-  console.info('----------- ', sellerName, ' ---- ', query)
+  const [getDataInvoices, { data: dataInvoices }] = useLazyQuery(
+    SELLER_INVOICES,
+    {
+      ssr: false,
+      pollInterval: 0,
+      variables: {
+        sellerInvoiceParams: {
+          sellerName,
+          dates: {
+            startDate,
+            endDate: finalDate,
+          },
+          pagination: {
+            page,
+            pageSize,
+          },
+        },
+      },
+    }
+  )
 
   const formatDate = (valueDate: number) => {
     const validateDate = valueDate <= 9 ? `0${valueDate}` : valueDate
@@ -154,7 +191,10 @@ const CommissionReportDetail: FC = () => {
   }
 
   useEffect(() => {
-    if (sellerName === '' && !query.sellerName) setDataTableOrders([])
+    if (sellerName === '' && !query.sellerName) {
+      setDataTableOrders([])
+      setDataTableInvoice([])
+    }
   }, [query, sellerName])
 
   useEffect(() => {
@@ -171,6 +211,14 @@ const CommissionReportDetail: FC = () => {
       setOptionsStatus(buildSelectStatus)
     }
   }, [optionsStatus])
+
+  useEffect(() => {
+    getDataInvoices()
+    if (dataInvoices) {
+      setDataTableInvoice(dataInvoices.invoicesBySeller)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataInvoices, sellerName])
 
   useEffect(() => {
     // eslint-disable-next-line vtex/prefer-early-return
@@ -372,14 +420,21 @@ const CommissionReportDetail: FC = () => {
             active={tabs === 2}
             onClick={() => setTabs(2)}
           >
-            {/* decomentar esto cuando se tenga el invoice <div className="mt5">
+            <div className="mt5">
               <PageBlock>
-                <div>
-                  <TableComponent schemaTable={[]} items={[]} loading={false} />
-                </div>
+                {schemaTableInvoice.length > 0 ? (
+                  <div>
+                    <TableComponent
+                      schemaTable={schemaTableInvoice}
+                      items={dataTableInvoice}
+                      loading={false}
+                    />
+                  </div>
+                ) : (
+                  <EmptyTable />
+                )}
               </PageBlock>
-            </div> */}
-            <EmptyTable />
+            </div>
           </Tab>
         </Tabs>
       </div>

@@ -55,9 +55,9 @@ const Filter: FC<FilterProps> = (props) => {
         props.setStatusOrders('')
       }
 
-      props.setSellerId(stringSellersName)
+      props.setSellerId(stringSellersName.slice(0, -1))
     } else {
-      props.setSellerId(stringSellers)
+      props.setSellerId(stringSellers.slice(0, -1))
     }
 
     if (!stringSellers && !stringSellersName) props.setSellerId('')
@@ -66,13 +66,6 @@ const Filter: FC<FilterProps> = (props) => {
     stringSellersName = stringSellersName.slice(0, -1)
     stringSellersName = encodeURIComponent(stringSellersName)
     if (stringSellersName) setQuery({ sellerName: stringSellersName })
-
-    console.info(
-      'FILTERRRRRRRRR::::::: ',
-      stringSellers,
-      ' -------- ',
-      stringSellersName
-    )
 
     if (startDateFilter !== '') {
       const newDateStart = getDate(startDateFilter.toString())

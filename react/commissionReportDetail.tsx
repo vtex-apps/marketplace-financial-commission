@@ -19,7 +19,6 @@ import {
 import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
 import { useLazyQuery, useQuery } from 'react-apollo'
-import type { DocumentNode } from 'graphql'
 
 import { SEARCH_ORDERS, GET_SELLERS, SELLER_INVOICES } from './graphql'
 import { TableComponent, Filter, EmptyTable } from './components'
@@ -27,12 +26,7 @@ import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination
 import { status } from './typings/constants'
 import { config } from './utils/config'
 
-interface DetailProps {
-  account?: string
-  ordersQuery?: DocumentNode
-}
-
-const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
+const CommissionReportDetail: FC = () => {
   const { query } = useRuntime()
   const [startDate, setStartDate] = useState('')
   const [finalDate, setFinalDate] = useState('')
@@ -44,7 +38,7 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
   const [optionsSelect, setOptionsSelect] = useState<DataFilter[]>([])
-  const [sellerName, setSellerName] = useState(account ?? '')
+  const [sellerName, setSellerName] = useState('')
   const [tabs, setTabs] = useState(1)
   const [dataTableOrders, setDataTableOrders] = useState<any>([])
   const [dataTableInvoice, setDataTableInvoice] = useState<any>([])
@@ -151,11 +145,10 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
     pollInterval: 0,
-    skip: Boolean(account),
   })
 
   const [getDataOrders, { data: dataOrders, loading: loadingDataOrders }] =
-    useLazyQuery(ordersQuery ?? SEARCH_ORDERS, {
+    useLazyQuery(SEARCH_ORDERS, {
       ssr: false,
       pollInterval: 0,
       variables: {
@@ -282,7 +275,7 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
         )
 
         dataTable.push({
-          id: account ? item.sellerOrderId : item.orderId,
+          id: item.orderId,
           creationDate: item.creationDate.substring(
             0,
             item.creationDate.indexOf('T')
@@ -383,7 +376,6 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
                   multiValue={false}
                   optionsStatus={optionsStatus}
                   setStatusOrders={setStatusOrders}
-                  disableSelect={Boolean(account)}
                 />
               </div>
             </PageBlock>

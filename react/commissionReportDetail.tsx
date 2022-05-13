@@ -428,8 +428,8 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
             onClick={() => setTabs(2)}
           >
             <div className="mt5">
-              <PageBlock>
-                {schemaTableInvoice.length > 0 ? (
+              {dataTableInvoice.length > 0 ? (
+                <PageBlock>
                   <div>
                     <TableComponent
                       schemaTable={schemaTableInvoice}
@@ -437,10 +437,10 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
                       loading={false}
                     />
                   </div>
-                ) : (
-                  <EmptyTable />
-                )}
-              </PageBlock>
+                </PageBlock>
+              ) : (
+                <EmptyTable />
+              )}
             </div>
           </Tab>
         </Tabs>

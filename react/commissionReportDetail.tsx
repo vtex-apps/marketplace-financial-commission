@@ -126,13 +126,26 @@ const CommissionReportDetail: FC = () => {
         searchOrdersParams: {
           dateStart: startDate,
           dateEnd: finalDate,
-          sellerName: !sellerName ? query.sellerName : sellerName,
+          sellerName,
           page,
           perpage: pageSize,
           status: statusOrders,
         },
       },
     })
+
+  console.info({
+    searchOrdersParams: {
+      dateStart: startDate,
+      dateEnd: finalDate,
+      sellerName,
+      page,
+      perpage: pageSize,
+      status: statusOrders,
+    },
+  })
+
+  console.info('----------- ', sellerName, ' ---- ', query)
 
   const formatDate = (valueDate: number) => {
     const validateDate = valueDate <= 9 ? `0${valueDate}` : valueDate
@@ -141,23 +154,8 @@ const CommissionReportDetail: FC = () => {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line vtex/prefer-early-return
-    if (sellerName) {
-      const nameSellerFilter = optionsSelect.find(
-        (seller: any) => seller.value.id === sellerName
-      )
-
-      if (!nameSellerFilter) return
-
-      const nameFilterOrders = nameSellerFilter?.value.name ?? ''
-
-      setSellerName(nameFilterOrders)
-    }
-
-    if (sellerName === '' && query.sellerName === undefined)
-      setDataTableOrders([])
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [optionsSelect, sellerName])
+    if (sellerName === '' && !query.sellerName) setDataTableOrders([])
+  }, [query, sellerName])
 
   useEffect(() => {
     // eslint-disable-next-line vtex/prefer-early-return
@@ -191,7 +189,6 @@ const CommissionReportDetail: FC = () => {
   }, [dataSellers])
 
   useEffect(() => {
-    getDataOrders()
     const defaultDate = new Date()
     const defaultStart = new Date(
       defaultDate.getFullYear(),
@@ -214,8 +211,13 @@ const CommissionReportDetail: FC = () => {
     setFinalDate(defaultFinal)
     setDefaultStartDate(defaultStartString)
     setDefaultFinalDate(defaultFinal)
+  }, [])
+
+  useEffect(() => {
+    getDataOrders()
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataOrders) {
+      console.info('datosss obtenidos ', dataOrders)
       const dataTable: any = []
 
       dataOrders.orders.data.forEach((item: any) => {
@@ -244,7 +246,7 @@ const CommissionReportDetail: FC = () => {
       setTotalItems(dataOrders.orders.paging.total)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataOrders])
+  }, [dataOrders, sellerName])
 
   const onNextClick = () => {
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -279,7 +281,9 @@ const CommissionReportDetail: FC = () => {
   return (
     <Layout
       pageHeader={
-        <PageHeader title={<FormattedMessage id="admin/navigation.title" />} />
+        <PageHeader
+          title={<FormattedMessage id="admin/navigation.detail-title" />}
+        />
       }
     >
       <Modal

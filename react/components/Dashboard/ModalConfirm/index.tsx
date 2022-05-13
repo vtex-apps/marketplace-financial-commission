@@ -3,6 +3,7 @@ import type { FC } from 'react'
 import { ButtonWithIcon, ModalDialog, Input } from 'vtex.styleguide'
 
 const ModalConfirm: FC<ModalConfirmData> = (props) => {
+  const [email, setEmail] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   /** @todo pasar textos como props y pasar funciones para consumo servicio, crear interfaz en global */
@@ -11,7 +12,10 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
       <ModalDialog
         centered
         confirmation={{
-          onClick: () => {},
+          onClick: () => {
+            props.createInvoice(props.sellerData.startDate, props.sellerData.finalDate, props.sellerData.sellerName, email)
+            setIsModalOpen(!isModalOpen)
+          },
           label: 'Confirm',
         }}
         cancelation={{
@@ -22,9 +26,17 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
         onClose={() => setIsModalOpen(!isModalOpen)}
       >
         <div>
-          <p>Mensaje por props aquí</p>
+          <p>{props.messages.warning}</p>
+          <p>{props.messages.confirmation}</p>
           <div>
-            <Input placeholder="Seller ID" size="large" />
+            <Input
+              placeholder="e-mail"
+              size="large"
+              value={email}
+              onChange={(e: any) => { setEmail(e.target.value) }}
+              type="email"
+              required
+            />
           </div>
         </div>
       </ModalDialog>

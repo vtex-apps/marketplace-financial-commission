@@ -9,7 +9,6 @@ import {
   PageHeader,
   Tag,
   IconVisibilityOff,
-  Button,
   ButtonWithIcon,
   Divider,
   Modal,
@@ -145,17 +144,6 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
           </Tag>
         )
       },
-    },
-    {
-      id: 'createInvoice',
-      title : "Create Invoice",
-      cellRenderer: () => {
-        return (
-          <Tag onClick={() => {
-            setOpenInvoiceModal(!openInvoiceModal)
-          }}>Create Invoice</Tag>
-        )
-      }
     }
   ]
 
@@ -207,31 +195,17 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
     return validateDate
   }
 
-  const [createInvoice, { data, loading }] = useMutation(CREATE_INVOICE)
-  
-  const handleCreateInvoice = () => {
+  const handleCreateInvoice = (startDate: string, finalDate:string, sellerName:string, email:string) => {
     createInvoice({
       variables: {
         invoiceData: {
-          id: "sell21octandrei113",
-          name: "Sell21oct_Andrei",
-          email: "andres.moreno@vtex.com.br",
-          startDate: "2022-01-01",
-          endDate: "2022-05-10"
+          name: sellerName,
+          email,
+          startDate,
+          endDate: finalDate
         }
       }
     })
-
-    if (loading) {
-      console.info("Loading***********")
-      return
-    }
-
-    if (data) {
-      console.info("------------------Response from createInvoice---------------------")
-      console.info(data)
-      console.info("------------------------------------------------------------------")
-    }
   }
 
   useEffect(() => {
@@ -370,6 +344,25 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
     setPage(previousPage)
   }
 
+  const [createInvoice, { data, loading, error }] = useMutation(CREATE_INVOICE)
+
+  if (loading) {
+    return <Spinner />
+  }
+
+  if (data) {
+    // setOpenModalSpinner(false)
+    // setOpenModalConfirmation(true)
+    console.info("------------------Response from createInvoice---------------------")
+    console.info(data)
+    console.info("------------------------------------------------------------------")
+  }
+
+  if (error) {
+    console.log("Error***************")
+    console.error(error)
+  }
+
   return (
     <Layout
       pageHeader={
@@ -378,18 +371,6 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
         />
       }
     >
-      <Modal
-        centered
-        isOpen={openInvoiceModal}
-        onClose={()=> setOpenInvoiceModal(!openInvoiceModal)}
-      >
-        <div className='mb3'>
-          Hola
-          <br/>
-          <Button onClick={handleCreateInvoice}>Create</Button>
-        </div>
-        
-      </Modal>
       <Modal
         centered
         isOpen={openModal}
@@ -450,9 +431,18 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
               <div className="mt5">
                 <PageBlock>
                   <div className="mt2">
-                    <ModalConfirm
-                      buttonMessage="Create invoice"
+                    {statusOrders === "invoiced" ? (
+                      <ModalConfirm
+                        buttonMessage={<FormattedMessage id="admin/form-settings.button-invoice" />}
+                        messages={{
+                          warning: (<FormattedMessage id="admin/modal-setting.warning" />),
+                          confirmation: (<FormattedMessage id="admin/modal-setting.confirmation" />)
+                        }}
+                        sellerData={{ startDate, finalDate, sellerName }}
+                        createInvoice={handleCreateInvoice}
                     />
+                    ) : null}
+
                     <TableComponent
                       schemaTable={schemaTable}
                       items={dataTableOrders}

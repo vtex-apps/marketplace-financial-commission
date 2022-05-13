@@ -5154,10 +5154,6 @@ verror@1.10.0:
   version "0.3.0"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.format-currency@0.3.0/public/@types/vtex.format-currency#1cb7360452552301237c16d32037bbac61798f20"
 
-"vtex.marketplace-financial-commission@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.marketplace-financial-commission@0.3.2/public/@types/vtex.marketplace-financial-commission":
-  version "0.3.2"
-  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.marketplace-financial-commission@0.3.2/public/@types/vtex.marketplace-financial-commission#5a72f3b411c13b24cb23ce32d5994ec711c93dc5"
-
 "vtex.native-types@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types":
   version "0.8.0"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types#4fb38349122295832408d511efefa604a0addc57"

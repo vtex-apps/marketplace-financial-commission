@@ -40,7 +40,7 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
   const [optionsSelect, setOptionsSelect] = useState<DataFilter[]>([])
-  const [sellerName, setSellerName] = useState(account || '')
+  const [sellerName, setSellerName] = useState(account ?? '')
   const [tabs, setTabs] = useState(1)
   const [dataTableOrders, setDataTableOrders] = useState<any>([])
   const [openModal, setOpenModal] = useState(false)
@@ -122,7 +122,7 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
   })
 
   const [getDataOrders, { data: dataOrders, loading: loadingDataOrders }] =
-    useLazyQuery(ordersQuery || SEARCH_ORDERS, {
+    useLazyQuery(ordersQuery ?? SEARCH_ORDERS, {
       ssr: false,
       pollInterval: 0,
       variables: {

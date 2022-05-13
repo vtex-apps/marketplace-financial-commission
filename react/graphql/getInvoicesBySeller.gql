@@ -1,3 +1,16 @@
-query SELLER_INVOICES {
-  invoices: invoicesBySeller(seller: "test")
+query SELLER_INVOICES($sellerInvoiceParams: SellerInvoiceParams) {
+  invoicesBySeller(sellerInvoiceParams: $sellerInvoiceParams) {
+    invoiceCreatedDate
+    status
+    totalizers {
+      subtotal
+      fee
+      total
+    }
+  }
 }
+
+
+
+
+

@@ -219,3 +219,9 @@ input ListSellersParams {
   page: Int
   pageSize: Int
 }
+
+input SellerInvoiceParams{
+  sellerName: String!
+  pagination: Pagination
+  dates: Dates!
+}

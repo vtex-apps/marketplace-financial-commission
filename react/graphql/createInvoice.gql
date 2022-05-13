@@ -1,0 +1,3 @@
+mutation CREATE_INVOICE($invoiceData: InvoiceDataInput!) {
+    createInvoice(invoiceData: $invoiceData)
+}

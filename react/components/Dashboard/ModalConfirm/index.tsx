@@ -1,32 +1,53 @@
 import React, { useState } from 'react'
 import type { FC } from 'react'
-import { ModalDialog, Input } from 'vtex.styleguide'
+import { ButtonWithIcon, ModalDialog, Input } from 'vtex.styleguide'
 
-const ModalConfirm: FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true)
+const ModalConfirm: FC<ModalConfirmData> = (props) => {
+  const [email, setEmail] = useState("")
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   /** @todo pasar textos como props y pasar funciones para consumo servicio, crear interfaz en global */
   return (
-    <ModalDialog
-      centered
-      confirmation={{
-        onClick: () => {},
-        label: 'Confirm',
-      }}
-      cancelation={{
-        onClick: () => setIsModalOpen(!isModalOpen),
-        label: 'Cancel',
-      }}
-      isOpen={isModalOpen}
-      onClose={() => setIsModalOpen(!isModalOpen)}
-    >
-      <div>
-        <p>Mensaje por props aquí</p>
+    <>
+      <ModalDialog
+        centered
+        confirmation={{
+          onClick: () => {
+            props.createInvoice(props.sellerData.startDate, props.sellerData.finalDate, props.sellerData.sellerName, email)
+            setIsModalOpen(!isModalOpen)
+          },
+          label: 'Confirm',
+        }}
+        cancelation={{
+          onClick: () => setIsModalOpen(!isModalOpen),
+          label: 'Cancel',
+        }}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(!isModalOpen)}
+      >
         <div>
-          <Input placeholder="Seller ID" size="large" />
+          <p>{props.messages.warning}</p>
+          <p>{props.messages.confirmation}</p>
+          <div>
+            <Input
+              placeholder="e-mail"
+              size="large"
+              value={email}
+              onChange={(e: any) => { setEmail(e.target.value) }}
+              type="email"
+              required
+            />
+          </div>
         </div>
-      </div>
-    </ModalDialog>
+      </ModalDialog>
+      <ButtonWithIcon
+        onClick={() => {
+          setIsModalOpen(!isModalOpen)
+        }}
+      >
+       {props.buttonMessage}
+      </ButtonWithIcon>
+    </>
   )
 }
 

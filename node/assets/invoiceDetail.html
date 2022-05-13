@@ -1,144 +1,440 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html
-  xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:o="urn:schemas-microsoft-com:office:office"
-  xmlns:v="urn:schemas-microsoft-com:vml"
-  style="
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background: #f1f1f1 !important;
-  "
->
+<html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{_accountInfo.TradingName}}</title>
-    <style>
-      .row {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-around;
-      }
-    </style>
-    <style>
-      @media (max-width: 600px) {
-        img {
-          max-width: 100% !important;
-          height: auto !important;
-        }
-      }
-    </style>
   </head>
-
-  <body
-    style="
-      -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      box-sizing: border-box;
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      background: #f1f1f1 !important;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        Helvetica, Arial, sans-serif;
-    "
-  >
-    <div
-      style="
-        display: flex;
-        align-items: baseline;
-        justify-content: space-around;
-      "
-    >
-      <div>
-        <p>
-          9601 South Meridian Blvd<br />Englewood, CO<br />Phone: (303) 723-1000
-          Fax: (303) 723-1999
-        </p>
-      </div>
-      <div>
-        <h2>Invoice</h2>
-        <p>Invoice #{{id}}<br />Date: {{invoiceDueDate}}</p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div>
-        <p>
-          <span>To:</span><br />{{sellerData.name}}<br />
-          {{sellerData.address.street}}<br />
-          {{sellerData.address.city}}, {{sellerData.address.state}}
-          {{sellerData.address.postalCode}}<br />
-          Phone: {{sellerData.contact.phone}}<br />
-        </p>
-      </div>
-    </div>
-
-    <div class="row">
-      <p class="t-small lh-copy">
-        <span class="t-action--small">Comments or special instructions:</span
-        ><br />{{sellerData.comment}}
-      </p>
-    </div>
-
-    <br /><br /><br /><br />
-
-    <div class="row">
-      <table width="100%" style="box-sizing: border-box; background: #f1f1f1">
-        <tr>
-          <th>RATE</th>
-          <th>ID</th>
-          <th>TOTAL</th>
-          <th>COMMISSION</th>
-          <th>RATE</th>
-        </tr>
-        {{#each orders}}
-        <tr>
-          <td style="text-align: center">{{this.orderId}}</td>
-          <td style="text-align: center">{{this.total}}</td>
-          <td style="text-align: center">${{this.commission}}</td>
-          <td style="text-align: center">{{this.totalOrderRate}}%</td>
-        </tr>
-        {{/each}}
+  <body style="background-color: #f1f1f1 !important">
+    <center>
+      <table
+        style="
+          border-bottom-color: #e7e9ee !important;
+          border-bottom-style: solid !important;
+          border-bottom-width: 2px !important;
+          font-family: Helvetica, Arial, sans-serif !important;
+          line-height: 150% !important;
+          margin: 0px !important;
+          min-width: 800px;
+          background-color: #fff !important;
+        "
+        align="center"
+        border="0"
+        cellpading="0"
+        cellspacing="0"
+        width="800"
+      >
+        <tbody
+          style="
+            background-color: #fff !important;
+            font-family: Helvetica, Arial, sans-serif !important;
+            line-height: 150% !important;
+            margin: 0px !important;
+            min-width: 600px !important;
+          "
+        >
+          <tr
+            style="
+              font-family: Helvetica, Arial, sans-serif !important;
+              line-height: 150% !important;
+              margin: 0px !important;
+            "
+          >
+            <td
+              style="
+                font-family: Helvetica, Arial, sans-serif !important;
+                line-height: 150% !important;
+                margin: 0px !important;
+                padding: 22px 30px;
+              "
+            >
+              <a href="https://vtex.com" style="color: #f71963; fill: #f71963"
+                ><img
+                  alt
+                  border="0"
+                  width="auto"
+                  src="http://licensemanager.vtex.com.br/api/site/pub/accounts/e39d05f9-0c54-4469-a626-8bb5cff169f8/logos/show"
+                  style="
+                    vertical-align: top;
+                    outline: none;
+                    text-decoration: none;
+                    -ms-interpolation-mode: bicubic;
+                    max-width: 100%;
+                    border: none;
+                    width: 15% !important;
+                  "
+              /></a>
+            </td>
+            <td
+              align="right"
+              valign="center"
+              style="
+                font-family: Helvetica, Arial, sans-serif !important;
+                line-height: 150% !important;
+                margin: 0px !important;
+                padding: 22px 30px;
+              "
+            >
+              <h2 style="color: #717786; font-size: 16px !important">
+                Invoice Detail
+              </h2>
+              <p style="color: #717786; font-size: 12px !important">
+                Invoice: {{id}}<br />Date: {{invoiceDueDate}}
+              </p>
+            </td>
+          </tr>
+        </tbody>
       </table>
-    </div>
-
-    <br /><br /><br /><br />
-
-    <div class="row">
-      <table width="100%" style="box-sizing: border-box">
-        <tr>
-          <th>SUBTOTAL:</th>
-          <td>{{totalizers.subtotal}}</td>
-        </tr>
-        <tr>
-          <th>SALES TAX:</th>
-          <td>{{totalizers.tax.value}}%</td>
-        </tr>
-        <tr>
-          <th>SERVICE FEE:</th>
-          <td>${{totalizers.fee}}</td>
-        </tr>
-        <tr>
-          <th>TOTAL DUE:</th>
-          <td>${{totalizers.total}}</td>
-        </tr>
+      <table
+        style="
+          font-family: Helvetica, Arial, sans-serif !important;
+          line-height: 150% !important;
+          border-bottom-color: #e7e9ee !important;
+          border-bottom-style: solid !important;
+          border-bottom-width: 2px !important;
+          margin: 0px !important;
+        "
+        align="center"
+        border="0"
+        cellpading="0"
+        cellspacing="0"
+        width="800"
+      >
+        <tbody
+          style="
+            font-family: Helvetica, Arial, sans-serif !important;
+            line-height: 150% !important;
+            margin: 0px !important;
+          "
+        >
+          <tr
+            style="
+              background-color: #fff !important;
+              font-family: Helvetica, Arial, sans-serif !important;
+              line-height: 150% !important;
+              margin: 0px !important;
+            "
+          >
+            <td
+              style="
+                font-family: Helvetica, Arial, sans-serif !important;
+                line-height: 150% !important;
+                margin: 0px !important;
+                padding: 52px 30px 20px;
+                width: 50% !important;
+              "
+            >
+              <p>
+                9601 South Meridian Blvd<br />Englewood, CO<br />Phone: (303)
+                723-1000 Fax: (303) 723-1999
+              </p>
+            </td>
+            <td
+              style="
+                font-family: Helvetica, Arial, sans-serif !important;
+                line-height: 150% !important;
+                margin: 0px !important;
+                padding: 15px 80px 20px 180px;
+                width: 50%;
+                text-align: end !important;
+              "
+            >
+              <p><span>To:</span><br />{{seller.name}}<br /></p>
+            </td>
+          </tr>
+        </tbody>
       </table>
-    </div>
-
-    <br />
-
-    <p class="t-action lh-copy tc"><br />Thanks you for your business!</p>
+      <table
+        style="
+          font-family: Helvetica, Arial, sans-serif !important;
+          line-height: 150% !important;
+          margin: 0px !important;
+        "
+        align="center"
+        border="0"
+        cellpading="0"
+        cellspacing="0"
+        width="800"
+      >
+        <tbody
+          style="
+            font-family: Helvetica, Arial, sans-serif !important;
+            line-height: 150% !important;
+            margin: 0px !important;
+          "
+        >
+          <tr
+            style="
+              background-color: #fff !important;
+              font-family: Helvetica, Arial, sans-serif !important;
+              line-height: 150% !important;
+              margin: 0px !important;
+            "
+          >
+            <td
+              style="
+                font-family: Helvetica, Arial, sans-serif !important;
+                line-height: 150% !important;
+                margin: 0px !important;
+                padding: 20px 30px 64px;
+              "
+              align="center"
+            >
+              <p>
+                <b><span>Comments or special instructions:</span></b>
+                <br />{{comment}}
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table
+        style="
+          font-family: Helvetica, Arial, sans-serif !important;
+          line-height: 150% !important;
+          border-bottom-color: #e7e9ee !important;
+          border-bottom-style: solid !important;
+          border-bottom-width: 2px !important;
+          margin: 0px !important;
+        "
+        align="center"
+        border="0"
+        cellpading="0"
+        cellspacing="0"
+        width="800"
+      >
+        <tbody
+          style="
+            font-family: Helvetica, Arial, sans-serif !important;
+            line-height: 150% !important;
+            margin: 0px !important;
+          "
+        >
+          <tr
+            style="
+              background-color: #fff !important;
+              font-family: Helvetica, Arial, sans-serif !important;
+              line-height: 150% !important;
+              margin: 0px !important;
+            "
+          >
+            <th style="font-size: 14px; width: 25% !important">ID</th>
+            <th style="font-size: 14px; width: 25% !important">TOTAL</th>
+            <th style="font-size: 14px; width: 25% !important">COMMISSION</th>
+            <th style="font-size: 14px; width: 25% !important">RATE</th>
+          </tr>
+          {{#each orders}}
+          <tr>
+            <td
+              style="
+                text-align: center;
+                background-color: #fff;
+                padding-bottom: 60px !important;
+              "
+            >
+              {{this.orderId}}
+            </td>
+            <td
+              style="
+                text-align: center;
+                background-color: #fff;
+                padding-bottom: 60px !important;
+              "
+            >
+              {{this.total}}
+            </td>
+            <td
+              style="
+                text-align: center;
+                background-color: #fff;
+                padding-bottom: 60px !important;
+              "
+            >
+              ${{this.commission}}
+            </td>
+            <td
+              style="
+                text-align: center;
+                background-color: #fff;
+                padding-bottom: 60px !important;
+              "
+            >
+              {{this.totalOrderRate}}%
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <table
+        style="
+          font-family: Helvetica, Arial, sans-serif !important;
+          line-height: 150% !important;
+          border-bottom-color: #e7e9ee !important;
+          border-bottom-style: solid !important;
+          border-bottom-width: 2px !important;
+          margin: 0px !important;
+        "
+        align="center"
+        border="0"
+        cellpading="0"
+        cellspacing="0"
+        width="800"
+      >
+        <tbody
+          style="
+            font-family: Helvetica, Arial, sans-serif !important;
+            line-height: 150% !important;
+            margin: 0px !important;
+          "
+        >
+          <tr
+            style="
+              background-color: #fff !important;
+              font-family: Helvetica, Arial, sans-serif !important;
+              line-height: 150% !important;
+              margin: 0px !important;
+            "
+          >
+            <th style="width: 25% padding-top: 40px !important;"></th>
+            <th
+              style="
+                font-size: 14px;
+                width: 25%;
+                text-align: initial;
+                padding-top: 40px !important;
+              "
+            >
+              SUBTOTAL:
+            </th>
+            <td
+              style="width: 25%; text-align: end; padding-top: 40px !important"
+            >
+              {{totalizers.subtotal}}
+            </td>
+            <th style="width: 25%; padding-top: 40px !important"></th>
+          </tr>
+          <tr
+            style="
+              background-color: #fff !important;
+              font-family: Helvetica, Arial, sans-serif !important;
+              line-height: 150% !important;
+              margin: 0px !important;
+            "
+          >
+            <th style="width: 25%"></th>
+            <th
+              style="
+                font-size: 14px;
+                width: 25%;
+                text-align: initial !important;
+              "
+            >
+              SALES TAX:
+            </th>
+            <td style="width: 25%; text-align: end !important">
+              {{totalizers.tax.value}}%
+            </td>
+            <th style="width: 25%"></th>
+          </tr>
+          <tr
+            style="
+              background-color: #fff !important;
+              font-family: Helvetica, Arial, sans-serif !important;
+              line-height: 150% !important;
+              margin: 0px !important;
+            "
+          >
+            <th style="width: 25%"></th>
+            <th
+              style="
+                font-size: 14px;
+                width: 25%;
+                text-align: initial !important;
+              "
+            >
+              SERVICE FEE:
+            </th>
+            <td style="width: 25%; text-align: end !important">
+              ${{totalizers.fee}}
+            </td>
+            <th style="width: 25%"></th>
+          </tr>
+          <tr
+            style="
+              background-color: #fff !important;
+              font-family: Helvetica, Arial, sans-serif !important;
+              line-height: 150% !important;
+              margin: 0px !important;
+            "
+          >
+            <th style="width: 25%; padding-bottom: 40px !important"></th>
+            <th
+              style="
+                font-size: 14px;
+                width: 25%;
+                text-align: initial;
+                padding-bottom: 40px !important;
+              "
+            >
+              TOTAL DUE:
+            </th>
+            <td
+              style="
+                width: 25%;
+                text-align: end;
+                padding-bottom: 40px !important;
+              "
+            >
+              ${{totalizers.total}}
+            </td>
+            <th style="width: 25%; padding-bottom: 40px !important"></th>
+          </tr>
+        </tbody>
+      </table>
+      <table
+        style="
+          font-family: Helvetica, Arial, sans-serif !important;
+          line-height: 150% !important;
+          margin: 0px !important;
+        "
+        align="center"
+        border="0"
+        cellpading="0"
+        cellspacing="0"
+        width="800"
+      >
+        <tbody
+          style="
+            font-family: Helvetica, Arial, sans-serif !important;
+            line-height: 150% !important;
+            margin: 0px !important;
+          "
+        >
+          <tr
+            style="
+              background-color: #fff !important;
+              font-family: Helvetica, Arial, sans-serif !important;
+              line-height: 150% !important;
+              margin: 0px !important;
+            "
+          >
+            <td
+              style="
+                font-family: Helvetica, Arial, sans-serif !important;
+                line-height: 150% !important;
+                margin: 0px !important;
+                padding: 30px 30px 24px;
+              "
+              align="left"
+            >
+              <p>
+                <b>Thanks you for your business!</b>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </center>
   </body>
 </html>

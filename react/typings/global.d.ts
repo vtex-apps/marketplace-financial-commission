@@ -3,6 +3,23 @@ declare module '*.css'
 declare module 'vtex.render-runtime'
 declare module 'vtex.native-types'
 
+interface ModalConfirmData {
+  buttonMessage: any
+  messages: MessagesData
+  sellerData: SellerData
+  createInvoice: (startDate: string, finalDate: string, sellerName: string, email: string) => void
+}
+
+interface MessagesData {
+  confirmation: any,
+  warning: any
+}
+
+interface SellerData {
+  startDate: string
+  finalDate: string
+  sellerName: string
+}
 interface SchemaTable {
   id: string
   title: string

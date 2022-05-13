@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import React from 'react'
-import { useQuery } from 'react-apollo'
+// import { useQuery } from 'react-apollo'
 import {
   Spinner,
   Tag,
@@ -10,8 +10,10 @@ import {
   EXPERIMENTAL_Table as Table,
 } from 'vtex.styleguide'
 import { FormattedCurrency } from 'vtex.format-currency'
+import { useRuntime } from 'vtex.render-runtime'
 
-import SELLER_INVOICES from '../../../graphql/getInvoicesBySeller.gql'
+// import SELLER_INVOICES from '../../../graphql/getInvoicesBySeller.gql'
+import { MOCK_INVOICES } from '../../../../node/mocks/invoices'
 
 const columns = [
   {
@@ -63,6 +65,8 @@ const columns = [
 ]
 
 function Actions() {
+  const { navigate } = useRuntime()
+
   return (
     <ActionMenu
       buttonProps={{
@@ -73,13 +77,25 @@ function Actions() {
         {
           label: `test`,
         },
+        {
+          label: 'Detail',
+          onClick: () => {
+            navigate({
+              to: '/admin/app/commission-report/invoice',
+            })
+          },
+        },
       ]}
     />
   )
 }
 
 const InvoiceTable: FC = () => {
-  const { data, loading } = useQuery(SELLER_INVOICES)
+  // TODO: Change for real data
+  // const { data, loading } = useQuery(SELLER_INVOICES)
+  const data = { invoices: MOCK_INVOICES }
+  const loading = false
+
   const measures = useTableMeasures({ size: data?.invoices?.length ?? 0 })
 
   if (loading) {

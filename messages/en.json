@@ -23,6 +23,9 @@
   "admin/modal-settings.alert-warning": "Proceed with caution. All sellers that currently don't have individual settings will be affected",
   "admin/modal-settings.billingCycle": "Global Billing cycle",
   "admin/modal-settings.billingCycle-helpText": "Each cycle will trigger the creation of an Invoice; keep in mind that if this is changed, all sellers that follow the default settings will automatically generate an Invoice and start a new cycle following the new rule.",
+  "admin/form-settings.button-invoice": "Create Invoice",
+  "admin/modal-setting.warning": "The invoice you are about to create may contain orders previously invoiced.",
+  "admin/modal-setting.confirmation": "Are you sure to continue?",
   "admin/form-settings.button-new": "Generate a new one",
   "admin/form-settings.is-enable": "Actived"
 }

@@ -25,7 +25,7 @@ export async function sendMail(ctx: Context, next: () => Promise<any>) {
 
     if (!invoiceId) {
       ctx.status = 400
-      ctx.body = 'Specify an invoiceID'
+      ctx.body = 'Specify an invoiceId'
 
       return
     }
@@ -39,7 +39,7 @@ export async function sendMail(ctx: Context, next: () => Promise<any>) {
       status: 'paid',
       invoiceCreatedDate: '25/02/2022',
       invoiceDueDate: '15/03/2022',
-      sellerData: {
+      seller: {
         name: 'Seller A',
         id: 'SellerId',
         contact: {
@@ -47,16 +47,8 @@ export async function sendMail(ctx: Context, next: () => Promise<any>) {
           fax: null,
           email: 'sesarocampo@sellera.com',
         },
-        address: {
-          postalCode: 'EC1Y 8TZ',
-          city: 'Random',
-          state: 'State of Liberty',
-          country: 'GBR',
-          street: 'Carrer de Sardenya',
-          number: null,
-        },
-        comment: null,
       },
+      comment: 'Comments from seller',
       orders: [
         {
           orderId: '10012931-12',

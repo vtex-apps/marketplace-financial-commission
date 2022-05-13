@@ -12,7 +12,6 @@ import { useRuntime } from 'vtex.render-runtime'
 import styles from '../../../styles.css'
 import SelectComponent from './select'
 import DatePickerComponent from './datePicker'
-
 const Filter: FC<FilterProps> = (props) => {
   const [dataFilter, setDataFilter] = useState<DataFilter[]>([])
   const [statusFilter, setStatusfilter] = useState<any[]>([])

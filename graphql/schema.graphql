@@ -41,6 +41,8 @@ type Query {
   """
   getToken(sellerId: ID!): GetTokenResponse
     @cacheControl(scope: PUBLIC, maxAge: LONG)
+
+  getSettingsSeller(id: String!): SettingsSeller
 }
 
 type Mutation {
@@ -50,4 +52,11 @@ type Mutation {
   Attempts to create an Invoice
   """
   createInvoice(invoiceData: InvoiceDataInput!): String
+
+  """
+  Attempts to create an settings
+  """
+
+  createGobalSettings(settingsData: SettingsDataInput!): String
+  createSettings(settingsData: SettingsDataInput!): String
 }

@@ -13,7 +13,7 @@ export const invoicesBySeller = async (
     sellerName,
     pagination: { page = PAGE_DEFAULT, pageSize = PAGE_SIZE_DEFAULT },
     dates: { startDate, endDate },
-  } = params
+  } = params.sellerInvoiceParams
 
   const where = `seller.name=${sellerName} AND (invoiceCreatedDate between ${startDate} AND ${endDate})`
 

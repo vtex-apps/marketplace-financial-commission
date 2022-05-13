@@ -16,6 +16,8 @@ export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
     req,
   } = ctx
 
+  console.info('REQQQQQQQQQQQQQQQQQQQQQQQQQQQ ', req)
+
   /* This means the seller wants to access other seller's invoices */
   if (sellerId !== seller.id) {
     throw new AuthenticationError(
@@ -39,6 +41,8 @@ export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
   const where = `seller.name=${seller} AND (invoiceCreatedDate between ${startDate} AND ${endDate})`
 
   const fields = ['id', 'status', 'invoiceCreatedDate', 'totalizers']
+
+  console.info('page ', page)
 
   const sellerInvoices = await commissionInvoices.search(
     { page, pageSize },

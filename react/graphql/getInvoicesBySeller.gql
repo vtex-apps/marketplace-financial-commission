@@ -1,8 +1,9 @@
 query SELLER_INVOICES($sellerInvoiceParams: SellerInvoiceParams) {
   invoicesBySeller(sellerInvoiceParams: $sellerInvoiceParams) {
-    invoiceCreatedDate
+    id
     status
-    totalizers {
+    invoiceCreatedDate
+    totalizers{
       subtotal
       fee
       total

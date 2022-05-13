@@ -5,6 +5,7 @@ import GET_SELLERS from './getSellers.gql'
 import GET_TOKEN from './getToken.gql'
 import CREATE_TOKEN from './createToken.gql'
 import EDIT_TOKEN from './editToken.gql'
+import SELLER_INVOICES from './getInvoicesBySeller.gql'
 
 export {
   SEARCH_ORDERS,
@@ -14,4 +15,5 @@ export {
   GET_TOKEN,
   CREATE_TOKEN,
   EDIT_TOKEN,
+  SELLER_INVOICES,
 }

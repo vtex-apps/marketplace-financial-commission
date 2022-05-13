@@ -12,6 +12,7 @@ import {
   ButtonWithIcon,
   Divider,
   Modal,
+  Spinner
   // IconCalendar,
   // IconArrowUp,
   // IconClock,
@@ -20,8 +21,8 @@ import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
 import { useLazyQuery, useMutation, useQuery } from 'react-apollo'
 
-import { SEARCH_ORDERS, GET_SELLERS, SELLER_INVOICES } from './graphql'
-import { TableComponent, Filter, EmptyTable } from './components'
+import { CREATE_INVOICE, SEARCH_ORDERS, GET_SELLERS, SELLER_INVOICES } from './graphql'
+import { ModalConfirm, TableComponent, Filter, EmptyTable } from './components'
 import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
 import { status } from './typings/constants'
 import { config } from './utils/config'

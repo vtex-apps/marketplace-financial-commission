@@ -34,9 +34,9 @@ type InvoiceList {
 }
 
 type Totalizers {
-  subtotal: Int
-  fee: Int
-  total: Int
+  subtotal: Float
+  fee: Float
+  total: Float
 }
 
 type Order {
@@ -217,4 +217,10 @@ input ListSellersParams {
   sellersId: String
   page: Int
   pageSize: Int
+}
+
+input SellerInvoiceParams{
+  sellerName: String!
+  pagination: Pagination
+  dates: Dates!
 }

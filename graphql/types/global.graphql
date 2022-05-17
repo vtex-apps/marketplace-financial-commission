@@ -164,8 +164,8 @@ type ItemsRateOrdersSearch {
 }
 
 type RateOrders {
-  productCommissionPercentage: Int
-  freightCommissionPercentage: Int
+  productCommissionPercentage: Float
+  freightCommissionPercentage: Float
 }
 
 type PagingOrders {

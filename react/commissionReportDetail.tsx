@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/jsx-key */
 import type { FC } from 'react'
 import React, { useState, useEffect } from 'react'
@@ -12,7 +13,7 @@ import {
   ButtonWithIcon,
   Divider,
   Modal,
-  Spinner
+  Spinner,
   // IconCalendar,
   // IconArrowUp,
   // IconClock,
@@ -20,8 +21,14 @@ import {
 import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
 import { useLazyQuery, useMutation, useQuery } from 'react-apollo'
+import type { DocumentNode } from 'graphql'
 
-import { CREATE_INVOICE, SEARCH_ORDERS, GET_SELLERS, SELLER_INVOICES } from './graphql'
+import {
+  CREATE_INVOICE,
+  SEARCH_ORDERS,
+  GET_SELLERS,
+  SELLER_INVOICES,
+} from './graphql'
 import { ModalConfirm, TableComponent, Filter, EmptyTable } from './components'
 import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
 import { status } from './typings/constants'
@@ -145,7 +152,7 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
           </Tag>
         )
       },
-    }
+    },
   ]
 
   const { data: dataSellers } = useQuery(GET_SELLERS, {
@@ -196,16 +203,23 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
     return validateDate
   }
 
-  const handleCreateInvoice = (startDate: string, finalDate:string, sellerName:string, email:string) => {
+  const handleCreateInvoice = (
+    startDate: string,
+    finalDate: string,
+    sellerName: string,
+    email: string
+    // eslint-disable-next-line max-params
+  ) => {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     createInvoice({
       variables: {
         invoiceData: {
           name: sellerName,
           email,
           startDate,
-          endDate: finalDate
-        }
-      }
+          endDate: finalDate,
+        },
+      },
     })
   }
 
@@ -282,9 +296,9 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
 
   useEffect(() => {
     getDataOrders()
+    console.info('datosss obtenidos ', dataOrders)
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataOrders) {
-      console.info('datosss obtenidos ', dataOrders)
       const dataTable: any = []
 
       dataOrders.orders.data.forEach((item: any) => {
@@ -354,13 +368,17 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
   if (data) {
     // setOpenModalSpinner(false)
     // setOpenModalConfirmation(true)
-    console.info("------------------Response from createInvoice---------------------")
+    console.info(
+      '------------------Response from createInvoice---------------------'
+    )
     console.info(data)
-    console.info("------------------------------------------------------------------")
+    console.info(
+      '------------------------------------------------------------------'
+    )
   }
 
   if (error) {
-    console.log("Error***************")
+    console.info('Error***************')
     console.error(error)
   }
 
@@ -431,19 +449,24 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
             {dataTableOrders.length > 0 ? (
               <div className="mt5">
                 <PageBlock>
-                  <div className="mt2">
-                    {statusOrders === "invoiced" ? (
-                      <ModalConfirm
-                        buttonMessage={<FormattedMessage id="admin/form-settings.button-invoice" />}
-                        messages={{
-                          warning: (<FormattedMessage id="admin/modal-setting.warning" />),
-                          confirmation: (<FormattedMessage id="admin/modal-setting.confirmation" />)
-                        }}
-                        sellerData={{ startDate, finalDate, sellerName }}
-                        createInvoice={handleCreateInvoice}
+                  {statusOrders === 'invoiced' ? (
+                    <ModalConfirm
+                      buttonMessage={
+                        <FormattedMessage id="admin/form-settings.button-invoice" />
+                      }
+                      messages={{
+                        warning: (
+                          <FormattedMessage id="admin/modal-setting.warning" />
+                        ),
+                        confirmation: (
+                          <FormattedMessage id="admin/modal-setting.confirmation" />
+                        ),
+                      }}
+                      sellerData={{ startDate, finalDate, sellerName }}
+                      createInvoice={handleCreateInvoice}
                     />
-                    ) : null}
-
+                  ) : null}
+                  <div className="mt2">
                     <TableComponent
                       schemaTable={schemaTable}
                       items={dataTableOrders}

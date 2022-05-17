@@ -7,7 +7,6 @@ interface ModalConfirmData {
   buttonMessage: any
   messages: MessagesData
   sellerData: SellerData
-  createInvoice: (startDate: string, finalDate: string, sellerName: string, email: string) => void
 }
 
 interface MessagesData {

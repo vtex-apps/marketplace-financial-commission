@@ -13,18 +13,16 @@ import {
   ButtonWithIcon,
   Divider,
   Modal,
-  Spinner,
   // IconCalendar,
   // IconArrowUp,
   // IconClock,
 } from 'vtex.styleguide'
 import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
-import { useLazyQuery, useMutation, useQuery } from 'react-apollo'
+import { useLazyQuery, useQuery } from 'react-apollo'
 import type { DocumentNode } from 'graphql'
 
 import {
-  CREATE_INVOICE,
   SEARCH_ORDERS,
   GET_SELLERS,
   SELLER_INVOICES,
@@ -203,26 +201,6 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
     return validateDate
   }
 
-  const handleCreateInvoice = (
-    startDate: string,
-    finalDate: string,
-    sellerName: string,
-    email: string
-    // eslint-disable-next-line max-params
-  ) => {
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    createInvoice({
-      variables: {
-        invoiceData: {
-          name: sellerName,
-          email,
-          startDate,
-          endDate: finalDate,
-        },
-      },
-    })
-  }
-
   useEffect(() => {
     if (sellerName === '' && !query.sellerName) {
       setDataTableOrders([])
@@ -359,29 +337,6 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
     setPage(previousPage)
   }
 
-  const [createInvoice, { data, loading, error }] = useMutation(CREATE_INVOICE)
-
-  if (loading) {
-    return <Spinner />
-  }
-
-  if (data) {
-    // setOpenModalSpinner(false)
-    // setOpenModalConfirmation(true)
-    console.info(
-      '------------------Response from createInvoice---------------------'
-    )
-    console.info(data)
-    console.info(
-      '------------------------------------------------------------------'
-    )
-  }
-
-  if (error) {
-    console.info('Error***************')
-    console.error(error)
-  }
-
   return (
     <Layout
       pageHeader={
@@ -463,7 +418,6 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
                         ),
                       }}
                       sellerData={{ startDate, finalDate, sellerName }}
-                      createInvoice={handleCreateInvoice}
                     />
                   ) : null}
                   <div className="mt2">

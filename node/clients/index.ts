@@ -34,8 +34,8 @@ export class Clients extends IOClients {
 
   public get statisticsDashboardClientMD() {
     return this.getOrSet(
-      'statisticsDashboards',
-      masterDataFor<StatisticsDashboard>('statisticsDashboards')
+      'statisticsdashboards',
+      masterDataFor<StatisticsDashboard>('statisticsdashboards')
     )
   }
 

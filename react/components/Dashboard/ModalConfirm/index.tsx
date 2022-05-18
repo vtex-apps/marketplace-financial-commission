@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useMutation } from 'react-apollo'
 import { Alert, ButtonWithIcon, IconPlus, Input, ModalDialog, Spinner } from 'vtex.styleguide'
 import { CREATE_INVOICE } from '../../../graphql'
+import { FormattedMessage } from 'react-intl'
 
 
 const ModalConfirm: FC<ModalConfirmData> = (props) => {
@@ -13,10 +14,10 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
 
   const EMAIL_PATTERN = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   
-  const checkEmail = (email: string) => {
-    const valid = EMAIL_PATTERN.test(email)
+  const checkEmail = (emailAddress: string) => {
+    const valid = EMAIL_PATTERN.test(emailAddress)
 
-    if (!email) {
+    if (!emailAddress) {
       setEmpty(true)
       return
     } 
@@ -33,11 +34,11 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
 
   const getErrorMessage = () => {
     if (empty) {
-      return "Specify an email address"
+      return <FormattedMessage  id="admin/modal-settings.email-empty"/>
     }
 
     if (!validEmail) {
-      return "Invalid email address"
+      return <FormattedMessage  id="admin/modal-settings.email-invalid"/>
     }
 
     return null
@@ -70,11 +71,11 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
   }
 
   if (data) {
-    return <Alert type="success">Invoice Created</Alert>
+    return <Alert type="success">{ <FormattedMessage id="admin/invoice-success"/>}</Alert>
   }
 
   if (error) {
-    return <Alert type="error">Error: { error }</Alert>
+    return <Alert type="error">{<FormattedMessage id="admin/invoice-error"/>}: { error }</Alert>
   }
 
   return (

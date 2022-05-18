@@ -23,10 +23,13 @@
   "admin/modal-settings.alert-warning": "Warning about modifying settings",
   "admin/modal-settings.billingCycle": "Section title for billing cycle",
   "admin/modal-settings.billingCycle-helpText": "Repercution explanation about modifying billing cycle",
+  "admin/modal-settings.email-empty": "Specify an email address",
+  "admin/modal-settings.email-invalid": "Invalid email address",
   "admin/modal-setting.warning": "The invoice you are about to create may contain orders previously invoiced.",
   "admin/modal-setting.confirmation": "Are you sure to continue?",
   "admin/form-settings.button-invoice": "Create Invoice",
   "admin/form-settings.button-new": "Generate a new one",
-  "admin/form-settings.is-enable": "Actived"
-  
+  "admin/form-settings.is-enable": "Actived",
+  "admin/invoice-success": "Invoice Created",
+  "admin/invoice-error": "Error"
 }

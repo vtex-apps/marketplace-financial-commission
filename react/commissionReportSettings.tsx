@@ -13,10 +13,10 @@ import {
   Button,
 } from 'vtex.styleguide'
 import { FormattedMessage } from 'react-intl'
-import { useQuery } from 'react-apollo'
+import { useQuery, useMutation } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
 
-import { GET_SELLERS } from './graphql'
+import { GET_SELLERS, CREATE_SETTINGS, GET_SETTINGS } from './graphql'
 import SelectComponent from './components/Dashboard/Filter/select'
 import { TableComponent } from './components'
 
@@ -25,17 +25,21 @@ const CommissionReportSettings: FC = () => {
   const [dataFilter, setDataFilter] = useState<DataFilter[]>([])
   const [optionsSelect, setOptionsSelect] = useState<any>([])
   const [sellersResult, setSellersRestul] = useState<SettingsSellers[] | []>([])
-  const [selectedValue, setSelectValue] = useState({})
-
-  console.info(selectedValue)
+  const [selectedValue, setSelectValue] = useState<any | null>()
+  const [createSettings, { data: dataSettings }] = useMutation(CREATE_SETTINGS)
 
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
     pollInterval: 0,
   })
 
+  const { data: settings } = useQuery(GET_SETTINGS, {
+    ssr: false,
+    pollInterval: 0,
+  })
+
   const DATE_CUT_OPTIONS = [
-    {
+    /* {
       value: 1,
       label: 'Daily',
     },
@@ -46,12 +50,21 @@ const CommissionReportSettings: FC = () => {
     {
       value: 15,
       label: 'Bi-weekly',
-    },
+    }, */
     {
       value: 30,
       label: 'Monthly',
     },
   ]
+
+  useEffect(() => {
+    if (settings) {
+      setSelectValue({
+        value: 30,
+        label: settings.getSettings.billingCycle,
+      })
+    }
+  }, [settings])
 
   useEffect(() => {
     if (dataSellers) {
@@ -112,6 +125,51 @@ const CommissionReportSettings: FC = () => {
     },
   ]
 
+  const handleCreateSettings = () => {
+    if (selectedValue) {
+      /** @TODO crear funcion en utils para fecha ya que se usa en varios lados la misma conversión */
+      const nowDate = new Date()
+      const month =
+        nowDate.getMonth() + 1 <= 9
+          ? `0${nowDate.getMonth() + 1}`
+          : nowDate.getMonth() + 1
+
+      const date = `${nowDate.getFullYear()}-${month}-${nowDate.getDate()}`
+
+      const lastDate = new Date(
+        nowDate.getFullYear(),
+        nowDate.getMonth() + 1,
+        0
+      )
+
+      const lastMonth =
+        lastDate.getMonth() + 1
+          ? `0${lastDate.getMonth() + 1}`
+          : lastDate.getMonth() + 1
+
+      const lastDateString = `${lastDate.getFullYear()}-${lastMonth}-${lastDate.getDate()}`
+
+      createSettings({
+        variables: {
+          settingsData: {
+            startCycle: date,
+            endDate: lastDateString,
+            billingCycle: selectedValue.label,
+          },
+        },
+      })
+    }
+  }
+
+  useEffect(() => {
+    // eslint-disable-next-line vtex/prefer-early-return
+    /** @TODO alert para mostrar que los datos se guardaron con exito */
+    if (dataSettings) {
+      console.info('dataSettings Resultado ', dataSettings)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataSettings])
+
   return (
     <Layout
       pageHeader={
@@ -135,13 +193,19 @@ const CommissionReportSettings: FC = () => {
                   menuPosition="fixed"
                   options={DATE_CUT_OPTIONS}
                   multi={false}
+                  value={selectedValue}
                   onChange={(values: any) => {
-                    setSelectValue(JSON.stringify(values, null, 2))
+                    setSelectValue(values)
                   }}
                 />
               </div>
               <div className="w-10 pl2">
-                <Button variation="primary" onClick={() => {}}>
+                <Button
+                  variation="primary"
+                  onClick={() => {
+                    handleCreateSettings()
+                  }}
+                >
                   SAVE
                 </Button>
               </div>

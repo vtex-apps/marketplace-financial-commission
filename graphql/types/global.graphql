@@ -7,13 +7,17 @@ input InvoiceDataInput {
 }
 
 input SettingsDataInput {
-  id: String
-  startCycle: String
+  sellerName: String
+  startCycle: String!
+  endDate: String!
+  billingCycle: String!
 }
 
 type SettingsSeller {
-  id: String
+  sellerName: String
   startCycle: String
+  endDate: String
+  billingCycle: String
 }
 
 

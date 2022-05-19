@@ -38,7 +38,8 @@ type Query {
   getToken(sellerId: ID!): GetTokenResponse
     @cacheControl(scope: PUBLIC, maxAge: LONG)
 
-  getSettingsSeller(id: String!): SettingsSeller
+  getSettings(id: String): SettingsSeller
+    @cacheControl(scope: PUBLIC, maxAge: LONG)
 }
 
 type Mutation {
@@ -53,6 +54,5 @@ type Mutation {
   Attempts to create an settings
   """
 
-  createGobalSettings(settingsData: SettingsDataInput!): String
   createSettings(settingsData: SettingsDataInput!): String
 }

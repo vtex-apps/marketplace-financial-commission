@@ -6,6 +6,8 @@ import { getToken } from './getToken'
 import { orders } from './orders'
 import { searchSellersDashboard } from './searchSellersDashboard'
 import { searchStatisticsDashboard } from './searchStatisticsDashboard'
+import { createSettings } from './createSettings'
+import { getSettings } from './getSettings'
 
 export const queries = {
   getSellers,
@@ -15,10 +17,12 @@ export const queries = {
   getToken,
   invoicesBySeller,
   getInvoice,
+  getSettings,
 }
 
 export const mutations = {
   createToken,
   editToken,
   createInvoice,
+  createSettings,
 }

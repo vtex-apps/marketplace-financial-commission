@@ -13,10 +13,16 @@ import { FormattedMessage } from 'react-intl'
 import { useRuntime } from 'vtex.render-runtime'
 import { useMutation, useQuery } from 'react-apollo'
 
-import { CREATE_TOKEN, EDIT_TOKEN, GET_TOKEN } from './graphql'
+import {
+  CREATE_TOKEN,
+  EDIT_TOKEN,
+  GET_TOKEN,
+  CREATE_SETTINGS,
+  GET_SETTINGS,
+} from './graphql'
 
 const DATE_CUT_OPTIONS = [
-  {
+  /* {
     value: 1,
     label: 'Daily',
   },
@@ -27,7 +33,7 @@ const DATE_CUT_OPTIONS = [
   {
     value: 15,
     label: 'Bi-weekly',
-  },
+  }, */
   {
     value: 30,
     label: 'Monthly',
@@ -39,7 +45,7 @@ const CommissionReportSettingsDetail: FC = () => {
   const [sellerSettingsToken, setSellerSettingsToken] =
     useState<SellerSettingsToken>({})
 
-  const [selectedValue, setSelectValue] = useState({})
+  const [selectedValue, setSelectValue] = useState<any | null>()
 
   const { data: getToken } = useQuery(GET_TOKEN, {
     ssr: false,
@@ -49,15 +55,20 @@ const CommissionReportSettingsDetail: FC = () => {
     },
   })
 
-  /* const [billingCycle, { data: createBilling, loading: loadingBilling }] =
-    useMutation(CREATE_TOKEN) */
+  const [createSettings] = useMutation(CREATE_SETTINGS)
+
+  const { data: settings } = useQuery(GET_SETTINGS, {
+    ssr: false,
+    pollInterval: 0,
+    variables: {
+      id: sellerSettingsToken.name,
+    },
+  })
 
   const [
     authenticationToken,
     { data: createToken, loading: loadingCreateToken },
   ] = useMutation(CREATE_TOKEN)
-
-  const [billingCycle] = useMutation(CREATE_TOKEN)
 
   const [editTokenMutation] = useMutation(EDIT_TOKEN)
 
@@ -66,8 +77,40 @@ const CommissionReportSettingsDetail: FC = () => {
   }
 
   const handleSaveBilling = () => {
-    billingCycle({})
-    console.info(selectedValue)
+    // eslint-disable-next-line vtex/prefer-early-return
+    if (selectedValue) {
+      const nowDate = new Date()
+      const month =
+        nowDate.getMonth() + 1 <= 9
+          ? `0${nowDate.getMonth() + 1}`
+          : nowDate.getMonth() + 1
+
+      const date = `${nowDate.getFullYear()}-${month}-${nowDate.getDate()}`
+
+      const lastDate = new Date(
+        nowDate.getFullYear(),
+        nowDate.getMonth() + 1,
+        0
+      )
+
+      const lastMonth =
+        lastDate.getMonth() + 1
+          ? `0${lastDate.getMonth() + 1}`
+          : lastDate.getMonth() + 1
+
+      const lastDateString = `${lastDate.getFullYear()}-${lastMonth}-${lastDate.getDate()}`
+
+      createSettings({
+        variables: {
+          settingsData: {
+            sellerName: sellerSettingsToken.name,
+            startCycle: date,
+            endDate: lastDateString,
+            billingCycle: selectedValue.label,
+          },
+        },
+      })
+    }
   }
 
   const handleIsEnable = () => {
@@ -86,12 +129,14 @@ const CommissionReportSettingsDetail: FC = () => {
     })
   }
 
-  /* useEffect(() => {
-    if (selectedValue) {
-      billingCycle({ variables: { sellerName: sellerSettingsToken.name } })
+  useEffect(() => {
+    if (settings) {
+      setSelectValue({
+        value: 30,
+        label: settings.getSettings.billingCycle,
+      })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedValue]) */
+  }, [settings])
 
   useEffect(() => {
     // eslint-disable-next-line vtex/prefer-early-return
@@ -180,9 +225,10 @@ const CommissionReportSettingsDetail: FC = () => {
               <Select
                 menuPosition="fixed"
                 options={DATE_CUT_OPTIONS}
+                value={selectedValue}
                 multi={false}
                 onChange={(values: any) => {
-                  setSelectValue(JSON.stringify(values, null, 2))
+                  setSelectValue(values)
                 }}
               />
             </div>

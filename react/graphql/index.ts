@@ -1,6 +1,7 @@
 import SEARCH_ORDERS from './getSearchOrders.gql'
 import SEARCH_SELLERS from './getSearchSellers.gql'
 import SEARCH_STATS from './getSearchStats.gql'
+import GET_INVOICE from './getInvoice.gql'
 import GET_SELLERS from './getSellers.gql'
 import GET_TOKEN from './getToken.gql'
 import CREATE_INVOICE from './createInvoice.gql'
@@ -14,6 +15,7 @@ export {
   SEARCH_ORDERS,
   SEARCH_SELLERS,
   SEARCH_STATS,
+  GET_INVOICE,
   GET_SELLERS,
   GET_TOKEN,
   CREATE_INVOICE,

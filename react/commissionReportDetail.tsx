@@ -22,11 +22,7 @@ import { FormattedMessage } from 'react-intl'
 import { useLazyQuery, useQuery } from 'react-apollo'
 import type { DocumentNode } from 'graphql'
 
-import {
-  SEARCH_ORDERS,
-  GET_SELLERS,
-  SELLER_INVOICES,
-} from './graphql'
+import { SEARCH_ORDERS, GET_SELLERS, SELLER_INVOICES } from './graphql'
 import { ModalConfirm, TableComponent, Filter, EmptyTable } from './components'
 import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
 import { status } from './typings/constants'
@@ -66,9 +62,9 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
         return (
           // eslint-disable-next-line jsx-a11y/anchor-is-valid
           <a
-            href="#"
+            href={`/admin/app/commission-report/invoice/${props.data}`}
             style={{ color: '#0C389F' }}
-            target="_blank"
+            target="_self"
             rel="noreferrer"
           >
             {props.data}

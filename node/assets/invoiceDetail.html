@@ -80,7 +80,7 @@
                 Invoice Detail
               </h2>
               <p style="color: #717786; font-size: 12px !important">
-                Invoice: {{id}}<br />Date: {{invoiceDueDate}}
+                Invoice: {{id}}<br />Date: {{invoiceCreatedDate}}
               </p>
             </td>
           </tr>
@@ -126,8 +126,8 @@
               "
             >
               <p>
-                9601 South Meridian Blvd<br />Englewood, CO<br />Phone: (303)
-                723-1000 Fax: (303) 723-1999
+                E-mail: {{seller.contact.email}}<br />
+                Phone: {{seller.contact.phone}}
               </p>
             </td>
             <td
@@ -222,7 +222,6 @@
             <th style="font-size: 14px; width: 25% !important">ID</th>
             <th style="font-size: 14px; width: 25% !important">TOTAL</th>
             <th style="font-size: 14px; width: 25% !important">COMMISSION</th>
-            <th style="font-size: 14px; width: 25% !important">RATE</th>
           </tr>
           {{#each orders}}
           <tr>
@@ -230,37 +229,28 @@
               style="
                 text-align: center;
                 background-color: #fff;
-                padding-bottom: 60px !important;
+                padding-bottom: 10px !important;
               "
             >
-              {{this.orderId}}
+              {{this.sellerOrderId}}
             </td>
             <td
               style="
                 text-align: center;
                 background-color: #fff;
-                padding-bottom: 60px !important;
+                padding-bottom: 10px !important;
               "
             >
-              {{this.total}}
+              {{this.totalOrderValue}}
             </td>
             <td
               style="
                 text-align: center;
                 background-color: #fff;
-                padding-bottom: 60px !important;
+                padding-bottom: 10px !important;
               "
             >
-              ${{this.commission}}
-            </td>
-            <td
-              style="
-                text-align: center;
-                background-color: #fff;
-                padding-bottom: 60px !important;
-              "
-            >
-              {{this.totalOrderRate}}%
+              ${{this.totalComission}}
             </td>
           </tr>
           {{/each}}
@@ -313,29 +303,6 @@
               {{totalizers.subtotal}}
             </td>
             <th style="width: 25%; padding-top: 40px !important"></th>
-          </tr>
-          <tr
-            style="
-              background-color: #fff !important;
-              font-family: Helvetica, Arial, sans-serif !important;
-              line-height: 150% !important;
-              margin: 0px !important;
-            "
-          >
-            <th style="width: 25%"></th>
-            <th
-              style="
-                font-size: 14px;
-                width: 25%;
-                text-align: initial !important;
-              "
-            >
-              SALES TAX:
-            </th>
-            <td style="width: 25%; text-align: end !important">
-              {{totalizers.tax.value}}%
-            </td>
-            <th style="width: 25%"></th>
           </tr>
           <tr
             style="

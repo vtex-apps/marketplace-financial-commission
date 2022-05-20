@@ -38,7 +38,7 @@ export async function getSellers() {
 
 export async function getTemplate() {
   try {
-    const response = await fetch(config.getUrl('segment/template'), {
+    const response = await fetch(config.getUrl('_v/segment/template'), {
       method: 'GET',
       headers,
     })
@@ -46,6 +46,20 @@ export async function getTemplate() {
     const res = await response.json()
 
     return res
+  } catch (e) {
+    throw e
+  }
+}
+
+export async function sendEmail(data: any) {
+  try {
+    const response = await fetch(config.getUrl('_v/mail'), {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(data),
+    })
+
+    return response.status
   } catch (e) {
     throw e
   }

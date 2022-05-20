@@ -6,6 +6,7 @@ export async function sendMail(ctx: Context, next: () => Promise<any>) {
   } = ctx
 
   const body = await json(ctx.req)
+
   const { email } = body
 
   if (!email) {
@@ -30,8 +31,10 @@ export async function sendMail(ctx: Context, next: () => Promise<any>) {
       return
     }
 
-    console.info('Invoice id--------->')
+    console.info('This is the invoice ID***************')
     console.info(invoiceId)
+
+    // TODO: Get invoice from backend
 
     // TODO: Change mock invoice for real invoice
     const invoice = {

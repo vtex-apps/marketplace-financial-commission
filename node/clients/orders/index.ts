@@ -115,7 +115,7 @@ export class OrdersClient extends JanusClient {
 
       const loadData = () => {
         return Polly()
-          .waitAndRetry([1000, 2000, 3000, 4000, 5000, 6000, 7000])
+          .waitAndRetry([3000, 5000, 7000, 9000, 10000])
           .executeForPromise(async () => {
             const rsp = await fetch(
               routes.listOrders(this.context.account, params),

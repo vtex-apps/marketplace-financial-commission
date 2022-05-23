@@ -2,9 +2,9 @@ import Handlebars from 'handlebars'
 import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-apollo'
-import { useRuntime } from 'vtex.render-runtime'
-import { Button, Layout, Spinner } from 'vtex.styleguide'
 import { FormattedMessage } from 'react-intl'
+import { useRuntime } from 'vtex.render-runtime'
+import { Alert, Button, Layout, PageHeader, Spinner } from 'vtex.styleguide'
 
 import { GET_INVOICE } from './graphql'
 import { getTemplate, sendEmail } from './services'
@@ -14,8 +14,9 @@ const InvoiceDetail: FC = () => {
   const { params } = route
   const { id } = params
 
+  const [emailSent, setEmailSent] = useState(false)
   const [template, setTemplate] = useState('')
-  const [invoice, setInvoice] = useState<any>({})
+  const [invoice, setInvoice] = useState({})
 
   const { data } = useQuery(GET_INVOICE, {
     ssr: false,
@@ -56,6 +57,25 @@ const InvoiceDetail: FC = () => {
 
   return (
     <Layout>
+      <PageHeader title="Invoice Detail">
+        {emailSent ? (
+          <Alert type="success">
+            {<FormattedMessage id="admin/email-success" />}
+          </Alert>
+        ) : (
+          <Button
+            onClick={async () => {
+              const response = await sendEmail(invoice)
+
+              if (response) {
+                setEmailSent(true)
+              }
+            }}
+          >
+            <FormattedMessage id="admin/form-settings.button-email" />
+          </Button>
+        )}
+      </PageHeader>
       <div
         style={{
           position: 'relative',
@@ -78,21 +98,6 @@ const InvoiceDetail: FC = () => {
             border: 'none',
           }}
         />
-      </div>
-      <div className="mt5 flex justify-center">
-        <Button
-          onClick={async () => {
-            const response = await sendEmail({
-              email: invoice.seller.contact.email,
-              jsonData: { ...invoice },
-            })
-
-            console.info('Response from send email********************')
-            console.info(response)
-          }}
-        >
-          <FormattedMessage id="admin/form-settings.button-email" />
-        </Button>
       </div>
     </Layout>
   )

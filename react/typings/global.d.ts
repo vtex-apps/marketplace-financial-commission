@@ -3,15 +3,48 @@ declare module '*.css'
 declare module 'vtex.render-runtime'
 declare module 'vtex.native-types'
 
+interface Invoice {
+  comment?: string
+  invoiceCreateDate?: string
+  orders?: [Order]
+  seller?: Seller
+  status?: string
+  totalizers?: Totalizers
+}
+
+interface Order {
+  orderId: string
+  sellerOrderId: string
+  totalComission: number
+  totalOrderRate: number
+  totalOrderValue: number
+}
+
+interface Seller {
+  contact: SellerContact
+  id: string
+  name: string
+}
+
+interface SellerContact {
+  email: string
+  phone: string
+}
+
+interface Totalizers {
+  fee: number
+  subtotal: number
+  total: number
+}
 interface ModalConfirmData {
-  buttonMessage: any
+  buttonMessage: FormattedMessage
   messages: MessagesData
   sellerData: SellerData
 }
 
 interface MessagesData {
-  confirmation: any,
-  warning: any
+  confirmation: FormattedMessage
+  warning: aFormattedMessageny
 }
 
 interface SellerData {

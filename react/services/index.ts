@@ -51,12 +51,17 @@ export async function getTemplate() {
   }
 }
 
-export async function sendEmail(data: any) {
+export async function sendEmail(data: Invoice) {
   try {
+    const payload = {
+      email: data.seller?.contact.email,
+      jsonData: { ...data },
+    }
+
     const response = await fetch(config.getUrl('_v/mail'), {
       method: 'POST',
       headers,
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     })
 
     return response.status

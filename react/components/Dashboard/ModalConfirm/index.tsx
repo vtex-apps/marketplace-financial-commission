@@ -64,7 +64,7 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
       variables: {
         invoiceData: {
           name: sellerName,
-          emailAddress,
+          email: emailAddress,
           startDate,
           endDate: finalDate,
         },

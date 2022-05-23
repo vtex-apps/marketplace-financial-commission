@@ -31,6 +31,7 @@
   "admin/form-settings.button-new": "Generate a new one",
   "admin/form-settings.button-email": "Send Email",
   "admin/form-settings.is-enable": "Actived",
+  "admin/email-success": "Email sent",
   "admin/invoice-success": "Invoice Created",
   "admin/invoice-error": "Error"
 }

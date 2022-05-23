@@ -29,7 +29,9 @@
   "admin/modal-setting.warning": "The invoice you are about to create may contain orders previously invoiced.",
   "admin/modal-setting.confirmation": "Are you sure to continue?",
   "admin/form-settings.button-new": "Generate a new one",
+  "admin/form-settings.button-email": "Send Email",
   "admin/form-settings.is-enable": "Actived",
+  "admin/email-success": "Email sent",
   "admin/invoice-success": "Invoice Created",
   "admin/invoice-error": "Error"
 }

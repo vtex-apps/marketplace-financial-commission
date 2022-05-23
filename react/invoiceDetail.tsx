@@ -1,12 +1,34 @@
+import Handlebars from 'handlebars'
 import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
-import { Layout, Spinner } from 'vtex.styleguide'
-import Handlebars from 'handlebars'
+import { useQuery } from 'react-apollo'
+import { FormattedMessage } from 'react-intl'
+import { useRuntime } from 'vtex.render-runtime'
+import { Alert, Button, Layout, PageHeader, Spinner } from 'vtex.styleguide'
 
-import { getTemplate } from './services'
+import { GET_INVOICE } from './graphql'
+import { getTemplate, sendEmail } from './services'
 
 const InvoiceDetail: FC = () => {
+  const { route } = useRuntime()
+  const { params } = route
+  const { id } = params
+
+  const [emailSent, setEmailSent] = useState(false)
   const [template, setTemplate] = useState('')
+  const [invoice, setInvoice] = useState({})
+
+  const { data } = useQuery(GET_INVOICE, {
+    ssr: false,
+    pollInterval: 0,
+    variables: {
+      id,
+    },
+  })
+
+  useEffect(() => {
+    setInvoice(data?.getInvoice)
+  }, [data])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,60 +45,37 @@ const InvoiceDetail: FC = () => {
   }, [template])
 
   if (!template) {
-    return <Spinner />
-  }
-
-  const DATA = {
-    id: 'sellerA_3918239129',
-    status: 'paid',
-    invoiceCreateDate: '25/02/2022',
-    invoiceDueDate: '15/03/2022',
-    seller: {
-      name: 'Seller A',
-      id: 'SellerId',
-      contact: {
-        phone: '+34874958678',
-        email: 'sesarocampo@sellera.com',
-      },
-      comment: null,
-    },
-    comment: null,
-    orders: [
-      {
-        orderId: '10012931-12',
-        total: 1200.0,
-        commission: 400.0,
-        totalOrderRate: 0.3,
-      },
-      {
-        orderId: '11212924-14',
-        total: 500.0,
-        commission: 100.0,
-        totalOrderRate: 0.2,
-      },
-      {
-        orderId: '13312931-13',
-        total: 1500.0,
-        commission: 1000.0,
-        totalOrderRate: 0.6,
-      },
-    ],
-    totalizers: {
-      subtotal: 1500,
-      tax: {
-        type: 'percentage',
-        value: 10,
-      },
-      fee: 150,
-      total: 1800,
-    },
+    return (
+      <div style={{ position: 'absolute', top: '50%', left: '50%' }}>
+        <Spinner />
+      </div>
+    )
   }
 
   const hbTemplate = Handlebars.compile(template)
-  const htmlString = hbTemplate(DATA)
+  const htmlString = hbTemplate({ id, ...invoice })
 
   return (
     <Layout>
+      <PageHeader title="Invoice Detail">
+        {emailSent ? (
+          <Alert type="success">
+            {<FormattedMessage id="admin/email-success" />}
+          </Alert>
+        ) : (
+          <Button
+            onClick={async () => {
+              const response = await sendEmail(invoice)
+
+              if (response) {
+                setEmailSent(true)
+              }
+            }}
+          >
+            <FormattedMessage id="admin/form-settings.button-email" />
+          </Button>
+        )}
+      </PageHeader>
       <div
         style={{
           position: 'relative',

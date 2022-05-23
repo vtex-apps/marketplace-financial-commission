@@ -17,6 +17,6 @@
   },
   "admin.app.invoiceDetail": {
     "component": "invoiceDetail",
-    "path": "/admin/app/commission-report/invoice"
+    "path": "/admin/app/commission-report/invoice/:id"
   }
 }

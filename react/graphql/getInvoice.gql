@@ -1,0 +1,27 @@
+query GET_INVOICE($id: String!) {
+  getInvoice(id: $id) {
+    status
+    invoiceCreatedDate
+    seller {
+      id
+      name
+      contact {
+        phone
+        email
+      }
+    }
+    orders {
+      orderId
+      sellerOrderId
+      totalComission
+      totalOrderValue
+      totalOrderRate
+    }
+    totalizers {
+      subtotal
+      fee
+      total
+    }
+    comment
+  }
+}

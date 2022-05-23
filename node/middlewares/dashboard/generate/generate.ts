@@ -39,10 +39,10 @@ export async function generate(ctx: Context, next: () => Promise<Dashboards>) {
       const responseSellersMD = []
       const responseStatisticsMD = []
 
-      // eslint-disable-next-line no-console
-      console.time('generateLoop')
       while (loop <= endLoop) {
         const [dayToProcess] = loop.toISOString().split('T')
+
+        console.info({ dayToProcess: `Day Process ---> ${dayToProcess}` })
         const dateRange: DateRange = {
           start: dayToProcess,
           end: dayToProcess,
@@ -129,8 +129,6 @@ export async function generate(ctx: Context, next: () => Promise<Dashboards>) {
         Statistics: responseStatisticsMD,
       }
 
-      // eslint-disable-next-line no-console
-      console.timeEnd('generateLoop')
       console.info('Process completed')
 
       logger.info({

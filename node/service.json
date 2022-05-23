@@ -24,12 +24,12 @@
       "public": true
     },
     "generateDashboard": {
-      "path": "/_v/dashboard/generate",
+      "path": "/dashboard/generate",
       "public": false,
       "policies": [
         {
           "effect": "allow",
-          "actions": ["get"],
+          "actions": ["post"],
           "principals": [
             "vrn:apps:*:*:*:app/vtex.marketplace-financial-commission-cron@*"
           ]
@@ -83,8 +83,17 @@
       ]
     },
     "generateInvoices": {
-      "path": "/_v/financial-commission/generate-invoices",
-      "public": true
+      "path": "/invoice/generate",
+      "public": false,
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": ["get"],
+          "principals": [
+            "vrn:apps:*:*:*:app/vtex.marketplace-financial-commission-cron@*"
+          ]
+        }
+      ]
     },
     "orders": {
       "path": "/_v/private/orders",

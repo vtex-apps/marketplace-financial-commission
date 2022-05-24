@@ -1,10 +1,17 @@
 import type { FC } from 'react'
 import React, { useState } from 'react'
 import { useMutation } from 'react-apollo'
-import { Alert, ButtonWithIcon, IconPlus, Input, ModalDialog, Spinner } from 'vtex.styleguide'
-import { CREATE_INVOICE } from '../../../graphql'
+import {
+  Alert,
+  ButtonWithIcon,
+  IconPlus,
+  Input,
+  ModalDialog,
+  Spinner,
+} from 'vtex.styleguide'
 import { FormattedMessage } from 'react-intl'
 
+import { CREATE_INVOICE } from '../../../graphql'
 
 const ModalConfirm: FC<ModalConfirmData> = (props) => {
   const [email, setEmail] = useState('')
@@ -12,15 +19,18 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
   const [validEmail, setValidEmail] = useState(true)
   const [empty, setEmpty] = useState(true)
 
-  const EMAIL_PATTERN = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-  
+  const EMAIL_PATTERN =
+    // eslint-disable-next-line no-useless-escape
+    /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+
   const checkEmail = (emailAddress: string) => {
     const valid = EMAIL_PATTERN.test(emailAddress)
 
     if (!emailAddress) {
       setEmpty(true)
+
       return
-    } 
+    }
 
     setEmpty(false)
     if (!valid) {
@@ -34,11 +44,11 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
 
   const getErrorMessage = () => {
     if (empty) {
-      return <FormattedMessage  id="admin/modal-settings.email-empty"/>
+      return <FormattedMessage id="admin/modal-settings.email-empty" />
     }
 
     if (!validEmail) {
-      return <FormattedMessage  id="admin/modal-settings.email-invalid"/>
+      return <FormattedMessage id="admin/modal-settings.email-invalid" />
     }
 
     return null
@@ -48,7 +58,7 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
     startDate: string,
     finalDate: string,
     sellerName: string,
-    email: string
+    emailSeller: string
     // eslint-disable-next-line max-params
   ) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -56,7 +66,7 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
       variables: {
         invoiceData: {
           name: sellerName,
-          email,
+          email: emailSeller,
           startDate,
           endDate: finalDate,
         },
@@ -65,17 +75,27 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
   }
 
   if (loading) {
-    return <div className="mb5 flex justify-center">
-      <Spinner />
-    </div>
+    return (
+      <div className="mb5 flex justify-center">
+        <Spinner />
+      </div>
+    )
   }
 
   if (data) {
-    return <Alert type="success">{ <FormattedMessage id="admin/invoice-success"/>}</Alert>
+    return (
+      <Alert type="success">
+        {<FormattedMessage id="admin/invoice-success" />}
+      </Alert>
+    )
   }
 
   if (error) {
-    return <Alert type="error">{<FormattedMessage id="admin/invoice-error"/>}: { error }</Alert>
+    return (
+      <Alert type="error">
+        {<FormattedMessage id="admin/invoice-error" />}: {error}
+      </Alert>
+    )
   }
 
   return (

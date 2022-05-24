@@ -10,7 +10,7 @@ interface ModalConfirmData {
 }
 
 interface MessagesData {
-  confirmation: any,
+  confirmation: any
   warning: any
 }
 

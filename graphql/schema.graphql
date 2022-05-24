@@ -7,7 +7,7 @@ type Query {
   """
   Retrieve paginated Invoices for a given seller
   """
-  invoicesBySeller(sellerInvoiceParams: SellerInvoiceParams): [InvoiceList] @cacheControl(scope: PRIVATE, maxAge: LONG)
+  invoicesBySeller(sellerInvoiceParams: SellerInvoiceParams): ListInvoices @cacheControl(scope: PRIVATE, maxAge: LONG)
   """
   Retrieves an Invoice
   """

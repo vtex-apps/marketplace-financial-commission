@@ -11,7 +11,6 @@ import {
   PageHeader,
   ActionMenu,
   IconOptionsDots,
-  EmptyState,
 } from 'vtex.styleguide'
 import { useQuery, useLazyQuery } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
@@ -171,6 +170,7 @@ const CommissionReport: FC = () => {
     stats()
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataStats) {
+      console.info('Estamos mirando los stats ', dataStats)
       let valueSellersStats = 0
 
       if (dataDashboard)
@@ -340,39 +340,27 @@ const CommissionReport: FC = () => {
           </div>
         </PageBlock>
       </div>
-      {sellersDashboard.length > 0 ? (
-        <div className="mt2">
-          <PageBlock>
-            <div className="mt4 mb7">
-              <TableComponent
-                schemaTable={schemaTable}
-                items={sellersDashboard}
-                loading={loadingDataDashboard}
-              />
-              <PaginationComponent
-                setPageSize={setPageSize}
-                currentPage={itemFrom}
-                pageSize={itemTo}
-                setPage={setPage}
-                totalItems={
-                  totalItemsFilter > 0 ? totalItemsFilter : totalItems
-                }
-                onNextClick={onNextClick}
-                changeRows={changeRows}
-                onPrevClick={onPrevClick}
-              />
-            </div>
-          </PageBlock>
-        </div>
-      ) : (
-        <div className="mt2">
-          <PageBlock>
-            <EmptyState title="There is no data data to show">
-              <p>Use the filters to search and show information</p>
-            </EmptyState>
-          </PageBlock>
-        </div>
-      )}
+      <div className="mt2">
+        <PageBlock>
+          <div className="mt4 mb7">
+            <TableComponent
+              schemaTable={schemaTable}
+              items={sellersDashboard}
+              loading={loadingDataDashboard}
+            />
+            <PaginationComponent
+              setPageSize={setPageSize}
+              currentPage={itemFrom}
+              pageSize={itemTo}
+              setPage={setPage}
+              totalItems={totalItemsFilter > 0 ? totalItemsFilter : totalItems}
+              onNextClick={onNextClick}
+              changeRows={changeRows}
+              onPrevClick={onPrevClick}
+            />
+          </div>
+        </PageBlock>
+      </div>
     </Layout>
   )
 }

@@ -44,7 +44,7 @@ export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
 
   console.info('page ', page)
 
-  const sellerInvoices = await commissionInvoices.search(
+  const sellerInvoices = await commissionInvoices.searchRaw(
     { page, pageSize },
     fields,
     '',

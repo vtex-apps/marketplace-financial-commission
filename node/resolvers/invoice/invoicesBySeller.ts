@@ -19,8 +19,10 @@ export const invoicesBySeller = async (
 
   const fields = ['id', 'status', 'invoiceCreatedDate', 'totalizers']
 
-  const sellerInvoices = await commissionInvoices.search(
-    { page, pageSize },
+  const pagination = { page, pageSize }
+
+  const sellerInvoices = await commissionInvoices.searchRaw(
+    pagination,
     fields,
     '',
     where

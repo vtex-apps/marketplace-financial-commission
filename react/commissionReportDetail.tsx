@@ -171,54 +171,6 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
             active={tabs === 1}
             onClick={() => setTabs(1)}
           >
-<<<<<<< HEAD
-            {dataTableOrders.length > 0 ? (
-              <div className="mt5">
-                <PageBlock>
-                  {statusOrders === 'invoiced' ? (
-                    <ModalConfirm
-                      buttonMessage={
-                        <FormattedMessage id="admin/form-settings.button-invoice" />
-                      }
-                      messages={{
-                        warning: (
-                          <FormattedMessage id="admin/modal-setting.warning" />
-                        ),
-                        confirmation: (
-                          <FormattedMessage id="admin/modal-setting.confirmation" />
-                        ),
-                      }}
-                      sellerData={{
-                        startDate,
-                        finalDate,
-                        sellerName,
-                        id: sellerId,
-                      }}
-                    />
-                  ) : null}
-                  <div className="mt2">
-                    <TableComponent
-                      schemaTable={schemaTable}
-                      items={dataTableOrders}
-                      loading={loadingDataOrders}
-                    />
-                    <PaginationComponent
-                      setPageSize={setPageSize}
-                      currentPage={itemFrom}
-                      pageSize={itemTo}
-                      setPage={setPage}
-                      totalItems={totalItems}
-                      onNextClick={onNextClick}
-                      changeRows={changeRows}
-                      onPrevClick={onPrevClick}
-                    />
-                  </div>
-                </PageBlock>
-              </div>
-            ) : (
-              <EmptyTable />
-            )}
-=======
             <div className="mt5">
               <SellerOrders
                 ordersQuery={ordersQuery}
@@ -230,7 +182,6 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
                 setDataRate={setDataRate}
               />
             </div>
->>>>>>> e5d4f71 (separe detail)
           </Tab>
           <Tab
             label={<FormattedMessage id="admin/table.title-tab-invoices" />}

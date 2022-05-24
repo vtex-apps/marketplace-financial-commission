@@ -4,8 +4,6 @@ import { Pagination } from 'vtex.styleguide'
 import { FormattedMessage } from 'react-intl'
 
 const PaginationComponent: FC<PaginationProps> = (props) => {
-  console.info('propsssssss ', props)
-
   return (
     <div>
       {props.totalItems > 0 ? (

@@ -67,11 +67,11 @@ interface SellerSelect {
   label: string
 }
 interface FilterProps {
-  startDatePicker: Date
-  finalDatePicker: Date
+  startDatePicker?: Date
+  finalDatePicker?: Date
   optionsSelect: SellerSelect[]
-  setStartDate: (v: string) => void
-  setFinalDate: (v: string) => void
+  setStartDate?: (v: string) => void
+  setFinalDate?: (v: string) => void
   defaultStartDate?: string
   defaultFinalDate?: string
   setTotalItems?: (v: number) => void
@@ -81,6 +81,7 @@ interface FilterProps {
   optionsStatus?: any
   setStatusOrders?: any
   disableSelect?: boolean
+  test?: any
 }
 
 interface TotalizerProps {

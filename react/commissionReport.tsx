@@ -170,7 +170,6 @@ const CommissionReport: FC = () => {
     stats()
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataStats) {
-      console.info('Estamos mirando los stats ', dataStats)
       let valueSellersStats = 0
 
       if (dataDashboard)

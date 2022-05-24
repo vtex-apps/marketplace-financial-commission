@@ -34,4 +34,8 @@ export const status: StatusOptions = {
     bgColor: '#FF4C4C',
     fontColor: '#FFF',
   },
+  unpaid: {
+    bgColor: '#FFB100',
+    fontColor: '#FFF',
+  },
 }

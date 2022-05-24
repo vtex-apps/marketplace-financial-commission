@@ -31,6 +31,7 @@ const Filter: FC<FilterProps> = (props) => {
   }
 
   const changesValuesTable = () => {
+    console.info('ver valores props filter ', props)
     // eslint-disable-next-line prefer-const
     let stringSellers = ''
     let stringSellersName = ''

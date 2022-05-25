@@ -14,6 +14,21 @@ export async function orderListSeller(
 
   console.info({ status })
 
+  if (status === 'invoiced') {
+    const orderList = await ordersClient.listOrders({
+      fStatus: status,
+      fieldDate: 'invoicedDate',
+      fieldDateStart: `${dateStart}T00:00:00.000Z`,
+      fieldDateEnd: `${dateEnd}T23:59:59.999Z`,
+      sellerName,
+      orderBy: 'invoicedDate',
+      page,
+      perpage,
+    })
+
+    return orderList
+  }
+
   const orderList = await ordersClient.listOrders({
     fStatus: status ?? '',
     fieldDate: 'creationDate',

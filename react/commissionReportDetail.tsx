@@ -46,6 +46,7 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
   const [totalItems, setTotalItems] = useState(0)
   const [optionsSelect, setOptionsSelect] = useState<DataFilter[]>([])
   const [sellerName, setSellerName] = useState(account ?? '')
+  const [sellerId, setSellerId] = useState('')
   const [tabs, setTabs] = useState(1)
   const [dataTableOrders, setDataTableOrders] = useState<any>([])
   const [dataTableInvoice, setDataTableInvoice] = useState<any>([])
@@ -380,6 +381,7 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
                   defaultStartDate={defaultStartDate}
                   defaultFinalDate={defaultFinalDate}
                   setSellerId={setSellerName}
+                  setId={setSellerId}
                   multiValue={false}
                   optionsStatus={optionsStatus}
                   setStatusOrders={setStatusOrders}
@@ -413,7 +415,12 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
                           <FormattedMessage id="admin/modal-setting.confirmation" />
                         ),
                       }}
-                      sellerData={{ startDate, finalDate, sellerName }}
+                      sellerData={{
+                        startDate,
+                        finalDate,
+                        sellerName,
+                        id: sellerId,
+                      }}
                     />
                   ) : null}
                   <div className="mt2">

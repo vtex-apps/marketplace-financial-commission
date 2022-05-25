@@ -60,6 +60,8 @@ const Filter: FC<FilterProps> = (props) => {
       props.setSellerId(stringSellers.slice(0, -1))
     }
 
+    if (props.setId) props.setId(stringSellers.slice(0, -1))
+
     if (!stringSellers && !stringSellersName) props.setSellerId('')
 
     stringSellers = stringSellers.substring(0, stringSellers.length - 1)

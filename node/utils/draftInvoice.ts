@@ -60,7 +60,7 @@ export async function draftInvoice(
       : sellerTax.value */
 
   return {
-    id: randomId(sellerName),
+    id: randomId(sellerId),
     status: INVOICE_STATUS.UNPAID,
     invoiceCreatedDate: today,
     seller: {

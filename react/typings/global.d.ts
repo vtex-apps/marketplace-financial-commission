@@ -67,14 +67,15 @@ interface SellerSelect {
   label: string
 }
 interface FilterProps {
-  startDatePicker: Date
-  finalDatePicker: Date
+  startDatePicker?: Date
+  finalDatePicker?: Date
   optionsSelect: SellerSelect[]
-  setStartDate: (v: string) => void
-  setFinalDate: (v: string) => void
+  setStartDate?: (v: string) => void
+  setFinalDate?: (v: string) => void
   defaultStartDate?: string
   defaultFinalDate?: string
   setTotalItems?: (v: number) => void
+  setPages?: (v: number) => void
   setSellerId: (v: string) => void
   setId?: (v: string) => void
   multiValue: boolean

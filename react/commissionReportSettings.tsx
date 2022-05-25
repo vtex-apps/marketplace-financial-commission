@@ -17,20 +17,37 @@ import { useQuery, useMutation } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
 
 import { GET_SELLERS, CREATE_SETTINGS, GET_SETTINGS } from './graphql'
-import SelectComponent from './components/Dashboard/Filter/select'
-import { TableComponent } from './components'
+import { TableComponent, Filter } from './components'
+import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
 
 const CommissionReportSettings: FC = () => {
   const { navigate } = useRuntime()
-  const [dataFilter, setDataFilter] = useState<DataFilter[]>([])
+  const [sellersId, setSellersId] = useState('')
   const [optionsSelect, setOptionsSelect] = useState<any>([])
-  const [sellersResult, setSellersRestul] = useState<SettingsSellers[] | []>([])
+  const [sellersResult, setSellersResult] = useState<SettingsSellers[] | []>([])
   const [selectedValue, setSelectValue] = useState<any | null>()
   const [createSettings, { data: dataSettings }] = useMutation(CREATE_SETTINGS)
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(20)
+  const [itemFrom, setItemFrom] = useState(1)
+  const [itemTo, setItemTo] = useState(20)
+  const [totalItems, setTotalItems] = useState(0)
 
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
     pollInterval: 0,
+  })
+
+  const { data: dataSellersTable } = useQuery(GET_SELLERS, {
+    ssr: false,
+    pollInterval: 0,
+    variables: {
+      listSellersParams: {
+        page,
+        pageSize,
+        sellersId,
+      },
+    },
   })
 
   const { data: settings } = useQuery(GET_SETTINGS, {
@@ -67,22 +84,32 @@ const CommissionReportSettings: FC = () => {
   }, [settings])
 
   useEffect(() => {
+    if (dataSellersTable) {
+      const dataTableDashboard: SettingsSellers[] = []
+
+      dataSellersTable.getSellers.sellers.forEach((seller: DataSeller) => {
+        dataTableDashboard.push({
+          id: seller.id,
+          name: seller.name,
+        })
+      })
+      setSellersResult(dataTableDashboard)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataSellersTable])
+
+  useEffect(() => {
     if (dataSellers) {
       const builtSelectSeller: DataFilter[] = []
-      const dataTableDashboard: SettingsSellers[] = []
 
       dataSellers.getSellers.sellers.forEach((seller: DataSeller) => {
         builtSelectSeller.push({
           value: { id: seller.id, name: seller.name },
           label: seller.name,
         })
-        dataTableDashboard.push({
-          id: seller.id,
-          name: seller.name,
-        })
       })
-      setSellersRestul(dataTableDashboard)
       setOptionsSelect(builtSelectSeller)
+      setTotalItems(dataSellers.getSellers.sellers.length)
     }
   }, [dataSellers])
 
@@ -170,6 +197,35 @@ const CommissionReportSettings: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSettings])
 
+  const changeRows = (row: number) => {
+    setPageSize(row)
+    setItemTo(row)
+    setItemFrom(1)
+    setPage(1)
+  }
+
+  const onNextClick = () => {
+    const nextPage = page + 1
+
+    const currentTo = pageSize * nextPage
+    const currentFrom = itemTo + 1
+
+    setItemTo(currentTo)
+    setItemFrom(currentFrom)
+    setPage(nextPage)
+  }
+
+  const onPrevClick = () => {
+    const previousPage = page - 1
+
+    const currentTo = itemTo - pageSize
+    const currentFrom = itemFrom - pageSize
+
+    setItemTo(currentTo)
+    setItemFrom(currentFrom)
+    setPage(previousPage)
+  }
+
   return (
     <Layout
       pageHeader={
@@ -178,7 +234,7 @@ const CommissionReportSettings: FC = () => {
         />
       }
     >
-      <div className="mb6">
+      <div className="mb2">
         <Box>
           <h2>
             <FormattedMessage id="admin/modal-settings.billingCycle" />
@@ -223,15 +279,12 @@ const CommissionReportSettings: FC = () => {
       </p>
       <div className="mt6">
         <PageBlock>
-          <div className="mt2 mb2">
-            <SelectComponent
-              options={optionsSelect}
-              dataFilter={dataFilter}
-              setDataFilter={setDataFilter}
-              multi={false}
-              customLabel={
-                <FormattedMessage id="admin/table.title-seller-label" />
-              }
+          <div className="mt4 mb5">
+            <Filter
+              optionsSelect={optionsSelect}
+              setSellerId={setSellersId}
+              setTotalItems={setTotalItems}
+              multiValue
             />
           </div>
         </PageBlock>
@@ -243,6 +296,16 @@ const CommissionReportSettings: FC = () => {
               schemaTable={schemaTable}
               items={sellersResult}
               loading={false}
+            />
+            <PaginationComponent
+              setPageSize={setPageSize}
+              currentPage={itemFrom}
+              pageSize={itemTo}
+              setPage={setPage}
+              totalItems={totalItems}
+              onNextClick={onNextClick}
+              changeRows={changeRows}
+              onPrevClick={onPrevClick}
             />
           </div>
         </PageBlock>

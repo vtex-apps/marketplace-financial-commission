@@ -26,6 +26,7 @@ interface DetailProps {
   finalDate?: string
   statusOrders?: string
   setDataRate: (data: any) => void
+  sellerId?: string
 }
 
 const SellerOrders: FC<DetailProps> = ({
@@ -36,6 +37,7 @@ const SellerOrders: FC<DetailProps> = ({
   finalDate,
   statusOrders,
   setDataRate,
+  sellerId,
 }) => {
   const { query } = useRuntime()
   const [dataTableOrders, setDataTableOrders] = useState<any>([])
@@ -216,6 +218,7 @@ const SellerOrders: FC<DetailProps> = ({
             startDate: startDate ?? '',
             finalDate: finalDate ?? '',
             sellerName: sellerName ?? '',
+            id: sellerId ?? '',
           }}
         />
       ) : null}

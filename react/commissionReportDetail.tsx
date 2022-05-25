@@ -180,6 +180,7 @@ const CommissionReportDetail: FC<DetailProps> = ({ account, ordersQuery }) => {
                 finalDate={finalDate}
                 statusOrders={statusOrders}
                 setDataRate={setDataRate}
+                sellerId={sellerId}
               />
             </div>
           </Tab>

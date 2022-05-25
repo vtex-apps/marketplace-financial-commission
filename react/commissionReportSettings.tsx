@@ -21,10 +21,10 @@ import { TableComponent, Filter } from './components'
 import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
 
 const CommissionReportSettings: FC = () => {
-  const { navigate, setQuery } = useRuntime()
+  const { navigate } = useRuntime()
   const [sellersId, setSellersId] = useState('')
   const [optionsSelect, setOptionsSelect] = useState<any>([])
-  const [sellersResult, setSellersRestul] = useState<SettingsSellers[] | []>([])
+  const [sellersResult, setSellersResult] = useState<SettingsSellers[] | []>([])
   const [selectedValue, setSelectValue] = useState<any | null>()
   const [createSettings, { data: dataSettings }] = useMutation(CREATE_SETTINGS)
   const [page, setPage] = useState(1)
@@ -33,10 +33,12 @@ const CommissionReportSettings: FC = () => {
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
 
-  // eslint-disable-next-line no-console
-  console.log('%c sellersId ', 'background: green; color: white', sellersId)
-
   const { data: dataSellers } = useQuery(GET_SELLERS, {
+    ssr: false,
+    pollInterval: 0,
+  })
+
+  const { data: dataSellersTable } = useQuery(GET_SELLERS, {
     ssr: false,
     pollInterval: 0,
     variables: {
@@ -82,29 +84,34 @@ const CommissionReportSettings: FC = () => {
   }, [settings])
 
   useEffect(() => {
+    if (dataSellersTable) {
+      const dataTableDashboard: SettingsSellers[] = []
+
+      dataSellersTable.getSellers.sellers.forEach((seller: DataSeller) => {
+        dataTableDashboard.push({
+          id: seller.id,
+          name: seller.name,
+        })
+      })
+      setSellersResult(dataTableDashboard)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataSellersTable])
+
+  useEffect(() => {
     if (dataSellers) {
       const builtSelectSeller: DataFilter[] = []
-      const dataTableDashboard: SettingsSellers[] = []
 
       dataSellers.getSellers.sellers.forEach((seller: DataSeller) => {
         builtSelectSeller.push({
           value: { id: seller.id, name: seller.name },
           label: seller.name,
         })
-        dataTableDashboard.push({
-          id: seller.id,
-          name: seller.name,
-        })
       })
-      setSellersRestul(dataTableDashboard)
       setOptionsSelect(builtSelectSeller)
-      setTotalItems(dataSellers.getSellers.pagination.totalPage)
+      setTotalItems(dataSellers.getSellers.sellers.length)
     }
   }, [dataSellers])
-
-  const test = () => {
-    setQuery({ sellerName: undefined })
-  }
 
   const Actions = ({ data }: any) => {
     return (
@@ -276,7 +283,7 @@ const CommissionReportSettings: FC = () => {
             <Filter
               optionsSelect={optionsSelect}
               setSellerId={setSellersId}
-              test={test}
+              setTotalItems={setTotalItems}
               multiValue
             />
           </div>

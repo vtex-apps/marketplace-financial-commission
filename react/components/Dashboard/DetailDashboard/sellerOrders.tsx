@@ -161,6 +161,7 @@ const SellerOrders: FC<DetailProps> = ({
   useEffect(() => {
     if (sellerName === '' && !query.sellerName) {
       setDataTableOrders([])
+      setTotalItems(0)
     }
   }, [query, sellerName])
 

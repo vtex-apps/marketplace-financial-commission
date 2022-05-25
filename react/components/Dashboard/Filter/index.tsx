@@ -19,6 +19,7 @@ const Filter: FC<FilterProps> = (props) => {
   const [startDateFilter, setDateFilter] = useState<Date | string>('')
   const [finalDateFilter, setFinalDateFilter] = useState<Date | string>('')
   const { setQuery, query } = useRuntime()
+  const [clearFilter, setClearFilter] = useState(false)
 
   const getDate = (date: string) => {
     const dateConverter = new Date(date)
@@ -36,12 +37,7 @@ const Filter: FC<FilterProps> = (props) => {
     let stringSellersName = ''
     let countTotalItems = 0
 
-    // eslint-disable-next-line no-console
-    console.log(
-      '%c dataFilter ',
-      'background: purple; color: white',
-      dataFilter
-    )
+    setClearFilter(false)
 
     dataFilter.forEach((item: DataFilter) => {
       if (!item) return
@@ -92,14 +88,8 @@ const Filter: FC<FilterProps> = (props) => {
 
   useEffect(() => {
     if (!query.sellerName) return
-    // eslint-disable-next-line no-console
-    console.log(
-      '%c optionselect ',
-      'background: red; color: white',
-      query.sellerName
-    )
     // eslint-disable-next-line vtex/prefer-early-return
-    if (props.optionsSelect.length > 0) {
+    if (props.optionsSelect.length > 0 && !clearFilter) {
       const queryData = query.sellerName.split(',')
       const filterQueryData: any = []
 
@@ -111,20 +101,12 @@ const Filter: FC<FilterProps> = (props) => {
 
         filterQueryData.push(filterSeller)
       })
-      // setDataFilter(filterQueryData)
+      setDataFilter(filterQueryData)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.optionsSelect])
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(
-      '%c dataFilter ',
-      'background: yellow; color: black',
-      query.sellerName,
-      dataFilter[0],
-      dataFilter.length
-    )
     if (dataFilter.length && query.sellerName) changesValuesTable()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataFilter])
@@ -165,9 +147,9 @@ const Filter: FC<FilterProps> = (props) => {
           />
         </div>
       )}
-      <div className="flex mt5">
+      <div className="flex-ns mt5">
         {props.optionsStatus ? (
-          <div className="w-30 pr6">
+          <div className="w-30-ns w-100-s pr6-ns mb4-s">
             <SelectComponent
               options={props.optionsStatus}
               dataFilter={statusFilter}
@@ -181,7 +163,7 @@ const Filter: FC<FilterProps> = (props) => {
         ) : (
           <div className="w-30 pt6" />
         )}
-        <div className="w-50">
+        <div className="w-50-ns w-100-s mb4-s">
           {props.startDatePicker && props.finalDatePicker ? (
             <DatePickerComponent
               startDateFilter={startDateFilter}
@@ -195,7 +177,7 @@ const Filter: FC<FilterProps> = (props) => {
             <div />
           )}
         </div>
-        <div className="w-20 mt6">
+        <div className="w-20-ns w-100-s mt6-ns mb7-s mb0-m">
           <div className={`fr ${styles.buttonGroup}`}>
             <ButtonGroup
               buttons={[
@@ -211,16 +193,11 @@ const Filter: FC<FilterProps> = (props) => {
                 <ButtonWithIcon
                   isActiveOfGroup={false}
                   onClick={() => {
-                    // eslint-disable-next-line no-console
-                    console.log(
-                      '%c borrando... ',
-                      'background: orange; color: black'
-                    )
                     setDataFilter([])
                     setQuery({ sellerName: undefined })
-                    props?.test()
                     props.setSellerId('')
                     setStatusfilter([])
+                    setClearFilter(true)
                     if (props.setStartDate && props.setFinalDate) {
                       props.setStartDate(
                         props.defaultStartDate ? props.defaultStartDate : ''

@@ -74,12 +74,12 @@ interface FilterProps {
   defaultStartDate?: string
   defaultFinalDate?: string
   setTotalItems?: (v: number) => void
+  setPages?: (v: number) => void
   setSellerId: (v: string) => void
   multiValue: boolean
   optionsStatus?: any
   setStatusOrders?: any
   disableSelect?: boolean
-  test?: any
 }
 
 interface TotalizerProps {

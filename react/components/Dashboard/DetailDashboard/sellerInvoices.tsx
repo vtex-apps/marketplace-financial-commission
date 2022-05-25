@@ -58,6 +58,7 @@ const SellerInvoices: FC<DetailProps> = ({
   useEffect(() => {
     if (sellerName === '' && !query.sellerName) {
       setDataTableInvoice([])
+      setTotalItems(0)
     }
   }, [query, sellerName])
 

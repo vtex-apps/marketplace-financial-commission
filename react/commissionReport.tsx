@@ -315,7 +315,7 @@ const CommissionReport: FC = () => {
       {startDate && finalDate && (
         <div className="mt2">
           <PageBlock>
-            <div className="mt4 mb5">
+            <div className="mt4">
               <Filter
                 startDatePicker={new Date(`${startDate}T00:00:00`)}
                 finalDatePicker={new Date(`${finalDate}T00:00:00`)}

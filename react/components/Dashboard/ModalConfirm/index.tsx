@@ -55,7 +55,8 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
   const handleCreateInvoice = (
     startDate: string,
     finalDate: string,
-    sellerName: string,
+    name: string,
+    id: string,
     emailAddress: string
     // eslint-disable-next-line max-params
   ) => {
@@ -63,7 +64,8 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
     createInvoice({
       variables: {
         invoiceData: {
-          name: sellerName,
+          name,
+          id,
           email: emailAddress,
           startDate,
           endDate: finalDate,
@@ -91,7 +93,7 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
   if (error) {
     return (
       <Alert type="error">
-        {<FormattedMessage id="admin/invoice-error" />}: {error}
+        {<FormattedMessage id="admin/invoice-error" />}
       </Alert>
     )
   }
@@ -111,6 +113,7 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
               props.sellerData.startDate,
               props.sellerData.finalDate,
               props.sellerData.sellerName,
+              props.sellerData.id,
               email
             )
             setIsModalOpen(!isModalOpen)

@@ -33,5 +33,5 @@
   "admin/form-settings.is-enable": "Actived",
   "admin/email-success": "Email sent",
   "admin/invoice-success": "Invoice Created",
-  "admin/invoice-error": "Error"
+  "admin/invoice-error": "Error creating invoice"
 }

@@ -51,6 +51,7 @@ interface SellerData {
   startDate: string
   finalDate: string
   sellerName: string
+  id: string
 }
 interface SchemaTable {
   id: string
@@ -75,6 +76,7 @@ interface FilterProps {
   defaultFinalDate?: string
   setTotalItems?: (v: number) => void
   setSellerId: (v: string) => void
+  setId?: (v: string) => void
   multiValue: boolean
   optionsStatus?: any
   setStatusOrders?: any

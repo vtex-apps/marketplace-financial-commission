@@ -15,10 +15,13 @@ import {
 import { FormattedMessage } from 'react-intl'
 import { useQuery, useMutation } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
+import {
+  table as TableComponent,
+  pagination as PaginationComponent,
+} from 'vtex.components-financial-commission'
 
 import { GET_SELLERS, CREATE_SETTINGS, GET_SETTINGS } from './graphql'
-import { TableComponent, Filter } from './components'
-import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
+import { Filter } from './components'
 
 const CommissionReportSettings: FC = () => {
   const { navigate } = useRuntime()

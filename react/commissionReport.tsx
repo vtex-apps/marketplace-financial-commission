@@ -15,10 +15,13 @@ import {
 import { useQuery, useLazyQuery } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
 import { FormattedMessage } from 'react-intl'
+import {
+  table as TableComponent,
+  pagination as PaginationComponent,
+} from 'vtex.components-financial-commission'
 
-import { Filter, Totalizer, TableComponent } from './components'
+import { Filter, Totalizer } from './components'
 import { GET_SELLERS, SEARCH_STATS, SEARCH_SELLERS } from './graphql'
-import PaginationComponent from './components/Dashboard/Table/Tablev2/pagination'
 
 const CommissionReport: FC = () => {
   const { navigate } = useRuntime()

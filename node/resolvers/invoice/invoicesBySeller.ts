@@ -15,7 +15,7 @@ export const invoicesBySeller = async (
     dates: { startDate, endDate },
   } = params.sellerInvoiceParams
 
-  const where = `seller.name=${sellerName} AND (invoiceCreatedDate between ${startDate} AND ${endDate})`
+  const where = `seller.name="${sellerName}" AND (invoiceCreatedDate between ${startDate} AND ${endDate})`
 
   const fields = ['id', 'status', 'invoiceCreatedDate', 'totalizers']
 

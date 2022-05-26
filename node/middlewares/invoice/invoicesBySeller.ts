@@ -38,7 +38,7 @@ export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
     )
   }
 
-  const where = `seller.name=${seller.name} AND (invoiceCreatedDate between ${startDate} AND ${endDate})`
+  const where = `seller.name="${seller.name}" AND (invoiceCreatedDate between ${startDate} AND ${endDate})`
 
   const fields = ['id', 'status', 'invoiceCreatedDate', 'totalizers']
 

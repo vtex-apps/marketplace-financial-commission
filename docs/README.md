@@ -175,7 +175,8 @@ curl --request GET \
 | outstandingBalance | number      | Total invoiced value                                    |
 
 
-![](https://img.shields.io/static/v1?label=&message=200&color=green) `OK`
+![](https://img.shields.io/static/v1?label=&message=200&color=green) `OK`\
+If the number of days is less than 5 days
 
 ```json
 {

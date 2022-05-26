@@ -172,8 +172,6 @@ function numberOfDays(date1: Date, date2: Date) {
 function isToday(dateEnd: string) {
   const [date1] = new Date().toISOString().split('T')
 
-  /* console.info(date1) */
-
   if (date1 === dateEnd) {
     throw new CustomError(
       400,

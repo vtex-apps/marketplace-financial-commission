@@ -63,14 +63,7 @@ export const searchSellersService = async (
       sellers: calculateSellers,
     }
 
-    console.info(
-      `lenght ------------------------------->${calculateSellers.length}`
-    )
-
     if (calculateSellers.length > 0) {
-      console.info(
-        `entre aca ------------------------------->${calculateSellers.length}`
-      )
       const responseSaveVbase = await vbase.saveJSON<Dashboards>(
         config.BUCKET_VBASE,
         vbaseId,
@@ -81,8 +74,6 @@ export const searchSellersService = async (
         message: 'Save to VBase',
         responseSaveVbase,
       }
-
-      console.info({ responseSaveVbase: JSON.stringify(result) })
     }
 
     if (sellersId) {
@@ -153,8 +144,6 @@ export const searchSellersService = async (
     }
   } else {
     const sellerDashboardVbase: Dashboards = vbaseResponse.data
-
-    console.info({ sellersId })
 
     if (sellersId) {
       const searchSellerId = findSeller(sellerDashboardVbase, sellersId)

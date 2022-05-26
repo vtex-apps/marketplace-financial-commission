@@ -55,7 +55,7 @@
       "policies": [
         {
           "effect": "allow",
-          "actions": ["get"],
+          "actions": ["get", "post"],
           "principals": [
             "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*",
             "vrn:vtex.vtex-id:*:*:*:user/*@vtex.com.br"
@@ -74,7 +74,7 @@
       "policies": [
         {
           "effect": "allow",
-          "actions": ["get"],
+          "actions": ["post"],
           "principals": [
             "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*",
             "vrn:vtex.vtex-id:*:*:*:user/*@vtex.com.br"

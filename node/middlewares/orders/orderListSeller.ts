@@ -12,8 +12,6 @@ export async function orderListSeller(
     clients: { ordersClient },
   } = ctx
 
-  console.info({ status })
-
   if (status === 'invoiced') {
     const orderList = await ordersClient.listOrders({
       fStatus: status,

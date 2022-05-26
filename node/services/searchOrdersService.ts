@@ -9,8 +9,6 @@ export const searchOrdersService = async (
 
   const status = searchOrdersParams.status as string
 
-  console.info(sellerName)
-
   const listOrders = await orderListSeller(
     ctx,
     sellerName,

@@ -17,9 +17,6 @@ export const getSellers = async (
 
   result = respsellers
 
-  console.info('aca llegue')
-  console.info({ listSellersParams })
-
   if (listSellersParams) {
     await validationParams('ListSellers', listSellersParams)
 

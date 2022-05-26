@@ -33,8 +33,6 @@ export const searchStatisticsService = async (
       .toFixed(2)
   ) as number
 
-  console.info({ ordersCount })
-
   const totalComission = Number(
     statisticsArray
       .reduce((total, comis) => (total += comis.statistics.totalComission), 0)

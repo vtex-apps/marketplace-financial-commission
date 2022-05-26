@@ -109,8 +109,6 @@ export class OrdersClient extends JanusClient {
         sellersNameReplace = arrayResult.join(' ')
       }
 
-      // console.info(sellersNameReplace)
-
       params.sellerName = sellersNameReplace ?? params.sellerName
 
       const loadData = () => {

@@ -1,5 +1,4 @@
 export function getDatesInvoiced(dateRange?: DateRange): DatesInvoice {
-  /* console.info({ dateRange }) */
   if (dateRange?.start !== undefined && dateRange?.end !== undefined) {
     const start = new Date(dateRange.start)
     const end = new Date(dateRange.end)

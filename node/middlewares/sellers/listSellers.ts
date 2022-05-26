@@ -26,15 +26,10 @@ export async function listSellers(ctx: Context): Promise<Sellers> {
     total = respsellers.paging.total ?? 0
 
     if (total <= to) {
-      console.info('Into to break')
       break
     }
 
     const totalProcessPending = total - to
-
-    console.info(
-      `totalProcessPending ----------------------------------> ${totalProcessPending}`
-    )
 
     from = to
     to = total > totalProcessPending ? from + 100 : totalProcessPending

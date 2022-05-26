@@ -10,7 +10,6 @@ export const orders = async (
   },
   ctx: Context
 ): Promise<OrdersResponse> => {
-  console.info({ searchOrdersParams })
   await validationParams('Orders', searchOrdersParams)
   const { resultDetail } = await searchOrdersService(searchOrdersParams, ctx)
 

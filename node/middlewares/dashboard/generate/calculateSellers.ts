@@ -98,8 +98,6 @@ export async function calculateSellers(
     })
   )
 
-  // TODO  BORRAR---> console.info({ sellersDashboard: JSON.stringify(sellersDashboard) })
-
   const responseCalculateDashboard: CalculateSellers = {
     sellersDashboard,
     statistics: {

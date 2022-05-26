@@ -25,8 +25,6 @@ export async function generate(ctx: Context, next: () => Promise<Dashboards>) {
 
   const numDays = numberOfDays(new Date(start), new Date(end))
 
-  console.info(`Number Days-------> ${numDays}`)
-
   const processGenerate = async () => {
     try {
       const getDates = getDatesInvoiced({
@@ -42,7 +40,6 @@ export async function generate(ctx: Context, next: () => Promise<Dashboards>) {
       while (loop <= endLoop) {
         const [dayToProcess] = loop.toISOString().split('T')
 
-        console.info({ dayToProcess: `Day Process ---> ${dayToProcess}` })
         const dateRange: DateRange = {
           start: dayToProcess,
           end: dayToProcess,
@@ -128,8 +125,6 @@ export async function generate(ctx: Context, next: () => Promise<Dashboards>) {
         Sellers: responseSellersMD,
         Statistics: responseStatisticsMD,
       }
-
-      console.info('Process completed')
 
       logger.info({
         message: 'Process completed',

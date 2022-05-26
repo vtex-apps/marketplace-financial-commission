@@ -8,18 +8,20 @@ import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
  */
 export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
   const {
-    query: { sellerId },
     clients: { commissionInvoices },
     state: {
       body: { seller },
+    },
+    vtex: {
+      route: { params },
     },
     req,
   } = ctx
 
   /* This means the seller wants to access other seller's invoices */
-  if (sellerId !== seller.id) {
+  if (params.sellerId !== seller.id) {
     throw new AuthenticationError(
-      `${seller.id} cannot access invoices for ${sellerId}`
+      `${seller.id} cannot access invoices for ${params.sellerId}`
     )
   }
 
@@ -36,7 +38,7 @@ export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
     )
   }
 
-  const where = `seller.name=${seller} AND (invoiceCreatedDate between ${startDate} AND ${endDate})`
+  const where = `seller.name=${seller.name} AND (invoiceCreatedDate between ${startDate} AND ${endDate})`
 
   const fields = ['id', 'status', 'invoiceCreatedDate', 'totalizers']
 

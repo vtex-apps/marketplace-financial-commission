@@ -19,7 +19,7 @@ export async function getInvoice(ctx: Context) {
     throw new AuthenticationError(`Cannot access invoices for ${seller}`)
   }
 
-  const where = `id=${id} AND seller.name=${sellerName}`
+  const where = `id=${id} AND seller.name="${sellerName}"`
 
   const invoice = await commissionInvoices.search(
     { page: PAGE_DEFAULT, pageSize: PAGE_SIZE_DEFAULT },

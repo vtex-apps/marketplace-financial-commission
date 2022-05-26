@@ -2,11 +2,7 @@
 
 # API REST
 ## List Sellers
-<<<<<<< HEAD
 ![](https://img.shields.io/static/v1?label=&message=GET&color=brightgreen) `https://{{accountmarketplace}}.myvtex.com/_v/sellers/list`
-=======
-![](https://img.shields.io/static/v1?label=&message=POST&color=brightgreen) `https://{{accountmarketplace}}.myvtex.com/_v/sellers/list`
->>>>>>> d0617f27292242b0456fc115e0aba2dd7ce20c46
 
 This endpoint lists all Sellers.
 
@@ -45,7 +41,6 @@ curl --request GET \
 }
 ```
 
-<<<<<<< HEAD
 __________________________________________________
 ## Generate Dashboard
 ![](https://img.shields.io/static/v1?label=&message=POST&color=brightgreen) `https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/{{accountmarketplace}}/master/dashboard/generate`
@@ -104,5 +99,3 @@ curl --request POST \
 }
 ```
 
-=======
->>>>>>> d0617f27292242b0456fc115e0aba2dd7ce20c46

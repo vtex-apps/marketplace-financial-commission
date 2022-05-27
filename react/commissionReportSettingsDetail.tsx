@@ -104,7 +104,7 @@ const CommissionReportSettingsDetail: FC = () => {
         variables: {
           settingsData: {
             sellerName: sellerSettingsToken.name,
-            startCycle: date,
+            startDate: date,
             endDate: lastDateString,
             billingCycle: selectedValue.label,
           },

@@ -125,7 +125,7 @@ const CommissionReportSettings: FC = () => {
         }}
         options={[
           {
-            label: 'Detail',
+            label: <FormattedMessage id="admin/table-settings-detail" />,
             onClick: () => {
               navigate({
                 to: `/admin/app/commission-report/settings/detail/${data.id}`,
@@ -139,8 +139,8 @@ const CommissionReportSettings: FC = () => {
 
   const schemaTable = [
     {
-      id: 'name',
-      title: 'Seller name',
+      id: 'id',
+      title: <FormattedMessage id="admin/table-settings-name" />,
       width: '90em',
       cellRenderer: (props: CellRendererProps) => {
         return <span>{props.data}</span>
@@ -148,7 +148,7 @@ const CommissionReportSettings: FC = () => {
     },
     {
       id: 'id',
-      title: 'Actions',
+      title: <FormattedMessage id="admin/table-settings-actions" />,
       width: '10em',
       cellRenderer: (props: CellRendererProps) => <Actions {...props} />,
       extended: true,
@@ -182,7 +182,7 @@ const CommissionReportSettings: FC = () => {
       createSettings({
         variables: {
           settingsData: {
-            startCycle: date,
+            startDate: date,
             endDate: lastDateString,
             billingCycle: selectedValue.label,
           },
@@ -265,7 +265,7 @@ const CommissionReportSettings: FC = () => {
                     handleCreateSettings()
                   }}
                 >
-                  SAVE
+                  <FormattedMessage id="admin/save-settings" />
                 </Button>
               </div>
             </div>
@@ -278,7 +278,7 @@ const CommissionReportSettings: FC = () => {
         </Box>
       </div>
       <p className="c-action-primary hover-c-action-primary fw5 ml2 mt6">
-        Billing Cycle Detail
+        <FormattedMessage id="admin/billing-cycle" />
       </p>
       <div className="mt6">
         <PageBlock>

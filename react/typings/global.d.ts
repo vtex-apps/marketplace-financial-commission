@@ -55,7 +55,7 @@ interface SellerData {
 }
 interface SchemaTable {
   id: string
-  title: string
+  title: any
   cellRenderer?: (props: CellRendererProps) => void
 }
 
@@ -107,8 +107,8 @@ type Sorted = {
 }
 
 interface StatsTotalizer {
-  label: string
-  value: string
+  label: any
+  value: any
   iconBackgroundColor?: string
   icon?: any
 }

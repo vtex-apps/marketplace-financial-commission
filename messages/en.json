@@ -33,5 +33,26 @@
   "admin/form-settings.is-enable": "Actived",
   "admin/email-success": "Email sent",
   "admin/invoice-success": "Invoice Created",
-  "admin/invoice-error": "Error creating invoice"
+  "admin/invoice-error": "Error creating invoice",
+  "admin/billing-cycle": "Billing Cycle Detail",
+  "admin/save-settings": "SAVE",
+  "admin/table-settings-name": "name",
+  "admin/table-settings-actions": "Actions",
+  "admin/table-settings-detail": "Detail",
+  "admin/table-seller-name": "Seller name",
+  "admin/table-total-orders": "Total Orders",
+  "admin/table-total-amount": "Total Amount Orders",
+  "admin/table-total-commission": "Total commission",
+  "admin/table-actions": "Actions",
+  "admin/stats-number-sellers": "Number of Sellers",
+  "admin/stats-total-orders": "Total Orders",
+  "admin/stats-total-amount": "Total Amount Orders",
+  "admin/stats-total-commission": "Total Commission"
 }
+
+
+
+
+
+
+

@@ -87,26 +87,26 @@ const CommissionReport: FC = () => {
   const schemaTable = [
     {
       id: 'name',
-      title: 'Seller name',
+      title: <FormattedMessage id="admin/table-seller-name" />,
       cellRenderer: (props: CellRendererProps) => {
         return <span>{props.data}</span>
       },
     },
     {
       id: 'ordersCount',
-      title: 'Total Orders',
+      title: <FormattedMessage id="admin/table-total-orders" />,
     },
     {
       id: 'totalOrderValue',
-      title: 'Total Amount Orders',
+      title: <FormattedMessage id="admin/table-total-amount" />,
     },
     {
       id: 'totalComission',
-      title: 'Total commission',
+      title: <FormattedMessage id="admin/table-total-commission" />,
     },
     {
       id: 'name',
-      title: 'Actions',
+      title: <FormattedMessage id="admin/table-actions" />,
       cellRenderer: (props: CellRendererProps) => {
         return (
           <ActionMenu

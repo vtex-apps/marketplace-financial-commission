@@ -8,14 +8,14 @@ input InvoiceDataInput {
 
 input SettingsDataInput {
   sellerName: String
-  startCycle: String!
+  startDate: String!
   endDate: String!
   billingCycle: String!
 }
 
 type SettingsSeller {
   sellerName: String
-  startCycle: String
+  startDate: String
   endDate: String
   billingCycle: String
 }

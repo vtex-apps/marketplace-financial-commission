@@ -20,7 +20,6 @@ type SettingsSeller {
   billingCycle: String
 }
 
-
 type Invoice {
   status: String
   invoiceCreatedDate: String
@@ -235,7 +234,7 @@ input ListSellersParams {
   pageSize: Int
 }
 
-input SellerInvoiceParams{
+input SellerInvoiceParams {
   sellerName: String!
   pagination: Pagination
   dates: Dates!

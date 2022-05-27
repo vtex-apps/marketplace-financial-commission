@@ -2,7 +2,7 @@
 
 # API REST
 ## List Sellers
-![](https://img.shields.io/static/v1?label=&message=GET&color=brightgreen) `https://{{accountmarketplace}}.myvtex.com/_v/sellers/list`
+![](https://img.shields.io/static/v1?label=&message=GET&color=blue) `https://{{accountmarketplace}}.myvtex.com/_v/sellers/list`
 
 This endpoint lists all Sellers.
 
@@ -40,7 +40,6 @@ curl --request GET \
 	}
 }
 ```
-
 __________________________________________________
 
 ## Generate Dashboard
@@ -115,5 +114,74 @@ If the number of days is greater than 5 days
 ```
 <br />
 
-> **Important**
-> If the volume of information to be generated is large, it is recommended to do it for each day of the month.
+> :warning: If the volume of information to be generated is large, it is recommended to do it for each day of the month.
+
+__________________________________________________
+
+## Search Sellers Dashboard
+![](https://img.shields.io/static/v1?label=&message=GET&color=blue) `https://{{accountmarketplace}}.myvtex.com/_v/dashboard/sellers/search`
+
+Retrieve commission information of the sellers,  for a specific date range, from the orders that are invoiced in VTEX.
+
+<br />
+
+#### **Path parameters**
+
+| accountmarketplace  |
+| ------------ |
+|  Name of the VTEX account of the marketplace. |
+
+<br />
+
+#### **Request parameters allowed**
+| Attribute     | Type        | Mandatory | Description |
+| -----------   | ----------- |---------- | ----------- |
+| dateStart     | string      | Yes       | Start date of consulting  in ```"yyyy-mm-dd"``` format          |
+| dateEnd       | string      | Yes       | End date of consulting  in ```"yyyy-mm-dd"``` format            |
+| page          | number      | Yes       | Page Number                                                     |
+| pageSize      | number      | Yes       | Number of items per page                                        |
+| sellersId     | string      | No        | Sellers to be returned in the query. Separate the seller's Id with commas. For example ```sellersId=sellerId1,sellerId2,sellerId3```. You can also leave empty to get all sellers. | 
+| reIndex       | boolean     | No        | Performs reindex of the search by refreshing and updating the information. | 
+
+<br />
+
+```bash
+curl --request GET \
+  --url 'https://example.myvtex.com/_v/dashboard/sellers/search?dateStart=2022-05-25&dateEnd=2022-05-25&page=1&pageSize=100&reIndex=true' \
+```
+<br />
+
+#### **Response** 
+
+![](https://img.shields.io/static/v1?label=&message=200&color=green) `OK`
+
+```json
+{
+	"dateStart": "2022-05-25",
+	"dateEnd": "2022-05-25",
+	"sellers": [
+		{
+			"id": "1",
+			"account": "sellerAccount",
+			"name": "sellerAccount",
+			"statistics": {
+				"ordersCount": 0,
+				"totalComission": 0,
+				"totalOrderValue": 0,
+				"outstandingBalance": 0
+			}
+		},
+		{
+			...
+		} 
+    ],
+  "pagination": {
+  "currentPage": 1,
+  "pageSize": 100,
+  "totalPage": 1
+	}
+}
+
+```
+
+

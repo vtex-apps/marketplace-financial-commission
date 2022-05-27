@@ -8,18 +8,17 @@ input InvoiceDataInput {
 
 input SettingsDataInput {
   sellerName: String
-  startCycle: String!
+  startDate: String!
   endDate: String!
   billingCycle: String!
 }
 
 type SettingsSeller {
   sellerName: String
-  startCycle: String
+  startDate: String
   endDate: String
   billingCycle: String
 }
-
 
 type Invoice {
   status: String
@@ -235,7 +234,7 @@ input ListSellersParams {
   pageSize: Int
 }
 
-input SellerInvoiceParams{
+input SellerInvoiceParams {
   sellerName: String!
   pagination: Pagination
   dates: Dates!

@@ -147,7 +147,66 @@ Retrieve commission information of the sellers,  for a specific date range, from
 
 ```bash
 curl --request GET \
-  --url 'https://example.myvtex.com/_v/dashboard/sellers/search?dateStart=2022-05-25&dateEnd=2022-05-25&page=1&pageSize=100&reIndex=true' \
+  --url 'https://example.myvtex.com/_v/dashboard/sellers/search?dateStart=2022-04-01&dateEnd=2022-04-30&page=1&pageSize=20&reIndex=true' \
+```
+<br />
+
+#### **Response** 
+
+| Attribute          | Type        | Description                                      |
+| --------------     | ----------- |------------------------------------------------- |
+| dateStart          | string      | Start date of consulting  in ```"yyyy-mm-dd"``` format  |
+| dateEnd            | string      | End date of consulting  in ```"yyyy-mm-dd"``` format    |
+| sellers            | object      | Array with sellers                                      |
+| id                 | string      | Seller id                                               |
+| account            | string      | Seller account                                          |
+| name               | string      | Seller name                                             |
+| statistics         | object      | Object with seller's totals                             |
+| ordersCount        | number      | Number of orders                                        |
+| totalComission     | number      | Total commission value                                  |
+| totalComission     | number      | Total order value                                       |
+| outstandingBalance | number      | Total invoiced value                                    |
+
+
+![](https://img.shields.io/static/v1?label=&message=200&color=green) `OK`
+
+```json
+{
+	"dateStart": "2022-04-01",
+	"dateEnd": "2022-04-30",
+	"sellers": [
+		{
+			"id": "sellerId1",
+			"account": "sellerId1",
+			"name": "sellerId1_Name",
+			"statistics": {
+				"ordersCount": 252,
+				"totalComission": 396.11,
+				"totalOrderValue": 3784,
+				"outstandingBalance": 0
+			}
+		},
+    {
+      ...
+    }
+	],
+	"pagination": {
+		"currentPage": 1,
+		"pageSize": 20,
+		"totalPage": 5
+	}
+}
+
+```
+
+<br />
+
+### Search for specific sellersId
+> When specifying one or more sellers in the search in the service it will additionally return the ```statistics``` object, returning the total statistics.
+
+```bash
+curl --request GET \
+  --url 'https://example.myvtex.com/_v/dashboard/sellers/search?dateStart=2022-04-01&dateEnd=2022-04-30&page=1&pageSize=20&sellersId=sellerId1&reIndex=true' \
 ```
 <br />
 
@@ -157,31 +216,228 @@ curl --request GET \
 
 ```json
 {
-	"dateStart": "2022-05-25",
-	"dateEnd": "2022-05-25",
+	"dateStart": "2022-04-01",
+	"dateEnd": "2022-04-30",
 	"sellers": [
 		{
-			"id": "1",
-			"account": "sellerAccount",
-			"name": "sellerAccount",
+			"id": "sellerId1",
+			"account": "sellerId1",
+			"name": "sellerId1_Name",
 			"statistics": {
-				"ordersCount": 0,
-				"totalComission": 0,
-				"totalOrderValue": 0,
+				"ordersCount": 252,
+				"totalComission": 396.11,
+				"totalOrderValue": 3784,
 				"outstandingBalance": 0
 			}
-		},
-		{
-			...
-		} 
-    ],
-  "pagination": {
-  "currentPage": 1,
-  "pageSize": 100,
-  "totalPage": 1
+		}
+	],
+	"statistics": {
+		"ordersCount": 252,
+		"totalComission": 396.11,
+		"totalOrderValue": 3784
+	},
+	"pagination": {
+		"currentPage": 1,
+		"pageSize": 1,
+		"totalPage": 1
 	}
 }
 
 ```
 
+<br />
+__________________________________________________
+
+## Search Statistics Dashboard
+![](https://img.shields.io/static/v1?label=&message=GET&color=blue) `https://{{accountmarketplace}}.myvtex.com/_v/dashboard/statistics/search`
+
+Retrieve totals information of the sellers,  for a specific date range, from the orders that are invoiced in VTEX.
+
+<br />
+
+#### **Path parameters**
+
+| accountmarketplace  |
+| ------------ |
+|  Name of the VTEX account of the marketplace. |
+
+<br />
+
+#### **Request parameters allowed**
+| Attribute     | Type        | Mandatory | Description |
+| -----------   | ----------- |---------- | ----------- |
+| dateStart     | string      | Yes       | Start date of consulting  in ```"yyyy-mm-dd"``` format  |
+| dateEnd       | string      | Yes       | End date of consulting  in ```"yyyy-mm-dd"``` format    | 
+
+<br />
+
+```bash
+curl --request GET \
+  --url 'https://example.myvtex.com/_v/dashboard/statistics/search?dateStart=2022-04-01&dateEnd=2022-04-30' \
+```
+<br />
+
+#### **Response** 
+
+| Attribute          | Type        | Description                                      |
+| --------------     | ----------- |------------------------------------------------- |
+| dateStart          | string      | Start date of consulting  in ```"yyyy-mm-dd"``` format  |
+| dateEnd            | string      | End date of consulting  in ```"yyyy-mm-dd"``` format    |
+| statistics         | object      | Object with seller's totals                             |
+| ordersCount        | number      | Number of orders                                        |
+| totalComission     | number      | Total commission value                                  |
+| totalComission     | number      | Total order value                                       |
+
+<br />
+
+![](https://img.shields.io/static/v1?label=&message=200&color=green) `OK`
+
+```json
+{
+	"dateStart": "2022-04-01",
+	"dateEnd": "2022-04-30",
+	"statistics": {
+		"ordersCount": 264,
+		"totalComission": 398.61,
+		"totalOrderValue": 4716.8
+	}
+}
+
+```
+
+<br />
+__________________________________________________
+
+## Search Orders
+![](https://img.shields.io/static/v1?label=&message=GET&color=blue) `https://{{accountmarketplace}}.myvtex.com/_v/private/orders`
+
+Retrieve a list of orders according to the filters described below, for a specific date range, from the orders placed in VTEX. 
+
+<br />
+
+> :information: The date range is the creation date of the orders if the filtered status is ```Invoiced``` it will be filtered by invoice date in VTEX.
+
+<br />
+
+#### **Path parameters**
+
+| accountmarketplace  |
+| ------------ |
+|  Name of the VTEX account of the marketplace. |
+
+<br />
+
+#### **Authorization**
+> **Type** ```Bearer Token```
+
+| Attribute | Type        | Mandatory | Description |
+| ----------| ----------- |---------- | ----------- |
+| Token     | string      | Yes       |The token configured by the marketplace in financial commission             |
+
+
+<br />
+
+#### **Request filters allowed**
+| Attribute     | Type        | Mandatory | Description |
+| -----------   | ----------- |---------- | ----------- |
+| dateStart     | string      | Yes       | Start date of consulting  in ```"yyyy-mm-dd"``` format  |
+| dateEnd       | string      | Yes       | End date of consulting  in ```"yyyy-mm-dd"``` format    |
+| page          | number      | Yes       | Page Number                                             |
+| perpage       | number      | Yes       | Number of items per page                                |
+| sellerId      | string      | Yes       | Seller ID                                               |
+| status        | string      | No        | Order Status Value                                      | 
+
+<br />
+
+##### **Order Status avaible to filter**
+
+| Status                               | 
+| ----------------------------------   | 
+| waiting-for-sellers-confirmation     | 
+| payment-pending                      | 
+| payment-approved                     | 
+| ready-for-handling                   | 
+| handling                             | 
+| invoiced                             |
+| canceled                             |  
+
+<br />
+
+```bash
+curl --request GET \
+  --url 'https://example.myvtex.com/_v/private/orders?dateStart=2022-04-01&dateEnd=2022-01-30&page=1&perpage=100&sellerId=sellerId1' \
+  --header 'Authorization: Bearer abcdefghijk12345'
+```
+<br />
+
+#### **Response** 
+
+| Attribute                   | Type        | Description                                             |
+| ----------------------------| ----------- |-------------------------------------------------------- |
+| data                        | object      | Order detail                                            |
+| orderId                     | string      | Order Id                                                |
+| sellerOrderId               | string      | Order Seller Id                                         |
+| totalOrderValue             | number      | Payment value                                           |
+| totalComission              | number      | Commission on payment value                             |
+| status                      | string      | Order status                                            |
+| statusDescription           | string      | Status description                                      |
+| creationDate                | string      | Order creation date                                     |
+| rate                        | object      | Rate detail object                                      |
+| itemId                      | string      | Item id                                                 |
+| nameItem                    | string      | Item name                                               |
+| rate                        | object      | Array object to contain the rates configured by item    |
+| freightCommissionPercentage | number      | Freight commission percentage                           |
+| productCommissionPercentage | number      | Product commission percentage                           |
+| paging                      | object      | Paging details object                                   |
+| total                       | number      | Total number of items                                   |
+| pages                       | number      | Paging total pages                                      |
+| currentPage                 | number      | Current page                                            |
+| perPage                     | number      | Paging total per Page                                   |
+
+<br />
+
+>:information:
+>* Throttling: Each account can make up to 5000 requests per minute.
+>* The maximum number of items per page is 100.
+>* The maximum number of pages to process is 30, if the number of pages is more than 30, you must refine the filter.
+
+<br />
+
+![](https://img.shields.io/static/v1?label=&message=200&color=green) `OK`
+
+```json
+{
+	"data": [
+		{
+			"orderId": "123456789-01",
+			"sellerOrderId": "GCB-123456789-01",
+			"totalOrderValue": 27,
+			"totalComission": 6.75,
+			"status": "payment-approved",
+			"statusDescription": "Pagamento Aprovado",
+			"creationDate": "2022-05-25T11:08:01.3004547+00:00",
+			"rate": [
+				{
+					"itemId": "116",
+					"nameItem": "Sare marina grunjoasa Solaris, 500 g",
+					"rate": {
+						"freightCommissionPercentage": 0,
+						"productCommissionPercentage": 25
+					}
+				}
+			]
+		},
+		{
+			...
+		}
+  ],
+	"paging": {
+		"total": 232,
+		"pages": 3,
+		"currentPage": 1,
+		"perPage": 100
+	}
+}
+
+```
 

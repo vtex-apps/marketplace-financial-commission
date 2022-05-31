@@ -114,7 +114,7 @@ If the number of days is greater than 5 days
 ```
 <br />
 
-> :warning: If the volume of information to be generated is large, it is recommended to do it for each day of the month.
+> **Note** If the volume of information to be generated is large, it is recommended to do it for each day of the month.
 
 __________________________________________________
 
@@ -315,7 +315,7 @@ Retrieve a list of orders according to the filters described below, for a specif
 
 <br />
 
-> :information: The date range is the creation date of the orders if the filtered status is ```Invoiced``` it will be filtered by invoice date in VTEX.
+> **Note** The date range is the creation date of the orders if the filtered status is ```Invoiced``` it will be filtered by invoice date in VTEX.
 
 <br />
 
@@ -396,7 +396,7 @@ curl --request GET \
 
 <br />
 
->:information:
+> **Warning**
 >* Throttling: Each account can make up to 5000 requests per minute.
 >* The maximum number of items per page is 100.
 >* The maximum number of pages to process is 30, if the number of pages is more than 30, you must refine the filter.

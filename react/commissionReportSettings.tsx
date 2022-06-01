@@ -59,10 +59,7 @@ const CommissionReportSettings: FC = () => {
   })
 
   const DATE_CUT_OPTIONS = [
-    /* {
-      value: 1,
-      label: 'Daily',
-    },
+    /*
     {
       value: 7,
       label: 'Weekly',
@@ -71,6 +68,10 @@ const CommissionReportSettings: FC = () => {
       value: 15,
       label: 'Bi-weekly',
     }, */
+    {
+      value: 1,
+      label: 'Daily',
+    },
     {
       value: 30,
       label: 'Monthly',
@@ -157,27 +158,50 @@ const CommissionReportSettings: FC = () => {
 
   const handleCreateSettings = () => {
     if (selectedValue) {
-      /** @TODO crear funcion en utils para fecha ya que se usa en varios lados la misma conversión */
       const nowDate = new Date()
+      let date = ''
+      let lastDateString = ''
+
       const month =
         nowDate.getMonth() + 1 <= 9
           ? `0${nowDate.getMonth() + 1}`
           : nowDate.getMonth() + 1
 
-      const date = `${nowDate.getFullYear()}-${month}-${nowDate.getDate()}`
+      if (selectedValue.label === 'Monthly') {
+        const day =
+          nowDate.getDate() < 10 ? `0${nowDate.getDate()}` : nowDate.getDate()
 
-      const lastDate = new Date(
-        nowDate.getFullYear(),
-        nowDate.getMonth() + 1,
-        0
-      )
+        date = `${nowDate.getFullYear()}-${month}-${day}`
 
-      const lastMonth =
-        lastDate.getMonth() + 1
-          ? `0${lastDate.getMonth() + 1}`
-          : lastDate.getMonth() + 1
+        const lastDate = new Date(
+          nowDate.getFullYear(),
+          nowDate.getMonth() + 1,
+          0
+        )
 
-      const lastDateString = `${lastDate.getFullYear()}-${lastMonth}-${lastDate.getDate()}`
+        const lastMonth =
+          lastDate.getMonth() + 1
+            ? `0${lastDate.getMonth() + 1}`
+            : lastDate.getMonth() + 1
+
+        const lastDay =
+          lastDate.getDate() < 10
+            ? `0${lastDate.getDate()}`
+            : lastDate.getDate()
+
+        lastDateString = `${lastDate.getFullYear()}-${lastMonth}-${lastDay}`
+      } else {
+        const day =
+          nowDate.getDate() < 10 ? `0${nowDate.getDate()}` : nowDate.getDate()
+
+        const finalDay =
+          nowDate.getDate() + 1 < 10
+            ? `0${nowDate.getDate() + 1}`
+            : nowDate.getDate() + 1
+
+        date = `${nowDate.getFullYear()}-${month}-${day}`
+        lastDateString = `${nowDate.getFullYear()}-${month}-${finalDay}`
+      }
 
       createSettings({
         variables: {

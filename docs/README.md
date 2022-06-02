@@ -1676,4 +1676,177 @@ curl --request GET \
 }
 
 ```
+<br />
+__________________________________________________
 
+## Create Token
+![](https://img.shields.io/static/v1?label=&message=POST&color=brightgreen) `https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/{{accountmarketplace}}/master/_v/token/{{sellerId}}`
+
+Create a security token for a specific seller.
+
+<br />
+
+#### **Headers**
+| Attribute               | Type        | Mandatory | Description |
+| ----------------------- | ----------- |---------- | ----------- |
+| X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
+| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
+
+<br />
+
+#### **Path parameters**
+
+| Attribute               | Type        | Mandatory | Description |
+| ----------------------- | ----------- |---------- | ----------- |
+| accountmarketplace      | string      | Yes       | Name of the VTEX account of the marketplace.             |
+| sellerId                | string      | Yes       | Seller Id                                                | 
+
+<br />
+
+```bash
+curl --request POST \
+  --url https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/example/master/_v/token/sellerId1 \
+  --header 'X-VTEX-API-AppKey: 12345' \
+  --header 'X-VTEX-API-AppToken: 12345'
+```
+<br />
+
+#### **Response** 
+
+![](https://img.shields.io/static/v1?label=&message=200&color=green) `OK`\
+
+```json
+{
+	"message": "Successful token creation",
+	"sellerId": "sellerId1",
+	"autheticationToken": "abcdefghijk123456789",
+	"creationDate": "2022-05-31T19:56:26.291Z",
+	"resultVBase": [
+		{
+			"path": "/example/master/buckets/vtex.marketplace-financial-commission/TokenConfig/files/martketplaceSellerID1",
+			"hash": "F5C201AD90EBF1C5E7D8F9412334"
+		}
+	]
+}
+
+```
+
+<br />
+__________________________________________________
+
+## Get Token
+![](https://img.shields.io/static/v1?label=&message=GET&color=blue) `https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/{{accountmarketplace}}/master/_v/token/{{sellerId}}`
+
+Retrieves the token information created for a specific seller.
+
+<br />
+
+#### **Headers**
+| Attribute               | Type        | Mandatory | Description |
+| ----------------------- | ----------- |---------- | ----------- |
+| X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
+| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
+
+<br />
+
+#### **Path parameters**
+
+| Attribute               | Type        | Mandatory | Description |
+| ----------------------- | ----------- |---------- | ----------- |
+| accountmarketplace      | string      | Yes       | Name of the VTEX account of the marketplace.             |
+| sellerId                | string      | Yes       | Seller Id                                                | 
+
+<br />
+
+```bash
+curl --request GET \
+  --url https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/example/master/_v/token/sellerId1 \
+  --header 'X-VTEX-API-AppKey: 12345' \
+  --header 'X-VTEX-API-AppToken: 12345'
+```
+<br />
+
+#### **Response** 
+
+![](https://img.shields.io/static/v1?label=&message=200&color=green) `OK`\
+
+```json
+{
+	"account": "sellerId1",
+	"autheticationToken": "abcdefghijk123456789",
+	"enabled": true,
+	"name": "sellerId1_name",
+	"id": "sellerId1"
+}
+
+```
+
+<br />
+__________________________________________________
+
+## Update Token
+![](https://img.shields.io/static/v1?label=&message=PUT&color=orange) `https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/{{accountmarketplace}}/master/_v/token/{{sellerId}}`
+
+Allows you to update the status of the token
+
+<br />
+
+#### **Headers**
+| Attribute               | Type        | Mandatory | Description |
+| ----------------------- | ----------- |---------- | ----------- |
+| X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
+| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
+
+<br />
+
+#### **Path parameters**
+
+| Attribute               | Type        | Mandatory | Description |
+| ----------------------- | ----------- |---------- | ----------- |
+| accountmarketplace      | string      | Yes       | Name of the VTEX account of the marketplace.             |
+| sellerId                | string      | Yes       | Seller Id                                                | 
+
+<br />
+
+```bash
+curl --request PUT \
+  --url https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/example/master/_v/token/sellerId1 \
+  --header 'X-VTEX-API-AppKey: 12345' \
+  --header 'X-VTEX-API-AppToken: 12345'
+```
+<br />
+
+#### **Request Body Example** 
+
+| Attribute                   | Type        | Description                                             |
+| ----------------------------| ----------- |-------------------------------------------------------- |
+| enabled                     | boolean     | Indicates whether the token is enabled or disabled.     |
+
+
+```json
+{
+	"enabled": true
+}
+
+```
+
+<br />
+
+#### **Response** 
+
+![](https://img.shields.io/static/v1?label=&message=200&color=green) `OK`\
+
+```json
+{
+	"message": "Successful token update",
+	"sellerId": "sellerId1",
+	"lastModificationDate": "2022-05-31T19:57:54.745Z",
+	"resultVBase": [
+		{
+			"path": "/example/master/buckets/vtex.marketplace-financial-commission/TokenConfig/files/martketplaceSellerID1",
+			"hash": "6ADD1F2B0F5614326400BA0F3132456"
+		}
+	]
+}
+
+```

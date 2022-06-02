@@ -152,7 +152,9 @@ const CommissionReport: FC = () => {
 
       if (!dataDashboard.searchSellersDashboard.sellers.length) setTotalItems(0)
       else {
-        setTotalItems(dataSellers.getSellers.sellers.length)
+        const total = dataSellers ? dataSellers.getSellers.sellers.length : 0
+
+        setTotalItems(total)
       }
 
       const dataTableDashboard: DataSeller[] = []
@@ -285,7 +287,7 @@ const CommissionReport: FC = () => {
     if (dataSellers) {
       const builtSelectSeller: DataFilter[] = []
 
-      dataSellers.getSellers.sellers.forEach((seller: DataSellerSelect) => {
+      dataSellers.getSellers?.sellers.forEach((seller: DataSellerSelect) => {
         builtSelectSeller.push({
           value: { id: seller.id, name: seller.name },
           label: seller.name,

@@ -220,8 +220,7 @@ curl --request GET \
 
 #### **Response** 
 
-![](https://img.shields.io/static/v1?label=&message=200&color=green) `OK`\
-If the number of days is less than 5 days
+![](https://img.shields.io/static/v1?label=&message=200&color=green) `OK`
 
 ```json
 {
@@ -929,8 +928,6 @@ Create a single invoice.
 	"endDate": "2022-06-17",
 }
 ```
-\
-If the number of days is greater than 5 days
 
 <br />
 

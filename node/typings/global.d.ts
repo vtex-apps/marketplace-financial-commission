@@ -80,6 +80,7 @@ declare global {
     page: number
     pageSize: number
     reIndex?: boolean
+    sort?: string
   }
 
   interface SearchStatsServiceRequest {

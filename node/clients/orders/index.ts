@@ -84,20 +84,10 @@ export class OrdersClient extends JanusClient {
     const { logger } = this.context
 
     try {
-      const characterReplace = '%26amp;'
+      const characterReplace = '%26'
       let sellersNameReplace
 
-      if (params.sellerName.includes('&amp;', 0)) {
-        const splitSellerName = params.sellerName.split(' ')
-        const arrayResult: string[] = []
-
-        splitSellerName.forEach((element) => {
-          const salida = element.replace('&amp;', characterReplace)
-
-          arrayResult.push(salida)
-        })
-        sellersNameReplace = arrayResult.join(' ')
-      } else if (params.sellerName.includes('&', 0)) {
+      if (params.sellerName.includes('&', 0)) {
         const splitSellerName = params.sellerName.split(' ')
         const arrayResult: string[] = []
 

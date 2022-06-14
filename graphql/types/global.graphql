@@ -125,6 +125,7 @@ input SearchDashboardParams {
   sellersId: String
   page: Int!
   pageSize: Int!
+  sort: String
 }
 
 type SearchStatsResponse {

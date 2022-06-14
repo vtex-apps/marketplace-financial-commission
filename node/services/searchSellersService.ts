@@ -1,8 +1,10 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { config } from '../constants'
 import { calculateSellersSearch } from '../middlewares/dashboard/search/calculateSellersSearch'
 import { findSeller } from '../middlewares/dashboard/search/findSeller'
 import { unificationSellers } from '../middlewares/dashboard/search/unificationSellers'
+import { sortGeneric } from '../middlewares/dashboard/search/sortGeneric'
 
 export const searchSellersService = async (
   searchDashboardParams: SearchSellersServiceRequest,
@@ -12,12 +14,12 @@ export const searchSellersService = async (
     clients: { sellersDashboardClientMD, vbase },
   } = ctx
 
-  const pagination = {
+  let pagination = {
     page: 1,
     pageSize: 100,
   }
 
-  const { dateStart, dateEnd, sellersId, page, pageSize, reIndex } =
+  const { dateStart, dateEnd, sellersId, page, pageSize, reIndex, sort } =
     searchDashboardParams
 
   const vbaseId = `${dateStart.replace('-', '').replace('-', '')}-${dateEnd
@@ -46,12 +48,48 @@ export const searchSellersService = async (
     vbaseSellers?.length === 0 ||
     reIndex === true
   ) {
-    const dashboardResponse = await sellersDashboardClientMD.search(
+    const dashboardResponse: any[] = []
+    let dashboardResponseTemp = await sellersDashboardClientMD.searchRaw(
       pagination,
       ['_all'],
       'createdIn',
       `dateCut between ${dateStart} AND ${dateEnd}`
     )
+
+    dashboardResponseTemp.data.forEach((item) => {
+      dashboardResponse.push(item)
+    })
+
+    const totalRecords = dashboardResponseTemp.pagination.total
+    let currentRecords = dashboardResponseTemp.pagination.pageSize
+
+    if (totalRecords > currentRecords) {
+      while (totalRecords > currentRecords) {
+        const pageMD = pagination.page + 1
+
+        pagination = {
+          page: pageMD,
+          pageSize: 100,
+        }
+
+        dashboardResponseTemp = await sellersDashboardClientMD.searchRaw(
+          pagination,
+          ['_all'],
+          'createdIn',
+          `dateCut between ${dateStart} AND ${dateEnd}`
+        )
+
+        dashboardResponseTemp.data.forEach((item) => {
+          dashboardResponse.push(item)
+        })
+
+        currentRecords += dashboardResponseTemp.pagination.pageSize
+
+        if (currentRecords >= totalRecords) {
+          break
+        }
+      }
+    }
 
     const unificationResponse = await unificationSellers(dashboardResponse)
 
@@ -79,9 +117,10 @@ export const searchSellersService = async (
     if (sellersId) {
       const searchSellerId = findSeller(dashboard, sellersId)
 
-      const sortSellers = searchSellerId.sort((a, b) =>
-        a.id.localeCompare(b.id)
-      )
+      const sortSellers = sortGeneric(
+        searchSellerId,
+        sort as string
+      ) as SellersDashboard[]
 
       const ordersCount = sortSellers.reduce(
         (total, comis) => (total += Number(comis.statistics?.ordersCount)),
@@ -118,9 +157,7 @@ export const searchSellersService = async (
     } else {
       const initialOffset = (page - 1) * pageSize
 
-      const sortSellers = dashboard.sellers.sort((a, b) =>
-        a.id.localeCompare(b.id)
-      )
+      const sortSellers = sortGeneric(dashboard.sellers, sort as string)
 
       const sellersDashboardOffset = sortSellers.slice(
         initialOffset,
@@ -148,9 +185,10 @@ export const searchSellersService = async (
     if (sellersId) {
       const searchSellerId = findSeller(sellerDashboardVbase, sellersId)
 
-      const sortSellers = searchSellerId.sort((a, b) =>
-        a.id.localeCompare(b.id)
-      )
+      const sortSellers = sortGeneric(
+        searchSellerId,
+        sort as string
+      ) as SellersDashboard[]
 
       const ordersCount = sortSellers.reduce(
         (total, comis) => (total += Number(comis.statistics?.ordersCount)),
@@ -185,8 +223,9 @@ export const searchSellersService = async (
     } else {
       const initialOffset = (page - 1) * pageSize
 
-      const sortSellers = sellerDashboardVbase.sellers.sort((a, b) =>
-        a.id.localeCompare(b.id)
+      const sortSellers = sortGeneric(
+        sellerDashboardVbase.sellers,
+        sort as string
       )
 
       const sellersDashboardOffset = sortSellers.slice(

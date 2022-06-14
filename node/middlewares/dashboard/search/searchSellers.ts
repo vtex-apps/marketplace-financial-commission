@@ -11,6 +11,8 @@ export async function searchSellers(ctx: Context, next: () => Promise<any>) {
     (ctx.query.reIndex as string) ?? 'false'
   ) as boolean
 
+  const sort = ctx.query.sort as string
+
   await validationParams('Sellers', ctx.query)
 
   const searchSellersParams = {
@@ -20,6 +22,7 @@ export async function searchSellers(ctx: Context, next: () => Promise<any>) {
     page,
     pageSize,
     reIndex,
+    sort,
   }
 
   const { status, result } = await searchSellersService(

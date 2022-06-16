@@ -7,7 +7,8 @@ import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
  */
 export async function getInvoice(ctx: Context) {
   const {
-    query: { id, sellerName },
+    query: { sellerName },
+    params: { id },
     clients: { commissionInvoices },
     state: {
       body: { seller },
@@ -15,7 +16,7 @@ export async function getInvoice(ctx: Context) {
   } = ctx
 
   /* This means the seller wants to access other seller's invoices */
-  if (sellerName !== seller) {
+  if (sellerName !== seller.name) {
     throw new AuthenticationError(`Cannot access invoices for ${seller}`)
   }
 

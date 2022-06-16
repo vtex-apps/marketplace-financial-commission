@@ -10,6 +10,8 @@ import EDIT_TOKEN from './editToken.gql'
 import SELLER_INVOICES from './getInvoicesBySeller.gql'
 import CREATE_SETTINGS from './createSettings.gql'
 import GET_SETTINGS from './getSettings.gql'
+import GET_TEMPLATE from './getTemplate.gql'
+import SEND_EMAIL from './sendEmail.gql'
 
 export {
   SEARCH_ORDERS,
@@ -24,4 +26,6 @@ export {
   SELLER_INVOICES,
   CREATE_SETTINGS,
   GET_SETTINGS,
+  GET_TEMPLATE,
+  SEND_EMAIL,
 }

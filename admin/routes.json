@@ -16,7 +16,7 @@
     "path": "/admin/app/commission-report/settings/detail/*sellerId"
   },
   "admin.app.invoiceDetail": {
-    "component": "invoiceDetail",
+    "component": "invoiceMarketplaceDetail",
     "path": "/admin/app/commission-report/invoice/:id"
   }
 }

@@ -28,10 +28,16 @@ const routes = {
   mail: method({
     POST: [sendMail],
   }),
+  _mail: method({
+    POST: [sendMail],
+  }),
   sellers: method({
     GET: [sellers, sellersResponse],
   }),
   template: method({
+    GET: [template],
+  }),
+  _template: method({
     GET: [template],
   }),
   generateDashboard: method({

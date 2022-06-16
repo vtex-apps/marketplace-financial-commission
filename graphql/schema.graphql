@@ -7,7 +7,8 @@ type Query {
   """
   Retrieve paginated Invoices for a given seller
   """
-  invoicesBySeller(sellerInvoiceParams: SellerInvoiceParams): ListInvoices @cacheControl(scope: PRIVATE, maxAge: LONG)
+  invoicesBySeller(sellerInvoiceParams: SellerInvoiceParams): ListInvoices
+    @cacheControl(scope: PRIVATE, maxAge: LONG)
   """
   Retrieves an Invoice
   """
@@ -40,6 +41,10 @@ type Query {
 
   getSettings(id: String): SettingsSeller
     @cacheControl(scope: PUBLIC, maxAge: LONG)
+  """
+  Retrieve template for order detail
+  """
+  getTemplate: String @cacheControl(scope: PRIVATE, maxAge: LONG)
 }
 
 type Mutation {
@@ -53,6 +58,9 @@ type Mutation {
   """
   Attempts to create an settings
   """
-
   createSettings(settingsData: SettingsDataInput!): String
+  """
+  Send invoice data to a specific email address
+  """
+  sendEmail(emailData: EmailDataInput!): String
 }

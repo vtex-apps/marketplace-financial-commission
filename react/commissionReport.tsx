@@ -192,6 +192,7 @@ const CommissionReport: FC = () => {
           ? totalItemsFilter
           : totalItems
 
+      // TODO: Change labels to FormattedText components
       setStatsTotalizer([
         {
           label: 'Number of Sellers',

@@ -240,3 +240,8 @@ input SellerInvoiceParams {
   pagination: Pagination
   dates: Dates!
 }
+
+input EmailDataInput {
+  email: String
+  jsonData: String
+}

@@ -8,6 +8,8 @@ import { searchSellersDashboard } from './searchSellersDashboard'
 import { searchStatisticsDashboard } from './searchStatisticsDashboard'
 import { createSettings } from './createSettings'
 import { getSettings } from './getSettings'
+import { getTemplate } from './getTemplate'
+import { sendEmail } from './sendEmail'
 
 export const queries = {
   getSellers,
@@ -18,6 +20,7 @@ export const queries = {
   invoicesBySeller,
   getInvoice,
   getSettings,
+  getTemplate,
 }
 
 export const mutations = {
@@ -25,4 +28,5 @@ export const mutations = {
   editToken,
   createInvoice,
   createSettings,
+  sendEmail,
 }

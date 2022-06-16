@@ -1,0 +1,3 @@
+mutation SEND_EMAIL($emailData: EmailDataInput!) {
+  sendEmail(emailData: $emailData)
+}

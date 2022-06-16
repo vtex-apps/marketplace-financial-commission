@@ -15,6 +15,21 @@
       "path": "/_v/mail",
       "public": true
     },
+    "_mail": {
+      "path": "/_v/policy/financial-commission/mail",
+      "public": false,
+      "access": "authenticated",
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": ["post"],
+          "principals": [
+            "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*",
+            "vrn:vtex.vtex-id:*:*:*:user/*@vtex.com.br"
+          ]
+        }
+      ]
+    },
     "sellers": {
       "path": "/_v/sellers/list",
       "public": true
@@ -22,6 +37,21 @@
     "template": {
       "path": "/_v/segment/template",
       "public": true
+    },
+    "_template": {
+      "path": "/_v/policy/financial-commission/template",
+      "public": false,
+      "access": "authenticated",
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": ["get"],
+          "principals": [
+            "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*",
+            "vrn:vtex.vtex-id:*:*:*:user/*@vtex.com.br"
+          ]
+        }
+      ]
     },
     "generateDashboard": {
       "path": "/dashboard/generate",

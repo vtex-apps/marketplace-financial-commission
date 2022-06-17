@@ -75,7 +75,7 @@
       "public": true
     },
     "singleInvoice": {
-      "path": "/_v/financial-commission/:sellerId/invoice/*id",
+      "path": "/_v/private/financial-commission/:sellerId/invoice/*id",
       "public": true
     },
     "_singleInvoice": {

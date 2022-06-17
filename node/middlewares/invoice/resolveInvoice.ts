@@ -41,4 +41,5 @@ export async function resolveInvoice(ctx: Context): Promise<void> {
 
   ctx.status = 200
   ctx.body = body
+  ctx.set('Cache-Control', 'no-cache ')
 }

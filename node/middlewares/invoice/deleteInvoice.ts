@@ -6,7 +6,11 @@ import { getInvoice } from './getInvoice'
  */
 export async function deleteInvoice(ctx: Context) {
   const {
-    query: { id },
+    vtex: {
+      route: {
+        params: { id },
+      },
+    },
     clients: { commissionInvoices },
   } = ctx
 
@@ -16,7 +20,7 @@ export async function deleteInvoice(ctx: Context) {
     return null
   }
 
-  await commissionInvoices.delete(id[0])
+  await commissionInvoices.delete(id.toString())
 
   return `Invoice ${id} deleted`
 }

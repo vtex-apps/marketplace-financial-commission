@@ -8,7 +8,12 @@ import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
 export async function getInvoice(ctx: Context) {
   const {
     query: { sellerName },
-    params: { id },
+    vtex: {
+      route: {
+        params: { id },
+      },
+    },
+    // params: { id },
     clients: { commissionInvoices },
     state: {
       body: { seller },

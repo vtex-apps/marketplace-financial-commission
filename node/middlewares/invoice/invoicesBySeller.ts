@@ -51,6 +51,7 @@ export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
 
   ctx.status = 200
   ctx.body = sellerInvoices
+  ctx.set('Cache-Control', 'no-cache ')
 
   await next()
 }

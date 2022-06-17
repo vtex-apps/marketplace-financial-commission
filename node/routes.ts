@@ -52,8 +52,8 @@ const routes = {
   singleInvoice: method({
     GET: [seller, authentication, resolveInvoice],
     POST: [seller, authentication, resolveInvoice],
-    DELETE: [resolveInvoice],
-    PATCH: [resolveInvoice],
+    DELETE: [seller, authentication, resolveInvoice],
+    PATCH: [seller, authentication, resolveInvoice],
   }),
   _singleInvoice: method({
     GET: [seller, policy, resolveInvoice],

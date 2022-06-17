@@ -9,7 +9,7 @@ import { invoicingProcess } from '../../services/invoicingProcess'
  */
 export async function createInvoice(ctx: Context) {
   const {
-    query: { sellerName, sellerId },
+    query: { sellerName },
     state: {
       body: { seller },
     },
@@ -17,7 +17,7 @@ export async function createInvoice(ctx: Context) {
   } = ctx
 
   /* This means the seller wants to access other seller's invoices */
-  if (sellerName !== seller) {
+  if (sellerName !== seller.name) {
     throw new AuthenticationError(`Cannot access invoices for ${seller}`)
   }
 
@@ -29,7 +29,7 @@ export async function createInvoice(ctx: Context) {
     )
   }
 
-  const sellerData = { ...requestData, id: sellerId, name: seller }
+  const sellerData = { ...requestData, id: seller.id, name: seller.name }
 
   const invoice = await invoicingProcess(ctx, sellerData)
 

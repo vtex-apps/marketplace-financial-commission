@@ -9,7 +9,11 @@ import { json } from 'co-body'
 export async function updateInvoice(ctx: Context): Promise<string> {
   const {
     clients: { commissionInvoices },
-    query: { id },
+    vtex: {
+      route: {
+        params: { id },
+      },
+    },
     req,
   } = ctx
 
@@ -20,7 +24,7 @@ export async function updateInvoice(ctx: Context): Promise<string> {
     ...requestBody,
   }
 
-  await commissionInvoices.update(id[0], invoice)
+  await commissionInvoices.update(id.toString(), invoice)
 
-  return `Invoice ${id[0]} updated`
+  return `Invoice ${id.toString()} updated`
 }

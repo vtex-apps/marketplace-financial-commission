@@ -6,11 +6,7 @@
 
  <br />
 
-<<<<<<< HEAD
 # Dashboard
-=======
- # Dashboard
->>>>>>> cadc2d3 (Update readme)
 
 ## List Sellers
 ![](https://img.shields.io/static/v1?label=&message=GET&color=blue) `https://{{accountmarketplace}}.myvtex.com/_v/sellers/list`

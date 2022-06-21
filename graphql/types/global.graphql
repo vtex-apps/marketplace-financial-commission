@@ -20,6 +20,12 @@ type SettingsSeller {
   billingCycle: String
 }
 
+type SettingsResponse {
+  startDate: String
+  endDate: String
+  billingCycle: String
+}
+
 type Invoice {
   status: String
   invoiceCreatedDate: String

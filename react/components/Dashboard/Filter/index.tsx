@@ -137,7 +137,7 @@ const Filter: FC<FilterProps> = (props) => {
   return (
     <div>
       {!props.disableSelect && (
-        <div className={`${styles.filter_container} w-100`}>
+        <div className='w-100'>
           <SelectComponent
             options={props.optionsSelect}
             dataFilter={dataFilter}
@@ -186,6 +186,7 @@ const Filter: FC<FilterProps> = (props) => {
                 // eslint-disable-next-line react/jsx-key
                 <ButtonWithIcon
                   isActiveOfGroup
+                  size="small"
                   onClick={() => changesValuesTable()}
                   icon={<IconFilter />}
                 >
@@ -194,6 +195,7 @@ const Filter: FC<FilterProps> = (props) => {
                 // eslint-disable-next-line react/jsx-key
                 <ButtonWithIcon
                   isActiveOfGroup={false}
+                  size="small"
                   onClick={() => {
                     setDataFilter([])
                     setQuery({ sellerName: undefined })

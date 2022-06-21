@@ -11,6 +11,11 @@ import {
   PageHeader,
   ActionMenu,
   IconOptionsDots,
+  IconCog,
+  ButtonWithIcon,
+  Modal,
+  Divider,
+  Toggle,
 } from 'vtex.styleguide'
 import { useQuery, useLazyQuery } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
@@ -18,9 +23,10 @@ import { FormattedMessage } from 'react-intl'
 import {
   table as TableComponent,
   pagination as PaginationComponent,
+  filter as Filter,
 } from 'vtex.components-financial-commission'
 
-import { Filter, Totalizer } from './components'
+import { Totalizer } from './components'
 import { GET_SELLERS, SEARCH_STATS, SEARCH_SELLERS } from './graphql'
 
 const CommissionReport: FC = () => {
@@ -39,6 +45,7 @@ const CommissionReport: FC = () => {
   const [totalAmount, setTotalAmout] = useState(0)
   const [totalCommission, setTotalCommission] = useState(0)
   const [totalOrder, setTotalOrder] = useState(0)
+  const [orderSort, setOrderSort] = useState('')
   const [totalItemsFilter, setTotalItemsFilter] = useState(0)
   const [statsTotalizer, setStatsTotalizer] = useState<StatsTotalizer[]>([
     {
@@ -47,6 +54,10 @@ const CommissionReport: FC = () => {
       iconBackgroundColor: '',
     },
   ])
+
+  let columnModal: JSX.Element[] = []
+  const [hideColumns, setHideColumn] = useState<string[]>([])
+  const [modalColumns, setModalColumns] = useState(false)
 
   const [sellersDashboard, setSellersDashboard] = useState<DataSeller[]>([])
 
@@ -80,10 +91,23 @@ const CommissionReport: FC = () => {
           page,
           pageSize,
           sellersId,
+          sort: orderSort
         },
       },
     })
 
+  // id name ordersCount totalComission totalOrderValue
+
+  const hideShowColumns = (e: string) => {
+
+    let temp = [...hideColumns]
+    if(temp.find(id => id === e)) {
+      temp.splice(temp.indexOf(e), 1)
+    }else{
+      temp.push(e)
+    }
+    setHideColumn(temp)
+  }
   const schemaTable = [
     {
       id: 'name',
@@ -91,18 +115,22 @@ const CommissionReport: FC = () => {
       cellRenderer: (props: CellRendererProps) => {
         return <span>{props.data}</span>
       },
+      sortable: true,
     },
     {
       id: 'ordersCount',
       title: <FormattedMessage id="admin/table-total-orders" />,
+      sortable: true,
     },
     {
       id: 'totalOrderValue',
       title: <FormattedMessage id="admin/table-total-amount" />,
+      sortable: true,
     },
     {
       id: 'totalComission',
       title: <FormattedMessage id="admin/table-total-commission" />,
+      sortable: true,
     },
     {
       id: 'name',
@@ -329,12 +357,35 @@ const CommissionReport: FC = () => {
     setPage(previousPage)
   }
 
+  const sorting = (dataSorting: any) => {
+    setOrderSort(`${dataSorting.by} ${dataSorting.order}`)
+  }
+
   return (
     <Layout
       pageHeader={
         <PageHeader title={<FormattedMessage id="admin/navigation.title" />} />
       }
     >
+      <div className='w-100 flex justify-end'>
+        <ButtonWithIcon icon={<IconCog color="#979899"/>} variation="tertiary" onClick={() => setModalColumns(true)}/>
+      </div>
+      <Modal centered isOpen={modalColumns} onClose={() => setModalColumns(false)}>
+        <p>Choose the columns to display</p>
+        <Divider orientation="horizontal" />
+        {
+          schemaTable.forEach(itemColum => {
+            const validateCheck = hideColumns.find(item => item === itemColum.id)
+            const idLabel = <FormattedMessage id={itemColum.title.props.id} />
+            columnModal.push(<div className='mt3'>
+              <Toggle id={itemColum.id} label={idLabel} onChange={(e: any) => hideShowColumns(e.target.id)} checked={validateCheck ? true : false}/>
+              <div className='mt3'><Divider orientation="horizontal" /></div>
+            </div>)
+
+          })}
+          {columnModal}
+
+      </Modal>
       {startDate && finalDate && (
         <div className="mt2">
           <PageBlock>
@@ -364,11 +415,13 @@ const CommissionReport: FC = () => {
       </div>
       <div className="mt2">
         <PageBlock>
-          <div className="mt4 mb7">
+          <div>
             <TableComponent
               schemaTable={schemaTable}
               items={sellersDashboard}
               loading={loadingDataDashboard}
+              sorting={sorting}
+              hiddenColumn={hideColumns}
             />
             <PaginationComponent
               setPageSize={setPageSize}

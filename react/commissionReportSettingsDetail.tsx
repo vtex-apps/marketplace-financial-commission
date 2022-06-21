@@ -144,7 +144,6 @@ const CommissionReportSettingsDetail: FC = () => {
 
   useEffect(() => {
     if (dataSettings) {
-      console.info('TESTTTTTT ', dataSettings)
       setInfoSettings([{'idbilling': dataSettings.createSettings.billingCycle, 'start': dataSettings.createSettings.startDate, 'end': dataSettings.createSettings.endDate}])
 
       setOpenAlert(true)
@@ -189,7 +188,6 @@ const CommissionReportSettingsDetail: FC = () => {
 
       setSellerSettingsToken(tokenData)
     }
-    console.info('getToken ', getToken)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getToken])
 

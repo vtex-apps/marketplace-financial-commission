@@ -103,7 +103,6 @@ const CommissionReportSettings: FC = () => {
           name: seller.name,
         })
       })
-      console.info('dataSellersTable ', dataSellersTable)
       setSellersResult(dataTableDashboard)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -223,7 +222,6 @@ const CommissionReportSettings: FC = () => {
 
   useEffect(() => {
     if (dataSettings) {
-      console.info('TESTTTTTT ', dataSettings)
       setInfoSettings([{'idbilling': dataSettings.createSettings.billingCycle, 'start': dataSettings.createSettings.startDate, 'end': dataSettings.createSettings.endDate}])
 
       setOpenAlert(true)
@@ -259,8 +257,6 @@ const CommissionReportSettings: FC = () => {
     setItemFrom(currentFrom)
     setPage(previousPage)
   }
-
-  console.info('openAlert ', openAlert)
 
   return (
     <Layout

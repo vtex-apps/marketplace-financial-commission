@@ -11,6 +11,7 @@ import {
   EXPERIMENTAL_Select as Select,
   Box,
   Button,
+  EXPERIMENTAL_Table as Table,
 } from 'vtex.styleguide'
 import { FormattedMessage } from 'react-intl'
 import { useQuery, useMutation } from 'react-apollo'
@@ -29,12 +30,14 @@ const CommissionReportSettings: FC = () => {
   const [optionsSelect, setOptionsSelect] = useState<any>([])
   const [sellersResult, setSellersResult] = useState<SettingsSellers[] | []>([])
   const [selectedValue, setSelectValue] = useState<any | null>()
+  const [infoSettings, setInfoSettings] = useState<any>([])
   const [createSettings, { data: dataSettings }] = useMutation(CREATE_SETTINGS)
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(20)
   const [itemFrom, setItemFrom] = useState(1)
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
+  const [openAlert, setOpenAlert] = useState(false)
 
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
@@ -80,10 +83,13 @@ const CommissionReportSettings: FC = () => {
 
   useEffect(() => {
     if (settings) {
+      setInfoSettings([{'idbilling': settings.getSettings.billingCycle, 'start': settings.getSettings.startDate, 'end': settings.getSettings.endDate}])
+
       setSelectValue({
         value: 30,
         label: settings.getSettings.billingCycle,
       })
+
     }
   }, [settings])
 
@@ -97,6 +103,7 @@ const CommissionReportSettings: FC = () => {
           name: seller.name,
         })
       })
+      console.info('dataSellersTable ', dataSellersTable)
       setSellersResult(dataTableDashboard)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -130,6 +137,7 @@ const CommissionReportSettings: FC = () => {
             onClick: () => {
               navigate({
                 to: `/admin/app/commission-report/settings/detail/${data.id}`,
+                query: `name=${data.name}`
               })
             },
           },
@@ -140,7 +148,7 @@ const CommissionReportSettings: FC = () => {
 
   const schemaTable = [
     {
-      id: 'id',
+      id: 'name',
       title: <FormattedMessage id="admin/table-settings-name" />,
       width: '90em',
       cellRenderer: (props: CellRendererProps) => {
@@ -194,13 +202,11 @@ const CommissionReportSettings: FC = () => {
         const day =
           nowDate.getDate() < 10 ? `0${nowDate.getDate()}` : nowDate.getDate()
 
-        const finalDay =
-          nowDate.getDate() + 1 < 10
-            ? `0${nowDate.getDate() + 1}`
-            : nowDate.getDate() + 1
+        /* const finalDay =
+          nowDate.getDate() + 1 < 10? `0${nowDate.getDate() + 1}` : nowDate.getDate() + 1 */
 
         date = `${nowDate.getFullYear()}-${month}-${day}`
-        lastDateString = `${nowDate.getFullYear()}-${month}-${finalDay}`
+        lastDateString = `${nowDate.getFullYear()}-${month}-${day}`
       }
 
       createSettings({
@@ -216,10 +222,11 @@ const CommissionReportSettings: FC = () => {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line vtex/prefer-early-return
-    /** @TODO alert para mostrar que los datos se guardaron con exito */
     if (dataSettings) {
-      console.info('dataSettings Resultado ', dataSettings)
+      console.info('TESTTTTTT ', dataSettings)
+      setInfoSettings([{'idbilling': dataSettings.createSettings.billingCycle, 'start': dataSettings.createSettings.startDate, 'end': dataSettings.createSettings.endDate}])
+
+      setOpenAlert(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSettings])
@@ -252,6 +259,8 @@ const CommissionReportSettings: FC = () => {
     setItemFrom(currentFrom)
     setPage(previousPage)
   }
+
+  console.info('openAlert ', openAlert)
 
   return (
     <Layout
@@ -299,6 +308,32 @@ const CommissionReportSettings: FC = () => {
               </p>
             </div>
           </div>
+          {openAlert ? <div className='mt7'>
+            <Alert type="success" onClose={() => setOpenAlert(false)}>
+              Data was updated successfully
+            </Alert>
+          </div> : <div/>}
+          <div className='mt7'>
+            <Table
+              stickyHeader
+              measures={[]}
+              items={infoSettings}
+              columns={[
+                {
+                  id: 'idbilling',
+                  title: 'Billing Cycle',
+                },
+                {
+                  id: 'start',
+                  title: 'Start Date',
+                },
+                {
+                  id: 'end',
+                  title: 'End Date',
+                },
+              ]}
+            />
+          </div>
         </Box>
       </div>
       <p className="c-action-primary hover-c-action-primary fw5 ml2 mt6">
@@ -306,7 +341,7 @@ const CommissionReportSettings: FC = () => {
       </p>
       <div className="mt6">
         <PageBlock>
-          <div className="mt4 mb5">
+          <div>
             <Filter
               optionsSelect={optionsSelect}
               setSellerId={setSellersId}

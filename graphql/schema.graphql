@@ -54,5 +54,5 @@ type Mutation {
   Attempts to create an settings
   """
 
-  createSettings(settingsData: SettingsDataInput!): String
+  createSettings(settingsData: SettingsDataInput!): SettingsResponse
 }

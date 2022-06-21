@@ -1,3 +1,7 @@
 mutation CREATE_SETTINGS($settingsData: SettingsDataInput!) {
-    createSettings(settingsData: $settingsData)
+    createSettings(settingsData: $settingsData) {
+      startDate
+      endDate
+      billingCycle
+    }
 }

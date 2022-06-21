@@ -1,6 +1,6 @@
 export const sortGeneric = (
   arr: any[],
-  fieldsArray = 'totalComission DESC'
+  fieldsArray = 'totalComission DSC'
 ) => {
   let result = 0
 
@@ -11,7 +11,7 @@ export const sortGeneric = (
       const [field, order] = element.split(' ')
 
       if (field.includes('id') || field.includes('name')) {
-        if (order === 'DESC') {
+        if (order === 'DSC') {
           result = String(b[field]).localeCompare(a[field])
 
           return result
@@ -26,7 +26,7 @@ export const sortGeneric = (
         return 0
       }
 
-      if (order === 'DESC') {
+      if (order === 'DSC') {
         const field2 = 'ordersCount'
 
         result =

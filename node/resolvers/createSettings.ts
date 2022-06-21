@@ -19,9 +19,10 @@ export const createSettings = async (
 
   try {
     await vbase.saveJSON<any>(config.SETTINGS_BUCKET, idBucket, settingsData)
+    console.info('settingsData::::: ', settingsData)
   } catch (err) {
     console.info('error ', err)
   }
 
-  return idBucket
+  return settingsData
 }

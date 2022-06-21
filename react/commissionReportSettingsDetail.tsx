@@ -8,6 +8,8 @@ import {
   EXPERIMENTAL_Select as Select,
   Toggle,
   Box,
+  EXPERIMENTAL_Table as Table,
+  Alert,
 } from 'vtex.styleguide'
 import { FormattedMessage } from 'react-intl'
 import { useRuntime } from 'vtex.render-runtime'
@@ -42,11 +44,13 @@ const DATE_CUT_OPTIONS = [
 ]
 
 const CommissionReportSettingsDetail: FC = () => {
-  const { navigate, route } = useRuntime()
+  const { navigate, route, query } = useRuntime()
   const [sellerSettingsToken, setSellerSettingsToken] =
     useState<SellerSettingsToken>({})
 
   const [selectedValue, setSelectValue] = useState<any | null>()
+  const [openAlert, setOpenAlert] = useState(false)
+  const [infoSettings, setInfoSettings] = useState<any>([])
 
   const { data: getToken } = useQuery(GET_TOKEN, {
     ssr: false,
@@ -56,7 +60,7 @@ const CommissionReportSettingsDetail: FC = () => {
     },
   })
 
-  const [createSettings] = useMutation(CREATE_SETTINGS)
+  const [createSettings, { data: dataSettings }] = useMutation(CREATE_SETTINGS)
 
   const { data: settings } = useQuery(GET_SETTINGS, {
     ssr: false,
@@ -138,6 +142,16 @@ const CommissionReportSettingsDetail: FC = () => {
     }
   }
 
+  useEffect(() => {
+    if (dataSettings) {
+      console.info('TESTTTTTT ', dataSettings)
+      setInfoSettings([{'idbilling': dataSettings.createSettings.billingCycle, 'start': dataSettings.createSettings.startDate, 'end': dataSettings.createSettings.endDate}])
+
+      setOpenAlert(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataSettings])
+
   const handleIsEnable = () => {
     setSellerSettingsToken({
       ...sellerSettingsToken,
@@ -156,6 +170,7 @@ const CommissionReportSettingsDetail: FC = () => {
 
   useEffect(() => {
     if (settings) {
+      setInfoSettings([{'idbilling': settings.getSettings.billingCycle, 'start': settings.getSettings.startDate, 'end': settings.getSettings.endDate}])
       setSelectValue({
         value: 30,
         label: settings.getSettings.billingCycle,
@@ -174,6 +189,7 @@ const CommissionReportSettingsDetail: FC = () => {
 
       setSellerSettingsToken(tokenData)
     }
+    console.info('getToken ', getToken)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getToken])
 
@@ -197,7 +213,7 @@ const CommissionReportSettingsDetail: FC = () => {
           title={
             <FormattedMessage
               id="admin/navigation.setting"
-              values={{ name: sellerSettingsToken.name }}
+              values={{ name: query.name }}
             />
           }
           linkLabel={<FormattedMessage id="admin/navigation.settings" />}
@@ -271,6 +287,32 @@ const CommissionReportSettingsDetail: FC = () => {
             <p className="t-small w-100 c-muted-1">
               <FormattedMessage id="admin/modal-settings.billingCycle-helpText" />
             </p>
+          </div>
+          {openAlert ? <div className='mt7'>
+            <Alert type="success" onClose={() => setOpenAlert(false)}>
+              Data was updated successfully
+            </Alert>
+          </div> : <div/>}
+          <div className='mt7'>
+            <Table
+              stickyHeader
+              measures={[]}
+              items={infoSettings}
+              columns={[
+                {
+                  id: 'idbilling',
+                  title: 'Billing Cycle',
+                },
+                {
+                  id: 'start',
+                  title: 'Start Date',
+                },
+                {
+                  id: 'end',
+                  title: 'End Date',
+                },
+              ]}
+            />
           </div>
         </Box>
       </div>

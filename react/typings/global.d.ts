@@ -117,6 +117,8 @@ interface TableData {
   items: any
   schemaTable: SchemaTable[]
   loading: boolean
+  sorting?: any
+  hiddenColumn?: string[]
 }
 
 interface DataSellerSelect {

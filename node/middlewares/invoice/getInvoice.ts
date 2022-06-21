@@ -29,7 +29,7 @@ export async function getInvoice(ctx: Context) {
 
   const invoice = await commissionInvoices.search(
     { page: PAGE_DEFAULT, pageSize: PAGE_SIZE_DEFAULT },
-    ['_all'],
+    ['id,status,invoiceCreatedDate,seller,orders,totalizers'],
     '',
     where
   )

@@ -23,3 +23,4 @@
  - [Commit fix search order when status is invoiced](https://github.com/vtex-apps/marketplace-financial-commission/pull/58)
  - [Commit sort to Dashboard and search to MD](https://github.com/vtex-apps/marketplace-financial-commission/pull/63)
  - [Commit fix endpoint's singleInvoice](https://github.com/vtex-apps/marketplace-financial-commission/pull/65)
+ - [Feature/dashboard backend](https://github.com/vtex-apps/marketplace-financial-commission/pull/66)

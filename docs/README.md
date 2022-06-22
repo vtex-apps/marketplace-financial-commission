@@ -6,7 +6,11 @@
 
  <br />
 
+<<<<<<< HEAD
 # Dashboard
+=======
+ # Dashboard
+>>>>>>> cadc2d3 (Update readme)
 
 ## List Sellers
 ![](https://img.shields.io/static/v1?label=&message=GET&color=blue) `https://{{accountmarketplace}}.myvtex.com/_v/sellers/list`
@@ -1544,140 +1548,7 @@ curl --request GET \
 <br />
 __________________________________________________
 
-## Search Orders
-![](https://img.shields.io/static/v1?label=&message=GET&color=blue) `https://{{accountmarketplace}}.myvtex.com/_v/private/orders`
-
-Retrieve a list of orders according to the filters described below, for a specific date range, from the orders placed in VTEX. 
-
-<br />
-
-> **Note** The date range is the creation date of the orders if the filtered status is ```Invoiced``` it will be filtered by invoice date in VTEX.
-
-<br />
-
-#### **Path parameters**
-
-| accountmarketplace  |
-| ------------ |
-|  Name of the VTEX account of the marketplace. |
-
-<br />
-
-#### **Authorization**
-> **Type** ```Bearer Token```
-
-| Attribute | Type        | Mandatory | Description |
-| ----------| ----------- |---------- | ----------- |
-| Token     | string      | Yes       |The token configured by the marketplace in financial commission             |
-
-
-<br />
-
-#### **Request filters allowed**
-| Attribute     | Type        | Mandatory | Description |
-| -----------   | ----------- |---------- | ----------- |
-| dateStart     | string      | Yes       | Start date of consulting  in ```"yyyy-mm-dd"``` format  |
-| dateEnd       | string      | Yes       | End date of consulting  in ```"yyyy-mm-dd"``` format    |
-| page          | number      | Yes       | Page Number                                             |
-| perpage       | number      | Yes       | Number of items per page                                |
-| sellerId      | string      | Yes       | Seller ID                                               |
-| status        | string      | No        | Order Status Value                                      | 
-
-<br />
-
-##### **Order Status avaible to filter**
-
-| Status                               | 
-| ----------------------------------   | 
-| waiting-for-sellers-confirmation     | 
-| payment-pending                      | 
-| payment-approved                     | 
-| ready-for-handling                   | 
-| handling                             | 
-| invoiced                             |
-| canceled                             |  
-
-<br />
-
-```bash
-curl --request GET \
-  --url 'https://example.myvtex.com/_v/private/orders?dateStart=2022-04-01&dateEnd=2022-01-30&page=1&perpage=100&sellerId=sellerId1' \
-  --header 'Authorization: Bearer abcdefghijk12345'
-```
-<br />
-
-#### **Response** 
-
-| Attribute                   | Type        | Description                                             |
-| ----------------------------| ----------- |-------------------------------------------------------- |
-| data                        | object      | Order detail                                            |
-| orderId                     | string      | Order Id                                                |
-| sellerOrderId               | string      | Order Seller Id                                         |
-| totalOrderValue             | number      | Payment value                                           |
-| totalComission              | number      | Commission on payment value                             |
-| status                      | string      | Order status                                            |
-| statusDescription           | string      | Status description                                      |
-| creationDate                | string      | Order creation date                                     |
-| rate                        | object      | Rate detail object                                      |
-| itemId                      | string      | Item id                                                 |
-| nameItem                    | string      | Item name                                               |
-| rate                        | object      | Array object to contain the rates configured by item    |
-| freightCommissionPercentage | number      | Freight commission percentage                           |
-| productCommissionPercentage | number      | Product commission percentage                           |
-| paging                      | object      | Paging details object                                   |
-| total                       | number      | Total number of items                                   |
-| pages                       | number      | Paging total pages                                      |
-| currentPage                 | number      | Current page                                            |
-| perPage                     | number      | Paging total per Page                                   |
-
-<br />
-
-> **Warning**
->* Throttling: Each account can make up to 5000 requests per minute.
->* The maximum number of items per page is 100.
->* The maximum number of pages to process is 30, if the number of pages is more than 30, you must refine the filter.
-
-<br />
-
-![](https://img.shields.io/static/v1?label=&message=200&color=green) `OK`
-
-```json
-{
-	"data": [
-		{
-			"orderId": "123456789-01",
-			"sellerOrderId": "GCB-123456789-01",
-			"totalOrderValue": 27,
-			"totalComission": 6.75,
-			"status": "payment-approved",
-			"statusDescription": "Pagamento Aprovado",
-			"creationDate": "2022-05-25T11:08:01.3004547+00:00",
-			"rate": [
-				{
-					"itemId": "116",
-					"nameItem": "Sare marina grunjoasa Solaris, 500 g",
-					"rate": {
-						"freightCommissionPercentage": 0,
-						"productCommissionPercentage": 25
-					}
-				}
-			]
-		},
-		{
-			...
-		}
-  ],
-	"paging": {
-		"total": 232,
-		"pages": 3,
-		"currentPage": 1,
-		"perPage": 100
-	}
-}
-
-```
-<br />
-__________________________________________________
+# Token Authorization
 
 ## Create Token
 ![](https://img.shields.io/static/v1?label=&message=POST&color=brightgreen) `https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/{{accountmarketplace}}/master/_v/token/{{sellerId}}`
@@ -1850,3 +1721,145 @@ curl --request PUT \
 }
 
 ```
+__________________________________________________
+<br />
+
+# Seller Invoice Detail
+
+
+## Search Orders
+![](https://img.shields.io/static/v1?label=&message=GET&color=blue) `https://{{accountmarketplace}}.myvtex.com/_v/private/orders`
+
+Retrieve a list of orders according to the filters described below, for a specific date range, from the orders placed in VTEX. 
+
+<br />
+
+> **Note** The date range is the creation date of the orders if the filtered status is ```Invoiced``` it will be filtered by invoice date in VTEX.
+
+<br />
+
+#### **Path parameters**
+
+| accountmarketplace  |
+| ------------ |
+|  Name of the VTEX account of the marketplace. |
+
+<br />
+
+#### **Authorization**
+> **Type** ```Bearer Token```
+
+| Attribute | Type        | Mandatory | Description |
+| ----------| ----------- |---------- | ----------- |
+| Token     | string      | Yes       |The token configured by the marketplace in financial commission             |
+
+
+<br />
+
+#### **Request filters allowed**
+| Attribute     | Type        | Mandatory | Description |
+| -----------   | ----------- |---------- | ----------- |
+| dateStart     | string      | Yes       | Start date of consulting  in ```"yyyy-mm-dd"``` format  |
+| dateEnd       | string      | Yes       | End date of consulting  in ```"yyyy-mm-dd"``` format    |
+| page          | number      | Yes       | Page Number                                             |
+| perpage       | number      | Yes       | Number of items per page                                |
+| sellerId      | string      | Yes       | Seller ID                                               |
+| status        | string      | No        | Order Status Value                                      | 
+
+<br />
+
+##### **Order Status avaible to filter**
+
+| Status                               | 
+| ----------------------------------   | 
+| waiting-for-sellers-confirmation     | 
+| payment-pending                      | 
+| payment-approved                     | 
+| ready-for-handling                   | 
+| handling                             | 
+| invoiced                             |
+| canceled                             |  
+
+<br />
+
+```bash
+curl --request GET \
+  --url 'https://example.myvtex.com/_v/private/orders?dateStart=2022-04-01&dateEnd=2022-01-30&page=1&perpage=100&sellerId=sellerId1' \
+  --header 'Authorization: Bearer abcdefghijk12345'
+```
+<br />
+
+#### **Response** 
+
+| Attribute                   | Type        | Description                                             |
+| ----------------------------| ----------- |-------------------------------------------------------- |
+| data                        | object      | Order detail                                            |
+| orderId                     | string      | Order Id                                                |
+| sellerOrderId               | string      | Order Seller Id                                         |
+| totalOrderValue             | number      | Payment value                                           |
+| totalComission              | number      | Commission on payment value                             |
+| status                      | string      | Order status                                            |
+| statusDescription           | string      | Status description                                      |
+| creationDate                | string      | Order creation date                                     |
+| rate                        | object      | Rate detail object                                      |
+| itemId                      | string      | Item id                                                 |
+| nameItem                    | string      | Item name                                               |
+| rate                        | object      | Array object to contain the rates configured by item    |
+| freightCommissionPercentage | number      | Freight commission percentage                           |
+| productCommissionPercentage | number      | Product commission percentage                           |
+| paging                      | object      | Paging details object                                   |
+| total                       | number      | Total number of items                                   |
+| pages                       | number      | Paging total pages                                      |
+| currentPage                 | number      | Current page                                            |
+| perPage                     | number      | Paging total per Page                                   |
+
+<br />
+
+> **Warning**
+>* Throttling: Each account can make up to 5000 requests per minute.
+>* The maximum number of items per page is 100.
+>* The maximum number of pages to process is 30, if the number of pages is more than 30, you must refine the filter.
+
+<br />
+
+![](https://img.shields.io/static/v1?label=&message=200&color=green) `OK`
+
+```json
+{
+	"data": [
+		{
+			"orderId": "123456789-01",
+			"sellerOrderId": "GCB-123456789-01",
+			"totalOrderValue": 27,
+			"totalComission": 6.75,
+			"status": "payment-approved",
+			"statusDescription": "Pagamento Aprovado",
+			"creationDate": "2022-05-25T11:08:01.3004547+00:00",
+			"rate": [
+				{
+					"itemId": "116",
+					"nameItem": "Sare marina grunjoasa Solaris, 500 g",
+					"rate": {
+						"freightCommissionPercentage": 0,
+						"productCommissionPercentage": 25
+					}
+				}
+			]
+		},
+		{
+			...
+		}
+  ],
+	"paging": {
+		"total": 232,
+		"pages": 3,
+		"currentPage": 1,
+		"perPage": 100
+	}
+}
+
+```
+<br />
+__________________________________________________
+
+<br />

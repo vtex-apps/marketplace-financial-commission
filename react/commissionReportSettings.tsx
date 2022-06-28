@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable vtex/prefer-early-return */
 import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
@@ -83,13 +84,18 @@ const CommissionReportSettings: FC = () => {
 
   useEffect(() => {
     if (settings) {
-      setInfoSettings([{'idbilling': settings.getSettings.billingCycle, 'start': settings.getSettings.startDate, 'end': settings.getSettings.endDate}])
+      setInfoSettings([
+        {
+          idbilling: settings.getSettings.billingCycle,
+          start: settings.getSettings.startDate,
+          end: settings.getSettings.endDate,
+        },
+      ])
 
       setSelectValue({
         value: 30,
         label: settings.getSettings.billingCycle,
       })
-
     }
   }, [settings])
 
@@ -136,7 +142,7 @@ const CommissionReportSettings: FC = () => {
             onClick: () => {
               navigate({
                 to: `/admin/app/commission-report/settings/detail/${data.id}`,
-                query: `name=${data.name}`
+                query: `name=${data.name}`,
               })
             },
           },
@@ -222,7 +228,13 @@ const CommissionReportSettings: FC = () => {
 
   useEffect(() => {
     if (dataSettings) {
-      setInfoSettings([{'idbilling': dataSettings.createSettings.billingCycle, 'start': dataSettings.createSettings.startDate, 'end': dataSettings.createSettings.endDate}])
+      setInfoSettings([
+        {
+          idbilling: dataSettings.createSettings.billingCycle,
+          start: dataSettings.createSettings.startDate,
+          end: dataSettings.createSettings.endDate,
+        },
+      ])
 
       setOpenAlert(true)
     }
@@ -304,12 +316,16 @@ const CommissionReportSettings: FC = () => {
               </p>
             </div>
           </div>
-          {openAlert ? <div className='mt7'>
-            <Alert type="success" onClose={() => setOpenAlert(false)}>
-              Data was updated successfully
-            </Alert>
-          </div> : <div/>}
-          <div className='mt7'>
+          {openAlert ? (
+            <div className="mt7">
+              <Alert type="success" onClose={() => setOpenAlert(false)}>
+                Data was updated successfully
+              </Alert>
+            </div>
+          ) : (
+            <div />
+          )}
+          <div className="mt7">
             <Table
               stickyHeader
               measures={[]}

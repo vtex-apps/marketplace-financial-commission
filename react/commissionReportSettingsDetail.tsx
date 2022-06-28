@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FC } from 'react'
 import React, { useState, useEffect } from 'react'
 import {
@@ -144,7 +145,13 @@ const CommissionReportSettingsDetail: FC = () => {
 
   useEffect(() => {
     if (dataSettings) {
-      setInfoSettings([{'idbilling': dataSettings.createSettings.billingCycle, 'start': dataSettings.createSettings.startDate, 'end': dataSettings.createSettings.endDate}])
+      setInfoSettings([
+        {
+          idbilling: dataSettings.createSettings.billingCycle,
+          start: dataSettings.createSettings.startDate,
+          end: dataSettings.createSettings.endDate,
+        },
+      ])
 
       setOpenAlert(true)
     }
@@ -169,7 +176,13 @@ const CommissionReportSettingsDetail: FC = () => {
 
   useEffect(() => {
     if (settings) {
-      setInfoSettings([{'idbilling': settings.getSettings.billingCycle, 'start': settings.getSettings.startDate, 'end': settings.getSettings.endDate}])
+      setInfoSettings([
+        {
+          idbilling: settings.getSettings.billingCycle,
+          start: settings.getSettings.startDate,
+          end: settings.getSettings.endDate,
+        },
+      ])
       setSelectValue({
         value: 30,
         label: settings.getSettings.billingCycle,
@@ -286,12 +299,16 @@ const CommissionReportSettingsDetail: FC = () => {
               <FormattedMessage id="admin/modal-settings.billingCycle-helpText" />
             </p>
           </div>
-          {openAlert ? <div className='mt7'>
-            <Alert type="success" onClose={() => setOpenAlert(false)}>
-              Data was updated successfully
-            </Alert>
-          </div> : <div/>}
-          <div className='mt7'>
+          {openAlert ? (
+            <div className="mt7">
+              <Alert type="success" onClose={() => setOpenAlert(false)}>
+                Data was updated successfully
+              </Alert>
+            </div>
+          ) : (
+            <div />
+          )}
+          <div className="mt7">
             <Table
               stickyHeader
               measures={[]}

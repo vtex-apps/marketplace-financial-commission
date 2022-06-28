@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react'
 import type { FC } from 'react'
 import { FormattedMessage } from 'react-intl'

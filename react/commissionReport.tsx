@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
@@ -55,7 +56,7 @@ const CommissionReport: FC = () => {
     },
   ])
 
-  let columnModal: JSX.Element[] = []
+  const columnModal: JSX.Element[] = []
   const [hideColumns, setHideColumn] = useState<string[]>([])
   const [modalColumns, setModalColumns] = useState(false)
 
@@ -91,7 +92,7 @@ const CommissionReport: FC = () => {
           page,
           pageSize,
           sellersId,
-          sort: orderSort
+          sort: orderSort,
         },
       },
     })
@@ -99,15 +100,17 @@ const CommissionReport: FC = () => {
   // id name ordersCount totalComission totalOrderValue
 
   const hideShowColumns = (e: string) => {
+    const temp = [...hideColumns]
 
-    let temp = [...hideColumns]
-    if(temp.find(id => id === e)) {
+    if (temp.find((id) => id === e)) {
       temp.splice(temp.indexOf(e), 1)
-    }else{
+    } else {
       temp.push(e)
     }
+
     setHideColumn(temp)
   }
+
   const schemaTable = [
     {
       id: 'name',
@@ -367,24 +370,42 @@ const CommissionReport: FC = () => {
         <PageHeader title={<FormattedMessage id="admin/navigation.title" />} />
       }
     >
-      <div className='w-100 flex justify-end'>
-        <ButtonWithIcon icon={<IconCog color="#979899"/>} variation="tertiary" onClick={() => setModalColumns(true)}/>
+      <div className="w-100 flex justify-end">
+        <ButtonWithIcon
+          icon={<IconCog color="#979899" />}
+          variation="tertiary"
+          onClick={() => setModalColumns(true)}
+        />
       </div>
-      <Modal centered isOpen={modalColumns} onClose={() => setModalColumns(false)}>
+      <Modal
+        centered
+        isOpen={modalColumns}
+        onClose={() => setModalColumns(false)}
+      >
         <p>Choose the columns to display</p>
         <Divider orientation="horizontal" />
-        {
-          schemaTable.forEach(itemColum => {
-            const validateCheck = hideColumns.find(item => item === itemColum.id)
-            const idLabel = <FormattedMessage id={itemColum.title.props.id} />
-            columnModal.push(<div className='mt3'>
-              <Toggle id={itemColum.id} label={idLabel} onChange={(e: any) => hideShowColumns(e.target.id)} checked={validateCheck ? true : false}/>
-              <div className='mt3'><Divider orientation="horizontal" /></div>
-            </div>)
+        {schemaTable.forEach((itemColum) => {
+          const validateCheck = hideColumns.find(
+            (item) => item === itemColum.id
+          )
 
-          })}
-          {columnModal}
+          const idLabel = <FormattedMessage id={itemColum.title.props.id} />
 
+          columnModal.push(
+            <div className="mt3">
+              <Toggle
+                id={itemColum.id}
+                label={idLabel}
+                onChange={(e: any) => hideShowColumns(e.target.id)}
+                checked={!!validateCheck}
+              />
+              <div className="mt3">
+                <Divider orientation="horizontal" />
+              </div>
+            </div>
+          )
+        })}
+        {columnModal}
       </Modal>
       {startDate && finalDate && (
         <div className="mt2">

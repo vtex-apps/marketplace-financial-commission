@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FC } from 'react'
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -137,7 +138,7 @@ const Filter: FC<FilterProps> = (props) => {
   return (
     <div>
       {!props.disableSelect && (
-        <div className='w-100'>
+        <div className="w-100">
           <SelectComponent
             options={props.optionsSelect}
             dataFilter={dataFilter}

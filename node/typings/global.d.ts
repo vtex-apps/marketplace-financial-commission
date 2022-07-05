@@ -107,6 +107,15 @@ declare global {
     email: string
   }
 
+  const enum TypeIntegration {
+    external = 0,
+    internal = 1,
+  }
+
+  interface MarketplaceSettings extends Settings {
+    integration: TypeIntegration
+  }
+
   type FullFilledResult = {
     status: 'fullfilled'
     value: any

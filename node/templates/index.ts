@@ -1,5 +1,3 @@
-import { invoiceDetailMessage } from './invoiceDetail'
+import { GetBody } from './invoiceDetail'
 
-const templateBody = invoiceDetailMessage
-
-export default templateBody
+export default GetBody

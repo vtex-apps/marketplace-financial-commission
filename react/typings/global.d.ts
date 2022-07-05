@@ -101,6 +101,12 @@ enum SortOrder {
   DSC = 'DSC',
 }
 
+// eslint-disable-next-line no-restricted-syntax
+/* enum TypeIntegration {
+  external = 0,
+  internal = 1,
+} */
+
 type Sorted = {
   order?: SortOrder
   by?: string

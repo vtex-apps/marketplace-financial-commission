@@ -11,6 +11,7 @@ input SettingsDataInput {
   startDate: String!
   endDate: String!
   billingCycle: String!
+  integration: Int
 }
 
 type SettingsSeller {
@@ -18,12 +19,14 @@ type SettingsSeller {
   startDate: String
   endDate: String
   billingCycle: String
+  integration: String
 }
 
 type SettingsResponse {
   startDate: String
   endDate: String
   billingCycle: String
+  integration: Int
 }
 
 type Invoice {

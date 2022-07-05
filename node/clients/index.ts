@@ -3,6 +3,7 @@ import type {
   SellersDashboard,
   StatisticsDashboard,
   CommissionInvoice,
+  ExternalInvoice,
 } from 'vtex.marketplace-financial-commission'
 import { IOClients, LRUCache } from '@vtex/api'
 import { masterDataFor } from '@vtex/clients'
@@ -47,6 +48,13 @@ export class Clients extends IOClients {
     return this.getOrSet(
       'commissioninvoices',
       masterDataFor<CommissionInvoice>('commissioninvoices')
+    )
+  }
+
+  public get externalInvoices() {
+    return this.getOrSet(
+      'externalinvoices',
+      masterDataFor<ExternalInvoice>('externalinvoices')
     )
   }
 }

@@ -9,6 +9,11 @@ export const config = {
   INVOICE_MAIL_TEMPLATE: 'invoice-detail',
 } as const
 
+export const TypeIntegration = {
+  EXTERNAL: 'external',
+  INTERNAL: 'internal',
+}
+
 export const validationMessage = {
   DEFAULT_ERRORMESSAGE_FIELD_IS_REQUIRED: 'This field is required',
   ERROR_MESSAGE_DATE_FORMAT:

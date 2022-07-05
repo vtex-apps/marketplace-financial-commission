@@ -1,4 +1,4 @@
-import { config } from '../constants'
+import { config, TypeIntegration } from '../constants'
 
 export const getSettings = async (
   _: unknown,
@@ -17,6 +17,14 @@ export const getSettings = async (
   const idBucket = id || marketplace
 
   const response = await vbase.getJSON<any>(config.SETTINGS_BUCKET, idBucket)
+  const { integration } = response
 
-  return response
+  const { EXTERNAL, INTERNAL } = TypeIntegration
+
+  const responseClone = {
+    ...response,
+    integration: integration === 1 ? INTERNAL : EXTERNAL,
+  }
+
+  return responseClone
 }

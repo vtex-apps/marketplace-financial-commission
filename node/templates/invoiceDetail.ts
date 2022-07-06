@@ -5,7 +5,7 @@ export const GetBody = async (ctx: Context) => {
   const integration = await typeIntegration(ctx)
 
   const MESSAGE_BODY =
-    integration === TypeIntegration.internal
+    integration === TypeIntegration.internal.toString()
       ? readFile('../assets/invoiceDetail.html')
       : readFile('../assets/invoiceDetailExternal.html')
 

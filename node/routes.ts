@@ -15,7 +15,7 @@ import {
   templateMethod,
   policy,
   createInvoiceExternal,
-  // getInvoiceExternal,
+  getInvoiceExternal,
 } from './middlewares'
 import { createTokenAuth } from './middlewares/authentication/createTokenAuth'
 import { seller } from './middlewares/sellers/seller'
@@ -84,7 +84,7 @@ const routes = {
   }),
   invoiceExternal: method({
     POST: [validateParamsExternal, createInvoiceExternal],
-    // GET: [getInvoiceExternal],
+    GET: [getInvoiceExternal],
   }),
 }
 

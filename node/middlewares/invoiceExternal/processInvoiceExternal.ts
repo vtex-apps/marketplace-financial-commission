@@ -47,7 +47,7 @@ export const processInvoiceExternal = async (
     createdDate: dataInvoice.createdDate,
     status: dataInvoice.status,
     jsonData: dataInvoice.jsonData,
-    comment: `Invocie created by external API REST integration on ${today}`,
+    comment: `Invoice created by external API REST integration on ${today}`,
   }
 
   const idInvoice = randomId(dataInvoice.seller.id)

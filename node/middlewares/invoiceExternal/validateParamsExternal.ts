@@ -1,9 +1,10 @@
 /* eslint-disable no-useless-escape */
 import type { ErrorLike } from '@vtex/api'
-import { UserInputError } from '@vtex/api'
+import { AuthenticationError, UserInputError } from '@vtex/api'
 import { json } from 'co-body'
 
-import { validationMessage } from '../../constants'
+import { INVOICE_STATUS, validationMessage } from '../../constants'
+import { typeIntegration } from '../../utils/typeIntegration'
 // import type { InvoiceExternal } from '../../typings/externalInvoice'
 
 export async function validateParamsExternal(
@@ -18,6 +19,12 @@ export async function validateParamsExternal(
       break
 
     case 'POST': {
+      const integration = await typeIntegration(ctx)
+
+      if (TypeIntegration.external !== integration) {
+        throw new AuthenticationError('Invalid type integration')
+      }
+
       if (!requestData || JSON.stringify(requestData) === '{}') {
         const error: ErrorLike = {
           message: 'Body is requerid',
@@ -41,6 +48,8 @@ export async function validateParamsExternal(
 
       if (!status) {
         isRequerid(status, 'status')
+      } else {
+        validateStatus(status)
       }
 
       if (!seller) {
@@ -115,5 +124,23 @@ function validateEmail(email: string) {
     }
 
     throw new UserInputError(error)
+  }
+}
+
+function validateStatus(value: string) {
+  try {
+    if (
+      !Object.values(INVOICE_STATUS).includes(
+        value as 'unpaid' | 'partial' | 'paid'
+      )
+    ) {
+      throw new UserInputError(
+        `Invalid status '${value}'. The valid values are 'unpaid' | 'partial' | 'paid'`
+      )
+    }
+  } catch (error) {
+    throw new UserInputError(
+      `Invalid status '${value}'. The valid values are 'unpaid' | 'partial' | 'paid'`
+    )
   }
 }

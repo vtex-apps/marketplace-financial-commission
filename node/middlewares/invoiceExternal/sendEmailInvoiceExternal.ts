@@ -23,7 +23,7 @@ export const sendEmailInvoiceExternal = async (
     }
 
     await mail.sendMail({
-      templateName: config.INVOICE_MAIL_TEMPLATE_EXTERNAL,
+      templateName: config.INVOICE_MAIL_TEMPLATE,
       jsonData: {
         message: {
           to: dataInvoice.seller.contact.email,

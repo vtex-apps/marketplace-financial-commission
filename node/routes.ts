@@ -24,6 +24,7 @@ import { updateToken } from './middlewares/authentication/updateToken'
 import { getToken } from './middlewares/authentication/getToken'
 import { generate } from './middlewares/dashboard/generate/generate'
 import { validateParamsExternal } from './middlewares/invoiceExternal/validateParamsExternal'
+import { getTypeIntegration } from './middlewares/typeIntegration/getTypeIntegration'
 
 const template = templateMethod
 
@@ -85,6 +86,12 @@ const routes = {
   invoiceExternal: method({
     POST: [validateParamsExternal, createInvoiceExternal],
     GET: [getInvoiceExternal],
+  }),
+  _invoiceExternal: method({
+    GET: [seller, policy, getInvoiceExternal],
+  }),
+  typeIntegration: method({
+    GET: [getTypeIntegration],
   }),
 }
 

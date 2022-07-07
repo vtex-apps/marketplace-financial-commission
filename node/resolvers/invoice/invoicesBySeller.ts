@@ -1,4 +1,5 @@
 import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
+import { typeIntegration } from '../../utils/typeIntegration'
 
 export const invoicesBySeller = async (
   _: unknown,
@@ -6,7 +7,7 @@ export const invoicesBySeller = async (
   ctx: Context
 ): Promise<any> => {
   const {
-    clients: { commissionInvoices },
+    clients: { commissionInvoices, externalInvoices },
   } = ctx
 
   const {
@@ -21,12 +22,36 @@ export const invoicesBySeller = async (
 
   const pagination = { page, pageSize }
 
-  const sellerInvoices = await commissionInvoices.searchRaw(
-    pagination,
-    fields,
-    '',
-    where
-  )
+  let sellerInvoices
+
+  const integration = await typeIntegration(ctx)
+
+  console.info({ integration })
+
+  if (TypeIntegration.external === integration) {
+    console.info('Entre al external')
+    const whereExternal = `seller.name="${sellerName}" AND (invoiceCreatedDate between ${startDate} AND ${endDate})`
+
+    const fieldsExternal = ['id', 'status', 'invoiceCreatedDate', 'jsonData']
+
+    sellerInvoices = await externalInvoices.searchRaw(
+      pagination,
+      fieldsExternal,
+      '',
+      whereExternal
+    )
+
+    console.info({ sellerInvoices })
+  } else {
+    sellerInvoices = await commissionInvoices.searchRaw(
+      pagination,
+      fields,
+      '',
+      where
+    )
+  }
+
+  console.info({ sellerInvoices })
 
   return sellerInvoices
 }

@@ -44,7 +44,7 @@ export const processInvoiceExternal = async (
         phone: dataInvoice.seller.contact.phone,
       },
     },
-    createdDate: dataInvoice.createdDate,
+    invoiceCreatedDate: dataInvoice.invoiceCreatedDate,
     status: dataInvoice.status,
     jsonData: dataInvoice.jsonData,
     comment: `Invoice created by external API REST integration on ${today}`,

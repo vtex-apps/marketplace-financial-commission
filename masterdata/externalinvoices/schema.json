@@ -7,7 +7,7 @@
       "type": "string",
       "enum": ["partial", "unpaid", "paid"]
     },
-    "createdDate": {
+    "invoiceCreatedDate": {
       "type": "string"
     },
     "seller": {
@@ -39,8 +39,8 @@
       "type": ["string", "null"]
     }
   },
-  "v-indexed": ["id", "status", "createdDate", "seller"],
-  "required": ["status", "createdDate", "seller", "jsonData"],
+  "v-indexed": ["id", "status", "invoiceCreatedDate", "seller", "contact"],
+  "required": ["status", "invoiceCreatedDate", "seller", "jsonData"],
   "v-cache": false,
   "v-immediate-indexing": true
 }

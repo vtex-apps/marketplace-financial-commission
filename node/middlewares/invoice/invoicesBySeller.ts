@@ -2,13 +2,14 @@ import { AuthenticationError, UserInputError } from '@vtex/api'
 import { json } from 'co-body'
 
 import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
+import { typeIntegration } from '../../utils/typeIntegration'
 
 /**
  * @description Retrieves a REFERENCE list of invoices for a given seller.
  */
 export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
   const {
-    clients: { commissionInvoices },
+    clients: { commissionInvoices, externalInvoices },
     state: {
       body: { seller },
     },
@@ -42,12 +43,25 @@ export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
 
   const fields = ['id', 'status', 'invoiceCreatedDate', 'totalizers']
 
-  const sellerInvoices = await commissionInvoices.searchRaw(
-    { page, pageSize },
-    fields,
-    '',
-    where
-  )
+  let sellerInvoices
+
+  const integration = await typeIntegration(ctx)
+
+  if (TypeIntegration.external === integration) {
+    sellerInvoices = await externalInvoices.searchRaw(
+      { page, pageSize },
+      fields,
+      '',
+      where
+    )
+  } else {
+    sellerInvoices = await commissionInvoices.searchRaw(
+      { page, pageSize },
+      fields,
+      '',
+      where
+    )
+  }
 
   ctx.status = 200
   ctx.body = sellerInvoices

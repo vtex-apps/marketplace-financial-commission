@@ -29,9 +29,9 @@ const assembleWhere = async (query: any): Promise<string> => {
 
   if (createdDateInitial !== '' && createdDateEnd !== '') {
     if (sellerName !== '' || sellerId !== '' || status !== '') {
-      where += ` AND (createdDate between ${createdDateInitial} AND ${createdDateEnd})`
+      where += ` AND (invoiceCreatedDate between ${createdDateInitial} AND ${createdDateEnd})`
     } else {
-      where += `(createdDate between ${createdDateInitial} AND ${createdDateEnd})`
+      where += `(invoiceCreatedDate between ${createdDateInitial} AND ${createdDateEnd})`
     }
   }
 
@@ -62,7 +62,7 @@ export async function getInvoiceExternal(
 
     sellerInvoices = await externalInvoices.searchRaw(
       pagination,
-      ['id,status,accountName,seller,createdDate,jsonData'],
+      ['id,status,accountName,seller,invoiceCreatedDate,jsonData,comment'],
       'createdIn',
       `id=${id}`
     )
@@ -89,14 +89,14 @@ export async function getInvoiceExternal(
     if (where !== '') {
       sellerInvoices = await externalInvoices.searchRaw(
         pagination,
-        ['id,status,accountName,seller,createdDate,jsonData'],
+        ['id,status,accountName,seller,invoiceCreatedDate,jsonData,comment'],
         'createdIn',
         where
       )
     } else {
       sellerInvoices = await externalInvoices.searchRaw(
         pagination,
-        ['id,status,accountName,seller,createdDate,jsonData'],
+        ['id,status,accountName,seller,invoiceCreatedDate,jsonData,comment'],
         'createdIn'
       )
     }

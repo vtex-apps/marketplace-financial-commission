@@ -6,7 +6,7 @@ const enum TypeStatusInvoice {
 
 export interface InvoiceExternal {
   status: TypeStatusInvoice
-  createdDate: string
+  invoiceCreatedDate: string
   seller: SellerData
   jsonData: string
 }
@@ -25,7 +25,7 @@ export interface ContactData {
 export interface EmailInvoiceData {
   id?: string
   status: string
-  createdDate: string
+  invoiceCreatedDate: string
   seller: SellerData
   jsonData: JSON
 }

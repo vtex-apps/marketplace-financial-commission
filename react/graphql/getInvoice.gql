@@ -23,5 +23,6 @@ query GET_INVOICE($id: String!) {
       total
     }
     comment
+    jsonData
   }
 }

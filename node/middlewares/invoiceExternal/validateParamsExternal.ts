@@ -35,15 +35,10 @@ export async function validateParamsExternal(
         throw new UserInputError(error)
       }
 
-      const { createdDate, status, seller, jsonData } = requestData
+      const { invoiceCreatedDate, status, seller, jsonData } = requestData
 
-      console.info(
-        '🚀 ~ file: validateParamsExternal.ts ~ line 31 ~ createdDate',
-        createdDate
-      )
-
-      if (!createdDate) {
-        isRequerid(createdDate, 'createdDate')
+      if (!invoiceCreatedDate) {
+        isRequerid(invoiceCreatedDate, 'invoiceCreatedDate')
       }
 
       if (!status) {

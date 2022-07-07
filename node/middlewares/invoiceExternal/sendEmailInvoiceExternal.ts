@@ -16,7 +16,7 @@ export const sendEmailInvoiceExternal = async (
 
     const emailData: EmailInvoiceData = {
       id: documentId,
-      createdDate: dataInvoice.createdDate,
+      invoiceCreatedDate: dataInvoice.invoiceCreatedDate,
       seller: dataInvoice.seller,
       status: dataInvoice.status,
       jsonData: JSON.parse(dataInvoice.jsonData),

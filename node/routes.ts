@@ -87,9 +87,6 @@ const routes = {
     POST: [validateParamsExternal, createInvoiceExternal],
     GET: [getInvoiceExternal],
   }),
-  _invoiceExternal: method({
-    GET: [seller, policy, getInvoiceExternal],
-  }),
   typeIntegration: method({
     GET: [getTypeIntegration],
   }),

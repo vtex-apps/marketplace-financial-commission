@@ -75,6 +75,8 @@ export async function validateParamsExternal(
 
       if (!jsonData) {
         isRequerid(jsonData, 'jsonData')
+      } else {
+        isJsonString(jsonData)
       }
 
       break
@@ -137,5 +139,29 @@ function validateStatus(value: string) {
     throw new UserInputError(
       `Invalid status '${value}'. The valid values are 'unpaid' | 'partial' | 'paid'`
     )
+  }
+}
+
+function isJsonString(str: string) {
+  if (typeof str !== 'string') {
+    const errorString: ErrorLike = {
+      message: validationMessage.ERROR_JSONDATA,
+      name: 'jsonData',
+    }
+
+    throw new UserInputError(errorString)
+  }
+
+  try {
+    const jsonData = JSON.parse(str)
+
+    return typeof jsonData === 'object'
+  } catch (err) {
+    const errorJson: ErrorLike = {
+      message: validationMessage.ERROR_JSONDATA,
+      name: 'jsonData',
+    }
+
+    throw new UserInputError(errorJson)
   }
 }

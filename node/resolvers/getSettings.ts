@@ -17,6 +17,7 @@ export const getSettings = async (
   const idBucket = id || marketplace
 
   const response = await vbase.getJSON<any>(config.SETTINGS_BUCKET, idBucket)
+
   const { integration } = response
 
   const { EXTERNAL, INTERNAL } = TypeIntegration

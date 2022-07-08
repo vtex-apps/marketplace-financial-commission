@@ -12,6 +12,7 @@ import {
   EXPERIMENTAL_Select as Select,
   Box,
   Button,
+  Toggle,
   EXPERIMENTAL_Table as Table,
 } from 'vtex.styleguide'
 import { FormattedMessage } from 'react-intl'
@@ -39,6 +40,7 @@ const CommissionReportSettings: FC = () => {
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
   const [openAlert, setOpenAlert] = useState(false)
+  const [integration, setIntegration] = useState(false)
 
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
@@ -96,6 +98,8 @@ const CommissionReportSettings: FC = () => {
         value: 30,
         label: settings.getSettings.billingCycle,
       })
+
+      if (settings.getSettings.integration === 'external') setIntegration(true)
     }
   }, [settings])
 
@@ -142,7 +146,8 @@ const CommissionReportSettings: FC = () => {
             onClick: () => {
               navigate({
                 to: `/admin/app/commission-report/settings/detail/${data.id}`,
-                query: `name=${data.name}`,
+                query: `name=${data.name}&integration=${integration}`,
+                params: { __integration: integration },
               })
             },
           },
@@ -169,7 +174,7 @@ const CommissionReportSettings: FC = () => {
     },
   ]
 
-  const handleCreateSettings = () => {
+  const handleCreateSettings = (integrationType = integration) => {
     if (selectedValue) {
       const nowDate = new Date()
       let date = ''
@@ -220,6 +225,7 @@ const CommissionReportSettings: FC = () => {
             startDate: date,
             endDate: lastDateString,
             billingCycle: selectedValue.label,
+            integration: integrationType ? 0 : 1,
           },
         },
       })
@@ -280,71 +286,96 @@ const CommissionReportSettings: FC = () => {
     >
       <div className="mb2">
         <Box>
-          <h2>
-            <FormattedMessage id="admin/modal-settings.billingCycle" />
-          </h2>
-          <div className="mb4">
-            <Alert type="warning">
-              <FormattedMessage id="admin/modal-settings.alert-warning" />
-            </Alert>
-            <div className="mb5 flex w-100 mt6">
-              <div className="w-90">
-                <Select
-                  menuPosition="fixed"
-                  options={DATE_CUT_OPTIONS}
-                  multi={false}
-                  value={selectedValue}
-                  onChange={(values: any) => {
-                    setSelectValue(values)
+          {integration && (
+            <div className="mb7">
+              <h2>
+                <FormattedMessage id="admin/modal-settings.billingCycle" />
+              </h2>
+              <div className="mb4">
+                <Alert type="warning">
+                  <FormattedMessage id="admin/modal-settings.alert-warning" />
+                </Alert>
+                <div className="mb5 flex w-100 mt6">
+                  <div className="w-90">
+                    <Select
+                      menuPosition="fixed"
+                      options={DATE_CUT_OPTIONS}
+                      multi={false}
+                      value={selectedValue}
+                      onChange={(values: any) => {
+                        setSelectValue(values)
+                      }}
+                    />
+                  </div>
+                  <div className="w-10 pl2">
+                    <Button
+                      variation="primary"
+                      onClick={() => {
+                        handleCreateSettings()
+                      }}
+                    >
+                      <FormattedMessage id="admin/save-settings" />
+                    </Button>
+                  </div>
+                </div>
+                <div className="w-100">
+                  <p className="t-small mw9 c-muted-1">
+                    <FormattedMessage id="admin/modal-settings.billingCycle-helpText" />
+                  </p>
+                </div>
+              </div>
+              {openAlert ? (
+                <div className="mt7">
+                  <Alert type="success" onClose={() => setOpenAlert(false)}>
+                    Data was updated successfully
+                  </Alert>
+                </div>
+              ) : (
+                <div />
+              )}
+              <div className="mt7">
+                <Table
+                  stickyHeader
+                  measures={[]}
+                  items={infoSettings}
+                  columns={[
+                    {
+                      id: 'idbilling',
+                      title: 'Billing Cycle',
+                    },
+                    {
+                      id: 'start',
+                      title: 'Start Date',
+                    },
+                    {
+                      id: 'end',
+                      title: 'End Date',
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          )}
+          <div>
+            <h3 className="ma0">Type Integration</h3>
+            <div className="flex items-center">
+              <div className="w-20">
+                <Toggle
+                  label={integration ? 'External' : 'Integration'}
+                  checked={integration}
+                  onChange={() => {
+                    setIntegration(!integration)
+                    handleCreateSettings(!integration)
                   }}
                 />
               </div>
-              <div className="w-10 pl2">
-                <Button
-                  variation="primary"
-                  onClick={() => {
-                    handleCreateSettings()
-                  }}
-                >
-                  <FormattedMessage id="admin/save-settings" />
-                </Button>
+              <div className="w-80">
+                <p>
+                  If you enable the <b>External</b> option, you will be in
+                  charge to do the commission calculations and invoices.
+                </p>
               </div>
             </div>
-            <div className="w-100">
-              <p className="t-small mw9 c-muted-1">
-                <FormattedMessage id="admin/modal-settings.billingCycle-helpText" />
-              </p>
-            </div>
-          </div>
-          {openAlert ? (
-            <div className="mt7">
-              <Alert type="success" onClose={() => setOpenAlert(false)}>
-                Data was updated successfully
-              </Alert>
-            </div>
-          ) : (
-            <div />
-          )}
-          <div className="mt7">
-            <Table
-              stickyHeader
-              measures={[]}
-              items={infoSettings}
-              columns={[
-                {
-                  id: 'idbilling',
-                  title: 'Billing Cycle',
-                },
-                {
-                  id: 'start',
-                  title: 'Start Date',
-                },
-                {
-                  id: 'end',
-                  title: 'End Date',
-                },
-              ]}
-            />
           </div>
         </Box>
       </div>

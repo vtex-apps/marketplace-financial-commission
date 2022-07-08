@@ -45,7 +45,10 @@ const DATE_CUT_OPTIONS = [
 ]
 
 const CommissionReportSettingsDetail: FC = () => {
-  const { navigate, route, query } = useRuntime()
+  const { navigate, route, query, params } = useRuntime()
+
+  console.info('params ', params)
+
   const [sellerSettingsToken, setSellerSettingsToken] =
     useState<SellerSettingsToken>({})
 
@@ -269,68 +272,70 @@ const CommissionReportSettingsDetail: FC = () => {
           </div>
         </Box>
       </div>
-      <div className="mt4">
-        <Box>
-          <h2 className="mt0 mb6">Billing cycle</h2>
-          <div className="mb5 flex w-100">
-            <div className="w-90">
-              <Select
-                menuPosition="fixed"
-                options={DATE_CUT_OPTIONS}
-                value={selectedValue}
-                multi={false}
-                onChange={(values: any) => {
-                  setSelectValue(values)
-                }}
+      {query.integration === 'true' && (
+        <div className="mt4">
+          <Box>
+            <h2 className="mt0 mb6">Billing cycle</h2>
+            <div className="mb5 flex w-100">
+              <div className="w-90">
+                <Select
+                  menuPosition="fixed"
+                  options={DATE_CUT_OPTIONS}
+                  value={selectedValue}
+                  multi={false}
+                  onChange={(values: any) => {
+                    setSelectValue(values)
+                  }}
+                />
+              </div>
+              <div className="w-10 pl2">
+                <Button
+                  variation="primary"
+                  loading={loadingCreateToken}
+                  onClick={handleSaveBilling}
+                >
+                  SAVE
+                </Button>
+              </div>
+            </div>
+            <div className="w-100">
+              <p className="t-small w-100 c-muted-1">
+                <FormattedMessage id="admin/modal-settings.billingCycle-helpText" />
+              </p>
+            </div>
+            {openAlert ? (
+              <div className="mt7">
+                <Alert type="success" onClose={() => setOpenAlert(false)}>
+                  Data was updated successfully
+                </Alert>
+              </div>
+            ) : (
+              <div />
+            )}
+            <div className="mt7">
+              <Table
+                stickyHeader
+                measures={[]}
+                items={infoSettings}
+                columns={[
+                  {
+                    id: 'idbilling',
+                    title: 'Billing Cycle',
+                  },
+                  {
+                    id: 'start',
+                    title: 'Start Date',
+                  },
+                  {
+                    id: 'end',
+                    title: 'End Date',
+                  },
+                ]}
               />
             </div>
-            <div className="w-10 pl2">
-              <Button
-                variation="primary"
-                loading={loadingCreateToken}
-                onClick={handleSaveBilling}
-              >
-                SAVE
-              </Button>
-            </div>
-          </div>
-          <div className="w-100">
-            <p className="t-small w-100 c-muted-1">
-              <FormattedMessage id="admin/modal-settings.billingCycle-helpText" />
-            </p>
-          </div>
-          {openAlert ? (
-            <div className="mt7">
-              <Alert type="success" onClose={() => setOpenAlert(false)}>
-                Data was updated successfully
-              </Alert>
-            </div>
-          ) : (
-            <div />
-          )}
-          <div className="mt7">
-            <Table
-              stickyHeader
-              measures={[]}
-              items={infoSettings}
-              columns={[
-                {
-                  id: 'idbilling',
-                  title: 'Billing Cycle',
-                },
-                {
-                  id: 'start',
-                  title: 'Start Date',
-                },
-                {
-                  id: 'end',
-                  title: 'End Date',
-                },
-              ]}
-            />
-          </div>
-        </Box>
-      </div>
+          </Box>
+        </div>
+      )}
     </Layout>
   )
 }

@@ -31,9 +31,6 @@ export async function seller(ctx: Context, next: () => Promise<Seller>) {
 
   ctx.state.body = {
     seller: responseSeller,
-    params: {
-      id: params.id ?? '',
-    },
   }
 
   await next()

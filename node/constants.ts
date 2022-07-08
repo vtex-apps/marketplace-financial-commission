@@ -28,6 +28,7 @@ export const validationMessage = {
   ERROR_MESSAGE_DATE_END_EQUAL_OR_GREATER:
     'End date cannot be equal to or greater than the current current day or date..',
   ERROR_EMAIL: 'Please enter valid email',
+  ERROR_JSONDATA: 'jsonData Invalid please check',
 } as const
 
 export const JOB_STATUS = {

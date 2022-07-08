@@ -150,7 +150,7 @@
     },
     "invoiceExternal": {
       "path": "/_v/financial-commission/external/invoice/*id",
-      "public": true
+      "public": false
     },
     "typeIntegration": {
       "path": "/_v/policy/financial-commission/typeIntegration",

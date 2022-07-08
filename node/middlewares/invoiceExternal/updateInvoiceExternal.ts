@@ -1,8 +1,11 @@
-export async function deleteInvoiceExternal(
+export async function updateInvoiceExternal(
   ctx: Context,
   next: () => Promise<any>
 ) {
   const {
+    state: {
+      body: { requestData },
+    },
     vtex: {
       route: {
         params: { id },
@@ -17,10 +20,10 @@ export async function deleteInvoiceExternal(
   const getInvoice = await externalInvoices.get(id as string, ['_all'])
 
   if (getInvoice) {
-    await externalInvoices.delete(id as string)
+    await externalInvoices.update(id as string, requestData)
     message = {
       invoiceId: id,
-      message: 'The invoice has been successfully deleted ',
+      message: 'The invoice has been successfully update ',
     }
     status = 200
   } else {

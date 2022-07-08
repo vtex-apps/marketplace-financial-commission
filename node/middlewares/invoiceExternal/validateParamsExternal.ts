@@ -11,14 +11,18 @@ export async function validateParamsExternal(
   ctx: Context,
   next: () => Promise<any>
 ) {
-  const { req, method } = ctx
+  const {
+    req,
+    method,
+    vtex: {
+      route: { params },
+    },
+  } = ctx
+
   const requestData = await json(req) // as InvoiceExternal
 
   switch (method) {
-    case 'PATCH':
-      break
-
-    case 'POST': {
+    case 'PATCH': {
       const integration = await typeIntegration(ctx)
 
       if (TypeIntegration.external !== integration) {
@@ -79,18 +83,109 @@ export async function validateParamsExternal(
         isJsonString(jsonData)
       }
 
+      ctx.state.body = { requestData }
+
+      break
+    }
+
+    case 'POST': {
+      const integration = await typeIntegration(ctx)
+
+      if (TypeIntegration.external !== integration) {
+        throw new AuthenticationError('Invalid type integration')
+      }
+
+      if (!params.id || params.id === '' || params.id === null) {
+        const error: ErrorLike = {
+          message: `The param id is requerid`,
+          name: 'id',
+          stack: '',
+        }
+
+        throw new UserInputError(error)
+      }
+
+      if (!requestData || JSON.stringify(requestData) === '{}') {
+        const error: ErrorLike = {
+          message: 'Body is requerid',
+          name: '',
+          stack: '',
+        }
+
+        throw new UserInputError(error)
+      }
+
+      const { invoiceCreatedDate, status, seller, jsonData } = requestData
+
+      if (!invoiceCreatedDate) {
+        isRequerid(invoiceCreatedDate, 'invoiceCreatedDate')
+      }
+
+      if (!status) {
+        isRequerid(status, 'status')
+      } else {
+        validateStatus(status)
+      }
+
+      if (!seller) {
+        isRequerid(seller, 'seller')
+      }
+
+      const { id, name, contact } = seller
+
+      if (!id) {
+        isRequerid(id, 'seller.id')
+      }
+
+      if (!name) {
+        isRequerid(name, 'seller.name')
+      }
+
+      if (!contact) {
+        isRequerid(contact, 'seller.contact')
+      }
+
+      const { email } = contact
+
+      if (!email) {
+        isRequerid(email, 'seller.contact.email')
+      } else {
+        validateEmail(email)
+      }
+
+      if (!jsonData) {
+        isRequerid(jsonData, 'jsonData')
+      } else {
+        isJsonString(jsonData)
+      }
+
+      ctx.state.body = { requestData }
+      ctx.vtex.route.params.id = params.id
+
       break
     }
 
     case 'DELETE':
+      if (!params.id || params.id === '' || params.id === null) {
+        const error: ErrorLike = {
+          message: `The param id is requerid`,
+          name: 'id',
+          stack: '',
+        }
+
+        throw new UserInputError(error)
+      }
+
+      ctx.vtex.route.params.id = params.id
+
+      break
+
+    case 'GET':
       break
 
     default:
-    case 'GET':
       break
   }
-
-  ctx.state.body = { requestData }
 
   await next()
 }

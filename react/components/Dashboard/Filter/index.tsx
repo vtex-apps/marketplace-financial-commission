@@ -77,12 +77,14 @@ const Filter: FC<FilterProps> = (props) => {
       const newDateStart = getDate(startDateFilter.toString())
 
       props.setStartDate(newDateStart)
+      setQuery({ ...query, startDate: newDateStart })
     }
 
     if (finalDateFilter !== '' && props.setFinalDate) {
       const newDateFinal = getDate(finalDateFilter.toString())
 
       props.setFinalDate(newDateFinal)
+      setQuery({ ...query, finalDate: newDateFinal })
     }
 
     if (!props.setTotalItems) return

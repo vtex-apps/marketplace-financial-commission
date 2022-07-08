@@ -150,7 +150,7 @@ const CommissionReport: FC = () => {
                 label: 'Detail',
                 onClick: () => {
                   navigate({
-                    to: `/admin/app/commission-report/detail?sellerName=${props.data}`,
+                    to: `/admin/app/commission-report/detail?sellerName=${props.data}&status=invoiced`,
                   })
                 },
               },
@@ -212,16 +212,28 @@ const CommissionReport: FC = () => {
     // eslint-disable-next-line vtex/prefer-early-return
     if (dataStats) {
       let valueSellersStats = 0
+      const getStatistics = dataStats.searchStatisticsDashboard.statistics
+      let totalStats = 0
 
-      if (dataDashboard)
+      if (dataDashboard) {
         valueSellersStats = dataDashboard.searchSellersDashboard.sellers.length
+        totalStats =
+          valueSellersStats <= 0
+            ? 0
+            : totalItemsFilter > 0
+            ? totalItemsFilter
+            : totalItems
 
-      const totalStats =
-        valueSellersStats <= 0
-          ? 0
-          : totalItemsFilter > 0
-          ? totalItemsFilter
-          : totalItems
+        if (
+          getStatistics.ordersCount === 0 &&
+          getStatistics.totalComission === 0 &&
+          getStatistics.totalOrderValue === 0
+        ) {
+          setSellersDashboard([])
+          setTotalItems(0)
+          setOptionsSelect([])
+        }
+      }
 
       // TODO: Change labels to FormattedText components
       setStatsTotalizer([

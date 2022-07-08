@@ -4,5 +4,6 @@ query GET_SETTINGS($id: String) {
     startDate
     endDate
     billingCycle
+    integration
   }
 }

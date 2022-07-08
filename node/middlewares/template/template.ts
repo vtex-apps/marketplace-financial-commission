@@ -5,7 +5,33 @@ export async function templateMethod(ctx: Context, next: () => Promise<any>) {
     clients: { template },
   } = ctx
 
-  const templateResponse = await template.getTemplate()
+  let templateResponse = ''
+
+  const selectTemplate = async (typeIntegrationValue: TypeIntegration) => {
+    switch (typeIntegrationValue) {
+      case TypeIntegration.external: {
+        templateResponse = await template.getTemplateExternal()
+
+        return templateResponse
+      }
+
+      case TypeIntegration.internal: {
+        templateResponse = await template.getTemplate()
+
+        return templateResponse
+      }
+
+      default: {
+        templateResponse = await template.getTemplate()
+
+        return templateResponse
+      }
+    }
+  }
+
+  const integration = await typeIntegration(ctx)
+
+  await selectTemplate(integration)
 
   if (templateResponse) {
     ctx.body = { template: templateResponse }

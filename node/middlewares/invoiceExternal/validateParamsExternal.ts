@@ -39,6 +39,16 @@ export async function validateParamsExternal(
         throw new UserInputError(error)
       }
 
+      if (!params.id || params.id === '' || params.id === null) {
+        const error: ErrorLike = {
+          message: `The param id is requerid`,
+          name: 'id',
+          stack: '',
+        }
+
+        throw new UserInputError(error)
+      }
+
       const { invoiceCreatedDate, status, seller, jsonData } = requestData
 
       if (!invoiceCreatedDate) {
@@ -93,16 +103,6 @@ export async function validateParamsExternal(
 
       if (TypeIntegration.external !== integration) {
         throw new AuthenticationError('Invalid type integration')
-      }
-
-      if (!params.id || params.id === '' || params.id === null) {
-        const error: ErrorLike = {
-          message: `The param id is requerid`,
-          name: 'id',
-          stack: '',
-        }
-
-        throw new UserInputError(error)
       }
 
       if (!requestData || JSON.stringify(requestData) === '{}') {

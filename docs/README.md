@@ -25,3 +25,4 @@
  - [Commit fix endpoint's singleInvoice](https://github.com/vtex-apps/marketplace-financial-commission/pull/65)
  - [Feature/dashboard backend](https://github.com/vtex-apps/marketplace-financial-commission/pull/66)
  - [Integration external API REST](https://github.com/vtex-apps/marketplace-financial-commission/pull/73)
+ - [Commit getInvoiced External](https://github.com/vtex-apps/marketplace-financial-commission/pull/74)

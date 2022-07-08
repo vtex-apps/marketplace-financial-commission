@@ -147,6 +147,26 @@
     "token": {
       "path": "/_v/token/:sellerId",
       "public": false
+    },
+    "invoiceExternal": {
+      "path": "/_v/financial-commission/external/invoice/*id",
+      "public": false
+    },
+    "typeIntegration": {
+      "path": "/_v/policy/financial-commission/typeIntegration",
+      "public": false,
+      "access": "authenticated",
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": ["get"],
+          "principals": [
+            "vrn:apps:*:*:*:app/vtex.seller-financial-commission@*",
+            "vrn:apps:*:*:*:app/vtex.marketplace-financial-commission-cron@*",
+            "vrn:vtex.vtex-id:*:*:*:user/*@vtex.com.br"
+          ]
+        }
+      ]
     }
   }
 }

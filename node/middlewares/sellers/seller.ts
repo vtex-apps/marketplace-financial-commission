@@ -29,7 +29,9 @@ export async function seller(ctx: Context, next: () => Promise<Seller>) {
 
   if (!responseSeller) throw new NotFoundError('Seller no found')
 
-  ctx.state.body = { seller: responseSeller }
+  ctx.state.body = {
+    seller: responseSeller,
+  }
 
   await next()
 }

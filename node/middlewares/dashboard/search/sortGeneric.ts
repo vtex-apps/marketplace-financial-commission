@@ -1,7 +1,4 @@
-export const sortGeneric = (
-  arr: any[],
-  fieldsArray = 'totalComission DSC'
-) => {
+export const sortGeneric = (arr: any[], fieldsArray = 'totalComission DSC') => {
   let result = 0
 
   const fields = fieldsArray.split(',')

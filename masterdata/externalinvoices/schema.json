@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "ExternalInvoice",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["partial", "unpaid", "paid"]
+    },
+    "invoiceCreatedDate": {
+      "type": "string"
+    },
+    "seller": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "contact": {
+          "type": "object",
+          "properties": {
+            "phone": {
+              "type": ["string", "null"]
+            },
+            "email": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "jsonData": {
+      "type": "string"
+    },
+    "comment": {
+      "type": ["string", "null"]
+    }
+  },
+  "v-indexed": ["id", "status", "invoiceCreatedDate", "seller", "contact"],
+  "required": ["status", "invoiceCreatedDate", "seller", "jsonData"],
+  "v-cache": false,
+  "v-immediate-indexing": true
+}

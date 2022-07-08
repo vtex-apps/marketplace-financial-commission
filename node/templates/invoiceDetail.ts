@@ -1,38 +1,41 @@
 import readFile from '../utils/readFile'
+import { typeIntegration } from '../utils/typeIntegration'
 
-const MESSAGE_BODY = readFile('../assets/invoiceDetail.html')
+export const GetBody = async (ctx: Context) => {
+  const integration = await typeIntegration(ctx)
 
-export const invoiceDetailMessage = {
-  Name: 'invoice-detail',
-  FriendlyName: 'Invoice Detail',
-  // Description: null,
-  IsDefaultTemplate: false,
-  // AccountId: null,
-  // AccountName: null,
-  // ApplicationId: null,
-  IsPersisted: true,
-  IsRemoved: false,
-  Type: '',
-  Templates: {
-    email: {
-      To: '{{message.to}}',
-      // CC: null,
-      // BCC: null,
-      Subject: 'Invoice Detail',
-      Message: MESSAGE_BODY,
-      Type: 'E',
-      ProviderId: '00000000-0000-0000-0000-000000000000',
-      // ProviderName: null,
-      IsActive: true,
-      withError: false,
+  const MESSAGE_BODY =
+    integration === TypeIntegration.internal
+      ? readFile('../assets/invoiceDetail.html')
+      : readFile('../assets/invoiceDetailExternal.html')
+
+  const invoiceDetailMessage = {
+    Name: 'invoice-detail',
+    FriendlyName: 'Invoice Detail',
+    IsDefaultTemplate: false,
+    IsPersisted: true,
+    IsRemoved: false,
+    Type: '',
+    Templates: {
+      email: {
+        To: '{{message.to}}',
+        Subject: 'Invoice Detail',
+        Message: MESSAGE_BODY,
+        Type: 'E',
+        ProviderId: '00000000-0000-0000-0000-000000000000',
+        IsActive: true,
+        withError: false,
+      },
+      sms: {
+        Type: 'S',
+        IsActive: false,
+        withError: false,
+        Parameters: [],
+      },
     },
-    sms: {
-      Type: 'S',
-      // ProviderId: null,
-      // ProviderName: null,
-      IsActive: false,
-      withError: false,
-      Parameters: [],
-    },
-  },
+  }
+
+  return invoiceDetailMessage
 }
+
+export default GetBody

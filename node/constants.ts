@@ -6,7 +6,10 @@ export const config = {
   RETRY_SELLERS_BUCKET: 'retry',
   MANUAL_JOB_BUCKET: 'manual',
   AUTO_JOB_BUCKET: 'automatic',
+  APIREST_JOB_BUCKET: 'api-rest',
   INVOICE_MAIL_TEMPLATE: 'invoice-detail',
+  INVOICE_MAIL_TEMPLATE_EXTERNAL: 'invoice-detail-external',
+  INVOICE_EXTERNAL_BUCKET: 'invoice-ext',
 } as const
 
 export const TypeIntegration = {
@@ -24,6 +27,8 @@ export const validationMessage = {
     'Only a date range of no more than 30 days is allowed.',
   ERROR_MESSAGE_DATE_END_EQUAL_OR_GREATER:
     'End date cannot be equal to or greater than the current current day or date..',
+  ERROR_EMAIL: 'Please enter valid email',
+  ERROR_JSONDATA: 'jsonData Invalid please check',
 } as const
 
 export const JOB_STATUS = {

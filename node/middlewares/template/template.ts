@@ -1,4 +1,4 @@
-import templateBody from '../../templates'
+import GetBody from '../../templates'
 
 export async function templateMethod(ctx: Context, next: () => Promise<any>) {
   const {
@@ -7,15 +7,15 @@ export async function templateMethod(ctx: Context, next: () => Promise<any>) {
 
   const templateResponse = await template.getTemplate()
 
-  ctx.set('Cache-Control', 'no-cache')
   if (templateResponse) {
     ctx.body = { template: templateResponse }
   } else {
-    // Create template
+    const templateBody = await GetBody(ctx)
     const templateCreated = await template.publishTemplate(templateBody)
 
     ctx.body = { template: templateCreated }
   }
 
+  ctx.set('Cache-Control', 'no-cache')
   await next()
 }

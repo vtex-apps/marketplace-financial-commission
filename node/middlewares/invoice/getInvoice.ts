@@ -1,6 +1,7 @@
 import { AuthenticationError } from '@vtex/api'
 
 import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '../../constants'
+import { typeIntegration } from '../../utils/typeIntegration'
 
 /**
  * @description Retrieves a specific Invoice by ID.
@@ -14,7 +15,7 @@ export async function getInvoice(ctx: Context) {
       },
     },
     // params: { id },
-    clients: { commissionInvoices },
+    clients: { commissionInvoices, externalInvoices },
     state: {
       body: { seller },
     },
@@ -27,12 +28,36 @@ export async function getInvoice(ctx: Context) {
 
   const where = `id=${id} AND seller.name="${sellerName}"`
 
-  const invoice = await commissionInvoices.search(
-    { page: PAGE_DEFAULT, pageSize: PAGE_SIZE_DEFAULT },
-    ['id,status,invoiceCreatedDate,seller,orders,totalizers'],
-    '',
-    where
-  )
+  let invoice
+
+  const integration = await typeIntegration(ctx)
+
+  if (TypeIntegration.external === integration) {
+    const externalInvoice = await externalInvoices.search(
+      { page: PAGE_DEFAULT, pageSize: PAGE_SIZE_DEFAULT },
+      ['id,status,invoiceCreatedDate,seller,jsonData,comment'],
+      '',
+      where
+    )
+
+    invoice = [
+      {
+        id: externalInvoice[0].id,
+        status: externalInvoice[0].status,
+        invoiceCreatedDate: externalInvoice[0].invoiceCreatedDate,
+        seller: externalInvoice[0].seller,
+        jsonData: JSON.parse(externalInvoice[0].jsonData as string),
+        comment: externalInvoice[0].comment,
+      },
+    ]
+  } else {
+    invoice = await commissionInvoices.search(
+      { page: PAGE_DEFAULT, pageSize: PAGE_SIZE_DEFAULT },
+      ['id,status,invoiceCreatedDate,seller,orders,totalizers'],
+      '',
+      where
+    )
+  }
 
   if (invoice.length > 1) {
     console.warn('Invoice duplication, seek resolution')

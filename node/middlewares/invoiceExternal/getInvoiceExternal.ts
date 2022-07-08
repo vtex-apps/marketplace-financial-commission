@@ -54,7 +54,7 @@ export async function getInvoiceExternal(
 
   let sellerInvoices
 
-  if (id !== '') {
+  if (id !== '' && id !== undefined) {
     const pagination = {
       page: 1,
       pageSize: 100,

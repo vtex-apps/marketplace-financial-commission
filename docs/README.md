@@ -26,3 +26,4 @@
  - [Feature/dashboard backend](https://github.com/vtex-apps/marketplace-financial-commission/pull/66)
  - [Integration external API REST](https://github.com/vtex-apps/marketplace-financial-commission/pull/73)
  - [Commit getInvoiced External](https://github.com/vtex-apps/marketplace-financial-commission/pull/74)
+ - [Commit orderby invoicesBySeller](https://github.com/vtex-apps/marketplace-financial-commission/pull/75)

@@ -29,7 +29,6 @@ export const invoicesBySeller = async (
   console.info({ integration })
 
   if (TypeIntegration.external === integration) {
-    console.info('Entre al external')
     const whereExternal = `seller.name="${sellerName}" AND (invoiceCreatedDate between ${startDate} AND ${endDate})`
 
     const fieldsExternal = ['id', 'status', 'invoiceCreatedDate', 'jsonData']
@@ -37,7 +36,7 @@ export const invoicesBySeller = async (
     sellerInvoices = await externalInvoices.searchRaw(
       pagination,
       fieldsExternal,
-      '',
+      'invoiceCreatedDate',
       whereExternal
     )
 
@@ -46,7 +45,7 @@ export const invoicesBySeller = async (
     sellerInvoices = await commissionInvoices.searchRaw(
       pagination,
       fields,
-      '',
+      'invoiceCreatedDate',
       where
     )
   }

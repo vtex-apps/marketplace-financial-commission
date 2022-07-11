@@ -51,14 +51,14 @@ export async function invoicesBySeller(ctx: Context, next: () => Promise<any>) {
     sellerInvoices = await externalInvoices.searchRaw(
       { page, pageSize },
       fields,
-      '',
+      'invoiceCreatedDate',
       where
     )
   } else {
     sellerInvoices = await commissionInvoices.searchRaw(
       { page, pageSize },
       fields,
-      '',
+      'invoiceCreatedDate',
       where
     )
   }

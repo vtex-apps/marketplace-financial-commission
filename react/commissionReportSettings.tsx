@@ -40,7 +40,7 @@ const CommissionReportSettings: FC = () => {
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
   const [openAlert, setOpenAlert] = useState(false)
-  const [internal, setInternal] = useState(false)
+  const [integration, setIntegration] = useState(true)
 
   const { data: dataSellers } = useQuery(GET_SELLERS, {
     ssr: false,
@@ -86,6 +86,7 @@ const CommissionReportSettings: FC = () => {
 
   useEffect(() => {
     if (settings) {
+      console.info('getsettings ', settings)
       setInfoSettings([
         {
           idbilling: settings.getSettings.billingCycle,
@@ -99,7 +100,7 @@ const CommissionReportSettings: FC = () => {
         label: settings.getSettings.billingCycle,
       })
 
-      if (settings.getSettings.integration === 'external') setInternal(true)
+      if (settings.getSettings.integration === 'external') setIntegration(false)
     }
   }, [settings])
 
@@ -146,8 +147,8 @@ const CommissionReportSettings: FC = () => {
             onClick: () => {
               navigate({
                 to: `/admin/app/commission-report/settings/detail/${data.id}`,
-                query: `name=${data.name}&integration=${internal}`,
-                params: { __internal: internal },
+                query: `name=${data.name}&integration=${integration}`,
+                params: { __integration: integration },
               })
             },
           },
@@ -174,7 +175,7 @@ const CommissionReportSettings: FC = () => {
     },
   ]
 
-  const handleCreateSettings = (internalType = internal) => {
+  const handleCreateSettings = (integrationType = integration) => {
     if (selectedValue) {
       const nowDate = new Date()
       let date = ''
@@ -225,7 +226,7 @@ const CommissionReportSettings: FC = () => {
             startDate: date,
             endDate: lastDateString,
             billingCycle: selectedValue.label,
-            integration: internalType ? 1 : 0,
+            integration: integrationType ? 1 : 0,
           },
         },
       })
@@ -234,6 +235,7 @@ const CommissionReportSettings: FC = () => {
 
   useEffect(() => {
     if (dataSettings) {
+      console.info('------- ', dataSettings)
       setInfoSettings([
         {
           idbilling: dataSettings.createSettings.billingCycle,
@@ -286,7 +288,7 @@ const CommissionReportSettings: FC = () => {
     >
       <div className="mb2">
         <Box>
-          {internal && (
+          {integration && (
             <div className="mb7">
               <h2>
                 <FormattedMessage id="admin/modal-settings.billingCycle" />
@@ -361,18 +363,18 @@ const CommissionReportSettings: FC = () => {
             <div className="flex items-center">
               <div className="w-20">
                 <Toggle
-                  label={internal ? 'Internal' : 'External'}
+                  label={integration ? 'Internal' : 'External'}
                   semantic
-                  checked={internal}
+                  checked={integration}
                   onChange={() => {
-                    setInternal(!internal)
-                    handleCreateSettings(!internal)
+                    setIntegration(!integration)
+                    handleCreateSettings(!integration)
                   }}
                 />
               </div>
               <div className="w-80">
                 <p>
-                  If you enable the <b>External</b> option, you will be in
+                  If you choose the <b>External</b> option, you will be in
                   charge to do the commission calculations and invoices.
                 </p>
               </div>

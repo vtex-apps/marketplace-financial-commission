@@ -165,7 +165,13 @@ export async function validateParamsExternal(
       break
     }
 
-    case 'DELETE':
+    case 'DELETE': {
+      const integration = await typeIntegration(ctx)
+
+      if (TypeIntegration.external !== integration) {
+        throw new AuthenticationError('Invalid type integration')
+      }
+
       if (!params.id || params.id === '' || params.id === null) {
         const error: ErrorLike = {
           message: `The param id is requerid`,
@@ -179,6 +185,7 @@ export async function validateParamsExternal(
       ctx.vtex.route.params.id = params.id
 
       break
+    }
 
     case 'GET':
       break

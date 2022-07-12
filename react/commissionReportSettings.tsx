@@ -62,6 +62,7 @@ const CommissionReportSettings: FC = () => {
   const { data: settings } = useQuery(GET_SETTINGS, {
     ssr: false,
     pollInterval: 0,
+    fetchPolicy: 'no-cache',
   })
 
   const DATE_CUT_OPTIONS = [
@@ -86,7 +87,6 @@ const CommissionReportSettings: FC = () => {
 
   useEffect(() => {
     if (settings) {
-      console.info('getsettings ', settings)
       setInfoSettings([
         {
           idbilling: settings.getSettings.billingCycle,
@@ -147,6 +147,7 @@ const CommissionReportSettings: FC = () => {
             onClick: () => {
               navigate({
                 to: `/admin/app/commission-report/settings/detail/${data.id}`,
+                replace: true,
                 query: `name=${data.name}&integration=${integration}`,
                 params: { __integration: integration },
               })
@@ -235,7 +236,6 @@ const CommissionReportSettings: FC = () => {
 
   useEffect(() => {
     if (dataSettings) {
-      console.info('------- ', dataSettings)
       setInfoSettings([
         {
           idbilling: dataSettings.createSettings.billingCycle,

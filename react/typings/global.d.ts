@@ -112,13 +112,6 @@ type Sorted = {
   by?: string
 }
 
-interface StatsTotalizer {
-  label: any
-  value: any
-  iconBackgroundColor?: string
-  icon?: any
-}
-
 interface TableData {
   items: any
   schemaTable: SchemaTable[]
@@ -134,13 +127,6 @@ interface DataSellerSelect {
   isActive: boolean
   name: string
   productCommissionPercentage: number
-}
-
-interface DataDashboardSeller {
-  account: string
-  id: string
-  name: string
-  statistics: DataStatistics
 }
 
 interface SettingsSellers {
@@ -163,14 +149,6 @@ interface DataFilter {
     id: string
     name: string
   }
-}
-
-interface DataSeller {
-  id: string
-  name: string
-  ordersCount: string
-  totalComission: string
-  totalOrderValue: string
 }
 
 interface PaginationProps {

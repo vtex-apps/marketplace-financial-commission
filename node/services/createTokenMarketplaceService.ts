@@ -1,7 +1,10 @@
 import { config } from '../constants'
 import { createKeyToken } from '../utils'
 
-export const createTokenService = async (seller: Seller, ctx: Context) => {
+export const createTokenMarketplaceService = async (
+  accountMarketplace: string,
+  ctx: Context
+) => {
   const {
     clients: { vbase },
   } = ctx
@@ -9,14 +12,9 @@ export const createTokenService = async (seller: Seller, ctx: Context) => {
   const date = new Date()
   const creationDate = date.toISOString()
 
-  const accountMarketplace = ctx.vtex.account
-
-  const { id, name, account } = seller as Seller
-  const sellerId = id as string
-
   const autheticationToken = createKeyToken()
 
-  const keyBucket = `${accountMarketplace}-${name}-${account}`
+  const keyBucket = `${accountMarketplace}`
 
   let vbaseData: TokenConfiguration | undefined
   let lastModificationDate
@@ -35,12 +33,12 @@ export const createTokenService = async (seller: Seller, ctx: Context) => {
   }
 
   const vbaseBody: TokenConfiguration = {
-    account,
+    account: accountMarketplace,
     autheticationToken,
     creationDate: vbaseData?.creationDate as string,
     enabled: true,
-    name,
-    id,
+    name: accountMarketplace,
+    id: accountMarketplace,
     lastModificationDate,
   }
 
@@ -54,7 +52,7 @@ export const createTokenService = async (seller: Seller, ctx: Context) => {
     status: 200,
     resultCreateToken: {
       message: 'Successful token creation',
-      accountId: sellerId,
+      accountId: accountMarketplace,
       autheticationToken,
       creationDate,
       resultVBase,

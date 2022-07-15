@@ -134,8 +134,6 @@ interface SettingsSellers {
   name: string
 }
 
-type SellerSettingsToken = Partial<TokenConfiguration>
-
 interface DataStatistics {
   ordersCount: number
   outstandingBalance: number

@@ -27,6 +27,8 @@ import { validateParamsExternal } from './middlewares/invoiceExternal/validatePa
 import { getTypeIntegration } from './middlewares/typeIntegration/getTypeIntegration'
 import { deleteInvoiceExternal } from './middlewares/invoiceExternal/deleteInvoiceExternal'
 import { updateInvoiceExternal } from './middlewares/invoiceExternal/updateInvoiceExternal'
+import { switchUser } from './middlewares/authentication/switchUser'
+import { authenticationMarketplace } from './middlewares/authentication/authenticationMarketplace'
 
 const template = templateMethod
 
@@ -81,15 +83,27 @@ const routes = {
     GET: [seller, policy, orders],
   }),
   token: method({
-    POST: [seller, createTokenAuth],
-    PUT: [seller, updateToken],
-    GET: [seller, getToken],
+    POST: [switchUser, createTokenAuth],
+    PUT: [switchUser, updateToken],
+    GET: [switchUser, getToken],
   }),
   invoiceExternal: method({
-    POST: [validateParamsExternal, createInvoiceExternal],
-    GET: [getInvoiceExternal],
-    DELETE: [validateParamsExternal, deleteInvoiceExternal],
-    PATCH: [validateParamsExternal, updateInvoiceExternal],
+    POST: [
+      authenticationMarketplace,
+      validateParamsExternal,
+      createInvoiceExternal,
+    ],
+    GET: [authenticationMarketplace, getInvoiceExternal],
+    DELETE: [
+      authenticationMarketplace,
+      validateParamsExternal,
+      deleteInvoiceExternal,
+    ],
+    PATCH: [
+      authenticationMarketplace,
+      validateParamsExternal,
+      updateInvoiceExternal,
+    ],
   }),
   typeIntegration: method({
     GET: [getTypeIntegration],

@@ -209,7 +209,7 @@ type SearchOrdersResponse {
 
 type CreateTokenResponse {
   message: String
-  sellerId: String
+  accountId: String
   autheticationToken: String
   creationDate: String
   resultVBase: [ResultVBase]
@@ -226,7 +226,7 @@ input TokenInput {
 
 type EditTokenResponse {
   message: String
-  sellerId: String
+  accountId: String
   lastModificationDate: String
   resultVBase: [ResultVBase]
 }

@@ -1,13 +1,14 @@
 import { NotFoundError } from '@vtex/api'
 
+import { createTokenMarketplaceService } from '../services/createTokenMarketplaceService'
 import { createTokenService } from '../services/createTokenService'
 
 export const createToken = async (
   _: unknown,
   {
-    sellerId,
+    accountId,
   }: {
-    sellerId: string
+    accountId: string
   },
   ctx: Context
 ): Promise<ResponseCreateToken> => {
@@ -15,11 +16,22 @@ export const createToken = async (
     clients: { sellersIO },
   } = ctx
 
-  const seller = await sellersIO.seller(sellerId)
+  const accountMarketplace = ctx.vtex.account
 
-  if (!seller) throw new NotFoundError('Seller no found')
+  if (accountMarketplace !== accountId) {
+    const seller = await sellersIO.seller(accountId)
 
-  const { resultCreateToken } = await createTokenService(seller, ctx)
+    if (!seller) throw new NotFoundError('Seller no found')
+
+    const { resultCreateToken } = await createTokenService(seller, ctx)
+
+    return resultCreateToken
+  }
+
+  const { resultCreateToken } = await createTokenMarketplaceService(
+    accountMarketplace,
+    ctx
+  )
 
   return resultCreateToken
 }

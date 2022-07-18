@@ -36,7 +36,7 @@ type Query {
   """
   Get data token
   """
-  getToken(sellerId: ID!): GetTokenResponse
+  getToken(accountId: ID!): GetTokenResponse
     @cacheControl(scope: PUBLIC, maxAge: LONG)
 
   getSettings(id: String): SettingsSeller
@@ -48,8 +48,8 @@ type Query {
 }
 
 type Mutation {
-  createToken(sellerId: ID!): CreateTokenResponse
-  editToken(sellerId: ID!, tokenInput: TokenInput!): EditTokenResponse
+  createToken(accountId: ID!): CreateTokenResponse
+  editToken(accountId: ID!, tokenInput: TokenInput!): EditTokenResponse
   """
   Attempts to create an Invoice
   """
@@ -58,7 +58,6 @@ type Mutation {
   """
   Attempts to create an settings
   """
-
   createSettings(settingsData: SettingsDataInput!): SettingsResponse
   sendEmail(emailData: EmailDataInput!): String
 }

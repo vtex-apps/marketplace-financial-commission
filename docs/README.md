@@ -28,3 +28,4 @@
  - [Commit getInvoiced External](https://github.com/vtex-apps/marketplace-financial-commission/pull/74)
  - [Commit orderby invoicesBySeller](https://github.com/vtex-apps/marketplace-financial-commission/pull/75)
  - [Integration external](https://github.com/vtex-apps/marketplace-financial-commission/pull/79)
+ - [Authentication Integration external](https://github.com/vtex-apps/marketplace-financial-commission/pull/83)

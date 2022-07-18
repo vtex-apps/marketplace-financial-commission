@@ -145,11 +145,11 @@
       ]
     },
     "token": {
-      "path": "/_v/token/:sellerId",
+      "path": "/_v/token/*sellerId",
       "public": false
     },
     "invoiceExternal": {
-      "path": "/_v/financial-commission/external/invoice/*id",
+      "path": "/_v/private/financial-commission/external/invoice/*id",
       "public": true
     },
     "typeIntegration": {

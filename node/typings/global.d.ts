@@ -130,7 +130,7 @@ declare global {
 
   interface ResponseCreateToken {
     message: string
-    sellerId: string
+    accountId: string
     autheticationToken?: string
     creationDate?: string
     resultVBase: any

@@ -1,14 +1,15 @@
 import { NotFoundError } from '@vtex/api'
 
+import { updateTokenMarketplaceService } from '../services/updateTokenMarketplaceService'
 import { updateTokenService } from '../services/updateTokenService'
 
 export const editToken = async (
   _: unknown,
   {
-    sellerId,
+    accountId,
     tokenInput,
   }: {
-    sellerId: string
+    accountId: string
     tokenInput: RequestUpdateToken
   },
   ctx: Context
@@ -17,12 +18,24 @@ export const editToken = async (
     clients: { sellersIO },
   } = ctx
 
-  const seller = await sellersIO.seller(sellerId)
+  const accountMarketplace = ctx.vtex.account
 
-  if (!seller) throw new NotFoundError('Seller no found')
+  if (accountMarketplace !== accountId) {
+    const seller = await sellersIO.seller(accountId)
 
-  const { resultUpdateToken } = await updateTokenService(
-    seller,
+    if (!seller) throw new NotFoundError('Seller no found')
+
+    const { resultUpdateToken } = await updateTokenService(
+      seller,
+      tokenInput,
+      ctx
+    )
+
+    return resultUpdateToken
+  }
+
+  const { resultUpdateToken } = await updateTokenMarketplaceService(
+    accountMarketplace,
     tokenInput,
     ctx
   )

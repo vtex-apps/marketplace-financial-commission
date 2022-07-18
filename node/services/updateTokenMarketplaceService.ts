@@ -2,8 +2,8 @@ import { NotFoundError, UserInputError } from '@vtex/api'
 
 import { config } from '../constants'
 
-export const updateTokenService = async (
-  seller: Seller,
+export const updateTokenMarketplaceService = async (
+  accountMarketplace: string,
   body: RequestUpdateToken,
   ctx: Context
 ) => {
@@ -20,12 +20,7 @@ export const updateTokenService = async (
   const date = new Date()
   const lastModificationDate = date.toISOString()
 
-  const accountMarketplace = ctx.vtex.account
-
-  const { id, name, account } = seller as Seller
-  const sellerId = id as string
-
-  const keyBucket = `${accountMarketplace}-${name}-${account}`
+  const keyBucket = `${accountMarketplace}`
 
   let vbaseData: TokenConfiguration | undefined
 
@@ -35,7 +30,7 @@ export const updateTokenService = async (
       keyBucket
     )
   } catch (err) {
-    throw new NotFoundError('Seller not configured')
+    throw new NotFoundError('Marketplace not configured')
   }
 
   const vbaseBody: TokenConfiguration = enabled
@@ -61,7 +56,7 @@ export const updateTokenService = async (
     status: 200,
     resultUpdateToken: {
       message: 'Successful token update',
-      accountId: sellerId,
+      accountId: accountMarketplace,
       lastModificationDate,
       resultVBase,
     },

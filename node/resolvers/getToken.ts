@@ -16,6 +16,8 @@ export const getToken = async (
     clients: { sellersIO },
   } = ctx
 
+  console.info(':::::::::::::::::::: ', accountId)
+
   const accountMarketplace = ctx.vtex.account
 
   if (accountMarketplace !== accountId) {

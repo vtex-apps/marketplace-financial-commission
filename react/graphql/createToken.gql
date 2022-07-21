@@ -1,5 +1,5 @@
-mutation CREATE_TOKEN($sellerId: ID!) {
-  createToken(sellerId: $sellerId) {
+mutation CREATE_TOKEN($accountId: ID!) {
+  createToken(accountId: $accountId) {
     autheticationToken
   }
 }

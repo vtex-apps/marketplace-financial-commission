@@ -1,5 +1,5 @@
-query GET_TOKEN($sellerId: ID!) {
-  getToken(sellerId: $sellerId) {
+query GET_TOKEN($accountId: ID!) {
+  getToken(accountId: $accountId) {
     name
     autheticationToken
     enabled

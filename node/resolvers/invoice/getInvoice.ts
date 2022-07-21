@@ -18,8 +18,6 @@ export const getInvoice = async (
 
   const integration = await typeIntegration(ctx)
 
-  console.info({ integration })
-
   if (TypeIntegration.external === integration) {
     const externalInvoice = await externalInvoices.search(
       { page: PAGE_DEFAULT, pageSize: PAGE_SIZE_DEFAULT },
@@ -50,8 +48,6 @@ export const getInvoice = async (
       where
     )
   }
-
-  console.info({ invoice })
 
   if (invoice.length > 1) {
     console.warn('Invoice duplication, seek resolution')

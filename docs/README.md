@@ -321,7 +321,7 @@ __________________________________________________
 ## Create Token
 ![](https://img.shields.io/static/v1?label=&message=POST&color=brightgreen) `https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/{{accountmarketplace}}/master/_v/token/{{sellerId}}`
 
-Create a security token for a specific seller.
+Create a security token for a vendor or the specific marketplace where the financial commission app is installed.
 
 <br />
 
@@ -329,7 +329,8 @@ Create a security token for a specific seller.
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
 | X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
-| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
+| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           |
+| origintoken     | string      | Yes       |Specify if the token is for a seller or marketplace           | 
 
 <br />
 
@@ -338,7 +339,7 @@ Create a security token for a specific seller.
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
 | accountmarketplace      | string      | Yes       | Name of the VTEX account of the marketplace.             |
-| sellerId                | string      | Yes       | Seller Id                                                | 
+| sellerId                | string      | No       | Seller Id                                                | 
 
 <br />
 
@@ -384,7 +385,8 @@ Retrieves the token information created for a specific seller.
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
 | X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
-| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
+| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           |
+| origintoken     | string      | Yes       |Specify if the token is for a seller or marketplace           |  
 
 <br />
 
@@ -393,7 +395,7 @@ Retrieves the token information created for a specific seller.
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
 | accountmarketplace      | string      | Yes       | Name of the VTEX account of the marketplace.             |
-| sellerId                | string      | Yes       | Seller Id                                                | 
+| sellerId                | string      | No       | Seller Id                                                | 
 
 <br />
 
@@ -435,6 +437,7 @@ Allows you to update the status of the token
 | ----------------------- | ----------- |---------- | ----------- |
 | X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
 | X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
+| origintoken     | string      | Yes       |Specify if the token is for a seller or marketplace           | 
 
 <br />
 
@@ -443,7 +446,7 @@ Allows you to update the status of the token
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
 | accountmarketplace      | string      | Yes       | Name of the VTEX account of the marketplace.             |
-| sellerId                | string      | Yes       | Seller Id                                                | 
+| sellerId                | string      | No       | Seller Id                                                | 
 
 <br />
 

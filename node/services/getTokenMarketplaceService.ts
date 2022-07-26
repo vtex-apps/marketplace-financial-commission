@@ -19,6 +19,8 @@ export const getTokenMarketplaceService = async (
       config.BUCKET_VBASE_TOKEN,
       keyBucket
     )
+
+    console.info({ vbaseData })
   } catch (err) {
     throw new NotFoundError('Marketplace not configured')
   }

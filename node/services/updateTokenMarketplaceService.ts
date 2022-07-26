@@ -33,18 +33,11 @@ export const updateTokenMarketplaceService = async (
     throw new NotFoundError('Marketplace not configured')
   }
 
-  const vbaseBody: TokenConfiguration = enabled
-    ? {
-        ...vbaseData,
-        enabled,
-        lastModificationDate,
-      }
-    : {
-        ...vbaseData,
-        enabled,
-        lastModificationDate,
-        autheticationToken: '',
-      }
+  const vbaseBody: TokenConfiguration = {
+    ...vbaseData,
+    enabled,
+    lastModificationDate,
+  }
 
   const resultVBase = await vbase.saveJSON(
     config.BUCKET_VBASE_TOKEN,

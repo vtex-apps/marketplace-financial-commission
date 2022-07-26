@@ -49,47 +49,66 @@ export async function validateParamsExternal(
         throw new UserInputError(error)
       }
 
-      const { invoiceCreatedDate, status, seller, jsonData } = requestData
+      const { status, seller, invoiceCreatedDate, jsonData } = requestData
 
-      if (!invoiceCreatedDate) {
-        isRequerid(invoiceCreatedDate, 'invoiceCreatedDate')
+      if (
+        status === undefined &&
+        seller === undefined &&
+        invoiceCreatedDate === undefined &&
+        jsonData === undefined
+      ) {
+        const error: ErrorLike = {
+          message: `Error model no valid`,
+          name: 'email',
+          stack: '',
+        }
+
+        throw new UserInputError(error)
       }
 
-      if (!status) {
-        isRequerid(status, 'status')
-      } else {
+      isNullorEmpty(seller, 'seller')
+      isNullorEmpty(invoiceCreatedDate, 'invoiceCreatedDate')
+      isNullorEmpty(jsonData, 'jsonData')
+
+      if (status || status === '') {
         validateStatus(status)
       }
 
-      if (!seller) {
-        isRequerid(seller, 'seller')
+      if (seller) {
+        const { contact, id, name } = seller
+
+        if (contact === undefined && id === undefined && name === undefined) {
+          const error: ErrorLike = {
+            message: `Error model object seller no valid`,
+          }
+
+          throw new UserInputError(error)
+        }
+
+        isNullorEmpty(id, 'id')
+        isNullorEmpty(name, 'name')
+
+        if (contact === '' || contact === null || contact === {}) {
+          const error: ErrorLike = {
+            message: `Error model, is requerid object contact`,
+          }
+
+          throw new UserInputError(error)
+        }
+
+        if (contact) {
+          const { email } = contact
+
+          isNullorEmpty(email, 'email')
+          isRequerid(email, 'email')
+
+          if (email) {
+            validateEmail(email)
+          }
+        }
       }
 
-      const { id, name, contact } = seller
-
-      if (!id) {
-        isRequerid(id, 'seller.id')
-      }
-
-      if (!name) {
-        isRequerid(name, 'seller.name')
-      }
-
-      if (!contact) {
-        isRequerid(contact, 'seller.contact')
-      }
-
-      const { email } = contact
-
-      if (!email) {
-        isRequerid(email, 'seller.contact.email')
-      } else {
-        validateEmail(email)
-      }
-
-      if (!jsonData) {
-        isRequerid(jsonData, 'jsonData')
-      } else {
+      if (jsonData) {
         isJsonString(jsonData)
       }
 
@@ -206,6 +225,20 @@ function isRequerid(value: string | number, name: string) {
     }
 
     throw new UserInputError(error)
+  }
+}
+
+function isNullorEmpty(value: string, name: string) {
+  if (value === '' || value === null) {
+    const errorString: ErrorLike = {
+      message:
+        name === 'seller'
+          ? 'Object seller is requerid'
+          : `Field "${name}" cannot be empty or null`,
+      name,
+    }
+
+    throw new UserInputError(errorString)
   }
 }
 

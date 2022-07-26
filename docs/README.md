@@ -29,3 +29,4 @@
  - [Commit orderby invoicesBySeller](https://github.com/vtex-apps/marketplace-financial-commission/pull/75)
  - [Integration external](https://github.com/vtex-apps/marketplace-financial-commission/pull/79)
  - [Authentication Integration external](https://github.com/vtex-apps/marketplace-financial-commission/pull/83)
+ - [Commit endpoint patch integration external](https://github.com/vtex-apps/marketplace-financial-commission/pull/86)

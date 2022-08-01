@@ -18,7 +18,7 @@ query GET_INVOICE($id: String!) {
       totalOrderRate
     }
     totalizers {
-      subtotal
+      subTotal
       fee
       total
     }

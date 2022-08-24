@@ -38,4 +38,4 @@ vtex install vtex.marketplace-financial-commission-cron@1.1.x
 
 ## API REST  
    
-Endpoints exposed for the integration process with the financial commission app, for more information click here.
+Endpoints exposed for the integration process with the financial commission app, for more information [click here](https://github.com/vtex-apps/marketplace-financial-commission/blob/develop/docs/API_REST_README.md).

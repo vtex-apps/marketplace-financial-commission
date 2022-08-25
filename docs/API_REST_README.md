@@ -59,8 +59,7 @@ This endpoint is in charge of generating the commissions dashboard.
 #### **Headers**
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
-| X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
-| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
+| VtexIdclientAutCookie   | string      | Yes       |VTEX Infrastructure Authorization Token             |
 
 <br />
 
@@ -83,8 +82,7 @@ This endpoint is in charge of generating the commissions dashboard.
 ```bash
 curl --request POST \
   --url 'https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/example/master/dashboard/generate?dateStart=2022-04-25&dateEnd=2022-04-30' \
-  --header 'X-VTEX-API-AppKey: 12345' \
-  --header 'X-VTEX-API-AppToken: 12345'
+  --header 'VtexIdclientAutCookie: 12345' \
 ```
 <br />
 
@@ -328,8 +326,8 @@ Create a security token for a specific seller.
 #### **Headers**
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
-| X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
-| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
+| VtexIdclientAutCookie   | string      | Yes       | VTEX Infrastructure Authorization Token             |
+| originToken             | string      | Yes       | Destination of token to be processed. Values:`marketplace`,`seller`. |
 
 <br />
 
@@ -338,15 +336,16 @@ Create a security token for a specific seller.
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
 | accountmarketplace      | string      | Yes       | Name of the VTEX account of the marketplace.             |
-| sellerId                | string      | Yes       | Seller Id                                                | 
+| sellerId                | string      | No        | If the token is for the seller, the value is mandatory. Seller Id | 
 
 <br />
 
 ```bash
 curl --request POST \
   --url https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/example/master/_v/token/sellerId1 \
-  --header 'X-VTEX-API-AppKey: 12345' \
-  --header 'X-VTEX-API-AppToken: 12345'
+  --header 'VtexIdclientAutCookie: 12345' \
+  --header 'originToken: seller' 
+
 ```
 <br />
 
@@ -383,8 +382,8 @@ Retrieves the token information created for a specific seller.
 #### **Headers**
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
-| X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
-| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
+| VtexIdclientAutCookie   | string      | Yes       |VTEX Infrastructure Authorization Token             |
+| originToken             | string      | Yes       | Destination of token to be processed. Values:`marketplace`,`seller`. | 
 
 <br />
 
@@ -393,15 +392,15 @@ Retrieves the token information created for a specific seller.
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
 | accountmarketplace      | string      | Yes       | Name of the VTEX account of the marketplace.             |
-| sellerId                | string      | Yes       | Seller Id                                                | 
+| sellerId                | string      | No        | If the token is for the seller, the value is mandatory. Seller Id | 
 
 <br />
 
 ```bash
 curl --request GET \
   --url https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/example/master/_v/token/sellerId1 \
-  --header 'X-VTEX-API-AppKey: 12345' \
-  --header 'X-VTEX-API-AppToken: 12345'
+  --header 'VtexIdclientAutCookie: 12345' \
+  --header 'originToken: seller' 
 ```
 <br />
 
@@ -433,8 +432,8 @@ Allows you to update the status of the token
 #### **Headers**
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
-| X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
-| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
+| VtexIdclientAutCookie   | string      | Yes       |VTEX Infrastructure Authorization Token             |
+| originToken             | string      | Yes       | Destination of token to be processed. Values:`marketplace`,`seller`. |
 
 <br />
 
@@ -443,15 +442,15 @@ Allows you to update the status of the token
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
 | accountmarketplace      | string      | Yes       | Name of the VTEX account of the marketplace.             |
-| sellerId                | string      | Yes       | Seller Id                                                | 
+| sellerId                | string      | No        | If the token is for the seller, the value is mandatory. Seller Id |  
 
 <br />
 
 ```bash
 curl --request PUT \
   --url https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/example/master/_v/token/sellerId1 \
-  --header 'X-VTEX-API-AppKey: 12345' \
-  --header 'X-VTEX-API-AppToken: 12345'
+  --header 'VtexIdclientAutCookie: 12345' \
+  --header 'originToken: seller'  
 ```
 <br />
 
@@ -640,8 +639,7 @@ This endpoint is responsible for generating the invoices, according to the cut-o
 #### **Headers**
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
-| X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
-| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
+| VtexIdclientAutCookie   | string      | Yes       |VTEX Infrastructure Authorization Token             | 
 
 <br />
 
@@ -657,8 +655,7 @@ This endpoint is responsible for generating the invoices, according to the cut-o
 ```bash
 curl --request GET \
   --url 'https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/example/master/invoice/generate ' \
-  --header 'X-VTEX-API-AppKey: 12345' \
-  --header 'X-VTEX-API-AppToken: 12345'
+  --header 'VtexIdclientAutCookie: 12345' 
 ```
 <br />
 

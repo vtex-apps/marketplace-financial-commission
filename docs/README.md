@@ -18,6 +18,8 @@ vtex install vtex.marketplace-financial-app@0.1.x
 vtex install vtex.marketplace-financial-commission-cron@1.1.x
 ```
 
+> **Note**. For more information about the `vtex.marketplace-financial-commission-cron` app [click here](https://github.com/vtex-apps/marketplace-financial-commission-cron).
+
 </br>
 
 ## **Features**:
@@ -242,7 +244,7 @@ Generate a token to get the information from external sources only for the selec
 
 ## API REST  
    
-Endpoints exposed for the integration process with the financial commission app, for more information [click here](../API_REST_README.md).
+Endpoints exposed for the integration process with the financial commission app, for more information [click here](docs/API_REST_README.md).
 
 </br>
 

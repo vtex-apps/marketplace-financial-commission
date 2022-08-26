@@ -1,7 +1,3 @@
-
-![discount-1](https://user-images.githubusercontent.com/8409481/186940326-28bafc96-6cbd-436d-9361-7a738abdbb26.png)
-
-
 # Financial commission for Marketplace
 
 Marketplace Financial App is an application that is responsible for displaying, generating sales commissions from affiliated sellers.

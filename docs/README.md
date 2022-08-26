@@ -244,7 +244,7 @@ Generate a token to get the information from external sources only for the selec
 
 ## API REST  
    
-Endpoints exposed for the integration process with the financial commission app, for more information [click here](docs/API_REST_README.md).
+Endpoints exposed for the integration process with the financial commission app, for more information [click here](API_REST_README.md).
 
 </br>
 

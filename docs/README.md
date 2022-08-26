@@ -242,7 +242,7 @@ Generate a token to get the information from external sources only for the selec
 
 ## API REST  
    
-Endpoints exposed for the integration process with the financial commission app, for more information [click here](https://github.com/vtex-apps/marketplace-financial-commission/blob/develop/docs/API_REST_README.md).
+Endpoints exposed for the integration process with the financial commission app, for more information [click here](../API_REST_README.md).
 
 </br>
 

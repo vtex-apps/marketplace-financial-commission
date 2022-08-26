@@ -183,7 +183,7 @@ interface InvoiceDetailProps {
 
 Use the types to identify the data to pass between props of the components.
 
-`⚠️` See more details about this app related with the technical topics [here](https://github.com/vtex-apps/components-financial-commission/)
+`⚠️` See more details about this app related with the technical topics [Components financial](https://github.com/vtex-apps/components-financial-commission/)
 
 </br>
 

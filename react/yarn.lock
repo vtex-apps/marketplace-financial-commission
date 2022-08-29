@@ -5238,13 +5238,11 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-"vtex.components-financial-commission@https://dashboard--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.components-financial-commission@0.0.7+build1657573958/public/@types/vtex.components-financial-commission":
-  version "0.0.7"
-  resolved "https://dashboard--elefantqa.myvtex.com/_v/private/typings/linked/v1/vtex.components-financial-commission@0.0.7+build1657573958/public/@types/vtex.components-financial-commission#02f9e0a383e1a24a36543cfa3e4d951ec54501b9"
 
 "vtex.format-currency@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.format-currency@0.4.1/public/@types/vtex.format-currency":
   version "0.4.1"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.format-currency@0.4.1/public/@types/vtex.format-currency#aaed82b498270f0bb6f37e93eff7e7f401e4d283"
+
 
 "vtex.native-types@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types":
   version "0.8.0"

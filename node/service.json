@@ -145,8 +145,8 @@
       ]
     },
     "token": {
-      "path": "/_v/token/*sellerId",
-      "public": false
+      "path": "/_v/financial-commission/token/*sellerId",
+      "public": true
     },
     "invoiceExternal": {
       "path": "/_v/private/financial-commission/external/invoice/*id",

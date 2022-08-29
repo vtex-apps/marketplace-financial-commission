@@ -12,6 +12,7 @@ import Mail from './mail'
 import { OrdersClient } from './orders'
 import SellersIO from './sellers'
 import Template from './template'
+import AppTokenClient from './vtexLogin'
 
 export class Clients extends IOClients {
   public get mail() {
@@ -56,6 +57,10 @@ export class Clients extends IOClients {
       'externalinvoices',
       masterDataFor<ExternalInvoice>('externalinvoices')
     )
+  }
+
+  public get appTokenClient() {
+    return this.getOrSet('appTokenClient', AppTokenClient)
   }
 }
 

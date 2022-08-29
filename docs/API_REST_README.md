@@ -317,7 +317,7 @@ __________________________________________________
 # Token Authorization
 
 ## Create Token
-![](https://img.shields.io/static/v1?label=&message=POST&color=brightgreen) `https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/{{accountmarketplace}}/master/_v/token/{{sellerId}}`
+![](https://img.shields.io/static/v1?label=&message=POST&color=brightgreen) `https://{{accountmarketplace}}myvtex.com/_v/financial-commission/token/{{sellerId}}`
 
 Create a security token for a specific seller.
 
@@ -326,7 +326,8 @@ Create a security token for a specific seller.
 #### **Headers**
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
-| VtexIdclientAutCookie   | string      | Yes       | VTEX Infrastructure Authorization Token             |
+| X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
+| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
 | originToken             | string      | Yes       | Destination of token to be processed. Values:`marketplace`,`seller`. |
 
 <br />
@@ -342,9 +343,10 @@ Create a security token for a specific seller.
 
 ```bash
 curl --request POST \
-  --url https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/example/master/_v/token/sellerId1 \
-  --header 'VtexIdclientAutCookie: 12345' \
-  --header 'originToken: seller' 
+  --url https://example.myvtex.com/_v/financial-commission/token/sellerId1 \
+   --header 'X-VTEX-API-AppKey: 12345' \
+   --header 'X-VTEX-API-AppToken: 12345' \
+   --header 'originToken: seller' 
 
 ```
 <br />
@@ -373,7 +375,7 @@ curl --request POST \
 __________________________________________________
 
 ## Get Token
-![](https://img.shields.io/static/v1?label=&message=GET&color=blue) `https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/{{accountmarketplace}}/master/_v/token/{{sellerId}}`
+![](https://img.shields.io/static/v1?label=&message=GET&color=blue) `https://{{accountmarketplace}}myvtex.com/_v/financial-commission/token/{{sellerId}}`
 
 Retrieves the token information created for a specific seller.
 
@@ -382,7 +384,8 @@ Retrieves the token information created for a specific seller.
 #### **Headers**
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
-| VtexIdclientAutCookie   | string      | Yes       |VTEX Infrastructure Authorization Token             |
+| X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
+| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
 | originToken             | string      | Yes       | Destination of token to be processed. Values:`marketplace`,`seller`. | 
 
 <br />
@@ -398,9 +401,10 @@ Retrieves the token information created for a specific seller.
 
 ```bash
 curl --request GET \
-  --url https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/example/master/_v/token/sellerId1 \
-  --header 'VtexIdclientAutCookie: 12345' \
-  --header 'originToken: seller' 
+  --url https://example.myvtex.com/_v/financial-commission/token/sellerId1 \
+   --header 'X-VTEX-API-AppKey: 12345' \
+   --header 'X-VTEX-API-AppToken: 12345' \
+   --header 'originToken: seller' 
 ```
 <br />
 
@@ -423,7 +427,7 @@ curl --request GET \
 __________________________________________________
 
 ## Update Token
-![](https://img.shields.io/static/v1?label=&message=PUT&color=orange) `https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/{{accountmarketplace}}/master/_v/token/{{sellerId}}`
+![](https://img.shields.io/static/v1?label=&message=PUT&color=orange) `https://{{accountmarketplace}}myvtex.com/_v/financial-commission/token/{{sellerId}}`
 
 Allows you to update the status of the token
 
@@ -432,7 +436,8 @@ Allows you to update the status of the token
 #### **Headers**
 | Attribute               | Type        | Mandatory | Description |
 | ----------------------- | ----------- |---------- | ----------- |
-| VtexIdclientAutCookie   | string      | Yes       |VTEX Infrastructure Authorization Token             |
+| X-VTEX-API-AppKey       | string      | Yes       |The AppKey configured by the merchant             |
+| X-VTEX-API-AppToken     | string      | Yes       |The AppToken configured by the merchant           | 
 | originToken             | string      | Yes       | Destination of token to be processed. Values:`marketplace`,`seller`. |
 
 <br />
@@ -448,9 +453,10 @@ Allows you to update the status of the token
 
 ```bash
 curl --request PUT \
-  --url https://app.io.vtex.com/vtex.marketplace-financial-commission/v0/example/master/_v/token/sellerId1 \
-  --header 'VtexIdclientAutCookie: 12345' \
-  --header 'originToken: seller'  
+  --url https://example.myvtex.com/_v/financial-commission/token/sellerId1 \
+   --header 'X-VTEX-API-AppKey: 12345' \
+   --header 'X-VTEX-API-AppToken: 12345' \
+   --header 'originToken: seller'   
 ```
 <br />
 

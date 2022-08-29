@@ -16,6 +16,7 @@ import {
   policy,
   createInvoiceExternal,
   getInvoiceExternal,
+  authenticationValidationVtex,
 } from './middlewares'
 import { createTokenAuth } from './middlewares/authentication/createTokenAuth'
 import { seller } from './middlewares/sellers/seller'
@@ -83,9 +84,9 @@ const routes = {
     GET: [seller, policy, orders],
   }),
   token: method({
-    POST: [switchUser, createTokenAuth],
-    PUT: [switchUser, updateToken],
-    GET: [switchUser, getToken],
+    POST: [authenticationValidationVtex, switchUser, createTokenAuth],
+    PUT: [authenticationValidationVtex, switchUser, updateToken],
+    GET: [authenticationValidationVtex, switchUser, getToken],
   }),
   invoiceExternal: method({
     POST: [

@@ -6,6 +6,12 @@ interface Data {
   apptoken: string
 }
 
+interface AuthenticatedUser {
+  userId: string
+  user: string
+  userType: string
+}
+
 export default class AppTokenClient extends JanusClient {
   constructor(context: IOContext, options?: InstanceOptions) {
     super(context, {
@@ -25,5 +31,15 @@ export default class AppTokenClient extends JanusClient {
     } catch (error) {
       throw new AuthenticationError('Unauthorized')
     }
+  }
+
+  public getAuthenticatedUser(
+    authToken: string
+  ): Promise<AuthenticatedUser | null> {
+    return this.http.get('/api/vtexid/pub/authenticated/user/', {
+      params: {
+        authToken,
+      },
+    })
   }
 }

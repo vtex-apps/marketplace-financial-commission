@@ -1,15 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{_accountInfo.TradingName}}</title>
-  </head>
-  <body style="background-color: #f1f1f1 !important">
-    <center>
-      <table
-        style="
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{_accountInfo.TradingName}}</title>
+</head>
+
+<body style="background-color: #f1f1f1 !important">
+  <center>
+    <table style="
           border-bottom-color: #e7e9ee !important;
           border-bottom-style: solid !important;
           border-bottom-width: 2px !important;
@@ -18,44 +20,28 @@
           margin: 0px !important;
           min-width: 800px;
           background-color: #fff !important;
-        "
-        align="center"
-        border="0"
-        cellpading="0"
-        cellspacing="0"
-        width="800"
-      >
-        <tbody
-          style="
+        " align="center" border="0" cellpading="0" cellspacing="0" width="800">
+      <tbody style="
             background-color: #fff !important;
             font-family: Helvetica, Arial, sans-serif !important;
             line-height: 150% !important;
             margin: 0px !important;
             min-width: 600px !important;
-          "
-        >
-          <tr
-            style="
+          ">
+        <tr style="
               font-family: Helvetica, Arial, sans-serif !important;
               line-height: 150% !important;
               margin: 0px !important;
-            "
-          >
-            <td
-              style="
+            ">
+          <td style="
                 font-family: Helvetica, Arial, sans-serif !important;
                 line-height: 150% !important;
                 margin: 0px !important;
                 padding: 22px 30px;
-              "
-            >
-              <a href="https://vtex.com" style="color: #f71963; fill: #f71963"
-                ><img
-                  alt
-                  border="0"
-                  width="auto"
-                  src="http://licensemanager.vtex.com.br/api/site/pub/accounts/e39d05f9-0c54-4469-a626-8bb5cff169f8/logos/show"
-                  style="
+              ">
+            <a href="https://vtex.com" style="color: #f71963; fill: #f71963"><img alt border="0" width="auto"
+                src="http://licensemanager.vtex.com.br/api/site/pub/accounts/e39d05f9-0c54-4469-a626-8bb5cff169f8/logos/show"
+                style="
                     vertical-align: top;
                     outline: none;
                     text-decoration: none;
@@ -63,338 +49,144 @@
                     max-width: 100%;
                     border: none;
                     width: 15% !important;
-                  "
-              /></a>
-            </td>
-            <td
-              align="right"
-              valign="center"
-              style="
+                  " /></a>
+          </td>
+          <td align="right" valign="center" style="
                 font-family: Helvetica, Arial, sans-serif !important;
                 line-height: 150% !important;
                 margin: 0px !important;
                 padding: 22px 30px;
-              "
-            >
-              <h2 style="color: #717786; font-size: 16px !important">
-                Invoice Detail
-              </h2>
-              <p style="color: #717786; font-size: 12px !important">
-                Invoice: {{id}}<br />Date: {{invoiceCreatedDate}}
-              </p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <table
-        style="
+              ">
+            <h2 style="color: #717786; font-size: 16px !important">
+              Invoice Detail
+            </h2>
+            <p style="color: #717786; font-size: 12px !important">
+              Invoice: {{id}}<br />Invoice Date: {{invoiceCreatedDate}} <br /> Date Range: {{jsonData.dateRange}}
+
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table style="
           font-family: Helvetica, Arial, sans-serif !important;
           line-height: 150% !important;
           border-bottom-color: #e7e9ee !important;
           border-bottom-style: solid !important;
           border-bottom-width: 2px !important;
           margin: 0px !important;
-        "
-        align="center"
-        border="0"
-        cellpading="0"
-        cellspacing="0"
-        width="800"
-      >
-        <tbody
-          style="
+        " align="center" border="0" cellpading="0" cellspacing="0" width="800">
+      <tbody style="
             font-family: Helvetica, Arial, sans-serif !important;
             line-height: 150% !important;
             margin: 0px !important;
-          "
-        >
-          <tr
-            style="
+          ">
+        <tr style="
               background-color: #fff !important;
               font-family: Helvetica, Arial, sans-serif !important;
               line-height: 150% !important;
               margin: 0px !important;
-            "
-          >
-            <td
-              style="
+            ">
+          <td style="
                 font-family: Helvetica, Arial, sans-serif !important;
                 line-height: 150% !important;
                 margin: 0px !important;
                 padding: 52px 30px 20px;
                 width: 50% !important;
-              "
-            >
-              <p>
-                E-mail: {{seller.contact.email}}<br />
-                Phone: {{seller.contact.phone}}
-              </p>
-            </td>
-            <td
-              style="
+              ">
+          </td>
+          <td style="
                 font-family: Helvetica, Arial, sans-serif !important;
                 line-height: 150% !important;
                 margin: 0px !important;
                 padding: 15px 80px 20px 180px;
                 width: 50%;
                 text-align: end !important;
-              "
-            >
-              <p><span>To:</span><br />{{seller.name}}<br /></p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <table
-        style="
+              ">
+            <p><span>To :</span>{{seller.name}}<br />SellerID: {{seller.id}}</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table style="
           font-family: Helvetica, Arial, sans-serif !important;
           line-height: 150% !important;
           margin: 0px !important;
-        "
-        align="center"
-        border="0"
-        cellpading="0"
-        cellspacing="0"
-        width="800"
-      >
-        <tbody
-          style="
+        " align="center" border="0" cellpading="0" cellspacing="0" width="800">
+      <tbody style="
             font-family: Helvetica, Arial, sans-serif !important;
             line-height: 150% !important;
             margin: 0px !important;
-          "
-        >
-          <tr
-            style="
+          ">
+        <tr style="
               background-color: #fff !important;
               font-family: Helvetica, Arial, sans-serif !important;
               line-height: 150% !important;
               margin: 0px !important;
-            "
-          >
-            <td
-              style="
-                font-family: Helvetica, Arial, sans-serif !important;
-                line-height: 150% !important;
-                margin: 0px !important;
-                padding: 20px 30px 64px;
-              "
-              align="center"
-            >
-              <p>
-                <b><span>Comments or special instructions:</span></b>
-                <br />{{comment}}
-              </p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <table
-        style="
-          font-family: Helvetica, Arial, sans-serif !important;
-          line-height: 150% !important;
-          border-bottom-color: #e7e9ee !important;
-          border-bottom-style: solid !important;
-          border-bottom-width: 2px !important;
-          margin: 0px !important;
-        "
-        align="center"
-        border="0"
-        cellpading="0"
-        cellspacing="0"
-        width="800"
-      >
-        <tbody
-          style="
-            font-family: Helvetica, Arial, sans-serif !important;
-            line-height: 150% !important;
-            margin: 0px !important;
-          "
-        >
-          <tr
-            style="
-              background-color: #fff !important;
-              font-family: Helvetica, Arial, sans-serif !important;
-              line-height: 150% !important;
-              margin: 0px !important;
-            "
-          >
-            <th style="font-size: 14px; width: 25% !important">ID</th>
-            <th style="font-size: 14px; width: 25% !important">TOTAL</th>
-            <th style="font-size: 14px; width: 25% !important">COMMISSION</th>
-          </tr>
-          {{#each orders}}
-          <tr>
-            <td
-              style="
-                text-align: center;
-                background-color: #fff;
-                padding-bottom: 10px !important;
-              "
-            >
-              {{this.sellerOrderId}}
-            </td>
-            <td
-              style="
-                text-align: center;
-                background-color: #fff;
-                padding-bottom: 10px !important;
-              "
-            >
-              {{this.totalOrderValue}}
-            </td>
-            <td
-              style="
-                text-align: center;
-                background-color: #fff;
-                padding-bottom: 10px !important;
-              "
-            >
-              ${{this.totalComission}}
-            </td>
-          </tr>
-          {{/each}}
-        </tbody>
-      </table>
-      <table
-        style="
-          font-family: Helvetica, Arial, sans-serif !important;
-          line-height: 150% !important;
-          border-bottom-color: #e7e9ee !important;
-          border-bottom-style: solid !important;
-          border-bottom-width: 2px !important;
-          margin: 0px !important;
-        "
-        align="center"
-        border="0"
-        cellpading="0"
-        cellspacing="0"
-        width="800"
-      >
-        <tbody
-          style="
-            font-family: Helvetica, Arial, sans-serif !important;
-            line-height: 150% !important;
-            margin: 0px !important;
-          "
-        >
-          <tr
-            style="
-              background-color: #fff !important;
-              font-family: Helvetica, Arial, sans-serif !important;
-              line-height: 150% !important;
-              margin: 0px !important;
-            "
-          >
-            <th style="width: 25%; padding-top: 40px !important;"></th>
-            <th
-              style="
-                font-size: 14px;
-                width: 25%;
-                text-align: initial;
-                padding-top: 40px !important;
-              "
-            >
-              SUBTOTAL:
-            </th>
-            <td
-              style="width: 25%; text-align: end; padding-top: 40px !important"
-            >
-              {{totalizers.subtotal}}
-            </td>
-            <th style="width: 25%; padding-top: 40px !important"></th>
-          </tr>
-          <tr
-            style="
-              background-color: #fff !important;
-              font-family: Helvetica, Arial, sans-serif !important;
-              line-height: 150% !important;
-              margin: 0px !important;
-            "
-          >
-            <th style="width: 25%"></th>
-            <th
-              style="
-                font-size: 14px;
-                width: 25%;
-                text-align: initial !important;
-              "
-            >
-              SERVICE FEE:
-            </th>
-            <td style="width: 25%; text-align: end !important">
-              ${{totalizers.fee}}
-            </td>
-            <th style="width: 25%"></th>
-          </tr>
-          <tr
-            style="
-              background-color: #fff !important;
-              font-family: Helvetica, Arial, sans-serif !important;
-              line-height: 150% !important;
-              margin: 0px !important;
-            "
-          >
-            <th style="width: 25%; padding-bottom: 40px !important"></th>
-            <th
-              style="
-                font-size: 14px;
-                width: 25%;
-                text-align: initial;
-                padding-bottom: 40px !important;
-              "
-            >
-              TOTAL DUE:
-            </th>
-            <td
-              style="
-                width: 25%;
-                text-align: end;
-                padding-bottom: 40px !important;
-              "
-            >
-              ${{totalizers.total}}
-            </td>
-            <th style="width: 25%; padding-bottom: 40px !important"></th>
-          </tr>
-        </tbody>
-      </table>
-      <table
-        style="
+            ">
+        </tr>
+      </tbody>
+    </table>
+    <h1><span>Order List</span></h1>
+
+    {{#each jsonData.orders}}
+    <h3>Order Id: {{this.orderId}}, PaymentMethod: {{this.paymentMethod}}</h3>
+    <table>
+
+      <thead>
+        <tr>
+          <th>PositionId</th>
+          <th>PositionType</th>
+          <th>Item ID</th>
+          <th>Category Id</th>
+          <th>Quantity</th>
+          <th>Item Value</th>
+          <th>Commission%</th>
+          <th>Commission</th>
+          <th>Total Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each items}}
+        <tr>
+        <td style="text-align:center">{{itemPositionId}}</td>
+          <td style="text-align:center">{{positionType}}</td>
+          <td style="text-align:center">{{itemId}}</td>
+          <td style="text-align:center">{{itemCategoryId}}</td>
+          <td style="text-align:center">{{itemQuantity}}</td>
+          <td style="text-align:center">{{itemGrossPrice}} &euro;</td>
+          <td style="text-align:center">{{itemTotalValue}} &euro;</td>
+          <td style="text-align:center">{{itemCommissionPercentage}}%</td>
+          <td style="text-align:center">{{itemCommissionAmount}} &euro;</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    ----
+    {{/each}}
+
+    <table style="
           font-family: Helvetica, Arial, sans-serif !important;
           line-height: 150% !important;
           margin: 0px !important;
-        "
-        align="center"
-        border="0"
-        cellpading="0"
-        cellspacing="0"
-        width="800"
-      >
-        <tbody
-          style="
+        " align="center" border="0" cellpading="0" cellspacing="0" width="800">
+        <tbody style="
             font-family: Helvetica, Arial, sans-serif !important;
             line-height: 150% !important;
             margin: 0px !important;
-          "
-        >
-          <tr
-            style="
+          ">
+          <tr style="
               background-color: #fff !important;
               font-family: Helvetica, Arial, sans-serif !important;
               line-height: 150% !important;
               margin: 0px !important;
-            "
-          >
-            <td
-              style="
+            ">
+            <td style="
                 font-family: Helvetica, Arial, sans-serif !important;
                 line-height: 150% !important;
                 margin: 0px !important;
                 padding: 30px 30px 24px;
-              "
-              align="left"
-            >
+              " align="left">
               <p>
                 <b>Thanks you for your business!</b>
               </p>
@@ -402,6 +194,8 @@
           </tr>
         </tbody>
       </table>
-    </center>
-  </body>
+  </center>
+
+</body>
+
 </html>

@@ -46,5 +46,16 @@ export const invoicesBySeller = async (
     )
   }
 
+  sellerInvoices.data = sellerInvoices.data.map((invoice: any) => {
+    const { id, invoiceCreatedDate } = invoice
+
+    const newId = `${id.split('_')[0]}_${invoiceCreatedDate.replace(/-/g, '')}`
+    return {
+      ...invoice,
+      id: newId
+    }
+  })
+
+
   return sellerInvoices
 }

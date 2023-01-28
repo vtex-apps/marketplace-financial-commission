@@ -24,7 +24,8 @@ query getSeller($sellerId: ID!) {
     id,
     name,
     account,
-    isActive
+    isActive,
+    salesChannel
   }
 }
 `

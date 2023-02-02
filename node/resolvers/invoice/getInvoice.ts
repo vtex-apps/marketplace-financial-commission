@@ -24,7 +24,7 @@ export const getInvoice = async (
     if (StartsWithCurrencySymbol) {
       return `${CurrencySymbol} ${value}`
     }
-    return `${value} ${CurrencySymbol}`
+    return `${value.toFixed(2)} ${CurrencySymbol}`
   }
 
   if (TypeIntegration.external === integration) {
@@ -35,14 +35,18 @@ export const getInvoice = async (
       where
     )
 
+    // @ts-ignore
     const sellerInfo = await sellersIO.seller(externalInvoice[0].seller?.id)
+    // @ts-ignore
     const culture = await catalog.salesChannelById(sellerInfo?.salesChannel)
+    // @ts-ignore
     let objectData = JSON.parse(externalInvoice[0].jsonData)
     objectData.orders = objectData.orders.map((order: any) => {
       order.items = order.items.map((item: any) => {
         const { itemGrossPrice, itemTotalValue, itemCommissionAmount} = item
         return {
           ...item,
+          orderId: order.orderId,
           itemGrossPrice: setSymbol(culture, itemGrossPrice),
           itemTotalValue: setSymbol(culture, itemTotalValue),
           itemCommissionAmount: setSymbol(culture, itemCommissionAmount),

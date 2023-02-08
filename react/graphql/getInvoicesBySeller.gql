@@ -2,6 +2,10 @@ query SELLER_INVOICES($sellerInvoiceParams: SellerInvoiceParams) {
   invoicesBySeller(sellerInvoiceParams: $sellerInvoiceParams) {
     data {
       id
+      columnId {
+        href
+        idVisible
+      }
       status
       invoiceCreatedDate
       totalizers {

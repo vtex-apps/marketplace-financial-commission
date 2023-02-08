@@ -128,9 +128,6 @@
       </tbody>
     </table>
     <h1><span>Order List</span></h1>
-
-    {{#each jsonData.orders}}
-    <h3>Order Id: {{this.orderId}}, PaymentMethod: {{this.paymentMethod}}</h3>
     <table border="1" style="border-collapse: collapse;">
 
       <thead>
@@ -148,7 +145,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each items}}
+        {{#each jsonData.items}}
         <tr>
           <td style="text-align:center">{{itemPositionId}}</td>
           <td style="text-align:center">{{orderId}}</td>
@@ -164,8 +161,6 @@
         {{/each}}
       </tbody>
     </table>
-    ----
-    {{/each}}
 
     <table style="
           font-family: Helvetica, Arial, sans-serif !important;

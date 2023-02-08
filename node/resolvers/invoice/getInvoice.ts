@@ -16,7 +16,7 @@ export const getInvoice = async (
 
   const where = `id=${id}`
 
-  let invoice
+  let invoice, items: any[] = []
 
   const integration = await typeIntegration(ctx)
 
@@ -52,9 +52,11 @@ export const getInvoice = async (
           itemCommissionAmount: setSymbol(culture, itemCommissionAmount),
         }
       })
-
+      items.push(...order.items)
       return order
     })
+    objectData.items = items
+    console.info("objectData.items", objectData.items)
     externalInvoice[0].jsonData = JSON.stringify(objectData);
 
     if (externalInvoice.length === 0) {

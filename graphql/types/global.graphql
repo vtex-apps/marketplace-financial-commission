@@ -41,8 +41,14 @@ type Invoice {
   jsonData: JSONData
 }
 
+type ColumnId {
+  href: String
+  idVisible: String
+}
+
 type InvoiceList {
   id: String
+  columnId: ColumnId
   status: String
   invoiceCreatedDate: String
   totalizers: Totalizers

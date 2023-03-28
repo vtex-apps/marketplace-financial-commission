@@ -24,7 +24,7 @@ export async function getInvoice(ctx: Context) {
 
   /* This means the seller wants to access other seller's invoices */
   if (sellerName !== seller.name) {
-    throw new AuthenticationError(`Cannot access invoices for ${seller}`)
+    throw new AuthenticationError(`Cannot access invoices for ${seller.name}`)
   }
 
   const where = `id=${id} AND seller.name="${sellerName}"`

@@ -30,6 +30,7 @@ import { deleteInvoiceExternal } from './middlewares/invoiceExternal/deleteInvoi
 import { updateInvoiceExternal } from './middlewares/invoiceExternal/updateInvoiceExternal'
 import { switchUser } from './middlewares/authentication/switchUser'
 import { authenticationMarketplace } from './middlewares/authentication/authenticationMarketplace'
+import { generateFileByType } from './middlewares/invoice/generateFile'
 
 const template = templateMethod
 
@@ -76,6 +77,9 @@ const routes = {
   }),
   generateInvoices: method({
     GET: [errorHandler, eligibleSellers, generateInvoices],
+  }),
+  generateInvoiceFile: method({
+    GET: [seller, generateFileByType],
   }),
   orders: method({
     GET: [seller, authentication, orders],

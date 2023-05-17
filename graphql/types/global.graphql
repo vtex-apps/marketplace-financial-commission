@@ -41,8 +41,21 @@ type Invoice {
   jsonData: JSONData
 }
 
+type ColumnId {
+  href: String
+  idVisible: String
+}
+
+type DownloadFiles {
+  id: String
+  sellerName: String
+  sellerId: String
+}
+
 type InvoiceList {
   id: String
+  columnId: ColumnId
+  downloadFiles: DownloadFiles
   status: String
   invoiceCreatedDate: String
   totalizers: Totalizers

@@ -125,6 +125,10 @@
         }
       ]
     },
+    "generateInvoiceFile": {
+      "path": "/_v/financial-commission/:sellerId/invoice/:id/generate/:type",
+      "public": true
+    },
     "orders": {
       "path": "/_v/private/orders",
       "public": true

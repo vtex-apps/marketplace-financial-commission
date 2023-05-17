@@ -14,6 +14,7 @@
     "masterdata": "1.x"
   },
   "dependencies": {
+    "vtex.catalog-api-proxy": "0.x",
     "vtex.sellers-graphql": "8.x",
     "vtex.styleguide": "9.x",
     "vtex.render-runtime": "8.x",
@@ -21,7 +22,9 @@
     "vtex.format-currency": "0.x",
     "vtex.components-financial-commission": "0.x"
   },
-  "registries": ["smartcheckout"],
+  "registries": [
+    "smartcheckout"
+  ],
   "credentialType": "absolute",
   "policies": [
     {
@@ -59,6 +62,12 @@
         "host": "portal.vtexcommercestable.com.br",
         "path": "/api/*"
       }
+    },
+    {
+      "name": "vtex.catalog-api-proxy:catalog-proxy"
+    },
+    {
+      "name": "vtex.catalog-api-proxy:authenticated-catalog-proxy"
     }
   ],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"

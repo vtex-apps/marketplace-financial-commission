@@ -1,6 +1,6 @@
 {
   "name": "financial-commission",
-  "version": "0.0.0",
+  "version": "0.3.24",
   "scripts": {
     "test": "vtex-test-tools test"
   },

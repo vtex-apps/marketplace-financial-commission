@@ -1,7 +1,6 @@
-##  ⚠️ Maintenance ⚠️
-*Starting June 1st 2023, this application will no longer be maintained by VTEX.*
+[<i class="fa-brands fa-github"></i> Source code](https://github.com/vtex-apps/marketplace-financial-commission)
 
----
+> ⚠️ This app is no longer maintained by VTEX. This means support and maintenance are no longer provided.
 
 This app and all affiliated services are provided “as is”, without warranty of any kind, either express or implied. Neither the publisher nor its partners, affiliates, employees, or contractors guarantee that this app will meet your requirements, provide uninterrupted use, or operate without delay or without error. Neither the publisher nor its partners, affiliates, employees, or contractors assume any responsibility for any errors and malfunctions within the app and will not provide support or maintenance of any kind.
 
